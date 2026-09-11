@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!--
+Interfaz: P02 - Login
+Funcionalidades: F01
+Entidades: Usuario
+Reglas: No aplica
+Estado: Maqueta HTML/CSS/Bootstrap sin backend
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Representar el acceso de demostración. Proyecto académico de Ingeniería Web, G1.">
+    <title>
+      Login | Estación Nexo · G1
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+  </head>
+  <body class="public">
+    <a class="skip-link" href="#contenido">
+      Saltar al contenido
+    </a>
+    <header class="public-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          N
+        </span>
+        <span>
+          NEXO
+          <small>
+            ESTACIÓN DE SERVICIO
+          </small>
+        </span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="index.html">
+          Inicio
+        </a>
+        <a href="publicidad.html">
+          Combustibles y beneficios
+        </a>
+        <a href="contacto.html">
+          Contacto
+        </a>
+        <a href="login.html" aria-current="page">
+          Ingresar al sistema
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        INGENIERÍA WEB
+        <span>
+          GRUPO G1 · 2026
+        </span>
+      </div>
+    </header>
+    <div class="page">
+      <div class="topbar">
+        <span>
+          Energía para seguir avanzando
+        </span>
+        <span class="demo">
+          Datos de demostración
+        </span>
+      </div>
+      <main id="contenido">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">
+              ESTACIÓN NEXO / P02
+            </p>
+            <h1>
+              Login
+            </h1>
+            <p class="subtitle">
+              Representar el acceso de demostración.
+            </p>
+          </div>
+          <div class="actions">
+          </div>
+        </div>
+        <div class="login-wrap">
+          <section class="panel ">
+            <h2>
+              Bienvenido a Nexo
+            </h2>
+            <p class="muted-text">
+              Accede al centro de operaciones.
+            </p>
+            <form action="dashboard.html" method="get">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="campo-1">
+                    Usuario
+                  </label>
+                  <input class="form-control" id="campo-1" type="text" value="">
+                </div>
+                <div class="field">
+                  <label for="campo-2">
+                    Contraseña
+                  </label>
+                  <input class="form-control" id="campo-2" type="password" value="">
+                </div>
+              </div>
+              <div class="remember">
+                <input type="checkbox" id="recordarme">
+                <label for="recordarme">
+                  Recordarme
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Iniciar sesión
+              </button>
+              <p class="muted-text">
+                Acceso de demostración
+              </p>
+              <a href="index.html">
+                ← Volver al inicio
+              </a>
+            </form>
+          </section>
+        </div>
+      </main>
+      <footer>
+        <span>
+          Estación Nexo · Ingeniería Web · G1
+        </span>
+        <span>
+          HTML / CSS / Bootstrap · 2026
+        </span>
+      </footer>
+    </div>
+  </body>
+</html>

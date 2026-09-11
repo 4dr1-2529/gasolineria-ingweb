@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<!--
+Interfaz: P15 - Resumen financiero
+Funcionalidades: F24
+Entidades: MovimientoCaja ConceptoMovimiento Venta
+Reglas: RN04
+Estado: Maqueta HTML/CSS/Bootstrap sin backend
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Consultar los movimientos de dinero. Proyecto académico de Ingeniería Web, G1.">
+    <title>
+      Resumen financiero | Estación Nexo · G1
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+  </head>
+  <body class="workspace">
+    <a class="skip-link" href="#contenido">
+      Saltar al contenido
+    </a>
+    <header class="sidebar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          N
+        </span>
+        <span>
+          NEXO
+          <small>
+            ESTACIÓN DE SERVICIO
+          </small>
+        </span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="index.html">
+          Inicio
+        </a>
+        <a href="dashboard.html">
+          Dashboard
+        </a>
+        <a href="categorias.html">
+          Categorías
+        </a>
+        <a href="combustibles.html">
+          Combustibles
+        </a>
+        <a href="ventas.html">
+          Ventas
+        </a>
+        <a href="inventario.html">
+          Inventario
+        </a>
+        <a href="finanzas.html" aria-current="page">
+          Finanzas
+        </a>
+        <a href="empleados.html">
+          Empleados
+        </a>
+        <a href="usuarios.html">
+          Usuarios
+        </a>
+        <a href="asistencia.html">
+          Asistencia
+        </a>
+        <a href="contacto.html">
+          Contacto
+        </a>
+        <a href="login.html">
+          Cerrar sesión
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        INGENIERÍA WEB
+        <span>
+          GRUPO G1 · 2026
+        </span>
+      </div>
+    </header>
+    <div class="page">
+      <div class="topbar">
+        <span>
+          Centro de operaciones / Estación Nexo
+        </span>
+        <span class="demo">
+          Datos de demostración
+        </span>
+      </div>
+      <main id="contenido">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">
+              OPERACIÓN DIARIA / P15
+            </p>
+            <h1>
+              Resumen financiero
+            </h1>
+            <p class="subtitle">
+              Consultar los movimientos de dinero.
+            </p>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="movimiento-economico.html">
+              + Movimiento
+            </a>
+            <a class="btn btn-secondary" href="conceptos.html">
+              Conceptos
+            </a>
+          </div>
+        </div>
+        <div class="kpi-grid">
+          <section class="kpi">
+            <p>
+              Ingresos de hoy
+            </p>
+            <strong>
+              S/ 370.00
+            </strong>
+            <small>
+              Ventas confirmadas
+            </small>
+          </section>
+          <section class="kpi">
+            <p>
+              Egresos de hoy
+            </p>
+            <strong>
+              S/ 50.00
+            </strong>
+            <small>
+              Mantenimiento
+            </small>
+          </section>
+          <section class="kpi">
+            <p>
+              Saldo demostrativo
+            </p>
+            <strong>
+              S/ 320.00
+            </strong>
+            <small>
+              Apertura de caja: S/ 0.00
+            </small>
+          </section>
+        </div>
+        <section class="panel ">
+          <h2>
+            Movimientos económicos recientes
+          </h2>
+          <div class="table-responsive">
+            <table class="table">
+              <caption>
+                Movimientos económicos en soles · Ingresos 370.00 − egresos 50.00 = saldo 320.00
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">
+                    Código
+                  </th>
+                  <th scope="col">
+                    Fecha
+                  </th>
+                  <th scope="col">
+                    Concepto
+                  </th>
+                  <th scope="col">
+                    Tipo
+                  </th>
+                  <th scope="col">
+                    Monto
+                  </th>
+                  <th scope="col">
+                    Origen
+                  </th>
+                  <th scope="col">
+                    Responsable
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    MC001
+                  </td>
+                  <td>
+                    10/09/2026 09:00
+                  </td>
+                  <td>
+                    Venta de combustible
+                  </td>
+                  <td>
+                    <span class="badge ">
+                      Ingreso
+                    </span>
+                  </td>
+                  <td>
+                    S/ 50.00
+                  </td>
+                  <td>
+                    V001
+                  </td>
+                  <td>
+                    Ana Torres
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    MC002
+                  </td>
+                  <td>
+                    10/09/2026 10:00
+                  </td>
+                  <td>
+                    Venta de combustible
+                  </td>
+                  <td>
+                    <span class="badge ">
+                      Ingreso
+                    </span>
+                  </td>
+                  <td>
+                    S/ 120.00
+                  </td>
+                  <td>
+                    V002
+                  </td>
+                  <td>
+                    Ana Torres
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    MC003
+                  </td>
+                  <td>
+                    10/09/2026 11:00
+                  </td>
+                  <td>
+                    Venta de combustible
+                  </td>
+                  <td>
+                    <span class="badge ">
+                      Ingreso
+                    </span>
+                  </td>
+                  <td>
+                    S/ 200.00
+                  </td>
+                  <td>
+                    V003
+                  </td>
+                  <td>
+                    Luis Rojas
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    MC004
+                  </td>
+                  <td>
+                    10/09/2026 11:30
+                  </td>
+                  <td>
+                    Mantenimiento
+                  </td>
+                  <td>
+                    <span class="badge muted">
+                      Egreso
+                    </span>
+                  </td>
+                  <td>
+                    S/ 50.00
+                  </td>
+                  <td>
+                    Manual
+                  </td>
+                  <td>
+                    Ana Torres
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <p class="notice">
+          Inventario expresa litros; finanzas expresa soles. Los tres ingresos de venta se vinculan individualmente a V001, V002 y V003.
+        </p>
+      </main>
+      <footer>
+        <span>
+          Estación Nexo · Ingeniería Web · G1
+        </span>
+        <span>
+          HTML / CSS / Bootstrap · 2026
+        </span>
+      </footer>
+    </div>
+  </body>
+</html>

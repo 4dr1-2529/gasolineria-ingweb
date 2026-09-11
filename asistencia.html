@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<!--
+Interfaz: P20 - Asistencia
+Funcionalidades: F29, F30
+Entidades: Asistencia Empleado
+Reglas: RN05, RN06
+Estado: Maqueta HTML/CSS/Bootstrap sin backend
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Representar la entrada, salida e historial del personal. Proyecto académico de Ingeniería Web, G1.">
+    <title>
+      Asistencia | Estación Nexo · G1
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+  </head>
+  <body class="workspace">
+    <a class="skip-link" href="#contenido">
+      Saltar al contenido
+    </a>
+    <header class="sidebar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          N
+        </span>
+        <span>
+          NEXO
+          <small>
+            ESTACIÓN DE SERVICIO
+          </small>
+        </span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="index.html">
+          Inicio
+        </a>
+        <a href="dashboard.html">
+          Dashboard
+        </a>
+        <a href="categorias.html">
+          Categorías
+        </a>
+        <a href="combustibles.html">
+          Combustibles
+        </a>
+        <a href="ventas.html">
+          Ventas
+        </a>
+        <a href="inventario.html">
+          Inventario
+        </a>
+        <a href="finanzas.html">
+          Finanzas
+        </a>
+        <a href="empleados.html">
+          Empleados
+        </a>
+        <a href="usuarios.html">
+          Usuarios
+        </a>
+        <a href="asistencia.html" aria-current="page">
+          Asistencia
+        </a>
+        <a href="contacto.html">
+          Contacto
+        </a>
+        <a href="login.html">
+          Cerrar sesión
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        INGENIERÍA WEB
+        <span>
+          GRUPO G1 · 2026
+        </span>
+      </div>
+    </header>
+    <div class="page">
+      <div class="topbar">
+        <span>
+          Centro de operaciones / Estación Nexo
+        </span>
+        <span class="demo">
+          Datos de demostración
+        </span>
+      </div>
+      <main id="contenido">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">
+              OPERACIÓN DIARIA / P20
+            </p>
+            <h1>
+              Asistencia
+            </h1>
+            <p class="subtitle">
+              Representar la entrada, salida e historial del personal.
+            </p>
+          </div>
+          <div class="actions">
+          </div>
+        </div>
+        <div class="kpi-grid">
+          <section class="kpi">
+            <p>
+              Personal presente
+            </p>
+            <strong>
+              2
+            </strong>
+            <small>
+              Ana y Luis · registros abiertos
+            </small>
+          </section>
+          <section class="kpi">
+            <p>
+              Jornadas cerradas
+            </p>
+            <strong>
+              1
+            </strong>
+            <small>
+              Elena · 06:00–10:00
+            </small>
+          </section>
+          <section class="kpi">
+            <p>
+              Marcaciones de hoy
+            </p>
+            <strong>
+              4
+            </strong>
+            <small>
+              3 entradas y 1 salida
+            </small>
+          </section>
+        </div>
+        <section class="panel ">
+          <h2>
+            Marcación de personal
+          </h2>
+          <form id="registro">
+            <div class="form-grid">
+              <div class="field">
+                <label for="campo-97">
+                  Empleado
+                </label>
+                <select class="form-select" id="campo-97">
+                  <option selected>
+                    Ana Torres
+                  </option>
+                  <option>
+                    Luis Rojas
+                  </option>
+                  <option>
+                    Elena Díaz
+                  </option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="campo-98">
+                  Fecha
+                </label>
+                <input class="form-control" id="campo-98" type="date" value="2026-09-10">
+              </div>
+              <div class="field">
+                <label for="campo-99">
+                  Hora de entrada
+                </label>
+                <input class="form-control" id="campo-99" type="time" value="08:00">
+              </div>
+              <div class="field">
+                <label for="campo-100">
+                  Hora de salida
+                </label>
+                <input class="form-control" id="campo-100" type="time" value="12:00">
+              </div>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn btn-primary">
+                Marcar entrada · visual
+              </button>
+            </div>
+            <p class="form-help">
+              Formulario de demostración; los cambios no se guardan.
+            </p>
+          </form>
+        </section>
+        <section class="panel ">
+          <h2>
+            Cerrar jornada
+          </h2>
+          <p>
+            Salida ilustrativa para Ana Torres: 12:00, posterior a la entrada 08:00.
+          </p>
+          <button type="button" class="btn btn-primary">
+            Marcar salida · visual
+          </button>
+        </section>
+        <section class="panel ">
+          <h2>
+            Historial de asistencia
+          </h2>
+          <div class="table-responsive">
+            <table class="table">
+              <caption>
+                Al corte de las 12:00 hay dos registros abiertos
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">
+                    Código
+                  </th>
+                  <th scope="col">
+                    Empleado
+                  </th>
+                  <th scope="col">
+                    Fecha
+                  </th>
+                  <th scope="col">
+                    Entrada
+                  </th>
+                  <th scope="col">
+                    Salida
+                  </th>
+                  <th scope="col">
+                    Estado
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    A001
+                  </td>
+                  <td>
+                    Ana Torres
+                  </td>
+                  <td>
+                    10/09/2026
+                  </td>
+                  <td>
+                    08:00
+                  </td>
+                  <td>
+                    —
+                  </td>
+                  <td>
+                    <span class="badge warn">
+                      Abierta
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    A002
+                  </td>
+                  <td>
+                    Luis Rojas
+                  </td>
+                  <td>
+                    10/09/2026
+                  </td>
+                  <td>
+                    08:00
+                  </td>
+                  <td>
+                    —
+                  </td>
+                  <td>
+                    <span class="badge warn">
+                      Abierta
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    A003
+                  </td>
+                  <td>
+                    Elena Díaz
+                  </td>
+                  <td>
+                    10/09/2026
+                  </td>
+                  <td>
+                    06:00
+                  </td>
+                  <td>
+                    10:00
+                  </td>
+                  <td>
+                    <span class="badge ">
+                      Cerrada
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <p class="notice">
+          RN05 · Ana y Luis no pueden abrir otra asistencia. RN06 · La salida debe ser posterior a la entrada. Spring Boot implementará ambas validaciones.
+        </p>
+      </main>
+      <footer>
+        <span>
+          Estación Nexo · Ingeniería Web · G1
+        </span>
+        <span>
+          HTML / CSS / Bootstrap · 2026
+        </span>
+      </footer>
+    </div>
+  </body>
+</html>

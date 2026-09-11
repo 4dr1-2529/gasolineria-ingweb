@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<!--
+Interfaz: P03 - Dashboard
+Funcionalidades: F02, F03
+Entidades: Venta Producto MovimientoCaja Asistencia
+Reglas: No aplica
+Estado: Maqueta HTML/CSS/Bootstrap sin backend
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Consultar un panorama de la operación. Proyecto académico de Ingeniería Web, G1.">
+    <title>
+      Dashboard | Estación Nexo · G1
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+  </head>
+  <body class="workspace">
+    <a class="skip-link" href="#contenido">
+      Saltar al contenido
+    </a>
+    <header class="sidebar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          N
+        </span>
+        <span>
+          NEXO
+          <small>
+            ESTACIÓN DE SERVICIO
+          </small>
+        </span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="index.html">
+          Inicio
+        </a>
+        <a href="dashboard.html" aria-current="page">
+          Dashboard
+        </a>
+        <a href="categorias.html">
+          Categorías
+        </a>
+        <a href="combustibles.html">
+          Combustibles
+        </a>
+        <a href="ventas.html">
+          Ventas
+        </a>
+        <a href="inventario.html">
+          Inventario
+        </a>
+        <a href="finanzas.html">
+          Finanzas
+        </a>
+        <a href="empleados.html">
+          Empleados
+        </a>
+        <a href="usuarios.html">
+          Usuarios
+        </a>
+        <a href="asistencia.html">
+          Asistencia
+        </a>
+        <a href="contacto.html">
+          Contacto
+        </a>
+        <a href="login.html">
+          Cerrar sesión
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        INGENIERÍA WEB
+        <span>
+          GRUPO G1 · 2026
+        </span>
+      </div>
+    </header>
+    <div class="page">
+      <div class="topbar">
+        <span>
+          Centro de operaciones / Estación Nexo
+        </span>
+        <span class="demo">
+          Datos de demostración
+        </span>
+      </div>
+      <main id="contenido">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">
+              OPERACIÓN DIARIA / P03
+            </p>
+            <h1>
+              Dashboard
+            </h1>
+            <p class="subtitle">
+              Consultar un panorama de la operación.
+            </p>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="ventas.html">
+              + Registrar venta
+            </a>
+            <a class="btn btn-secondary" href="inventario.html">
+              Consultar stock
+            </a>
+          </div>
+        </div>
+        <div class="kpi-grid">
+          <section class="kpi">
+            <p>
+              Ventas de hoy
+            </p>
+            <strong>
+              S/ 370.00
+            </strong>
+            <small>
+              3 ventas confirmadas · 80 L
+            </small>
+          </section>
+          <section class="kpi">
+            <p>
+              Stock disponible
+            </p>
+            <strong>
+              6,920 L
+            </strong>
+            <small>
+              3 combustibles activos
+            </small>
+          </section>
+          <section class="kpi">
+            <p>
+              Ingresos de hoy
+            </p>
+            <strong>
+              S/ 370.00
+            </strong>
+            <small>
+              3 ingresos asociados a ventas
+            </small>
+          </section>
+          <section class="kpi">
+            <p>
+              Egresos de hoy
+            </p>
+            <strong>
+              S/ 50.00
+            </strong>
+            <small>
+              Mantenimiento de estación
+            </small>
+          </section>
+          <section class="kpi">
+            <p>
+              Personal actualmente marcado
+            </p>
+            <strong>
+              2
+            </strong>
+            <small>
+              Asistencias abiertas
+            </small>
+          </section>
+        </div>
+        <div class="chart-grid">
+          <figure class="chart">
+            <figcaption>
+              Importe vendido por día
+            </figcaption>
+            <p class="chart-unit">
+              Soles · 04–10 sep. 2026 · Serie ilustrativa
+            </p>
+            <div class="bars">
+              <div class="bar-column">
+                <span class="bar-value">
+                  210
+                </span>
+                <div class="bar" style="--height:63.6px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  04 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  280
+                </span>
+                <div class="bar" style="--height:84.8px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  05 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  190
+                </span>
+                <div class="bar" style="--height:57.5px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  06 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  340
+                </span>
+                <div class="bar" style="--height:102.9px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  07 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  250
+                </span>
+                <div class="bar" style="--height:75.7px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  08 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  310
+                </span>
+                <div class="bar" style="--height:93.8px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  09 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  370
+                </span>
+                <div class="bar" style="--height:112.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  10 sep.
+                </span>
+              </div>
+            </div>
+          </figure>
+          <figure class="chart">
+            <figcaption>
+              Litros vendidos por día
+            </figcaption>
+            <p class="chart-unit">
+              Litros · 04–10 sep. 2026 · Serie ilustrativa
+            </p>
+            <div class="bars">
+              <div class="bar-column">
+                <span class="bar-value">
+                  45
+                </span>
+                <div class="bar" style="--height:63.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  04 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  60
+                </span>
+                <div class="bar" style="--height:84.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  05 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  40
+                </span>
+                <div class="bar" style="--height:56.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  06 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  72
+                </span>
+                <div class="bar" style="--height:100.8px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  07 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  54
+                </span>
+                <div class="bar" style="--height:75.6px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  08 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  66
+                </span>
+                <div class="bar" style="--height:92.4px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  09 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  80
+                </span>
+                <div class="bar" style="--height:112.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  10 sep.
+                </span>
+              </div>
+            </div>
+          </figure>
+          <figure class="chart">
+            <figcaption>
+              Ingresos por día
+            </figcaption>
+            <p class="chart-unit">
+              Soles · 04–10 sep. 2026 · Serie ilustrativa
+            </p>
+            <div class="bars">
+              <div class="bar-column">
+                <span class="bar-value">
+                  210
+                </span>
+                <div class="bar" style="--height:63.6px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  04 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  280
+                </span>
+                <div class="bar" style="--height:84.8px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  05 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  190
+                </span>
+                <div class="bar" style="--height:57.5px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  06 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  340
+                </span>
+                <div class="bar" style="--height:102.9px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  07 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  250
+                </span>
+                <div class="bar" style="--height:75.7px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  08 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  310
+                </span>
+                <div class="bar" style="--height:93.8px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  09 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  370
+                </span>
+                <div class="bar" style="--height:112.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  10 sep.
+                </span>
+              </div>
+            </div>
+          </figure>
+          <figure class="chart">
+            <figcaption>
+              Egresos por día
+            </figcaption>
+            <p class="chart-unit">
+              Soles · 04–10 sep. 2026 · Serie ilustrativa
+            </p>
+            <div class="bars">
+              <div class="bar-column">
+                <span class="bar-value">
+                  30
+                </span>
+                <div class="bar" style="--height:56.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  04 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  40
+                </span>
+                <div class="bar" style="--height:74.7px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  05 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  20
+                </span>
+                <div class="bar" style="--height:37.3px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  06 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  60
+                </span>
+                <div class="bar" style="--height:112.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  07 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  25
+                </span>
+                <div class="bar" style="--height:46.7px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  08 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  45
+                </span>
+                <div class="bar" style="--height:84.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  09 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  50
+                </span>
+                <div class="bar" style="--height:93.3px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  10 sep.
+                </span>
+              </div>
+            </div>
+          </figure>
+          <figure class="chart">
+            <figcaption>
+              Marcaciones por día
+            </figcaption>
+            <p class="chart-unit">
+              Eventos de entrada y salida · 04–10 sep. 2026 · Serie ilustrativa
+            </p>
+            <div class="bars">
+              <div class="bar-column">
+                <span class="bar-value">
+                  4
+                </span>
+                <div class="bar" style="--height:74.7px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  04 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  6
+                </span>
+                <div class="bar" style="--height:112.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  05 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  4
+                </span>
+                <div class="bar" style="--height:74.7px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  06 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  6
+                </span>
+                <div class="bar" style="--height:112.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  07 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  4
+                </span>
+                <div class="bar" style="--height:74.7px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  08 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  6
+                </span>
+                <div class="bar" style="--height:112.0px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  09 sep.
+                </span>
+              </div>
+              <div class="bar-column">
+                <span class="bar-value">
+                  4
+                </span>
+                <div class="bar" style="--height:74.7px" aria-hidden="true">
+                </div>
+                <span class="bar-label">
+                  10 sep.
+                </span>
+              </div>
+            </div>
+          </figure>
+        </div>
+        <section class="panel ">
+          <h2>
+            Últimas ventas
+          </h2>
+          <div class="table-responsive">
+            <table class="table">
+              <caption>
+                Ventas del 10 de septiembre de 2026 · Total: 80 L / S/ 370.00
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">
+                    Código
+                  </th>
+                  <th scope="col">
+                    Fecha
+                  </th>
+                  <th scope="col">
+                    Combustible
+                  </th>
+                  <th scope="col">
+                    Litros
+                  </th>
+                  <th scope="col">
+                    Total
+                  </th>
+                  <th scope="col">
+                    Operador
+                  </th>
+                  <th scope="col">
+                    Estado
+                  </th>
+                  <th scope="col">
+                    Detalle
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    V001
+                  </td>
+                  <td>
+                    10/09/2026 09:00
+                  </td>
+                  <td>
+                    Gasolina Regular
+                  </td>
+                  <td>
+                    10
+                  </td>
+                  <td>
+                    S/ 50.00
+                  </td>
+                  <td>
+                    Ana Torres
+                  </td>
+                  <td>
+                    <span class="badge ">
+                      Confirmada
+                    </span>
+                  </td>
+                  <td>
+                    <a href="venta-detalle.html#V001">
+                      Ver V001
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    V002
+                  </td>
+                  <td>
+                    10/09/2026 10:00
+                  </td>
+                  <td>
+                    Gasolina Premium
+                  </td>
+                  <td>
+                    20
+                  </td>
+                  <td>
+                    S/ 120.00
+                  </td>
+                  <td>
+                    Ana Torres
+                  </td>
+                  <td>
+                    <span class="badge ">
+                      Confirmada
+                    </span>
+                  </td>
+                  <td>
+                    <a href="venta-detalle.html#V002">
+                      Ver V002
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    V003
+                  </td>
+                  <td>
+                    10/09/2026 11:00
+                  </td>
+                  <td>
+                    Diésel
+                  </td>
+                  <td>
+                    50
+                  </td>
+                  <td>
+                    S/ 200.00
+                  </td>
+                  <td>
+                    Luis Rojas
+                  </td>
+                  <td>
+                    <span class="badge ">
+                      Confirmada
+                    </span>
+                  </td>
+                  <td>
+                    <a href="venta-detalle.html#V003">
+                      Ver V003
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <p class="notice">
+          Corte de referencia: 10 de septiembre de 2026, 12:00. Las series anteriores son ilustrativas; el último día corresponde al detalle de esta maqueta.
+        </p>
+      </main>
+      <footer>
+        <span>
+          Estación Nexo · Ingeniería Web · G1
+        </span>
+        <span>
+          HTML / CSS / Bootstrap · 2026
+        </span>
+      </footer>
+    </div>
+  </body>
+</html>
