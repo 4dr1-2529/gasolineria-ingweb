@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 Interfaz: P05 - Categorías
-Funcionalidades: F04, F05, F06, F07
+Funcionalidades: F04, F05, F06, F07, F08
 Entidades: Categoria
 Reglas: RN03
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
@@ -46,11 +46,14 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="combustibles.html">
           Combustibles
         </a>
-        <a href="ventas.html">
-          Ventas
+        <a href="compras.html">
+          Compras
         </a>
         <a href="inventario.html">
           Inventario
+        </a>
+        <a href="ventas.html">
+          Ventas
         </a>
         <a href="finanzas.html">
           Finanzas
@@ -60,9 +63,6 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         </a>
         <a href="usuarios.html">
           Usuarios
-        </a>
-        <a href="asistencia.html">
-          Asistencia
         </a>
         <a href="contacto.html">
           Contacto
@@ -101,6 +101,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             </p>
           </div>
           <div class="actions">
+            <a class="btn btn-primary" href="#registro">
+              + Categoría
+            </a>
           </div>
         </div>
         <section class="panel ">
@@ -124,6 +127,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     Descripción
                   </th>
                   <th scope="col">
+                    Combustibles
+                  </th>
+                  <th scope="col">
                     Estado
                   </th>
                   <th scope="col">
@@ -141,6 +147,15 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                   </td>
                   <td>
                     Combustibles para motores a gasolina
+                  </td>
+                  <td>
+                    <a href="combustibles.html#PR01">
+                      Gasolina Regular
+                    </a>
+                    ,
+                    <a href="combustibles.html#PR02">
+                      Gasolina Premium
+                    </a>
                   </td>
                   <td>
                     <span class="badge ">
@@ -166,6 +181,11 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                   </td>
                   <td>
                     Combustibles para motores diésel
+                  </td>
+                  <td>
+                    <a href="combustibles.html#PR03">
+                      Diésel
+                    </a>
                   </td>
                   <td>
                     <span class="badge ">

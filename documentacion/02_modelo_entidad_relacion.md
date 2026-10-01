@@ -1,6 +1,6 @@
 # Modelo entidad relación
 
-Diez entidades oficiales. Modelo conceptual preparado para Spring Boot; no existe esquema de base de datos implementado. PK identifica el registro; FK referencia una entidad.
+Once entidades oficiales. Modelo conceptual preparado para Spring Boot; no existe esquema de base de datos implementado. PK identifica el registro; FK referencia una entidad.
 
 ## Categoria
 
@@ -21,11 +21,37 @@ Relaciones: Categoria → Producto (1:N).
 | id_categoria | FK | Referencia a Categoria |
 | nombre | Atributo | Nombre |
 | unidad_medida | Atributo | Litro en esta maqueta. |
-| precio_actual | Atributo | Precio actual |
+| precio_actual | Atributo | Precio actual de venta al litro |
 | stock | Atributo | Saldo físico en litros, coherente con movimientos. |
 | estado | Atributo | Situación del registro según su ciclo de vida. |
 
-Relaciones: Categoria → Producto (1:N); Producto → DetalleVenta (1:N); Producto → MovimientoInventario (1:N).
+Relaciones: Categoria → Producto (1:N); Producto → DetalleVenta (1:N); Producto → DetalleCompra (1:N); Producto → MovimientoInventario (1:N).
+
+## Compra
+
+| Atributo | Clave / condición | Descripción |
+|---|---|---|
+| id_compra | PK | Identificador de Compra |
+| id_usuario | FK | Referencia a Usuario responsable del registro |
+| fecha_hora | Atributo | Fecha hora |
+| proveedor | Atributo | Nombre del proveedor; es un atributo de texto, no una entidad. |
+| total | Atributo | Suma de subtotales de la compra. |
+| estado | Atributo | Pendiente / Confirmada en esta maqueta. |
+
+Relaciones: Usuario → Compra (1:N); Compra → DetalleCompra (1:N); Compra → MovimientoCaja (1:0..1).
+
+## DetalleCompra
+
+| Atributo | Clave / condición | Descripción |
+|---|---|---|
+| id_detalle_compra | PK | Identificador de DetalleCompra |
+| id_compra | FK | Referencia a Compra |
+| id_producto | FK | Referencia a Producto |
+| cantidad | Atributo | Cantidad positiva en litros recibidos. |
+| precio_compra | Atributo | Precio de adquisición por litro en el momento de la compra. |
+| subtotal | Atributo | cantidad × precio_compra. |
+
+Relaciones: Compra → DetalleCompra (1:N); Producto → DetalleCompra (1:N).
 
 ## Empleado
 
@@ -39,7 +65,7 @@ Relaciones: Categoria → Producto (1:N); Producto → DetalleVenta (1:N); Produ
 | telefono | Atributo | Telefono |
 | estado | Atributo | Situación del registro según su ciclo de vida. |
 
-Relaciones: Empleado → Usuario (1:0..1); Empleado → Asistencia (1:N).
+Relaciones: Empleado → Usuario (1:0..1).
 
 ## Usuario
 
@@ -52,7 +78,7 @@ Relaciones: Empleado → Usuario (1:0..1); Empleado → Asistencia (1:N).
 | rol | Atributo | Rol |
 | estado | Atributo | Situación del registro según su ciclo de vida. |
 
-Relaciones: Empleado → Usuario (1:0..1); Usuario → Venta (1:N); Usuario → MovimientoInventario (1:N); Usuario → MovimientoCaja (1:N).
+Relaciones: Empleado → Usuario (1:0..1); Usuario → Venta (1:N); Usuario → Compra (1:N); Usuario → MovimientoInventario (1:N); Usuario → MovimientoCaja (1:N).
 
 ## Venta
 
@@ -89,7 +115,7 @@ Relaciones: Venta → DetalleVenta (1:N); Producto → DetalleVenta (1:N).
 | tipo_movimiento | Atributo | Entrada o Salida de combustible. |
 | cantidad | Atributo | Cantidad positiva en litros. |
 | fecha_hora | Atributo | Fecha hora |
-| motivo | Atributo | Motivo |
+| motivo | Atributo | Motivo; en esta maqueta documenta la referencia, por ejemplo "Compra C001" o "Venta V001". |
 
 Relaciones: Producto → MovimientoInventario (1:N); Usuario → MovimientoInventario (1:N).
 
@@ -112,48 +138,39 @@ Relaciones: ConceptoMovimiento → MovimientoCaja (1:N).
 | id_concepto | FK | Referencia a ConceptoMovimiento |
 | id_usuario | FK | Referencia a Usuario |
 | id_venta | FK opcional | Referencia a Venta |
+| id_compra | FK opcional | Referencia a Compra |
 | tipo | Atributo | Ingreso o Egreso. |
 | monto | Atributo | Importe positivo en soles. |
 | descripcion | Atributo | Descripcion |
 | fecha_hora | Atributo | Fecha hora |
 
-Relaciones: ConceptoMovimiento → MovimientoCaja (1:N); Venta → MovimientoCaja (1:0..1); Usuario → MovimientoCaja (1:N).
-
-## Asistencia
-
-| Atributo | Clave / condición | Descripción |
-|---|---|---|
-| id_asistencia | PK | Identificador de Asistencia |
-| id_empleado | FK | Referencia a Empleado |
-| fecha | Atributo | Fecha |
-| hora_entrada | Atributo | Hora entrada |
-| hora_salida | Atributo | Nula mientras la asistencia permanece abierta. |
-| estado | Atributo | Situación del registro según su ciclo de vida. |
-
-Relaciones: Empleado → Asistencia (1:N).
+Relaciones: ConceptoMovimiento → MovimientoCaja (1:N); Venta → MovimientoCaja (1:0..1); Compra → MovimientoCaja (1:0..1); Usuario → MovimientoCaja (1:N).
 
 ## Relaciones y cardinalidades
 
-- **Categoria 1:N Producto**: Cada producto pertenece a una categoría; una categoría puede agrupar muchos productos.
+- **Categoria 1:N Producto**: Cada producto pertenece a una categoría; una categoría puede agrupar muchos productos. Ejemplo: Gasolinas → Gasolina Regular y Gasolina Premium; Diésel → Diésel.
 - **Empleado 1:0..1 Usuario**: Un empleado puede no tener cuenta; cada usuario tiene un empleado, con id_empleado único.
 - **Usuario 1:N Venta**: Un usuario registra muchas ventas; cada venta tiene un usuario responsable.
+- **Usuario 1:N Compra**: Un usuario registra muchas compras; cada compra tiene un usuario responsable.
+- **Compra 1:N DetalleCompra**: Una compra confirmada tiene al menos un detalle; cada detalle pertenece a una compra.
+- **Producto 1:N DetalleCompra**: Un producto aparece en muchas compras; cada detalle identifica un producto.
 - **Venta 1:N DetalleVenta**: Una venta confirmada tiene al menos un detalle; cada detalle pertenece a una venta.
 - **Producto 1:N DetalleVenta**: Un producto aparece en muchos detalles; cada detalle identifica un producto.
 - **Producto 1:N MovimientoInventario**: Un producto tiene muchos movimientos; cada movimiento corresponde a un producto.
 - **ConceptoMovimiento 1:N MovimientoCaja**: Un concepto clasifica muchos movimientos; cada movimiento tiene un concepto.
-- **Venta 1:0..1 MovimientoCaja**: Una venta tiene cero o un movimiento asociado; al confirmarse exige uno de ingreso por RN04. Los movimientos manuales no tienen venta.
-- **Empleado 1:N Asistencia**: Un empleado tiene múltiples asistencias; cada asistencia pertenece a un empleado.
+- **Venta 1:0..1 MovimientoCaja**: Una venta tiene cero o un movimiento asociado; al confirmarse exige uno de ingreso por RN05. Los movimientos manuales y los de compra no tienen venta.
+- **Compra 1:0..1 MovimientoCaja**: Una compra tiene cero o un movimiento asociado; al confirmarse exige exactamente un egreso por su total por RN04.
 - **Usuario 1:N MovimientoInventario**: Relación adicional derivada de id_usuario: identifica al responsable del movimiento físico.
 - **Usuario 1:N MovimientoCaja**: Relación adicional derivada de id_usuario: identifica al responsable del movimiento económico.
 
 ## Condiciones de diseño futuro
 - Unicidad de Usuario.id_empleado (un usuario por empleado), username y DNI. No son funcionalidades adicionales.
-- MovimientoCaja.id_venta admite nulo para movimientos manuales y será único cuando tenga valor. En venta confirmada RN04 exige exactamente un ingreso por su total.
-- Producto.precio_actual, DetalleVenta.precio_unitario, subtotal, Venta.total y monto usarán decimales exactos; cantidades y stock también admitirán fracciones. No usar punto flotante para dinero.
+- MovimientoCaja.id_venta e id_compra admiten nulo para movimientos manuales y serán únicos cuando tengan valor. En venta confirmada RN05 exige exactamente un ingreso por su total; en compra confirmada RN04 exige exactamente un egreso por su total.
+- Producto.precio_actual, DetalleVenta.precio_unitario, DetalleCompra.precio_compra, subtotales, Venta.total, Compra.total y monto usarán decimales exactos; cantidades y stock también admitirán fracciones. No usar punto flotante para dinero.
 - Producto.stock y MovimientoInventario deben cambiar de forma atómica; RN01 requiere controlar concurrencia.
-- Estados de catálogos: Activo / Inactivo. Venta: Pendiente / Confirmada en esta maqueta. Asistencia: Abierta / Cerrada, coherente con hora_salida.
-- No se añade ninguna entidad. Las capacidades y umbral visual de stock no son atributos base persistentes.
-- En relaciones 1:N se permite cero registros dependientes antes de operar; Venta confirmada exige uno o más detalles.
+- Estados de catálogos: Activo / Inactivo. Venta y Compra: Pendiente / Confirmada en esta maqueta.
+- No se añade ninguna entidad. El proveedor es un atributo de texto de Compra; las capacidades y el umbral visual de stock no son atributos base persistentes.
+- En relaciones 1:N se permite cero registros dependientes antes de operar; Venta y Compra confirmadas exigen uno o más detalles.
 
 ## Diagrama ER (solo documentación)
 ```mermaid
@@ -161,12 +178,15 @@ erDiagram
     Categoria ||--o{ Producto : clasifica
     Empleado ||--o| Usuario : tiene
     Usuario ||--o{ Venta : registra
+    Usuario ||--o{ Compra : registra
+    Compra ||--|{ DetalleCompra : contiene
+    Producto ||--o{ DetalleCompra : integra
     Venta ||--|{ DetalleVenta : contiene
     Producto ||--o{ DetalleVenta : integra
     Producto ||--o{ MovimientoInventario : recibe
     ConceptoMovimiento ||--o{ MovimientoCaja : clasifica
     Venta o|--o| MovimientoCaja : genera
-    Empleado ||--o{ Asistencia : marca
+    Compra o|--o| MovimientoCaja : genera
     Usuario ||--o{ MovimientoInventario : responsable_fisico
     Usuario ||--o{ MovimientoCaja : responsable_caja
     Categoria {
@@ -183,6 +203,22 @@ erDiagram
         decimal precio_actual
         decimal stock
         string estado
+    }
+    Compra {
+        int id_compra PK
+        int id_usuario FK
+        datetime fecha_hora
+        string proveedor
+        decimal total
+        string estado
+    }
+    DetalleCompra {
+        int id_detalle_compra PK
+        int id_compra FK
+        int id_producto FK
+        decimal cantidad
+        decimal precio_compra
+        decimal subtotal
     }
     Empleado {
         int id_empleado PK
@@ -236,17 +272,28 @@ erDiagram
         int id_concepto FK
         int id_usuario FK
         int id_venta FK
+        int id_compra FK
         string tipo
         decimal monto
         string descripcion
         datetime fecha_hora
     }
-    Asistencia {
-        int id_asistencia PK
-        int id_empleado FK
-        date fecha
-        time hora_entrada
-        time hora_salida
-        string estado
-    }
 ```
+
+## Conteo
+
+| Entidad | Presente |
+|---|---|
+| Categoria | ✔ |
+| Producto | ✔ |
+| Compra | ✔ |
+| DetalleCompra | ✔ |
+| Empleado | ✔ |
+| Usuario | ✔ |
+| Venta | ✔ |
+| DetalleVenta | ✔ |
+| MovimientoInventario | ✔ |
+| ConceptoMovimiento | ✔ |
+| MovimientoCaja | ✔ |
+
+**Total: 11 entidades.**

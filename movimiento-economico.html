@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!--
 Interfaz: P16 - Movimiento económico
-Funcionalidades: F22, F23
-Entidades: MovimientoCaja ConceptoMovimiento Usuario Venta
-Reglas: RN04
+Funcionalidades: F26, F27
+Entidades: MovimientoCaja ConceptoMovimiento
+Reglas: RN06
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
 <html lang="es">
@@ -46,11 +46,14 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="combustibles.html">
           Combustibles
         </a>
-        <a href="ventas.html">
-          Ventas
+        <a href="compras.html">
+          Compras
         </a>
         <a href="inventario.html">
           Inventario
+        </a>
+        <a href="ventas.html">
+          Ventas
         </a>
         <a href="finanzas.html">
           Finanzas
@@ -60,9 +63,6 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         </a>
         <a href="usuarios.html">
           Usuarios
-        </a>
-        <a href="asistencia.html">
-          Asistencia
         </a>
         <a href="contacto.html">
           Contacto
@@ -193,7 +193,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           </form>
         </section>
         <p class="notice">
-          Ingreso manual → Otros ingresos. Egreso → Mantenimiento. Esta correspondencia la comprobará Spring Boot. Los ingresos por venta se generarán desde la venta, con su identificador asociado; no se duplican aquí.
+          Ingreso manual → Otros ingresos. Egreso manual → Mantenimiento. El egreso de una compra no se registra aquí: lo genera la compra C001 (MC001, RN04). Los ingresos por venta se generarán desde la venta, con su identificador asociado; no se duplican aquí. Esta correspondencia la comprobará Spring Boot.
         </p>
       </main>
       <footer>

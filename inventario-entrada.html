@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <!--
 Interfaz: P12 - Entrada combustible
-Funcionalidades: F13
-Entidades: Producto Usuario MovimientoInventario
-Reglas: No aplica
+Funcionalidades: F16
+Entidades: MovimientoInventario Producto Usuario Compra
+Reglas: RN04, RN06
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
 <html lang="es">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Representar un abastecimiento físico. Proyecto académico de Ingeniería Web, G1.">
+    <meta name="description" content="Representar la entrada de combustible por compra o por ajuste. Proyecto académico de Ingeniería Web, G1.">
     <title>
       Entrada combustible | Estación Nexo · G1
     </title>
@@ -46,11 +46,14 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="combustibles.html">
           Combustibles
         </a>
-        <a href="ventas.html">
-          Ventas
+        <a href="compras.html">
+          Compras
         </a>
         <a href="inventario.html">
           Inventario
+        </a>
+        <a href="ventas.html">
+          Ventas
         </a>
         <a href="finanzas.html">
           Finanzas
@@ -60,9 +63,6 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         </a>
         <a href="usuarios.html">
           Usuarios
-        </a>
-        <a href="asistencia.html">
-          Asistencia
         </a>
         <a href="contacto.html">
           Contacto
@@ -97,7 +97,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               Entrada combustible
             </h1>
             <p class="subtitle">
-              Representar un abastecimiento físico.
+              Representar la entrada de combustible por compra o por ajuste.
             </p>
           </div>
           <div class="actions">
@@ -107,7 +107,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           </div>
         </div>
         <p class="notice">
-          El abastecimiento representa litros recibidos; no implica automáticamente un ingreso de dinero.
+          RN04 · Una entrada originada en una compra recibe litros y genera también su egreso económico: así ocurrió con MI001–MI003 y MC001. Una entrada por ajuste, en cambio, no mueve dinero.
         </p>
         <section class="panel ">
           <h2>
@@ -148,7 +148,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                   Motivo
                 </label>
                 <textarea class="form-control" id="campo-54" rows="3">
-                  Abastecimiento de proveedor
+                  Compra de combustible a proveedor
                 </textarea>
               </div>
               <div class="field">
@@ -196,7 +196,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             </strong>
           </p>
           <p class="muted-text">
-            Proyección fija, sin incorporar al historial ni modificar las existencias.
+            Proyección fija, sin incorporar al historial ni modificar las existencias. Al confirmar se crearía un movimiento de inventario y su egreso asociado de S/ 2,250.00 (RN04).
           </p>
         </section>
       </main>

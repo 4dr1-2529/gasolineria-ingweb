@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!--
 Interfaz: P14 - Movimientos inventario
-Funcionalidades: F15
-Entidades: MovimientoInventario Producto Usuario
-Reglas: No aplica
+Funcionalidades: F19
+Entidades: MovimientoInventario Producto Usuario Compra
+Reglas: RN01, RN04
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
 <html lang="es">
@@ -46,11 +46,14 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="combustibles.html">
           Combustibles
         </a>
-        <a href="ventas.html">
-          Ventas
+        <a href="compras.html">
+          Compras
         </a>
         <a href="inventario.html">
           Inventario
+        </a>
+        <a href="ventas.html">
+          Ventas
         </a>
         <a href="finanzas.html">
           Finanzas
@@ -60,9 +63,6 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         </a>
         <a href="usuarios.html">
           Usuarios
-        </a>
-        <a href="asistencia.html">
-          Asistencia
         </a>
         <a href="contacto.html">
           Contacto
@@ -119,7 +119,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           <div class="table-responsive">
             <table class="table">
               <caption>
-                Saldo inicial 0 L + entradas 7,000 L − salidas 80 L = 6,920 L
+                Saldo inicial 6,700 L + entradas 300 L − salidas 80 L = 6,920 L
               </caption>
               <thead>
                 <tr>
@@ -160,7 +160,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     Gasolina Regular
                   </td>
                   <td>
-                    2,000 L
+                    100 L
                   </td>
                   <td>
                     10/09/2026 07:00
@@ -169,7 +169,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     Ana Torres
                   </td>
                   <td>
-                    Carga inicial
+                    Compra C001
                   </td>
                 </tr>
                 <tr>
@@ -185,7 +185,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     Gasolina Premium
                   </td>
                   <td>
-                    1,000 L
+                    100 L
                   </td>
                   <td>
                     10/09/2026 07:05
@@ -194,7 +194,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     Ana Torres
                   </td>
                   <td>
-                    Carga inicial
+                    Compra C001
                   </td>
                 </tr>
                 <tr>
@@ -210,7 +210,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     Diésel
                   </td>
                   <td>
-                    4,000 L
+                    100 L
                   </td>
                   <td>
                     10/09/2026 07:10
@@ -219,7 +219,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     Ana Torres
                   </td>
                   <td>
-                    Carga inicial
+                    Compra C001
                   </td>
                 </tr>
                 <tr>
@@ -302,7 +302,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           </div>
         </section>
         <p class="notice">
-          Las cargas iniciales representan existencias físicas de apertura, sin registrar una compra o un gasto del día.
+          RN04 · Las entradas de la compra C001 (MI001–MI003) aumentan el inventario y generan el egreso MC001. El saldo inicial de 6,700 L corresponde al cierre del 09/09/2026.
         </p>
       </main>
       <footer>

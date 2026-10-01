@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!--
 Interfaz: P08 - Registrar venta
-Funcionalidades: F12, F16
+Funcionalidades: F18, F20
 Entidades: Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja
-Reglas: RN01, RN02, RN04
+Reglas: RN01, RN02, RN05, RN06
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
 <html lang="es">
@@ -46,11 +46,14 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="combustibles.html">
           Combustibles
         </a>
-        <a href="ventas.html" aria-current="page">
-          Ventas
+        <a href="compras.html">
+          Compras
         </a>
         <a href="inventario.html">
           Inventario
+        </a>
+        <a href="ventas.html" aria-current="page">
+          Ventas
         </a>
         <a href="finanzas.html">
           Finanzas
@@ -60,9 +63,6 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         </a>
         <a href="usuarios.html">
           Usuarios
-        </a>
-        <a href="asistencia.html">
-          Asistencia
         </a>
         <a href="contacto.html">
           Contacto
@@ -110,7 +110,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           </div>
         </div>
         <p class="notice">
-          RN01, RN02 y RN04 · Spring Boot comprobará disponibilidad y estado, y confirmará venta, descuento e ingreso como una sola operación. Los importes de este formulario son fijos; no se recalculan.
+          RN01, RN02 y RN05 · Spring Boot comprobará disponibilidad y estado, y confirmará venta, descuento e ingreso como una sola operación. Los importes de este formulario son fijos; no se recalculan.
         </p>
         <section class="panel ">
           <h2>

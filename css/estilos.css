@@ -824,3 +824,64 @@ footer{
     color:#173c36
   }
 }
+
+/* ===== BPMN 2.0 · formas estándar (sólo CSS) ===== */
+.bpmn-doc{display:flex;flex-direction:column;gap:34px}
+.bpmn-figure{display:flex;flex-direction:column;gap:10px}
+.bpmn-pool{border:2px solid var(--ink);background:var(--white);display:flex;align-items:stretch;border-radius:6px;overflow:hidden}
+.bpmn-pool-name{writing-mode:vertical-rl;transform:rotate(180deg);background:var(--ink);color:var(--white);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:12px 7px;text-align:center;display:flex;align-items:center;justify-content:center;white-space:nowrap}
+.bpmn-grid{flex:1;min-width:0;display:flex;flex-direction:column}
+.bpmn-row{display:flex;border-bottom:1px solid var(--line);min-height:76px}
+.bpmn-row:last-child{border-bottom:0}
+.bpmn-lane-head{flex:1;min-width:0;background:var(--paper);border-bottom:2px solid var(--ink);border-left:1px solid var(--line);font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;justify-content:center;text-align:center;padding:9px 6px}
+.bpmn-row .bpmn-lane-head:first-child{border-left:0}
+.bpmn-cell{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center;padding:10px 8px;border-left:1px solid var(--line)}
+.bpmn-row .bpmn-cell:first-child{border-left:0}
+.bpmn-cell.span2{flex:2}
+.bpmn-node{display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;line-height:1.32;font-weight:600;color:var(--ink);background:var(--white);border:2px solid var(--ink);border-radius:8px;padding:9px 11px;min-height:54px;min-width:132px;max-width:190px}
+.bpmn-task{background:var(--lime);border-radius:10px}
+.bpmn-call{border-style:double;border-width:4px;min-width:150px}
+.bpmn-sub{position:relative;padding-bottom:15px}
+.bpmn-sub::after{content:"+";position:absolute;left:50%;bottom:2px;transform:translateX(-50%);font-size:12px;font-weight:800;color:var(--ink);line-height:1}
+.bpmn-start,.bpmn-end{width:58px;height:58px;min-width:58px;max-width:58px;min-height:58px;border-radius:50%;padding:0;font-size:9px;font-weight:700;line-height:1.15}
+.bpmn-start{border-width:2px;background:var(--white);color:var(--ink)}
+.bpmn-end{border-width:5px;background:var(--ink);color:var(--white)}
+.bpmn-gw{display:flex;align-items:center;justify-content:center;width:64px;height:64px;min-width:64px;max-width:64px;border:2px solid var(--ink);background:var(--white);transform:rotate(45deg);border-radius:3px}
+.bpmn-gw span{transform:rotate(-45deg);font-size:15px;font-weight:800;line-height:1;color:var(--ink)}
+.bpmn-gw-label{max-width:188px;font-size:10.5px;font-weight:700;color:var(--ink);line-height:1.35}
+.bpmn-vflow::before{content:"";position:absolute;left:50%;top:8px;height:34px;border-left:2px solid var(--ink);transform:translateX(-50%)}
+.bpmn-vflow::after{content:"";position:absolute;left:50%;top:40px;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid var(--ink)}
+.bpmn-move{position:relative;--vx:50%}
+.bpmn-move.span2{--vx:75%}
+.bpmn-move::before{content:"";position:absolute;left:var(--vx);top:-8px;bottom:13px;border-left:2px solid var(--ink);transform:translateX(-50%)}
+.bpmn-move::after{content:"";position:absolute;left:var(--vx);bottom:5px;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid var(--ink)}
+.bpmn-move .tail{position:absolute;top:-8px;border-top:2px solid var(--ink)}
+.bpmn-move.branch .tail{left:-30%;width:calc(30% + var(--vx))}
+.bpmn-move.span2 .tail{left:25%;width:calc(var(--vx) - 25%)}
+.bpmn-vflow .lbl,.bpmn-move .lbl,.bpmn-bridge .lbl{position:absolute;font-size:10px;font-weight:800;color:var(--green);background:var(--white);padding:0 4px;border-radius:3px;line-height:1.35}
+.bpmn-vflow .lbl{left:50%;top:4px;transform:translateX(12px)}
+.bpmn-move .lbl{right:calc(100% - var(--vx) + 9px);top:6px;text-align:right;max-width:calc(var(--vx) - 14px);padding-right:0}
+.bpmn-bridge{display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px 0}
+.bpmn-bridge i{display:block;width:0;height:34px;border-left:2px dashed var(--muted);position:relative}
+.bpmn-bridge i::after{content:"";position:absolute;left:-6px;bottom:-2px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid var(--muted)}
+.bpmn-bridge em{font-size:10.5px;font-style:normal;font-weight:700;color:var(--muted);text-align:center;max-width:420px}
+.bpmn-caption{font-size:11.5px;color:var(--muted);margin:0}
+.bpmn-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px 20px;margin:0;padding:0;list-style:none}
+.bpmn-legend li{display:flex;align-items:center;gap:11px;font-size:12px;color:var(--ink)}
+.bpmn-legend .lg{flex:none;display:flex;align-items:center;justify-content:center;width:44px;height:34px;border:2px solid var(--ink);background:var(--white);border-radius:8px;font-size:11px;font-weight:700}
+.bpmn-legend .lg-task{background:var(--lime)}
+.bpmn-legend .lg-round{border-radius:50%;width:32px;height:32px}
+.bpmn-legend .lg-end{background:var(--ink);border-width:4px}
+.bpmn-legend .lg-gw{width:32px;height:32px;transform:rotate(45deg);border-radius:3px}
+.bpmn-legend .lg-gw span{transform:rotate(-45deg)}
+.bpmn-legend .lg-call{border-style:double;border-width:4px}
+.bpmn-legend .lg-arrow{border:0;background:none;width:46px;height:0;border-top:2px solid var(--ink);border-radius:0;position:relative}
+.bpmn-legend .lg-arrow::after{content:"";position:absolute;right:0;top:-5px;border-left:9px solid var(--ink);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.bpmn-legend .lg-dash{border:0;background:none;width:46px;height:0;border-top:2px dashed var(--muted);border-radius:0}
+@media(max-width:768px){
+  .bpmn-row{overflow-x:auto}
+  .bpmn-lane-head{font-size:9.5px;padding:6px 4px}
+  .bpmn-cell{padding:8px 5px}
+  .bpmn-node{min-width:118px;font-size:10.5px}
+  .bpmn-pool-name{padding:8px 4px;font-size:9.5px}
+}

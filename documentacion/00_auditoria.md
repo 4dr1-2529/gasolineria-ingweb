@@ -1,56 +1,71 @@
 # Auditoría de entrega · G1
 
 ## Alcance y fecha
-Revisión realizada el 10/09/2026 sobre una carpeta inicialmente vacía. Se construyó una maqueta nueva con los requisitos proporcionados, sin incorporar una aplicación anterior ni consultar plantillas externas. Los datos comerciales y del personal son ficticios.
+Revisión final realizada el 10/09/2026 sobre la maqueta completa, tras la corrección integral de modelo de negocio, reglas, funcionalidades, interfaces, entidades, matriz, trazabilidad, documentación y HTML/CSS. El 01/10/2026 se revisó y actualizó este documento con el cierre de los puntos 5.9–5.15 (nuevos documentos `10`–`15` y sus cruces, más las capturas de `documentacion/anexos/`). Se trabajó sobre los requisitos entregados por el equipo: no se incorporó una aplicación anterior ni se copiaron plantillas externas. Los datos comerciales y del personal son ficticios.
+
+Los resultados que siguen son mediciones de esta revisión: se indican los totales observados en cada control, no estimaciones.
 
 ## Inventario final
-33 archivos generados de entrega: 21 HTML, 1 CSS, 9 documentos Markdown en documentacion/, README.md y .gitignore. La maqueta utiliza solo las carpetas css/ y documentacion/. Los scripts temporales de construcción y comprobación no forman parte de la entrega. No se crearon carpetas js, backend, frontend, node_modules ni archivos de dependencias.
+47 archivos de la entrega: 22 HTML en la raíz, 1 CSS (`css/estilos.css`), 17 Markdown (`README.md` + los 16 de `documentacion/`), 1 HTML auxiliar (`documentacion/bpmn.html`), 5 capturas PNG (`documentacion/anexos/`) y `.gitignore`.
 
-En el control final también aparecieron recurso/ (11 PDF) y .vscode/launch.json, ajenos a los archivos generados. Se conservaron sin modificar y no se usaron como fuentes. No se cuentan entre los 33 archivos de la maqueta ni se incluyen en el control UTF-8, que corresponde a archivos de texto de la entrega.
+Los 16 documentos de `documentacion/` son `00_auditoria.md`, `01_modelo_negocio.md`, `02_modelo_entidad_relacion.md`, `03_interfaces.md`, `04_funcionalidades.md`, `05_reglas_negocio.md`, `06_matriz_funcionalidades_interfaces.md`, `07_trazabilidad.md`, `08_puntos_1_al_5_8.md`, `09_bpmn.md`, `10_productos_y_entregables.md`, `11_conclusiones.md`, `12_recomendaciones.md`, `13_glosario.md`, `14_bibliografia.md` y `15_anexos.md`, además de la carpeta `anexos/` con las 5 capturas del anexo A-5.
+
+La maqueta usa sólo `css/` y `documentacion/` además de los HTML de la raíz. No hay carpetas `js/`, `backend/`, `frontend/`, `node_modules/` ni archivos de dependencias. Los scripts temporales de construcción y comprobación viven fuera del repositorio y no forman parte de la entrega.
+
+En el repositorio también están `recurso/` (11 PDF de la asignatura) y `.vscode/` (`launch.json`, `settings.json`), ajenos a la maqueta: se conservaron sin modificar. `recurso/` es el material oficial del curso citado en `14_bibliografia.md`. No se cuentan entre los 47 archivos ni en los controles de texto.
 
 ## Controles y resultados
+
 | Control | Resultado | Evidencia / alcance |
 |---|---|---|
-| HTML revisados | 21/21 | Análisis de etiquetas, cierres, IDs y estructura mediante HTMLParser; no equivale a certificación W3C |
-| Interfaces oficiales | 20/20 | P01–P20 en comentarios y documentación; publicidad.html reutiliza P01 |
-| Funcionalidades oficiales | 30/30 | F01–F30 documentadas, representadas y presentes en la matriz |
-| Reglas | 6/6 | RN01–RN06 con enunciado, justificación, impacto, validación futura y ambos casos |
-| Entidades | 10/10 | Atributos base, PK, FK, relaciones, cardinalidades y Mermaid ER |
-| Referencias locales HTML | 338/338 válidas | href, src y action; incluye navegación, CSS local y anclas; destinos existentes |
-| Enlaces Markdown | Verificados | Destinos locales de README y documentos existentes |
-| Bootstrap CSS | 21/21 HTML | CDN 5.3.3; contenido de la hoja confirmado cargado en Chrome |
-| JavaScript | Cero | Sin script, manejadores inline, URLs javascript:, Bootstrap JS o archivos JS/TS |
-| UTF-8 | Verificado | Decodificación estricta de todos los HTML, CSS y Markdown; meta charset en 21 HTML |
-| Caracteres dañados | Ninguno detectado | Búsqueda de carácter de reemplazo, marcas típicas de mojibake y interrogaciones entre letras |
-| Formularios | 101 controles etiquetados | input, select y textarea asociados a label por id/for; IDs únicos por documento |
-| Tablas | 15/15 responsive | Contenedor table-responsive, caption y encabezados con scope |
-| Semántica | Verificada | lang=es, viewport, título, un h1 y un main, header, nav y footer por archivo |
-| Dashboard | 5 KPI + 5 gráficos | Gráficos de barras HTML/CSS con valores textuales, sin bibliotecas de gráficos |
-| Responsive | 63 renderizados | 21 páginas × 3 viewports: 1440×1100, 820×1180, 390×1200 en Chrome headless |
-| Desbordamiento de página | 0/63 | Comparación del ancho del contenido con el viewport mediante protocolo del navegador; tablas pueden desplazarse dentro de su contenedor |
-| Inspección visual | Realizada | Dashboard de escritorio, portada de tablet, portada y formulario de venta en móvil |
-| Acceso | Destinos comprobados | Inicio → login; formulario login → dashboard; cerrar sesión → login |
-| Datos | Conciliados | 7,000 − 80 = 6,920 L; ventas S/ 370.00; caja 370 − 50 = S/ 320.00 |
-| Matriz | 30 × 20 | X marca relación directa; P01/P04 no añaden funciones; cierre de sesión es transversal |
-| Trazabilidad | Completa | Negocio → entidad → funcionalidad → regla → interfaz → HTML |
-| Documento académico | Completo en estructura | Puntos 1–4 y 5.1–5.8, con marcadores de integrantes y evidencias pendientes |
+| HTML de la raíz | 22/22 analizados · **0 errores** de estructura | Análisis de etiquetas, cierres e IDs con `HTMLParser`; no equivale a certificación W3C |
+| `documentacion/bpmn.html` | 1/1 analizado · **0 errores** | Mismo analizador; enlaces con ruta relativa `../` |
+| IDs duplicados | **0** | Recuento por documento de los 23 HTML |
+| Interfaces oficiales | **21/21** | P01–P21 en comentarios de cada archivo y en la documentación; `publicidad.html` reutiliza P01 |
+| Funcionalidades oficiales | **32/32** | F01–F32 documentadas, representadas y presentes en la matriz |
+| Reglas de negocio | **6/6** | RN01–RN06 con nombre, enunciado formal, justificación, impacto, validación técnica sugerida y casos de cumplimiento y violación (6 puntos exigidos en 5.9) |
+| Entidades | **11/11** | Atributos, PK, FK, relaciones, cardinalidades y diagrama ER en Mermaid; el módulo retirado no aparece en ningún HTML |
+| Módulo retirado (asistencia) | **0 en los 23 HTML** | El recuento global es 2 y ambos están en este documento (la decisión y este renglón); ninguno en el ER, en las reglas ni en la matriz |
+| Referencias locales HTML | **371 revisadas · 0 rotas** | `href`, `src` y `action`; navegación, CSS local y anclas; destinos existentes |
+| Enlaces Markdown locales | **291 revisados · 0 rotos** | Destinos y anclas de `README.md` y de los 16 documentos de `documentacion/` |
+| JavaScript | **0** | 0 archivos `.js`/`.ts`, 0 etiquetas `<script>`, 0 manejadores de evento inline ni `javascript:`, 0 usos de `localStorage` o `fetch(` |
+| Bootstrap CSS | 22/22 HTML | CDN 5.3.3 + `css/estilos.css`; sin Bootstrap JS |
+| Semántica | 22/22 HTML | `lang="es"`, `charset`, `viewport`, `<title>`, un `h1`, `main`, `header`, `nav` y `footer` por archivo |
+| Formularios | 103 controles / 103 etiquetas | `input`, `select` y `textarea` asociados a `label`; 0 archivos con controles sin etiqueta |
+| Tablas | **19/19** | Contenedor `table-responsive`, `caption`, `thead` y `th` en todas |
+| Dashboard | 5 KPI + 5 series temporales | 5 indicadores de estado puntual y 5 `figure`; las 5 unidades incluyen el rango `04–10 sep. 2026`; 5 títulos de serie |
+| Matriz | 34 pares funcionalidad × interfaz | **0 funcionalidades sin interfaz**; 19/21 interfaces con ≥1 funcionalidad; P01 y P04 son páginas públicas sin funciones (excepción documentada) |
+| Reglas ↔ negocio | 6/6 con funcionalidad e interfaz · **0 reglas huérfanas** | 22 funcionalidades con regla; 10 sin regla (F01–F06, F23, F24, F29, F30), comportamiento previsto y anotado en `04_funcionalidades.md` |
+| Coherencia de IDs | F 32/32, P 21/21, RN 6/6 | Conjuntos idénticos entre HTML y documentos · **0 discrepancias** |
+| Responsive | **69 renderizados** | 23 páginas × 3 viewports: 1440×1100, 820×1180 y 390×1200, en Chrome headless |
+| Desbordamiento horizontal | **0/69** | Comparación de `scrollWidth` frente a `clientWidth` del documento; las tablas pueden desplazarse dentro de su contenedor |
+| Páginas con `<script>` tras el render | **0/69** | Comprobado en el DOM ya cargado, no sólo en el texto fuente |
+| Inspección visual | Realizada | Capturas de `dashboard.html`, `compras.html` y de `documentacion/bpmn.html` en 7 posiciones de scroll (ambas figuras, pies de figura y tablas) |
+| Acceso | Destinos comprobados | Índice → login; login → dashboard; cerrar sesión → login |
+| Datos | Conciliados | 6,700 + 300 − 80 = 6,920 L y 1,990 + 980 + 3,950 = 6,920 L · 10×5.00 + 20×6.00 + 50×4.00 = S/ 370.00 (80 L) · 370.00 + 45.00 = S/ 415.00 · 1,350.00 + 50.00 = S/ 1,400.00 · 4,410.00 + 415.00 − 1,400.00 = S/ 3,425.00 |
+| Documento académico | Alcance declarado | Puntos 1–4 y 5.1–5.8 completos, con BPMN en `09_bpmn.md`/`bpmn.html`; 5.9 en `05_reglas_negocio.md`; 5.10–5.15 entregados en `10`–`15` (5.15 en `15_anexos.md`) con los pendientes clasificados en `08_puntos_1_al_5_8.md` |
 
 ## Método de revisión del navegador
-La herramienta agent-browser no estaba instalada. Se usó Chrome headless local y su protocolo de depuración desde una utilidad temporal de Python. La primera captura móvil por tamaño de ventana fue recortada por el viewport del navegador; se repitió con emulación explícita de 390 px. El resultado final no presentó desbordamiento global en ninguna de las tres resoluciones. La comprobación no añadió JavaScript al proyecto ni dependencias de ejecución.
+La herramienta de navegador del agente no estaba conectada. Se usó Chrome headless local y su protocolo de depuración desde una utilidad temporal de Python con un cliente WebSocket escrito a medida, sin librerías externas. La utilidad fija el viewport, navega, espera `readyState`, lee las métricas de layout del DOM y toma la captura. El perfil de Chrome se recrea en cada ejecución para descartar caché. La comprobación no añadió JavaScript ni dependencias al proyecto.
 
 ## Interpretación de avance
-- DEFINIDA: 20 interfaces, 30 funcionalidades, 6 reglas y 10 entidades.
-- MAQUETADA: 20 de 20 interfaces = **100 %** del alcance visual solicitado. Las 30 capacidades tienen una representación visual o navegación correspondiente.
-- IMPLEMENTADA: **0 de 30 funcionalidades con lógica real de negocio**. La navegación entre archivos existe, pero no implica que se autentique, guarde, calcule o aplique reglas.
+- **DEFINIDA:** 21 interfaces, 32 funcionalidades, 6 reglas y 11 entidades.
+- **MAQUETADA:** 21 de 21 interfaces = **100 %** del alcance visual. Las 32 capacidades tienen representación visual o navegación correspondiente.
+- **IMPLEMENTADA:** **0 de 32 funcionalidades con lógica real de negocio.** La navegación entre archivos existe, pero nada se autentica, guarda, calcula ni aplica reglas.
 
 ## Decisiones y límites
-- Los formularios de altas, edición, venta, marcación y contacto tienen botones visuales sin persistencia. Los selectores no cargan datos ni recalculan importes.
-- Cada venta confirmada del ejemplo tiene un detalle, una salida de inventario y un ingreso económico coherentes. Los formularios nuevos representan propuestas separadas, no nuevos registros en el corte.
-- Un empleado puede tener cero o un usuario. Las tres cuentas de referencia ya están asignadas; un alta requerirá un empleado sin cuenta.
-- MovimientoInventario conserva el modelo de atributos solicitado; la referencia a la venta se expresa en motivo. Se documenta la evaluación futura de un vínculo estructurado.
-- Las nueve relaciones oficiales se documentan, junto con las dos relaciones a Usuario derivadas de las FK de MovimientoInventario y MovimientoCaja; esto no añade entidades.
-- Bootstrap es la única dependencia externa, exclusivamente CSS. La hoja propia mantiene estilos de respaldo sin conexión; no se incluye una copia local de Bootstrap.
-- No se realizaron pruebas de tecnologías asistivas ni validación W3C externa. Las comprobaciones de accesibilidad se limitan a estructura, etiquetas, encabezados, foco visible y enlace para saltar al contenido.
+- Se eliminó el módulo de asistencia: no pertenece al núcleo del negocio (categorías → combustibles → compras → inventario → ventas → ingresos/egresos → dashboard → usuarios). El quinto indicador y la quinta serie del dashboard son hoy *Saldo de caja por día*.
+- Se añadieron `compras.html` (P20) y `compra-detalle.html` (P21) porque la compra/abastecimiento era un hueco real del flujo: sin ellas RN04 no tenía dónde representarse.
+- P01 (Inicio/Publicidad) y P04 (Contacto) son contenido público y no añaden funcionalidades al catálogo oficial: aparecen vacías en la matriz por decisión explícita, no por olvido.
+- Los formularios de alta, edición, venta y contacto tienen botones visuales sin persistencia; los selectores no cargan datos ni recalculan importes. Los formularios nuevos son escenarios separados y no alteran el corte de datos.
+- Cada venta del ejemplo tiene detalle, salida de inventario e ingreso económico coherentes. La compra `C001` genera tres entradas (MI001–MI003) y **un único** egreso (MC001), según RN04.
+- Un empleado puede tener cero o un usuario; las tres cuentas de referencia ya están asignadas.
+- `MovimientoInventario` conserva el modelo de atributos solicitado; la referencia a la venta se expresa en el motivo y queda anotada la evaluación futura de un vínculo estructurado.
+- Bootstrap es la única dependencia externa y sólo CSS. La hoja propia mantiene estilos de respaldo sin conexión; no se incluyó una copia local de Bootstrap.
+- El BPMN se dibuja con HTML/CSS propio (filas, carriles y conectores) y se documenta con Mermaid en `09_bpmn.md`: sin librerías de diagramas ni JavaScript.
+- No se realizaron pruebas con tecnologías asistivas ni validación W3C externa. Las comprobaciones de accesibilidad se limitan a estructura, etiquetas, encabezados, foco visible y enlace para saltar al contenido.
 
 ## Pendientes
-Completar los integrantes del G1 y las evidencias estadísticas, legales/noticiosas y citas solicitadas. Para Spring Boot: persistencia, validaciones RN01–RN06, seguridad y roles, transacciones de venta/stock/caja, concurrencia, formularios conectados, mensajes de resultado y pruebas de reglas. El detalle está en README, sección 16.
+Quedan clasificados y marcados en `08_puntos_1_al_5_8.md` como *pendiente humano* o *requiere evidencia*: integrantes y coordinador del G1; el anexo o registro oficial que respalda el proceso de gasolinera (el Anexo 1 de la estructura no incluye una estación de servicio); capturas de los patrones revisados en clase y fechas reales del cronograma (5.10); lectura y cita de las dos obras bibliográficas obligatorias (5.10/5.14); validación del equipo sobre conclusiones y recomendaciones (5.11/5.12); volcado del glosario a la plantilla del informe (5.13).
+
+Para Spring Boot: persistencia, validación de RN01–RN06, seguridad y roles, transacciones de venta/stock/caja, concurrencia, formularios conectados, mensajes de resultado y pruebas de reglas. El detalle está en el README, sección 16.

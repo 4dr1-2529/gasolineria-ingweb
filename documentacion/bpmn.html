@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<!--
+Documento: documentacion/bpmn.html - BPMN de los procesos núcleo y de soporte
+Funcionalidades: F13, F15, F16, F18, F19, F20, F21, F22, F28
+Entidades: Compra DetalleCompra Venta DetalleVenta Producto MovimientoInventario MovimientoCaja ConceptoMovimiento
+Reglas: RN01, RN02, RN04, RN05, RN06
+Estado: Diagrama estático HTML/CSS sin backend
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="BPMN de los procesos núcleo y de soporte de Estación Nexo con notación BPMN 2.0 estándar. Proyecto académico de Ingeniería Web, G1.">
+    <title>
+      BPMN · Procesos núcleo y de soporte | Estación Nexo · G1
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/estilos.css" rel="stylesheet">
+  </head>
+  <body class="public">
+    <a class="skip-link" href="#contenido">
+      Saltar al contenido
+    </a>
+    <header class="public-header">
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">
+          N
+        </span>
+        <span>
+          NEXO
+          <small>
+            ESTACIÓN DE SERVICIO
+          </small>
+        </span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="../index.html">
+          Inicio
+        </a>
+        <a href="../dashboard.html">
+          Dashboard
+        </a>
+        <a href="../contacto.html">
+          Contacto
+        </a>
+        <a href="../login.html">
+          Ingresar al sistema
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        INGENIERÍA WEB
+        <span>
+          GRUPO G1 · 2026
+        </span>
+      </div>
+    </header>
+    <div class="page">
+      <div class="topbar">
+        <span>
+          Documentación / BPMN · 09
+        </span>
+        <span class="demo">
+          Diagrama de demostración
+        </span>
+      </div>
+      <main id="contenido">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">
+              DOCUMENTACIÓN / BPMN
+            </p>
+            <h1>
+              BPMN · Procesos núcleo y de soporte
+            </h1>
+            <p class="subtitle">
+              Notación BPMN 2.0 estándar: eventos, actividades, puertas exclusivas, flujos de mensajes, pools y carriles.
+            </p>
+          </div>
+          <div class="actions">
+            <a class="btn btn-secondary" href="09_bpmn.md">
+              Ver diagrama en código
+            </a>
+            <a class="btn btn-primary" href="08_puntos_1_al_5_8.md">
+              Volver al informe
+            </a>
+          </div>
+        </div>
+
+        <section class="panel">
+          <h2>
+            Diccionario de notación
+          </h2>
+          <ul class="bpmn-legend">
+            <li>
+              <span class="lg lg-round" aria-hidden="true">○</span>
+              Evento de inicio · borde fino (BPMN 2.0 <em>Start Event</em>).
+            </li>
+            <li>
+              <span class="lg lg-round lg-end" aria-hidden="true">●</span>
+              Evento de fin · borde grueso (BPMN 2.0 <em>End Event</em>).
+            </li>
+            <li>
+              <span class="lg lg-task" aria-hidden="true">T</span>
+              Tarea · rectángulo de esquinas redondeadas (<em>Task</em>).
+            </li>
+            <li>
+              <span class="lg lg-call" aria-hidden="true">C</span>
+              Subproceso llamado · borde doble (<em>Call Activity</em>).
+            </li>
+            <li>
+              <span class="lg lg-sub" aria-hidden="true">+</span>
+              Subproceso incorporado · signo más en la base (<em>Sub-Process</em>).
+            </li>
+            <li>
+              <span class="lg lg-gw" aria-hidden="true"><span>X</span></span>
+              Puerta de decisión exclusiva · rombo con X (<em>Exclusive Gateway</em>).
+            </li>
+            <li>
+              <span class="lg lg-arrow" aria-hidden="true"></span>
+              Flujo secuencial · flecha de trazo continuo (<em>Sequence Flow</em>).
+            </li>
+            <li>
+              <span class="lg lg-dash" aria-hidden="true"></span>
+              Flujo de mensajes · trazo discontinuo entre pools (<em>Message Flow</em>).
+            </li>
+            <li>
+              <span class="lg" aria-hidden="true">▤</span>
+              Pool y carriles · rectángulo con cabecera y bandas de responsabilidad.
+            </li>
+            <li>
+              <span class="lg" aria-hidden="true">⋯</span>
+              Anotación de texto · corchete con línea punteada (<em>Text Annotation</em>).
+            </li>
+          </ul>
+          <p class="notice">
+            Cada proceso tiene exactamente un evento de inicio y uno o más eventos de fin; los rombos se marcan siempre con X y etiquetan cada rama; sólo los flujos de mensajes son discontinuos; cada tarea pertenece a un único carril. Los flujos van de arriba hacia abajo, con cambios de carril representados por conectores horizontales.
+          </p>
+        </section>
+
+        <section class="panel">
+          <h2>
+            Proceso núcleo · Venta de combustible
+          </h2>
+          <div class="bpmn-figure">
+            <div class="bpmn-pool">
+              <div class="bpmn-pool-name">
+                Pool · Nexo · Venta
+              </div>
+              <div class="bpmn-grid">
+                <div class="bpmn-row">
+                  <div class="bpmn-lane-head">
+                    Operador de turno
+                  </div>
+                  <div class="bpmn-lane-head">
+                    Sistema de inventario
+                  </div>
+                  <div class="bpmn-lane-head">
+                    Sistema de caja
+                  </div>
+                  <div class="bpmn-lane-head">
+                    Publicación y control
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-start">
+                      Inicio
+                    </div>
+                    <p class="bpmn-caption">
+                      S1 · El cliente solicita combustible
+                    </p>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell bpmn-vflow"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      A1 · Registrar los datos de la venta en P08
+                    </div>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell bpmn-vflow"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell">
+                    <div class="bpmn-gw">
+                      <span>X</span>
+                    </div>
+                    <p class="bpmn-gw-label">
+                      G1 · ¿RN01 existencia suficiente y RN02 producto activo?
+                    </p>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell bpmn-vflow">
+                    <span class="lbl">
+                      No
+                    </span>
+                  </div>
+                  <div class="bpmn-cell bpmn-move branch">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      Sí
+                    </span>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-end">
+                      Fin · error
+                    </div>
+                    <p class="bpmn-caption">
+                      E2 · Venta rechazada por regla de negocio
+                    </p>
+                  </div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      A2 · Confirmar venta y descontar existencias
+                    </div>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-vflow"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      A3 · Registrar la salida de inventario (MI004–MI006)
+                    </div>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-move span2">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      Cambio de carril → caja
+                    </span>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-gw">
+                      <span>X</span>
+                    </div>
+                    <p class="bpmn-gw-label">
+                      G2 · ¿RN05 ya existe un ingreso para esta venta?
+                    </p>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-vflow">
+                    <span class="lbl">
+                      No · aún no existe
+                    </span>
+                  </div>
+                  <div class="bpmn-cell bpmn-move branch">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      Sí · ya existe
+                    </span>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      A4 · Registrar el ingreso de la venta (MC003–MC005)
+                    </div>
+                  </div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-end">
+                      Fin · error
+                    </div>
+                    <p class="bpmn-caption">
+                      E3 · Ingreso duplicado para una misma venta
+                    </p>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-move span2">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      Cambio de carril → publicación
+                    </span>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      A5 · Publicar historial (P09) y detalle (P10)
+                    </div>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-vflow"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-sub">
+                      A8 · Conciliar la caja del día en P15
+                    </div>
+                    <p class="bpmn-caption">
+                      Apertura + ingresos − egresos = saldo
+                    </p>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-vflow"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-end">
+                      Fin
+                    </div>
+                    <p class="bpmn-caption">
+                      E1 · Venta confirmada, inventario descontado y caja acreditada
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="bpmn-caption">
+              Figura 1 · Pool <strong>POOL-CORE</strong> con cuatro carriles. Secuencia completa: S1 → A1 → G1; rama «Sí» → A2 → A3 → G2; en G2 la rama «No · aún no existe» → A4 → A5 → A8 → E1, y la rama «Sí · ya existe» → E3; en G1 la rama «No» → E2. Anotación: los gateways G1 y G2 son la representación de los casos de violación de RN01/RN02 y de RN05.
+            </p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>
+            Proceso de soporte · Compra y abastecimiento
+          </h2>
+          <div class="bpmn-figure">
+            <div class="bpmn-pool">
+              <div class="bpmn-pool-name">
+                Pool · Proveedor
+              </div>
+              <div class="bpmn-grid">
+                <div class="bpmn-row">
+                  <div class="bpmn-lane-head">
+                    Proveedor de combustible · actor externo
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      P1 · Emitir y remitir la factura de la compra
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bpmn-bridge">
+              <em>
+                M1 · Message Flow (trazo discontinuo) · factura del proveedor → POOL-SOPORTE, actividad A6
+              </em>
+              <i aria-hidden="true"></i>
+            </div>
+            <div class="bpmn-pool">
+              <div class="bpmn-pool-name">
+                Pool · Nexo · Abastecimiento
+              </div>
+              <div class="bpmn-grid">
+                <div class="bpmn-row">
+                  <div class="bpmn-lane-head">
+                    Compras
+                  </div>
+                  <div class="bpmn-lane-head">
+                    Sistema de inventario
+                  </div>
+                  <div class="bpmn-lane-head">
+                    Sistema de caja
+                  </div>
+                  <div class="bpmn-lane-head">
+                    Publicación y control
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-start">
+                      Inicio
+                    </div>
+                    <p class="bpmn-caption">
+                      S3 · Reposición de combustible
+                    </p>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell bpmn-vflow"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      A6 · Registrar la compra con sus líneas en P20
+                    </div>
+                    <p class="bpmn-caption">
+                      Destino del mensaje M1
+                    </p>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell bpmn-vflow"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell">
+                    <div class="bpmn-gw">
+                      <span>X</span>
+                    </div>
+                    <p class="bpmn-gw-label">
+                      G3 · ¿RN06 litros y precios válidos?
+                    </p>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell bpmn-vflow">
+                    <span class="lbl">
+                      No
+                    </span>
+                  </div>
+                  <div class="bpmn-cell bpmn-move branch">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      Sí
+                    </span>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-end">
+                      Fin · error
+                    </div>
+                    <p class="bpmn-caption">
+                      E4 · Compra con valores no válidos
+                    </p>
+                  </div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-call">
+                      A7 · Crear las entradas por línea (MI001–MI003)
+                    </div>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-vflow"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-sub">
+                      SP-INV · Subproceso: contabilizar el inventario en litros
+                    </div>
+                    <p class="bpmn-caption">
+                      P14 · F19 · suma al stock por producto
+                    </p>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-move span2">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      Cambio de carril → caja
+                    </span>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-gw">
+                      <span>X</span>
+                    </div>
+                    <p class="bpmn-gw-label">
+                      G4 · ¿RN04 ya existe un egreso para esta compra?
+                    </p>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-vflow">
+                    <span class="lbl">
+                      No · es el primero
+                    </span>
+                  </div>
+                  <div class="bpmn-cell bpmn-move branch">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      Sí · ya existe
+                    </span>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      A9 · Registrar el egreso único de la compra (MC001)
+                    </div>
+                  </div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-end">
+                      Fin · error
+                    </div>
+                    <p class="bpmn-caption">
+                      E5 · Egreso duplicado de la compra C001
+                    </p>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-move span2">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      Cambio de carril → publicación
+                    </span>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      A10 · Publicar el detalle de la compra en P21
+                    </div>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-vflow"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-end">
+                      Fin
+                    </div>
+                    <p class="bpmn-caption">
+                      E6 · Inventario incrementado y egreso registrado
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="bpmn-caption">
+              Figura 2 · Pools <strong>POOL-PROV</strong> y <strong>POOL-SOPORTE</strong>. El pool externo se comunica con el proceso sólo mediante el flujo de mensajes M1. Secuencia completa: S3 → A6 → G3; rama «Sí» → A7 → SP-INV → G4; en G4 la rama «No · es el primero» → A9 → A10 → E6, y la rama «Sí · ya existe» → E5; en G3 la rama «No» → E4. Anotación: A7 y A9 son consecutivas y de aparición única por RN04.
+            </p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>
+            Correspondencia con interfaces, reglas y datos
+          </h2>
+          <div class="table-responsive">
+            <table class="table">
+              <caption>
+                Cada hecho de la maqueta se vincula con el elemento BPMN, la interfaz y la regla que representa; el enlace con las funcionalidades está en 07_trazabilidad.md
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">
+                    Hecho en la maqueta (corte 10/09/2026)
+                  </th>
+                  <th scope="col">
+                    Elemento BPMN
+                  </th>
+                  <th scope="col">
+                    Interfaz
+                  </th>
+                  <th scope="col">
+                    Regla
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    Compra C001 · 300 L · S/ 1,350.00
+                  </td>
+                  <td>
+                    A6 → A7 → A9
+                  </td>
+                  <td>
+                    P20, P21
+                  </td>
+                  <td>
+                    RN04, RN06
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Entradas MI001, MI002, MI003
+                  </td>
+                  <td>
+                    A7, SP-INV
+                  </td>
+                  <td>
+                    P12, P14
+                  </td>
+                  <td>
+                    RN04
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Egreso MC001
+                  </td>
+                  <td>
+                    A9
+                  </td>
+                  <td>
+                    P15
+                  </td>
+                  <td>
+                    RN04
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Ventas V001, V002 y V003 · 80 L / S/ 370.00
+                  </td>
+                  <td>
+                    A1, A2
+                  </td>
+                  <td>
+                    P08
+                  </td>
+                  <td>
+                    RN01, RN02, RN05
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Salidas MI004, MI005 y MI006
+                  </td>
+                  <td>
+                    A3
+                  </td>
+                  <td>
+                    P14
+                  </td>
+                  <td>
+                    RN01
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Ingresos MC003, MC004 y MC005
+                  </td>
+                  <td>
+                    A4
+                  </td>
+                  <td>
+                    P15
+                  </td>
+                  <td>
+                    RN05
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Movimientos manuales MC002 y MC006
+                  </td>
+                  <td>
+                    Fuera de los dos procesos: movimientos manuales de A8
+                  </td>
+                  <td>
+                    P16, P17
+                  </td>
+                  <td>
+                    RN06
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Saldo de caja S/ 3,425.00 = 4,410.00 + 415.00 − 1,400.00
+                  </td>
+                  <td>
+                    A8
+                  </td>
+                  <td>
+                    P15
+                  </td>
+                  <td>
+                    RN04, RN05
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>
+            Autocontrol de notación
+          </h2>
+          <div class="table-responsive">
+            <table class="table">
+              <caption>
+                Comprobaciones de la notación BPMN 2.0 sobre los dos diagramas de esta página
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">
+                    Comprobación
+                  </th>
+                  <th scope="col">
+                    Resultado
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    Todo proceso tiene un evento de inicio y al menos un evento de fin
+                  </td>
+                  <td>
+                    Sí · S1 con E1 y E2; S3 con E4, E5 y E6
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Eventos de fin con borde grueso e inicio con borde fino
+                  </td>
+                  <td>
+                    Sí · los seis eventos de fin y los dos de inicio
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Gateways exclusivos marcados con X y etiqueta en cada rama
+                  </td>
+                  <td>
+                    Sí · G1, G2, G3 y G4
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Flujos de mensajes discontinuos y sólo entre pools distintos
+                  </td>
+                  <td>
+                    Sí · M1 entre POOL-PROV y POOL-SOPORTE
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Cada tarea pertenece a un único carril
+                  </td>
+                  <td>
+                    Sí · dos carriles por pool, doce elementos de actividad en total
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Existe un camino completo del inicio a un fin sin saltos
+                  </td>
+                  <td>
+                    Sí · se listan en el pie de cada figura
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Uso de formas no definidas en BPMN 2.0
+                  </td>
+                  <td>
+                    Ninguna
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <p class="notice">
+          Diagrama de demostración: no contiene JavaScript ni lógica de negocio. La versión en código, con el diccionario completo de eventos, actividades, gateways y llamadas a subproceso, está en 09_bpmn.md.
+        </p>
+      </main>
+      <footer>
+        <span>
+          Estación Nexo · Ingeniería Web · G1
+        </span>
+        <span>
+          HTML / CSS / Bootstrap · 2026
+        </span>
+      </footer>
+    </div>
+  </body>
+</html>

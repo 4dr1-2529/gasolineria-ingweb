@@ -2,7 +2,7 @@
 <!--
 Interfaz: P03 - Dashboard
 Funcionalidades: F02, F03
-Entidades: Venta Producto MovimientoCaja Asistencia
+Entidades: Venta DetalleVenta Producto MovimientoCaja
 Reglas: No aplica
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
@@ -46,11 +46,14 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="combustibles.html">
           Combustibles
         </a>
-        <a href="ventas.html">
-          Ventas
+        <a href="compras.html">
+          Compras
         </a>
         <a href="inventario.html">
           Inventario
+        </a>
+        <a href="ventas.html">
+          Ventas
         </a>
         <a href="finanzas.html">
           Finanzas
@@ -60,9 +63,6 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         </a>
         <a href="usuarios.html">
           Usuarios
-        </a>
-        <a href="asistencia.html">
-          Asistencia
         </a>
         <a href="contacto.html">
           Contacto
@@ -137,10 +137,10 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               Ingresos de hoy
             </p>
             <strong>
-              S/ 370.00
+              S/ 415.00
             </strong>
             <small>
-              3 ingresos asociados a ventas
+              S/ 370.00 por ventas + S/ 45.00 otros
             </small>
           </section>
           <section class="kpi">
@@ -148,21 +148,21 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               Egresos de hoy
             </p>
             <strong>
-              S/ 50.00
+              S/ 1,400.00
             </strong>
             <small>
-              Mantenimiento de estación
+              Compra C001 y mantenimiento
             </small>
           </section>
           <section class="kpi">
             <p>
-              Personal actualmente marcado
+              Saldo de caja
             </p>
             <strong>
-              2
+              S/ 3,425.00
             </strong>
             <small>
-              Asistencias abiertas
+              Apertura del día: S/ 4,410.00
             </small>
           </section>
         </div>
@@ -337,9 +337,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             <div class="bars">
               <div class="bar-column">
                 <span class="bar-value">
-                  210
+                  260
                 </span>
-                <div class="bar" style="--height:63.6px" aria-hidden="true">
+                <div class="bar" style="--height:70.2px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   04 sep.
@@ -347,9 +347,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  280
+                  320
                 </span>
-                <div class="bar" style="--height:84.8px" aria-hidden="true">
+                <div class="bar" style="--height:86.4px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   05 sep.
@@ -357,9 +357,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  190
+                  235
                 </span>
-                <div class="bar" style="--height:57.5px" aria-hidden="true">
+                <div class="bar" style="--height:63.4px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   06 sep.
@@ -367,9 +367,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  340
+                  385
                 </span>
-                <div class="bar" style="--height:102.9px" aria-hidden="true">
+                <div class="bar" style="--height:103.9px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   07 sep.
@@ -377,9 +377,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  250
+                  295
                 </span>
-                <div class="bar" style="--height:75.7px" aria-hidden="true">
+                <div class="bar" style="--height:79.6px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   08 sep.
@@ -387,9 +387,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  310
+                  355
                 </span>
-                <div class="bar" style="--height:93.8px" aria-hidden="true">
+                <div class="bar" style="--height:95.8px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   09 sep.
@@ -397,7 +397,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  370
+                  415
                 </span>
                 <div class="bar" style="--height:112.0px" aria-hidden="true">
                 </div>
@@ -417,9 +417,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             <div class="bars">
               <div class="bar-column">
                 <span class="bar-value">
-                  30
+                  380
                 </span>
-                <div class="bar" style="--height:56.0px" aria-hidden="true">
+                <div class="bar" style="--height:30.4px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   04 sep.
@@ -427,9 +427,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  40
+                  415
                 </span>
-                <div class="bar" style="--height:74.7px" aria-hidden="true">
+                <div class="bar" style="--height:33.2px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   05 sep.
@@ -437,9 +437,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  20
+                  350
                 </span>
-                <div class="bar" style="--height:37.3px" aria-hidden="true">
+                <div class="bar" style="--height:28.0px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   06 sep.
@@ -447,9 +447,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  60
+                  460
                 </span>
-                <div class="bar" style="--height:112.0px" aria-hidden="true">
+                <div class="bar" style="--height:36.8px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   07 sep.
@@ -457,9 +457,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  25
+                  395
                 </span>
-                <div class="bar" style="--height:46.7px" aria-hidden="true">
+                <div class="bar" style="--height:31.6px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   08 sep.
@@ -467,9 +467,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  45
+                  440
                 </span>
-                <div class="bar" style="--height:84.0px" aria-hidden="true">
+                <div class="bar" style="--height:35.2px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   09 sep.
@@ -477,9 +477,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  50
+                  1,400
                 </span>
-                <div class="bar" style="--height:93.3px" aria-hidden="true">
+                <div class="bar" style="--height:112.0px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   10 sep.
@@ -489,17 +489,17 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           </figure>
           <figure class="chart">
             <figcaption>
-              Marcaciones por día
+              Saldo de caja por día
             </figcaption>
             <p class="chart-unit">
-              Eventos de entrada y salida · 04–10 sep. 2026 · Serie ilustrativa
+              Soles · 04–10 sep. 2026 · Saldo al cierre · Serie ilustrativa
             </p>
             <div class="bars">
               <div class="bar-column">
                 <span class="bar-value">
-                  4
+                  4,880
                 </span>
-                <div class="bar" style="--height:74.7px" aria-hidden="true">
+                <div class="bar" style="--height:112.0px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   04 sep.
@@ -507,9 +507,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  6
+                  4,785
                 </span>
-                <div class="bar" style="--height:112.0px" aria-hidden="true">
+                <div class="bar" style="--height:109.8px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   05 sep.
@@ -517,9 +517,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  4
+                  4,670
                 </span>
-                <div class="bar" style="--height:74.7px" aria-hidden="true">
+                <div class="bar" style="--height:107.2px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   06 sep.
@@ -527,9 +527,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  6
+                  4,595
                 </span>
-                <div class="bar" style="--height:112.0px" aria-hidden="true">
+                <div class="bar" style="--height:105.5px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   07 sep.
@@ -537,9 +537,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  4
+                  4,495
                 </span>
-                <div class="bar" style="--height:74.7px" aria-hidden="true">
+                <div class="bar" style="--height:103.2px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   08 sep.
@@ -547,9 +547,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  6
+                  4,410
                 </span>
-                <div class="bar" style="--height:112.0px" aria-hidden="true">
+                <div class="bar" style="--height:101.2px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   09 sep.
@@ -557,9 +557,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
               <div class="bar-column">
                 <span class="bar-value">
-                  4
+                  3,425
                 </span>
-                <div class="bar" style="--height:74.7px" aria-hidden="true">
+                <div class="bar" style="--height:78.6px" aria-hidden="true">
                 </div>
                 <span class="bar-label">
                   10 sep.
@@ -701,7 +701,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           </div>
         </section>
         <p class="notice">
-          Corte de referencia: 10 de septiembre de 2026, 12:00. Las series anteriores son ilustrativas; el último día corresponde al detalle de esta maqueta.
+          Corte de referencia: 10 de septiembre de 2026, 12:00. Cinco métricas en series de tiempo con eje X temporal (04–10 sep.): importe vendido, litros vendidos, ingresos, egresos y saldo de caja. Las series son ilustrativas; el último día corresponde al detalle de esta maqueta.
         </p>
       </main>
       <footer>

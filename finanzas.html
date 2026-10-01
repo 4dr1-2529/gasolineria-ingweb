@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!--
 Interfaz: P15 - Resumen financiero
-Funcionalidades: F24
-Entidades: MovimientoCaja ConceptoMovimiento Venta
-Reglas: RN04
+Funcionalidades: F28
+Entidades: MovimientoCaja ConceptoMovimiento Venta Compra
+Reglas: RN04, RN05
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
 <html lang="es">
@@ -46,11 +46,14 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="combustibles.html">
           Combustibles
         </a>
-        <a href="ventas.html">
-          Ventas
+        <a href="compras.html">
+          Compras
         </a>
         <a href="inventario.html">
           Inventario
+        </a>
+        <a href="ventas.html">
+          Ventas
         </a>
         <a href="finanzas.html" aria-current="page">
           Finanzas
@@ -60,9 +63,6 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         </a>
         <a href="usuarios.html">
           Usuarios
-        </a>
-        <a href="asistencia.html">
-          Asistencia
         </a>
         <a href="contacto.html">
           Contacto
@@ -115,10 +115,10 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               Ingresos de hoy
             </p>
             <strong>
-              S/ 370.00
+              S/ 415.00
             </strong>
             <small>
-              Ventas confirmadas
+              S/ 370.00 por ventas + S/ 45.00 otros
             </small>
           </section>
           <section class="kpi">
@@ -126,21 +126,21 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               Egresos de hoy
             </p>
             <strong>
-              S/ 50.00
+              S/ 1,400.00
             </strong>
             <small>
-              Mantenimiento
+              Compra C001 y mantenimiento
             </small>
           </section>
           <section class="kpi">
             <p>
-              Saldo demostrativo
+              Saldo de caja
             </p>
             <strong>
-              S/ 320.00
+              S/ 3,425.00
             </strong>
             <small>
-              Apertura de caja: S/ 0.00
+              Apertura de caja: S/ 4,410.00
             </small>
           </section>
         </div>
@@ -151,7 +151,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           <div class="table-responsive">
             <table class="table">
               <caption>
-                Movimientos económicos en soles · Ingresos 370.00 − egresos 50.00 = saldo 320.00
+                Movimientos económicos en soles · Apertura 4,410.00 + ingresos 415.00 − egresos 1,400.00 = saldo 3,425.00
               </caption>
               <thead>
                 <tr>
@@ -184,6 +184,56 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     MC001
                   </td>
                   <td>
+                    10/09/2026 07:00
+                  </td>
+                  <td>
+                    Compra de combustible
+                  </td>
+                  <td>
+                    <span class="badge muted">
+                      Egreso
+                    </span>
+                  </td>
+                  <td>
+                    S/ 1,350.00
+                  </td>
+                  <td>
+                    C001
+                  </td>
+                  <td>
+                    Ana Torres
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    MC002
+                  </td>
+                  <td>
+                    10/09/2026 08:30
+                  </td>
+                  <td>
+                    Otros ingresos
+                  </td>
+                  <td>
+                    <span class="badge ">
+                      Ingreso
+                    </span>
+                  </td>
+                  <td>
+                    S/ 45.00
+                  </td>
+                  <td>
+                    Manual
+                  </td>
+                  <td>
+                    Elena Díaz
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    MC003
+                  </td>
+                  <td>
                     10/09/2026 09:00
                   </td>
                   <td>
@@ -206,7 +256,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 </tr>
                 <tr>
                   <td>
-                    MC002
+                    MC004
                   </td>
                   <td>
                     10/09/2026 10:00
@@ -231,7 +281,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 </tr>
                 <tr>
                   <td>
-                    MC003
+                    MC005
                   </td>
                   <td>
                     10/09/2026 11:00
@@ -256,7 +306,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 </tr>
                 <tr>
                   <td>
-                    MC004
+                    MC006
                   </td>
                   <td>
                     10/09/2026 11:30
@@ -284,7 +334,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           </div>
         </section>
         <p class="notice">
-          Inventario expresa litros; finanzas expresa soles. Los tres ingresos de venta se vinculan individualmente a V001, V002 y V003.
+          Inventario expresa litros; finanzas expresa soles. Los tres ingresos de venta se vinculan individualmente a V001, V002 y V003, y MC001 es el egreso de la compra C001 (RN04).
         </p>
       </main>
       <footer>

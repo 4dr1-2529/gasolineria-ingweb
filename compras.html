@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <!--
-Interfaz: P06 - Combustibles
-Funcionalidades: F10, F12
-Entidades: Producto Categoria
-Reglas: RN02, RN03
+Interfaz: P20 - Compras
+Funcionalidades: F13, F14
+Entidades: Compra DetalleCompra Producto MovimientoInventario MovimientoCaja
+Reglas: RN04, RN06
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
 <html lang="es">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Consultar el catálogo de combustibles. Proyecto académico de Ingeniería Web, G1.">
+    <meta name="description" content="Registrar y consultar el abastecimiento de combustible. Proyecto académico de Ingeniería Web, G1.">
     <title>
-      Combustibles | Estación Nexo · G1
+      Compras | Estación Nexo · G1
     </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/estilos.css" rel="stylesheet">
@@ -43,10 +43,10 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="categorias.html">
           Categorías
         </a>
-        <a href="combustibles.html" aria-current="page">
+        <a href="combustibles.html">
           Combustibles
         </a>
-        <a href="compras.html">
+        <a href="compras.html" aria-current="page">
           Compras
         </a>
         <a href="inventario.html">
@@ -91,29 +91,67 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <div class="page-heading">
           <div>
             <p class="eyebrow">
-              OPERACIÓN DIARIA / P06
+              OPERACIÓN DIARIA / P20
             </p>
             <h1>
-              Combustibles
+              Compras
             </h1>
             <p class="subtitle">
-              Consultar el catálogo de combustibles.
+              Registrar y consultar el abastecimiento de combustible.
             </p>
           </div>
           <div class="actions">
-            <a class="btn btn-primary" href="combustible-form.html">
-              + Nuevo combustible
+            <a class="btn btn-primary" href="#registrar-compra">
+              + Nueva compra
+            </a>
+            <a class="btn btn-secondary" href="compra-detalle.html#C001">
+              Ver C001
             </a>
           </div>
         </div>
-        <section class="panel ">
+        <div class="kpi-grid">
+          <section class="kpi">
+            <p>
+              Compras de hoy
+            </p>
+            <strong>
+              S/ 1,350.00
+            </strong>
+            <small>
+              1 compra confirmada · 3 líneas
+            </small>
+          </section>
+          <section class="kpi">
+            <p>
+              Litros adquiridos
+            </p>
+            <strong>
+              300 L
+            </strong>
+            <small>
+              Regular, Premium y Diésel
+            </small>
+          </section>
+          <section class="kpi">
+            <p>
+              Efecto en inventario
+            </p>
+            <strong>
+              +300 L
+            </strong>
+            <small>
+              Entradas MI001, MI002 y MI003
+            </small>
+          </section>
+        </div>
+        <section class="panel">
           <h2>
-            Catálogo de combustibles
+            Compras registradas
           </h2>
           <div class="table-responsive">
             <table class="table">
               <caption>
-                Precios y existencias de referencia al 10/09/2026 · 3 combustibles activos · 6,920 L
+                Compras del 10 de septiembre de 2026 · Total: S/ 1,350.00 · 300 L
               </caption>
               <thead>
                 <tr>
@@ -121,128 +159,56 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     Código
                   </th>
                   <th scope="col">
-                    Nombre
+                    Fecha
                   </th>
                   <th scope="col">
-                    Categoría
+                    Proveedor
                   </th>
                   <th scope="col">
-                    Unidad
+                    Combustibles
                   </th>
                   <th scope="col">
-                    Precio / L
+                    Litros
                   </th>
                   <th scope="col">
-                    Stock
+                    Total
                   </th>
                   <th scope="col">
                     Estado
                   </th>
                   <th scope="col">
-                    Acciones
+                    Detalle
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr id="PR01">
+                <tr>
                   <td>
-                    PR01
+                    C001
                   </td>
                   <td>
-                    Gasolina Regular
+                    10/09/2026 07:00
                   </td>
                   <td>
-                    Gasolinas
+                    Petroandes S.A.
                   </td>
                   <td>
-                    Litro
+                    Gasolina Regular, Gasolina Premium, Diésel
                   </td>
                   <td>
-                    S/ 5.00
+                    300
                   </td>
                   <td>
-                    1,990 L
-                  </td>
-                  <td>
-                    <span class="badge ">
-                      Activo
-                    </span>
-                  </td>
-                  <td>
-                    <a href="combustible-form.html#editar">
-                      Editar
-                    </a>
-                    ·
-                    <a href="#estado">
-                      Cambiar estado
-                    </a>
-                  </td>
-                </tr>
-                <tr id="PR02">
-                  <td>
-                    PR02
-                  </td>
-                  <td>
-                    Gasolina Premium
-                  </td>
-                  <td>
-                    Gasolinas
-                  </td>
-                  <td>
-                    Litro
-                  </td>
-                  <td>
-                    S/ 6.00
-                  </td>
-                  <td>
-                    980 L
+                    S/ 1,350.00
                   </td>
                   <td>
                     <span class="badge ">
-                      Activo
+                      Confirmada
                     </span>
                   </td>
                   <td>
-                    <a href="combustible-form.html#premium">
-                      Editar
-                    </a>
-                    ·
-                    <a href="#estado">
-                      Cambiar estado
-                    </a>
-                  </td>
-                </tr>
-                <tr id="PR03">
-                  <td>
-                    PR03
-                  </td>
-                  <td>
-                    Diésel
-                  </td>
-                  <td>
-                    Diésel
-                  </td>
-                  <td>
-                    Litro
-                  </td>
-                  <td>
-                    S/ 4.00
-                  </td>
-                  <td>
-                    3,950 L
-                  </td>
-                  <td>
-                    <span class="badge ">
-                      Activo
-                    </span>
-                  </td>
-                  <td>
-                    <a href="combustible-form.html#diesel">
-                      Editar
-                    </a>
-                    ·
-                    <a href="#estado">
-                      Cambiar estado
+                    <a href="compra-detalle.html#C001">
+                      Ver C001
                     </a>
                   </td>
                 </tr>
@@ -250,18 +216,30 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             </table>
           </div>
         </section>
-        <section class="panel ">
+        <section class="panel" id="registrar-compra">
           <h2>
-            Estado del combustible
+            Registrar compra de combustible
           </h2>
-          <form id="estado">
+          <form>
             <div class="form-grid">
               <div class="field">
-                <label for="campo-18">
+                <label for="compra-proveedor">
+                  Proveedor
+                </label>
+                <input class="form-control" id="compra-proveedor" name="proveedor" type="text" value="Petroandes S.A.">
+              </div>
+              <div class="field">
+                <label for="compra-fecha">
+                  Fecha y hora
+                </label>
+                <input class="form-control" id="compra-fecha" name="fecha" type="text" value="10/09/2026 07:00">
+              </div>
+              <div class="field">
+                <label for="compra-producto">
                   Combustible
                 </label>
-                <select class="form-select" id="campo-18">
-                  <option selected>
+                <select class="form-select" id="compra-producto" name="producto">
+                  <option>
                     Gasolina Regular
                   </option>
                   <option>
@@ -273,31 +251,46 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 </select>
               </div>
               <div class="field">
-                <label for="campo-19">
-                  Estado
+                <label for="compra-cantidad">
+                  Cantidad (L)
                 </label>
-                <select class="form-select" id="campo-19">
-                  <option selected>
-                    Activo
+                <input class="form-control" id="compra-cantidad" name="cantidad" type="text" value="100">
+              </div>
+              <div class="field">
+                <label for="compra-precio">
+                  Precio de compra (S/ por litro)
+                </label>
+                <input class="form-control" id="compra-precio" name="precio" type="text" value="4.50">
+              </div>
+              <div class="field">
+                <label for="compra-responsable">
+                  Responsable
+                </label>
+                <select class="form-select" id="compra-responsable" name="responsable">
+                  <option>
+                    Ana Torres
                   </option>
                   <option>
-                    Inactivo
+                    Luis Rojas
+                  </option>
+                  <option>
+                    Elena Díaz
                   </option>
                 </select>
               </div>
             </div>
             <div class="actions">
-              <button type="button" class="btn btn-primary">
-                Cambiar estado · visual
+              <button class="btn btn-primary" type="button">
+                Registrar compra · visual
               </button>
             </div>
             <p class="form-help">
-              Formulario de demostración; los cambios no se guardan.
+              Formulario de demostración; los cambios no se guardan. Al confirmar, Spring Boot generará las entradas de inventario y el egreso correspondientes.
             </p>
           </form>
         </section>
         <p class="notice">
-          RN02 y RN03 · Solo productos activos en nuevas ventas. El historial permanece al desactivar.
+          RN04 · Una compra confirmada produce entrada de inventario por los litros recibidos y un egreso económico por el importe total: C001 genera MI001, MI002, MI003 y MC001.
         </p>
       </main>
       <footer>
