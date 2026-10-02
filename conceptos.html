@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!--
 Interfaz: P17 - Conceptos económicos
-Funcionalidades: F23, F24, F25
+Funcionalidades: F24
 Entidades: ConceptoMovimiento
-Reglas: RN03
+Reglas: No aplica
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
 <html lang="es">
@@ -64,6 +64,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="usuarios.html">
           Usuarios
         </a>
+        <a href="mi-asistencia.html">
+          Asistencia
+        </a>
         <a href="contacto.html">
           Contacto
         </a>
@@ -101,6 +104,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             </p>
           </div>
           <div class="actions">
+            <a class="btn btn-primary" href="concepto-form.html">
+              + Concepto
+            </a>
             <a class="btn btn-secondary" href="finanzas.html">
               ← Finanzas
             </a>
@@ -151,11 +157,11 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     </span>
                   </td>
                   <td>
-                    <a href="#editar">
+                    <a href="concepto-form.html#editar">
                       Editar
                     </a>
                     ·
-                    <a href="#editar">
+                    <a href="concepto-form.html#editar">
                       Cambiar estado
                     </a>
                   </td>
@@ -165,32 +171,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     CE02
                   </td>
                   <td>
-                    Otros ingresos
-                  </td>
-                  <td>
-                    Ingreso
-                  </td>
-                  <td>
-                    <span class="badge ">
-                      Activo
-                    </span>
-                  </td>
-                  <td>
-                    <a href="#editar">
-                      Editar
-                    </a>
-                    ·
-                    <a href="#editar">
-                      Cambiar estado
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    CE03
-                  </td>
-                  <td>
-                    Mantenimiento
+                    Compra de combustible
                   </td>
                   <td>
                     Egreso
@@ -201,11 +182,11 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     </span>
                   </td>
                   <td>
-                    <a href="#editar">
+                    <a href="concepto-form.html#editar">
                       Editar
                     </a>
                     ·
-                    <a href="#editar">
+                    <a href="concepto-form.html#editar">
                       Cambiar estado
                     </a>
                   </td>
@@ -213,120 +194,6 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </tbody>
             </table>
           </div>
-        </section>
-        <section class="panel ">
-          <h2>
-            Registrar concepto
-          </h2>
-          <form id="registro">
-            <div class="form-grid">
-              <div class="field">
-                <label for="campo-68">
-                  Nombre
-                </label>
-                <input class="form-control" id="campo-68" type="text" value="">
-              </div>
-              <div class="field">
-                <label for="campo-69">
-                  Tipo
-                </label>
-                <select class="form-select" id="campo-69">
-                  <option selected>
-                    Ingreso
-                  </option>
-                  <option>
-                    Egreso
-                  </option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="campo-70">
-                  Estado
-                </label>
-                <select class="form-select" id="campo-70">
-                  <option selected>
-                    Activo
-                  </option>
-                  <option>
-                    Inactivo
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="actions">
-              <button type="button" class="btn btn-primary">
-                Registrar concepto · visual
-              </button>
-            </div>
-            <p class="form-help">
-              Formulario de demostración; los cambios no se guardan.
-            </p>
-          </form>
-        </section>
-        <section class="panel ">
-          <h2>
-            Editar / activar / desactivar concepto
-          </h2>
-          <form id="editar">
-            <div class="form-grid">
-              <div class="field">
-                <label for="campo-71">
-                  Concepto a editar
-                </label>
-                <select class="form-select" id="campo-71">
-                  <option>
-                    Venta de combustible
-                  </option>
-                  <option>
-                    Otros ingresos
-                  </option>
-                  <option selected>
-                    Mantenimiento
-                  </option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="campo-72">
-                  Nuevo nombre
-                </label>
-                <input class="form-control" id="campo-72" type="text" value="Mantenimiento">
-              </div>
-              <div class="field">
-                <label for="campo-73">
-                  Tipo
-                </label>
-                <select class="form-select" id="campo-73">
-                  <option>
-                    Ingreso
-                  </option>
-                  <option selected>
-                    Egreso
-                  </option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="campo-74">
-                  Estado
-                </label>
-                <select class="form-select" id="campo-74">
-                  <option selected>
-                    Activo
-                  </option>
-                  <option>
-                    Inactivo
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="actions">
-              <button type="button" class="btn btn-primary">
-                Guardar edición · visual
-              </button>
-            </div>
-            <p class="form-help">
-              Formulario de demostración; los cambios no se guardan.
-            </p>
-          </form>
         </section>
         <p class="notice">
           RN03 · Los conceptos con movimientos asociados se conservan. El selector de edición es visual y no carga datos automáticamente.

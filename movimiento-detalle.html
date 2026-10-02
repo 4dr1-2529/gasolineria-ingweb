@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <!--
-Interfaz: P09 - Historial de ventas
-Funcionalidades: F21
-Entidades: Venta DetalleVenta Producto Usuario MovimientoCaja
-Reglas: RN05
+Interfaz: P30 - Detalle de movimiento de caja
+Funcionalidades: F28
+Entidades: MovimientoCaja ConceptoMovimiento Venta Compra
+Reglas: RN04, RN05
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
 <html lang="es">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Consultar las ventas confirmadas de ejemplo. Proyecto académico de Ingeniería Web, G1.">
+    <meta name="description" content="Consultar el detalle de cada movimiento de caja. Proyecto académico de Ingeniería Web, G1.">
     <title>
-      Historial de ventas | Estación Nexo · G1
+      Detalle de movimiento de caja | Estación Nexo · G1
     </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/estilos.css" rel="stylesheet">
@@ -94,29 +94,35 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <div class="page-heading">
           <div>
             <p class="eyebrow">
-              OPERACIÓN DIARIA / P09
+              OPERACIÓN DIARIA / P30
             </p>
             <h1>
-              Historial de ventas
+              Detalle de movimiento de caja
             </h1>
             <p class="subtitle">
-              Consultar las ventas confirmadas de ejemplo.
+              Consultar el detalle de cada movimiento de caja del día.
             </p>
           </div>
           <div class="actions">
-            <a class="btn btn-primary" href="ventas.html">
-              + Registrar venta
+            <a class="btn btn-secondary" href="finanzas.html">
+              ← Resumen financiero
+            </a>
+            <a class="btn btn-secondary" href="movimiento-economico.html">
+              Ingresos y egresos
             </a>
           </div>
         </div>
+        <p class="notice">
+          Corte de referencia: 10 de septiembre de 2026, 12:00. Los cuatro movimientos de caja del día nacen de una compra o de una venta; no hay movimientos capturados a mano.
+        </p>
         <section class="panel ">
           <h2>
-            Ventas confirmadas
+            Movimientos del día
           </h2>
           <div class="table-responsive">
             <table class="table">
               <caption>
-                Ventas del 10 de septiembre de 2026 · Total: 80 L / S/ 370.00
+                4 movimientos · 1 egreso y 3 ingresos · soles
               </caption>
               <thead>
                 <tr>
@@ -124,58 +130,82 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     Código
                   </th>
                   <th scope="col">
-                    Fecha
+                    Hora
                   </th>
                   <th scope="col">
-                    Combustible
+                    Concepto
                   </th>
                   <th scope="col">
-                    Litros
+                    Tipo
                   </th>
                   <th scope="col">
-                    Total
+                    Monto
                   </th>
                   <th scope="col">
-                    Ingreso
+                    Origen
                   </th>
                   <th scope="col">
-                    Operador
+                    Responsable
                   </th>
                   <th scope="col">
-                    Estado
-                  </th>
-                  <th scope="col">
-                    Detalle
+                    Trazabilidad
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr id="MC001">
                   <td>
-                    V001
+                    MC001
                   </td>
                   <td>
-                    10/09/2026 09:00
+                    07:00
                   </td>
                   <td>
-                    Gasolina Regular
+                    Compra de combustible
                   </td>
                   <td>
-                    10
+                    <span class="badge muted">
+                      Egreso
+                    </span>
                   </td>
                   <td>
-                    S/ 50.00
+                    S/ 1,350.00
                   </td>
                   <td>
-                    MC003
+                    C001
                   </td>
                   <td>
                     Ana Torres
                   </td>
                   <td>
+                    <a href="compra-detalle.html#C001">
+                      Ver C001
+                    </a>
+                  </td>
+                </tr>
+                <tr id="MC003">
+                  <td>
+                    MC003
+                  </td>
+                  <td>
+                    09:00
+                  </td>
+                  <td>
+                    Venta de combustible
+                  </td>
+                  <td>
                     <span class="badge ">
-                      Confirmada
+                      Ingreso
                     </span>
+                  </td>
+                  <td>
+                    S/ 50.00
+                  </td>
+                  <td>
+                    V001
+                  </td>
+                  <td>
+                    Ana Torres
                   </td>
                   <td>
                     <a href="venta-detalle.html#V001">
@@ -183,32 +213,29 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr id="MC004">
                   <td>
-                    V002
+                    MC004
                   </td>
                   <td>
-                    10/09/2026 10:00
+                    10:00
                   </td>
                   <td>
-                    Gasolina Premium
+                    Venta de combustible
                   </td>
                   <td>
-                    20
+                    <span class="badge ">
+                      Ingreso
+                    </span>
                   </td>
                   <td>
                     S/ 120.00
                   </td>
                   <td>
-                    MC004
+                    V002
                   </td>
                   <td>
                     Ana Torres
-                  </td>
-                  <td>
-                    <span class="badge ">
-                      Confirmada
-                    </span>
                   </td>
                   <td>
                     <a href="venta-detalle.html#V002">
@@ -216,32 +243,29 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr id="MC005">
                   <td>
-                    V003
+                    MC005
                   </td>
                   <td>
-                    10/09/2026 11:00
+                    11:00
                   </td>
                   <td>
-                    Diésel
+                    Venta de combustible
                   </td>
                   <td>
-                    50
+                    <span class="badge ">
+                      Ingreso
+                    </span>
                   </td>
                   <td>
                     S/ 200.00
                   </td>
                   <td>
-                    MC005
+                    V003
                   </td>
                   <td>
                     Luis Rojas
-                  </td>
-                  <td>
-                    <span class="badge ">
-                      Confirmada
-                    </span>
                   </td>
                   <td>
                     <a href="venta-detalle.html#V003">
@@ -253,6 +277,51 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             </table>
           </div>
         </section>
+        <section class="panel receipt">
+          <h2>
+            Conciliación de caja
+          </h2>
+          <dl class="receipt-meta">
+            <div>
+              <dt>
+                Apertura
+              </dt>
+              <dd>
+                S/ 4,410.00
+              </dd>
+            </div>
+            <div>
+              <dt>
+                Ingresos
+              </dt>
+              <dd>
+                S/ 370.00
+              </dd>
+            </div>
+            <div>
+              <dt>
+                Egresos
+              </dt>
+              <dd>
+                S/ 1,350.00
+              </dd>
+            </div>
+            <div>
+              <dt>
+                Saldo
+              </dt>
+              <dd>
+                S/ 3,430.00
+              </dd>
+            </div>
+          </dl>
+          <p class="muted-text">
+            4,410.00 + 370.00 − 1,350.00 = 3,430.00. El egreso corresponde a la compra C001 (RN04) y los tres ingresos a las ventas V001, V002 y V003 (RN05).
+          </p>
+        </section>
+        <p class="notice">
+          RN04 y RN05 · Cada movimiento de caja tiene un único origen: una compra con un solo egreso y cada venta con un solo ingreso. Esta correspondencia la comprobará Spring Boot.
+        </p>
       </main>
       <footer>
         <span>

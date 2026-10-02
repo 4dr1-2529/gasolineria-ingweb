@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!--
+Interfaz: P26 - Formulario usuario
+Funcionalidades: F32
+Entidades: Usuario Empleado
+Reglas: RN03
+Estado: Maqueta HTML/CSS/Bootstrap sin backend
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Representar el registro y la edición de una cuenta de acceso. Proyecto académico de Ingeniería Web, G1.">
+    <title>
+      Formulario usuario | Estación Nexo · G1
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+  </head>
+  <body class="workspace">
+    <a class="skip-link" href="#contenido">
+      Saltar al contenido
+    </a>
+    <header class="sidebar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          N
+        </span>
+        <span>
+          NEXO
+          <small>
+            ESTACIÓN DE SERVICIO
+          </small>
+        </span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="index.html">
+          Inicio
+        </a>
+        <a href="dashboard.html">
+          Dashboard
+        </a>
+        <a href="categorias.html">
+          Categorías
+        </a>
+        <a href="combustibles.html">
+          Combustibles
+        </a>
+        <a href="compras.html">
+          Compras
+        </a>
+        <a href="inventario.html">
+          Inventario
+        </a>
+        <a href="ventas.html">
+          Ventas
+        </a>
+        <a href="finanzas.html">
+          Finanzas
+        </a>
+        <a href="empleados.html">
+          Empleados
+        </a>
+        <a href="usuarios.html">
+          Usuarios
+        </a>
+        <a href="mi-asistencia.html">
+          Asistencia
+        </a>
+        <a href="contacto.html">
+          Contacto
+        </a>
+        <a href="login.html">
+          Cerrar sesión
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        INGENIERÍA WEB
+        <span>
+          GRUPO G1 · 2026
+        </span>
+      </div>
+    </header>
+    <div class="page">
+      <div class="topbar">
+        <span>
+          Centro de operaciones / Estación Nexo
+        </span>
+        <span class="demo">
+          Datos de demostración
+        </span>
+      </div>
+      <main id="contenido">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">
+              OPERACIÓN DIARIA / P26
+            </p>
+            <h1>
+              Formulario usuario
+            </h1>
+            <p class="subtitle">
+              Representar el registro y la edición de una cuenta de acceso.
+            </p>
+          </div>
+          <div class="actions">
+            <a class="btn btn-secondary" href="usuarios.html">
+              ← Cuentas
+            </a>
+            <a class="btn btn-secondary" href="empleado-form.html">
+              Personal
+            </a>
+          </div>
+        </div>
+        <p class="notice">
+          RN03 · Una cuenta como máximo por empleado y sin borrado físico: se edita o se desactiva. El usuario debe tener entre 4 y 20 caracteres en minúsculas, y la contraseña entre 8 y 40.
+        </p>
+        <section class="panel ">
+          <h2>
+            Registrar usuario · F32
+          </h2>
+          <form id="registro">
+            <div class="form-grid">
+              <div class="field">
+                <label for="campo-130">
+                  Empleado *
+                </label>
+                <select class="form-select" id="campo-130" required>
+                  <option value="">
+                    Seleccionar empleado sin cuenta
+                  </option>
+                  <option>
+                    Ana Torres
+                  </option>
+                  <option>
+                    Luis Rojas
+                  </option>
+                  <option>
+                    Elena Díaz
+                  </option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="campo-131">
+                  Username *
+                </label>
+                <input class="form-control" id="campo-131" type="text" value="" required pattern="[a-z0-9._-]{4,20}" maxlength="20" title="De 4 a 20 caracteres en minúsculas, sin espacios">
+              </div>
+              <div class="field">
+                <label for="campo-132">
+                  Contraseña de demostración *
+                </label>
+                <input class="form-control" id="campo-132" type="password" value="" required minlength="8" maxlength="40">
+              </div>
+              <div class="field">
+                <label for="campo-133">
+                  Rol *
+                </label>
+                <select class="form-select" id="campo-133" required>
+                  <option>
+                    Administrador
+                  </option>
+                  <option>
+                    Operador / Vendedor
+                  </option>
+                  <option selected>
+                    Empleado
+                  </option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="campo-134">
+                  Estado *
+                </label>
+                <select class="form-select" id="campo-134" required>
+                  <option selected>
+                    Activo
+                  </option>
+                  <option>
+                    Inactivo
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="submit" class="btn btn-primary">
+                Registrar usuario · visual
+              </button>
+            </div>
+            <p class="form-help">
+              Formulario de demostración; los cambios no se guardan y la contraseña no se muestra ni se almacena.
+            </p>
+          </form>
+        </section>
+        <section class="panel ">
+          <h2>
+            Editar usuario / estado · atorres · F32
+          </h2>
+          <form id="editar">
+            <div class="form-grid">
+              <div class="field">
+                <label for="campo-135">
+                  Username *
+                </label>
+                <input class="form-control" id="campo-135" type="text" value="atorres" required pattern="[a-z0-9._-]{4,20}" maxlength="20" title="De 4 a 20 caracteres en minúsculas, sin espacios">
+              </div>
+              <div class="field">
+                <label for="campo-136">
+                  Rol *
+                </label>
+                <select class="form-select" id="campo-136" required>
+                  <option>
+                    Administrador
+                  </option>
+                  <option selected>
+                    Operador / Vendedor
+                  </option>
+                  <option>
+                    Empleado
+                  </option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="campo-137">
+                  Contraseña de demostración *
+                </label>
+                <input class="form-control" id="campo-137" type="password" value="" required minlength="8" maxlength="40">
+              </div>
+              <div class="field">
+                <label for="campo-138">
+                  Estado *
+                </label>
+                <select class="form-select" id="campo-138" required>
+                  <option selected>
+                    Activo
+                  </option>
+                  <option>
+                    Inactivo
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="submit" class="btn btn-primary">
+                Guardar edición · visual
+              </button>
+            </div>
+            <p class="form-help">
+              Formulario de demostración; los cambios no se guardan.
+            </p>
+          </form>
+        </section>
+        <p class="notice">
+          Este formulario comparte F32 con P19 usuarios.html: la lista de cuentas y este formulario dedicado representan la misma funcionalidad.
+        </p>
+      </main>
+      <footer>
+        <span>
+          Estación Nexo · Ingeniería Web · G1
+        </span>
+        <span>
+          HTML / CSS / Bootstrap · 2026
+        </span>
+      </footer>
+    </div>
+  </body>
+</html>

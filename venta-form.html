@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
-Interfaz: P08 - Registrar venta
-Funcionalidades: F18, F20
+Interfaz: P24 - Formulario venta
+Funcionalidades: F20
 Entidades: Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja
 Reglas: RN01, RN02, RN05, RN06
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
@@ -10,9 +10,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Representar una venta con disponibilidad y detalle. Proyecto académico de Ingeniería Web, G1.">
+    <meta name="description" content="Representar el registro de una venta de combustible. Proyecto académico de Ingeniería Web, G1.">
     <title>
-      Registrar venta | Estación Nexo · G1
+      Formulario venta | Estación Nexo · G1
     </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/estilos.css" rel="stylesheet">
@@ -52,7 +52,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="inventario.html">
           Inventario
         </a>
-        <a href="ventas.html" aria-current="page">
+        <a href="ventas.html">
           Ventas
         </a>
         <a href="finanzas.html">
@@ -94,41 +94,38 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <div class="page-heading">
           <div>
             <p class="eyebrow">
-              OPERACIÓN DIARIA / P08
+              OPERACIÓN DIARIA / P24
             </p>
             <h1>
-              Registrar venta
+              Formulario venta
             </h1>
             <p class="subtitle">
-              Representar una venta con disponibilidad y detalle.
+              Representar el registro de una venta de combustible.
             </p>
           </div>
           <div class="actions">
-            <a class="btn btn-secondary" href="ventas-historial.html">
-              Ver historial
+            <a class="btn btn-secondary" href="ventas.html">
+              ← Ventas
             </a>
             <a class="btn btn-secondary" href="inventario.html">
               Consultar disponibilidad
             </a>
-            <a class="btn btn-secondary" href="venta-form.html">
-              Abrir formulario
-            </a>
           </div>
         </div>
         <p class="notice">
-          RN01, RN02 y RN05 · Spring Boot comprobará disponibilidad y estado, y confirmará venta, descuento e ingreso como una sola operación. Los importes de este formulario son fijos; no se recalculan.
+          RN01, RN02, RN05 y RN06 · Spring Boot comprobará existencias, producto activo, importes positivos y el ingreso único de la venta. Los campos marcados con * son obligatorios.
         </p>
         <section class="panel ">
           <h2>
-            Nueva venta · Ejemplo de captura
+            Nueva venta · F20
           </h2>
           <form id="registro">
             <div class="form-grid">
               <div class="field">
-                <label for="campo-44">
-                  Combustible
+                <label for="campo-111">
+                  Combustible *
                 </label>
-                <select class="form-select" id="campo-44" required>
+                <select class="form-select" id="campo-111" required>
                   <option selected>
                     Gasolina Regular
                   </option>
@@ -141,34 +138,34 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 </select>
               </div>
               <div class="field">
-                <label for="campo-45">
-                  Cantidad (L)
+                <label for="campo-112">
+                  Cantidad (L) *
                 </label>
-                <input class="form-control" id="campo-45" type="number" value="10" min="0.01" step="0.01" required>
+                <input class="form-control" id="campo-112" type="number" value="10" required min="0.01" step="0.01">
               </div>
               <div class="field">
-                <label for="campo-46">
-                  Precio unitario (S/)
+                <label for="campo-113">
+                  Precio unitario (S/) *
                 </label>
-                <input class="form-control" id="campo-46" type="number" value="5.00" min="0.01" step="0.01" required>
+                <input class="form-control" id="campo-113" type="number" value="5.00" required min="0.01" step="0.01">
               </div>
               <div class="field">
-                <label for="campo-47">
-                  Subtotal (S/)
+                <label for="campo-114">
+                  Subtotal (S/) *
                 </label>
-                <input class="form-control" id="campo-47" type="number" value="50.00" min="0.01" step="0.01" required>
+                <input class="form-control" id="campo-114" type="number" value="50.00" required min="0.01" step="0.01">
               </div>
               <div class="field">
-                <label for="campo-48">
-                  Total (S/)
+                <label for="campo-115">
+                  Total (S/) *
                 </label>
-                <input class="form-control" id="campo-48" type="number" value="50.00" min="0.01" step="0.01" required>
+                <input class="form-control" id="campo-115" type="number" value="50.00" required min="0.01" step="0.01">
               </div>
               <div class="field">
-                <label for="campo-49">
-                  Operador
+                <label for="campo-116">
+                  Operador *
                 </label>
-                <select class="form-select" id="campo-49" required>
+                <select class="form-select" id="campo-116" required>
                   <option selected>
                     Ana Torres
                   </option>
@@ -178,10 +175,10 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 </select>
               </div>
               <div class="field">
-                <label for="campo-50">
-                  Estado
+                <label for="campo-117">
+                  Estado *
                 </label>
-                <select class="form-select" id="campo-50" required>
+                <select class="form-select" id="campo-117" required>
                   <option selected>
                     Pendiente
                   </option>
@@ -200,12 +197,12 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         </section>
         <section class="panel ">
           <h2>
-            Disponibilidad y detalle representado
+            Disponibilidad antes de confirmar
           </h2>
           <div class="table-responsive">
             <table class="table">
               <caption>
-                Escenario sin confirmar: stock proyectado 1,980 L. No forma parte de los totales actuales.
+                Existencias al corte del 10/09/2026 · No forma parte de los totales actuales
               </caption>
               <thead>
                 <tr>
@@ -247,14 +244,6 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </tbody>
             </table>
           </div>
-          <div class="total">
-            <span>
-              Total del ejemplo
-            </span>
-            <strong>
-              S/ 50.00
-            </strong>
-          </div>
           <div class="flow">
             <span>
               01 · Venta
@@ -273,6 +262,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             </span>
           </div>
         </section>
+        <p class="notice">
+          Este formulario comparte F20 con P08 ventas.html: la interfaz de captura y este formulario dedicado representan la misma funcionalidad.
+        </p>
       </main>
       <footer>
         <span>

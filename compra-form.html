@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <!--
-Interfaz: P12 - Entrada combustible
-Funcionalidades: F16
-Entidades: MovimientoInventario Producto Usuario Compra
+Interfaz: P23 - Formulario compra
+Funcionalidades: F13
+Entidades: Compra DetalleCompra Producto MovimientoInventario MovimientoCaja
 Reglas: RN04, RN06
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
@@ -10,9 +10,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Representar la entrada de combustible por compra o por ajuste. Proyecto académico de Ingeniería Web, G1.">
+    <meta name="description" content="Representar el registro de una compra de combustible. Proyecto académico de Ingeniería Web, G1.">
     <title>
-      Entrada combustible | Estación Nexo · G1
+      Formulario compra | Estación Nexo · G1
     </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/estilos.css" rel="stylesheet">
@@ -94,35 +94,50 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <div class="page-heading">
           <div>
             <p class="eyebrow">
-              OPERACIÓN DIARIA / P12
+              OPERACIÓN DIARIA / P23
             </p>
             <h1>
-              Entrada combustible
+              Formulario compra
             </h1>
             <p class="subtitle">
-              Representar la entrada de combustible por compra o por ajuste.
+              Representar el registro de una compra de combustible.
             </p>
           </div>
           <div class="actions">
-            <a class="btn btn-secondary" href="inventario.html">
-              ← Existencias
+            <a class="btn btn-secondary" href="compras.html">
+              ← Compras
+            </a>
+            <a class="btn btn-secondary" href="compra-detalle.html#C001">
+              Ver C001
             </a>
           </div>
         </div>
         <p class="notice">
-          RN04 · Una entrada originada en una compra recibe litros y genera también su egreso económico: así ocurrió con MI001–MI003 y MC001. Una entrada por ajuste, en cambio, no mueve dinero.
+          RN04 y RN06 · Al confirmarse, una compra genera las entradas de inventario y un único egreso de caja. Litros y precios deben ser numéricos mayores que cero; los campos marcados con * son obligatorios.
         </p>
         <section class="panel ">
           <h2>
-            Entrada de combustible
+            Registrar compra de combustible · F13
           </h2>
           <form id="registro">
             <div class="form-grid">
               <div class="field">
-                <label for="campo-51">
-                  Producto
+                <label for="campo-105">
+                  Proveedor *
                 </label>
-                <select class="form-select" id="campo-51" required>
+                <input class="form-control" id="campo-105" type="text" value="" required minlength="3" maxlength="60">
+              </div>
+              <div class="field">
+                <label for="campo-106">
+                  Fecha y hora *
+                </label>
+                <input class="form-control" id="campo-106" type="text" value="" required pattern="\d{2}/\d{2}/\d{4} \d{2}:\d{2}" title="Formato: dd/mm/aaaa hh:mm">
+              </div>
+              <div class="field">
+                <label for="campo-107">
+                  Combustible *
+                </label>
+                <select class="form-select" id="campo-107" required>
                   <option selected>
                     Gasolina Regular
                   </option>
@@ -135,46 +150,41 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 </select>
               </div>
               <div class="field">
-                <label for="campo-52">
-                  Cantidad (L)
+                <label for="campo-108">
+                  Cantidad (L) *
                 </label>
-                <input class="form-control" id="campo-52" type="number" value="500" min="0.01" step="0.01" required>
+                <input class="form-control" id="campo-108" type="number" value="100" required min="0.01" step="0.01">
               </div>
               <div class="field">
-                <label for="campo-53">
-                  Fecha y hora
+                <label for="campo-109">
+                  Precio de compra (S/ por litro) *
                 </label>
-                <input class="form-control" id="campo-53" type="datetime-local" value="2026-09-10T12:00" required>
+                <input class="form-control" id="campo-109" type="number" value="4.50" required min="0.01" step="0.01">
               </div>
               <div class="field">
-                <label for="campo-54">
-                  Motivo
+                <label for="campo-110">
+                  Responsable *
                 </label>
-                <textarea class="form-control" id="campo-54" rows="3" required minlength="5" maxlength="200">
-                  Compra de combustible a proveedor
-                </textarea>
-              </div>
-              <div class="field">
-                <label for="campo-55">
-                  Responsable
-                </label>
-                <select class="form-select" id="campo-55" required>
-                  <option selected>
+                <select class="form-select" id="campo-110" required>
+                  <option>
                     Ana Torres
                   </option>
                   <option>
                     Luis Rojas
+                  </option>
+                  <option>
+                    Elena Díaz
                   </option>
                 </select>
               </div>
             </div>
             <div class="actions">
               <button type="submit" class="btn btn-primary">
-                Registrar entrada · visual
+                Registrar compra · visual
               </button>
             </div>
             <p class="form-help">
-              Formulario de demostración; los cambios no se guardan.
+              Formulario de demostración; los cambios no se guardan. Al confirmar, Spring Boot generará las entradas de inventario y el egreso correspondientes.
             </p>
           </form>
         </section>
@@ -183,25 +193,23 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             Resumen del escenario
           </h2>
           <p>
-            Gasolina Regular · Stock actual:
+            Compra de referencia C001:
             <strong>
-              1,990 L
+              300 L
             </strong>
-          </p>
-          <p>
-            Entrada propuesta:
+            ·
             <strong>
-              500 L
+              S/ 1,350.00
             </strong>
-            · Stock proyectado:
-            <strong>
-              2,490 L
-            </strong>
+            · Petroandes S.A.
           </p>
           <p class="muted-text">
-            Proyección fija, sin incorporar al historial ni modificar las existencias. Al confirmar se crearía un movimiento de inventario y su egreso asociado de S/ 2,250.00 (RN04).
+            Proyección fija: 100 L a S/ 4.50 por litro = S/ 450.00. No se incorpora al historial ni modifica la caja hasta que Spring Boot confirme la compra.
           </p>
         </section>
+        <p class="notice">
+          Este formulario comparte F13 con P20 compras.html: la lista de compras y el formulario dedicado son dos interfaces para la misma funcionalidad.
+        </p>
       </main>
       <footer>
         <span>

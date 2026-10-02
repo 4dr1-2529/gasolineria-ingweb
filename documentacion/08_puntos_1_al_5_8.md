@@ -23,7 +23,7 @@ La descomposición medible de estos objetivos para la etapa de maquetación est�
 
 ## 4. Especificación y alcance
 
-Proceso elegido: **operación diaria de una estación de servicio (gasolinera)** — compra y abastecimiento de combustible, inventario en litros, ventas, ingresos y egresos en soles, tablero de control y gestión de usuarios y empleados —, bajo el nombre comercial ficticio **Estación Nexo**.
+Proceso elegido: **operación diaria de una estación de servicio (gasolinera)** — compra y abastecimiento de combustible, inventario en litros, ventas, ingresos y egresos en soles, tablero de control, gestión de usuarios y empleados y control de asistencia del personal —, bajo el nombre comercial ficticio **Estación Nexo**.
 
 > **[PENDIENTE — decisión humana]**: la estructura oficial remite a un «Anexo 4» con la lista de procesos entre los cuales debe elegirse uno; en `recurso/` sólo está disponible un *Anexo 1* con nueve sistemas y **la gasolinera no figura allí**. Debe confirmarse con el docente el anexo/registro que respalda este proceso antes de la exposición.
 
@@ -31,13 +31,13 @@ Contenido del alcance:
 
 | Elemento | Cantidad | Detalle |
 |---|---:|---|
-| Módulos funcionales | 10 | Acceso, Dashboard, Categorías, Combustibles, Compras, Inventario, Ventas, Finanzas, Empleados, Usuarios |
+| Módulos funcionales | 12 | Acceso, Portada y contacto, Dashboard, Categorías, Combustibles, Compras, Inventario, Ventas, Finanzas, Empleados, Usuarios, Asistencia |
 | Partes estáticas oficiales | 2 | Publicidad (P01) y Contacto (P04) |
-| Interfaces | 21 | P01–P21 |
-| Archivos HTML | 22 | `publicidad.html` es una segunda presentación de P01 |
-| Funcionalidades | 32 | F01–F32 (mínimo exigido: 20) |
-| Reglas de negocio | 6 | RN01–RN06 con caso de cumplimiento y de violación (mínimo exigido: 5) |
-| Entidades | 11 | Categoría, Producto, Compra, DetalleCompra, Empleado, Usuario, Venta, DetalleVenta, MovimientoInventario, ConceptoMovimiento, MovimientoCaja |
+| Interfaces | 30 | P01–P30 |
+| Archivos HTML | 31 | `publicidad.html` es una segunda presentación de P01 (más `documentacion/bpmn.html`) |
+| Funcionalidades | 38 | F01–F38 (mínimo exigido: 20) |
+| Reglas de negocio | 10 | RN01–RN10 con caso de cumplimiento y de violación (mínimo exigido: 5) |
+| Entidades | 12 | Categoría, Producto, Compra, DetalleCompra, Empleado, Usuario, Venta, DetalleVenta, MovimientoInventario, ConceptoMovimiento, MovimientoCaja, Asistencia |
 | Métricas de serie de tiempo (eje X temporal) | 5 | Dashboard, gráficos 1–5 (exigido: 5) |
 | KPI de estado puntual | 5 | Dashboard, tarjetas superiores |
 | Hojas de estilo | 1 | `css/estilos.css` |
@@ -49,11 +49,11 @@ Contenido del alcance:
 
 ## 5.1 Resumen
 
-Estación Nexo es la maqueta de un sistema de gestión de estación de servicio que cubre la cadena **categoría → combustible → compra → inventario en litros → venta → ingreso/egreso en soles → tablero de control**, más la administración de empleados y usuarios.
+Estación Nexo es la maqueta de un sistema de gestión de estación de servicio que cubre la cadena **categoría → combustible → compra → inventario en litros → venta → ingreso/egreso en soles → tablero de control**, más la administración de empleados y usuarios y el control de asistencia del personal.
 
-Se entregan 22 archivos HTML navegables, 21 interfaces oficiales (P01–P21), 32 funcionalidades (F01–F32), 6 reglas de negocio (RN01–RN06) y 11 entidades del modelo entidad-relación. Incluye las dos partes estáticas exigidas (publicidad y contacto), el acceso por login y un tablero con cinco métricas de serie de tiempo —ventas diarias en soles, litros vendidos, ingresos, egresos y saldo de caja, todas con eje X de fechas— más cinco indicadores de estado puntual.
+Se entregan 31 archivos HTML navegables, 30 interfaces oficiales (P01–P30), 38 funcionalidades (F01–F38), 10 reglas de negocio (RN01–RN10) y 12 entidades del modelo entidad-relación. Incluye las dos partes estáticas exigidas (publicidad y contacto), el acceso por login, las interfaces de asistencia (P28 y P29) y un tablero con cinco métricas de serie de tiempo —ventas diarias en soles, litros vendidos, ingresos, egresos y saldo de caja, todas con eje X de fechas— más cinco indicadores de estado puntual.
 
-Toda la documentación de negocio, modelo, interfaces, funcionalidades, reglas, matriz bidimensional y trazabilidad vive en `documentacion/`; el BPMN de los procesos núcleo y de soporte se entrega como diagrama de código (`09_bpmn.md`) y como vista navegable (`bpmn.html`). Los datos mostrados son ficticios con corte al **10/09/2026 12:00** y se concilian entre inventario y finanzas: 6,920 L en existencias y S/ 3,425.00 de saldo de caja.
+Toda la documentación de negocio, modelo, interfaces, funcionalidades, reglas, matriz bidimensional y trazabilidad vive en `documentacion/`; el BPMN de los procesos núcleo y de soporte se entrega como diagrama de código (`09_bpmn.md`) y como vista navegable (`bpmn.html`). Los datos mostrados son ficticios con corte al **10/09/2026 12:00** y se concilian entre inventario y finanzas: 6,920 L en existencias y S/ 3,430.00 de saldo de caja.
 
 ## 5.2 Introducción
 
@@ -126,13 +126,13 @@ La operación de una estación de servicio está conectada de forma directa con 
 Los tres objetivos cumplen con los criterios exigidos de **medible**, **alcanzable** y con **tiempo** definido (cierre de la Semana 8, fecha de la evaluación de Avance 1).
 
 **OBJ 3.1 — Medible, alcanzable, con tiempo.**
-Maquetar en HTML5, CSS3 y Bootstrap 5.3.3 **21 interfaces (P01–P21) que cubran 32 funcionalidades (F01–F32)**, dejando en **0** el número de funcionalidades sin interfaz y de interfaces internas sin funcionalidad, con navegación íntegra entre los 22 archivos HTML y **0 enlaces rotos**, antes del cierre de la **Semana 8**.
+Maquetar en HTML5, CSS3 y Bootstrap 5.3.3 **30 interfaces (P01–P30) que cubran 38 funcionalidades (F01–F38)**, dejando en **0** el número de funcionalidades sin interfaz y de interfaces internas sin funcionalidad, con navegación íntegra entre los 31 archivos HTML y **0 enlaces rotos**, antes del cierre de la **Semana 8**.
 
 **OBJ 3.2 — Medible, alcanzable, con tiempo.**
-Documentar **6 reglas de negocio (RN01–RN06)**, cada una con código, nombre, descripción, condición, caso de cumplimiento, caso de violación, funcionalidades, interfaces y entidades asociadas —mínimo exigido: 5 reglas completas—, dejando en **0** el número de reglas sin funcionalidad y sin interfaz, antes del cierre de la **Semana 8**.
+Documentar **10 reglas de negocio (RN01–RN10)**, cada una con código, nombre, descripción, condición, caso de cumplimiento, caso de violación, funcionalidades, interfaces y entidades asociadas —mínimo exigido: 5 reglas completas—, dejando en **0** el número de reglas sin funcionalidad y sin interfaz, antes del cierre de la **Semana 8**.
 
 **OBJ 3.3 — Medible, alcanzable, con tiempo.**
-Construir un tablero con **5 métricas de serie de tiempo con eje X temporal (no categórico)** y **5 indicadores de estado puntual**, publicar la **matriz bidimensional 32 × 21** funcionalidades–interfaces y el **BPMN de los procesos núcleo (venta) y de soporte (compra)** con notación estándar estricta, antes del cierre de la **Semana 8**.
+Construir un tablero con **5 métricas de serie de tiempo con eje X temporal (no categórico)** y **5 indicadores de estado puntual**, publicar la **matriz bidimensional 38 × 30** funcionalidades–interfaces y el **BPMN de los procesos núcleo (venta) y de soporte (compra)** con notación estándar estricta, antes del cierre de la **Semana 8**.
 
 **Criterio de autocumplimiento** (verificable en la auditoría final): JavaScript = 0%, enlaces rotos = 0, referencias a identificadores inexistentes = 0, registros duplicados de ID = 0.
 
@@ -155,8 +155,8 @@ Personas que participan directamente en el proyecto o que usarán el producto:
 
 - **Equipo G1 (desarrolladores)**: obtienen el modelo, la matriz y las reglas como base para la implementación con Spring Boot del curso.
 - **Docente evaluador**: dispone de una maqueta navegable y de una documentación trazable para evaluar comprensión, no sólo entrega.
-- **Administrador de la estación**: usuario principal de las interfaces de catálogo, compras, finanzas y personal; se beneficia de la conciliación automática inventario–caja.
-- **Operador / Vendedor de turno**: quien registra ventas y consultas de existencias; se beneficia de que su rendición de caja quede respaldada por movimientos identificados.
+- **Administrador de la estación**: usuario principal de las interfaces de catálogo, compras, finanzas, personal y asistencia; se beneficia de la conciliación automática inventario–caja.
+- **Operador / Vendedor de turno**: quien registra ventas, consultas de existencias y su propia asistencia; se beneficia de que su rendición de caja quede respaldada por movimientos identificados y su jornada por marcaciones verificables.
 - **Proveedor de combustible (Petroandes S.A. en los datos de ejemplo)**: su relación con la estación queda registrada como una `Compra` con detalle por línea, con fecha, cantidad y precio.
 
 ### Beneficiarios indirectos
@@ -174,12 +174,15 @@ Personas en la zona de influencia del proyecto que se ven impactadas por su uso:
 ### 5.6.1 Cómo funciona el sistema
 
 **Proceso núcleo — Venta.**
-Inicio → Login (P02) → Dashboard (P03) → selección del combustible en P08 → verificación de existencias (F18, RN01) y de estado activo (RN02) → registro de la venta (F20) → salida de inventario → ingreso económico único (RN05) → consulta en historial (P09) y detalle (P10) → conciliación en finanzas (P15).
+Inicio → Login (P02) → Dashboard (P03) → selección del combustible en P08 → verificación de existencias (F18, RN01) y de estado activo (RN02) → registro de la venta (F20, con formulario propio en P24) → salida de inventario → ingreso económico único (RN05) → consulta en historial (P09) y detalle (P10) → conciliación en finanzas (P15).
 
 **Proceso de soporte — Compra y abastecimiento.**
-P20 → alta de la compra con proveedor, líneas, cantidades y precio de compra (F13) → confirmación → una entrada de inventario por línea (MI001–MI003) → **un único** egreso económico por el importe total (MC001) → conciliación en P14 y P15. Regla aplicable: RN04.
+P20 → alta de la compra con proveedor, líneas, cantidades y precio de compra (F13, con formulario propio en P23) → confirmación → una entrada de inventario por línea (MI001–MI003) → **un único** egreso económico por el importe total (MC001) → conciliación en P14 y P15. Regla aplicable: RN04.
 
-**Alcance funcional incluido:** catálogo de categorías y de productos; compras y abastecimiento; inventario con entradas, salidas y libro de movimientos; ventas con historial y detalle; conceptos económicos con ingresos y egresos manuales; conciliación de caja; empleados y usuarios; tablero con métricas; partes estáticas de publicidad y contacto.
+**Proceso de soporte — Asistencia del personal.**
+Inicio → Login (P02) → el empleado marca su entrada y su salida en «Mi asistencia» (P28, F35) → consulta su historial y su resumen (F36, F37) → el administrador revisa la asistencia de todo el personal en «Control de asistencia» (P29, F38). Reglas aplicables: RN07, RN08, RN09 y RN10.
+
+**Alcance funcional incluido:** catálogo de categorías y de productos; compras y abastecimiento; inventario con entradas, salidas y libro de movimientos; ventas con historial y detalle; conceptos económicos (CE01 venta y CE02 compra) con consulta de ingresos y egresos de caja; conciliación de caja; empleados y usuarios; asistencia del personal con marcación, historial y control; tablero con métricas; partes estáticas de publicidad y contacto.
 
 **Alcance excluido explícitamente:** JavaScript de cualquier tipo, backend, base de datos, APIs, autenticación real, autorización por rol, persistencia de formularios, integración con SUNAT o con un proveedor de combustible, y módulos ajenos al negocio (no se incorpora ningún módulo sólo para aumentar conteos).
 
@@ -235,11 +238,11 @@ flowchart TB
 |---|---|---|
 | [00_auditoria.md](00_auditoria.md) | Auditoría de entrega: inventario, controles y resultados | Control interno |
 | [01_modelo_negocio.md](01_modelo_negocio.md) | Contexto, roles, cadenas de compra y venta, conciliación del ejemplo | 5.6 |
-| [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md) | 11 entidades, atributos, PK/FK, cardinalidades y diagrama ER (Mermaid) | 5.6, 5.10 |
-| [03_interfaces.md](03_interfaces.md) | Catálogo de P01–P21 con actor, campos, acciones, origen y destino | 5.7 |
-| [04_funcionalidades.md](04_funcionalidades.md) | Ficha de F01–F32 con entrada, proceso, resultado, reglas y estado | 5.8 |
-| [05_reglas_negocio.md](05_reglas_negocio.md) | RN01–RN06 completas con casos de cumplimiento y violación | 5.9 (fuera de este documento) |
-| [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md) | Matriz bidimensional 32 × 21 con cobertura por interfaz y por funcionalidad | 5.7 |
+| [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md) | 12 entidades, atributos, PK/FK, cardinalidades y diagrama ER (Mermaid) | 5.6, 5.10 |
+| [03_interfaces.md](03_interfaces.md) | Catálogo de P01–P30 con actor, campos, acciones, origen y destino | 5.7 |
+| [04_funcionalidades.md](04_funcionalidades.md) | Ficha de F01–F38 con entrada, proceso, resultado, reglas y estado | 5.8 |
+| [05_reglas_negocio.md](05_reglas_negocio.md) | RN01–RN10 completas con casos de cumplimiento y violación | 5.9 (fuera de este documento) |
+| [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md) | Matriz bidimensional 38 × 30 con cobertura por interfaz y por funcionalidad | 5.7 |
 | [07_trazabilidad.md](07_trazabilidad.md) | Modelo → entidad → funcionalidad → regla → interfaz → archivo | 5.6 |
 | [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md) | Este documento | 5.1–5.8 |
 | [09_bpmn.md](09_bpmn.md) | BPMN de proceso núcleo y de soporte con notación estándar estricta | 5.6 (rúbrica) |
@@ -255,7 +258,7 @@ flowchart TB
 
 ## 5.7 Interfaces
 
-21 interfaces, 22 archivos HTML. `publicidad.html` es una segunda presentación de P01, no una interfaz adicional. Las acciones de registro, edición y desactivación son visuales; los enlaces sí permiten recorrer todos los archivos.
+30 interfaces, 31 archivos HTML. `publicidad.html` es una segunda presentación de P01, no una interfaz adicional. Las acciones de registro, edición y desactivación son visuales; los enlaces sí permiten recorrer todos los archivos. Las nueve interfaces P22–P30 son nuevas: formularios dedicados de categoría, compra, venta, empleado, usuario y concepto (P22–P27), más «Mi asistencia» (P28), «Control de asistencia» (P29) y «Detalle de movimiento de caja» (P30). En P17, P18 y P19 ya no hay formularios: sus altas y ediciones viven en P27, P25 y P26.
 
 | Código | Interfaz | Archivo(s) | Funcionalidades | Reglas |
 |---|---|---|---|---|
@@ -274,16 +277,25 @@ flowchart TB
 | P13 | Salida de combustible | `inventario-salida.html` | F17, F18 | RN01, RN06 |
 | P14 | Movimientos de inventario | `inventario-movimientos.html` | F19 | RN01, RN04 |
 | P15 | Resumen financiero | `finanzas.html` | F28 | RN04, RN05 |
-| P16 | Movimiento económico | `movimiento-economico.html` | F26, F27 | RN06 |
-| P17 | Conceptos económicos | `conceptos.html` | F23–F25 | RN03 |
-| P18 | Empleados | `empleados.html` | F29–F31 | RN03 |
+| P16 | Ingresos y egresos de caja | `movimiento-economico.html` | F26, F27 | RN04, RN05 |
+| P17 | Conceptos económicos | `conceptos.html` | F24 | No aplica |
+| P18 | Empleados | `empleados.html` | F30 | No aplica |
 | P19 | Usuarios | `usuarios.html` | F32 | RN03 |
 | P20 | Compras | `compras.html` | F13, F14 | RN04, RN06 |
 | P21 | Detalle de compra | `compra-detalle.html` | F15 | RN04 |
+| P22 | Formulario de categoría | `categoria-form.html` | F04, F07, F08 | RN03 |
+| P23 | Formulario de compra | `compra-form.html` | F13 | RN04, RN06 |
+| P24 | Formulario de venta | `venta-form.html` | F20 | RN01, RN02, RN05, RN06 |
+| P25 | Formulario de empleado | `empleado-form.html` | F29, F31 | RN03 |
+| P26 | Formulario de usuario | `usuario-form.html` | F32 | RN03 |
+| P27 | Formulario de concepto | `concepto-form.html` | F23, F25 | RN03 |
+| P28 | Mi asistencia | `mi-asistencia.html` | F35, F36, F37 | RN07, RN08, RN09, RN10 |
+| P29 | Control de asistencia | `control-asistencia.html` | F38 | RN08, RN10 |
+| P30 | Detalle de movimiento de caja | `movimiento-detalle.html` | F28 | RN04, RN05 |
 
-**Matriz bidimensional funcionalidades × interfaces** (32 filas × 21 columnas, 34 relaciones marcadas con `X`): se entrega completa en [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md). El encabezado de cada archivo HTML declara su interfaz, sus funcionalidades, sus entidades y sus reglas, de modo que la matriz es comprobable sobre el código.
+**Matriz bidimensional funcionalidades × interfaces** (38 filas × 30 columnas, 47 relaciones marcadas con `X`): se entrega completa en [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md). El encabezado de cada archivo HTML declara su interfaz, sus funcionalidades, sus entidades y sus reglas, de modo que la matriz es comprobable sobre el código.
 
-**Métricas del tablero (P03).** Las cinco métricas con **eje X de series de tiempo** son: ventas diarias en soles, litros vendidos por día, ingresos diarios, egresos diarios y saldo de caja por día; todas recorren del **04/09/2026 al 10/09/2026** en el mismo eje de fechas. Completan la pantalla cinco indicadores de estado puntual al corte del 10/09/2026: ventas del día (S/ 370.00), existencias (6,920 L), ingresos del día (S/ 415.00), egresos del día (S/ 1,400.00) y saldo de caja (S/ 3,425.00).
+**Métricas del tablero (P03).** Las cinco métricas con **eje X de series de tiempo** son: ventas diarias en soles, litros vendidos por día, ingresos diarios, egresos diarios y saldo de caja por día; todas recorren del **04/09/2026 al 10/09/2026** en el mismo eje de fechas. Completan la pantalla cinco indicadores de estado puntual al corte del 10/09/2026: ventas del día (S/ 370.00), existencias (6,920 L), ingresos del día (S/ 370.00), egresos del día (S/ 1,350.00) y saldo de caja (S/ 3,430.00).
 
 **La entidad Categoría en el diseño.** P05 muestra, además del catálogo, la columna «Combustibles» que enlaza cada categoría con sus productos (`Gasolinas → Gasolina Regular, Gasolina Premium`; `Diésel → Diésel`), y F06 hace explícita esa relación. Es la representación del vínculo catálogo–producto exigido por la especificación.
 
@@ -291,12 +303,12 @@ flowchart TB
 
 **Definición usada.** Una funcionalidad es una unidad completa que permite al usuario cumplir un objetivo de negocio de principio a fin: recibe datos, aplica reglas de negocio y entrega una respuesta estructurada. No se cuentan acciones aisladas de interfaz («seleccionar un elemento de una lista», «presionar un botón»).
 
-**Total: 32 funcionalidades (F01–F32)**, por encima del mínimo de 20 exigido. Se aplican los dos niveles de graduación de complejidad de la especificación oficial:
+**Total: 38 funcionalidades (F01–F38)**, por encima del mínimo de 20 exigido. Se aplican los dos niveles de graduación de complejidad de la especificación oficial:
 
-- **Nivel mínimo (CRUD)**: operaciones atómicas sobre una entidad. Cada acción CRUD cuenta como una funcionalidad —F04–F12, F14, F16, F17, F19, F21–F27, F29–F32 (24 funcionalidades).
+- **Nivel mínimo (CRUD)**: operaciones atómicas sobre una entidad. Cada acción CRUD cuenta como una funcionalidad —F04–F12, F14, F16, F17, F19, F21–F27, F29–F32, F35, F36, F38 (27 funcionalidades).
 - **Nivel orientado a procesos (flujo de negocio)**: tareas compuestas orquestadas en el backend que representan transacciones o casos de uso completos —**F13** (compra: cabecera + detalles + entradas de inventario + egreso en una sola transacción), **F15** (detalle de compra con sus efectos trazados), **F18** (consulta de existencias como sustento de RN01), **F20** (venta: valida stock, calcula montos, guarda cabecera y detalle, descuenta inventario y crea un único ingreso) y **F28** (conciliación de caja: apertura + ingresos − egresos = saldo).
 
-Cierran el conjunto **F01–F03** (iniciar sesión, cerrar sesión y consultar el tablero), que son navegación y consulta agregada sin operación CRUD propia. Reparto completo y sin solapamientos: 24 (CRUD) + 5 (proceso) + 3 (acceso y tablero) = **32**.
+Cierran el conjunto **F01–F03** (iniciar sesión, cerrar sesión y consultar el tablero), **F33–F34** (consultar la portada pública y enviar el mensaje de contacto) y **F37** (resumen de asistencia), que son navegación y consulta agregada sin operación CRUD propia. Reparto completo y sin solapamientos: 27 (CRUD) + 5 (proceso) + 6 (acceso, portada y consultas agregadas) = **38**.
 
 | Módulo | Funcionalidades |
 |---|---|
@@ -307,11 +319,13 @@ Cierran el conjunto **F01–F03** (iniciar sesión, cerrar sesión y consultar e
 | Compras | F13 Registrar compra de combustible, F14 Consultar compras, F15 Consultar detalle de compra |
 | Inventario | F16 Registrar entrada de combustible, F17 Registrar salida de combustible, F18 Consultar existencias, F19 Consultar movimientos de inventario |
 | Ventas | F20 Registrar venta, F21 Consultar ventas, F22 Consultar detalle de venta |
-| Finanzas | F23 Registrar concepto económico, F24 Consultar conceptos económicos, F25 Editar/activar/desactivar concepto económico, F26 Registrar ingreso económico, F27 Registrar egreso económico, F28 Consultar movimientos y saldo de caja |
+| Finanzas | F23 Registrar concepto económico, F24 Consultar conceptos económicos, F25 Editar/activar/desactivar concepto económico, F26 Consultar ingresos de caja, F27 Consultar egresos de caja, F28 Consultar movimientos y saldo de caja |
 | Empleados | F29 Registrar empleado, F30 Consultar empleados, F31 Editar/activar/desactivar empleado |
 | Usuarios | F32 Gestionar usuarios |
+| Portada y contacto | F33 Consultar la portada pública, F34 Enviar mensaje de contacto |
+| Asistencia | F35 Registrar asistencia, F36 Consultar mi asistencia, F37 Consultar mi resumen de asistencia, F38 Consultar asistencia del personal |
 
-La ficha completa de cada funcionalidad —descripción, actor, entrada, proceso, resultado, interfaz, entidades, reglas, justificación y estado— está en [04_funcionalidades.md](04_funcionalidades.md). Veintidós funcionalidades están ligadas al menos a una regla de negocio; las diez restantes (F01–F06, F23, F24, F29, F30) son altas de registro nuevo, consultas o gestión sin restricción de negocio.
+La ficha completa de cada funcionalidad —descripción, actor, entrada, proceso, resultado, interfaz, entidades, reglas, justificación y estado— está en [04_funcionalidades.md](04_funcionalidades.md). Veintiséis funcionalidades están ligadas al menos a una regla de negocio; las doce restantes (F01–F06, F23, F24, F29, F30, F33, F34) son navegación, altas de registro nuevo, consultas o gestión sin restricción de negocio.
 
 ---
 

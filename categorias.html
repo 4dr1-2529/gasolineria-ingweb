@@ -64,6 +64,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="usuarios.html">
           Usuarios
         </a>
+        <a href="mi-asistencia.html">
+          Asistencia
+        </a>
         <a href="contacto.html">
           Contacto
         </a>
@@ -103,6 +106,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           <div class="actions">
             <a class="btn btn-primary" href="#registro">
               + Categoría
+            </a>
+            <a class="btn btn-secondary" href="categoria-form.html">
+              Abrir formulario
             </a>
           </div>
         </div>
@@ -216,20 +222,20 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-7">
                   Nombre
                 </label>
-                <input class="form-control" id="campo-7" type="text" value="">
+                <input class="form-control" id="campo-7" type="text" value="" required minlength="3" maxlength="40">
               </div>
               <div class="field">
                 <label for="campo-8">
                   Descripción
                 </label>
-                <textarea class="form-control" id="campo-8" rows="3">
+                <textarea class="form-control" id="campo-8" rows="3" minlength="5" maxlength="200" required>
                 </textarea>
               </div>
               <div class="field">
                 <label for="campo-9">
                   Estado
                 </label>
-                <select class="form-select" id="campo-9">
+                <select class="form-select" id="campo-9" required>
                   <option selected>
                     Activo
                   </option>
@@ -240,7 +246,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
             </div>
             <div class="actions">
-              <button type="button" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 Registrar categoría · visual
               </button>
             </div>
@@ -259,13 +265,13 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-10">
                   Nombre
                 </label>
-                <input class="form-control" id="campo-10" type="text" value="Gasolinas">
+                <input class="form-control" id="campo-10" type="text" value="Gasolinas" required minlength="3" maxlength="40">
               </div>
               <div class="field">
                 <label for="campo-11">
                   Descripción
                 </label>
-                <textarea class="form-control" id="campo-11" rows="3">
+                <textarea class="form-control" id="campo-11" rows="3" minlength="5" maxlength="200" required>
                   Combustibles para motores a gasolina
                 </textarea>
               </div>
@@ -273,7 +279,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-12">
                   Estado
                 </label>
-                <select class="form-select" id="campo-12">
+                <select class="form-select" id="campo-12" required>
                   <option selected>
                     Activo
                   </option>
@@ -284,7 +290,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
             </div>
             <div class="actions">
-              <button type="button" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 Guardar edición · visual
               </button>
             </div>
@@ -303,13 +309,13 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-13">
                   Nombre
                 </label>
-                <input class="form-control" id="campo-13" type="text" value="Diésel">
+                <input class="form-control" id="campo-13" type="text" value="Diésel" required minlength="3" maxlength="40">
               </div>
               <div class="field">
                 <label for="campo-14">
                   Descripción
                 </label>
-                <textarea class="form-control" id="campo-14" rows="3">
+                <textarea class="form-control" id="campo-14" rows="3" minlength="5" maxlength="200" required>
                   Combustibles para motores diésel
                 </textarea>
               </div>
@@ -317,7 +323,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-15">
                   Estado
                 </label>
-                <select class="form-select" id="campo-15">
+                <select class="form-select" id="campo-15" required>
                   <option selected>
                     Activo
                   </option>
@@ -328,7 +334,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
             </div>
             <div class="actions">
-              <button type="button" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 Guardar edición · visual
               </button>
             </div>
@@ -347,7 +353,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-16">
                   Categoría
                 </label>
-                <select class="form-select" id="campo-16">
+                <select class="form-select" id="campo-16" required>
                   <option selected>
                     Gasolinas
                   </option>
@@ -360,7 +366,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-17">
                   Nuevo estado
                 </label>
-                <select class="form-select" id="campo-17">
+                <select class="form-select" id="campo-17" required>
                   <option>
                     Activo
                   </option>
@@ -371,7 +377,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
             </div>
             <div class="actions">
-              <button type="button" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 Representar cambio de estado · visual
               </button>
             </div>

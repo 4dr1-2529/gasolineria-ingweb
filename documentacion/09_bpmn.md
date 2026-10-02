@@ -10,18 +10,18 @@ Sólo se emplean elementos oficiales de BPMN 2.0. Cada forma se usa con su signi
 
 | Elemento | Tipo BPMN 2.0 | Forma estándar | Símbolo usado en este proyecto |
 |---|---|---|---|
-| Evento de inicio | Evento · *Start Event* | Círculo de **borde fino** | `S1`, `S3` |
-| Evento de fin | Evento · *End Event* | Círculo de **borde grueso** | `E1`, `E6` |
-| Evento de fin por error | Evento · *End Event* de tipo *Error* | Círculo grueso relleno | `E2`, `E3`, `E4`, `E5` (clasificación *Business Rule Violation*) |
-| Tarea / actividad | Actividad · *Task* | Rectángulo con esquinas redondeadas | `P1`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `A9`, `A10` |
+| Evento de inicio | Evento · *Start Event* | Círculo de **borde fino** | `S1`, `S3`, `S4` |
+| Evento de fin | Evento · *End Event* | Círculo de **borde grueso** | `E1`, `E6`, `E9` |
+| Evento de fin por error | Evento · *End Event* de tipo *Error* | Círculo grueso relleno | `E2`, `E3`, `E4`, `E5`, `E7`, `E8` (clasificación *Business Rule Violation*) |
+| Tarea / actividad | Actividad · *Task* | Rectángulo con esquinas redondeadas | `P1`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `A9`, `A10`, `A11`, `A12`, `A13` |
 | Subproceso llamado | Actividad · *Call Activity* | Rectángulo redondeado con **borde doble** | `A7` llama a `SP-INV` |
 | Subproceso incorporado | Actividad · *Sub-Process* | Rectángulo redondeado con signo `+` en la base | `SP-INV`, `A8` |
-| Puerta de decisión exclusiva | *Gateway* · *Exclusive Gateway* | Rombo con **`X`** dentro | `G1`, `G2`, `G3`, `G4` |
+| Puerta de decisión exclusiva | *Gateway* · *Exclusive Gateway* | Rombo con **`X`** dentro | `G1`, `G2`, `G3`, `G4`, `G5`, `G6` |
 | Flujo secuencial | *Sequence Flow* | Flecha de trazo continuo | Todo el interior del pool |
 | Flujo de mensajes | *Message Flow* | Flecha de trazo **discontinuo** | `M1` (Proveedor ↔ Estación) |
-| Pool (participante) | *Participant* | Rectángulo con cabecera lateral | `POOL-CORE`, `POOL-SOPORTE`, `POOL-PROV` |
-| Carril (lane) | *Lane* | Banda lateral dentro del pool | Operador de turno, Sistema de inventario, Sistema de caja, Publicación y control, Compras |
-| Texto de anotación | *Text Annotation* | Texto bajo el elemento | Anotaciones `AN-01`, `AN-02` |
+| Pool (participante) | *Participant* | Rectángulo con cabecera lateral | `POOL-CORE`, `POOL-SOPORTE`, `POOL-PROV`, `POOL-ASIST` |
+| Carril (lane) | *Lane* | Banda lateral dentro del pool | Operador de turno, Sistema de inventario, Sistema de caja, Publicación y control, Compras, Empleado, Sistema de asistencia |
+| Texto de anotación | *Text Annotation* | Texto bajo el elemento | Anotaciones `AN-01`, `AN-02`, `AN-03` |
 
 **Reglas de uso verificables en el diagrama:**
 
@@ -153,14 +153,66 @@ flowchart TB
 
 ---
 
-## 4. Correspondencia con el resto del proyecto
+## 4. Proceso de asistencia · Marcación y control
+
+**Pool:** `POOL-ASIST` — Estación Nexo · Proceso de asistencia
+**Carriles:** Empleado · Sistema de asistencia · Publicación y control
+
+```mermaid
+flowchart TB
+  classDef start fill:#ffffff,stroke:#111827,stroke-width:2px,color:#111827;
+  classDef endn fill:#111827,stroke:#111827,stroke-width:4px,color:#ffffff;
+  classDef task fill:#d7f26c,stroke:#111827,stroke-width:2px,color:#111827;
+  classDef gw fill:#ffffff,stroke:#111827,stroke-width:2px,color:#111827;
+
+  S4(["S4 · Inicio: el empleado quiere marcar<br/>su asistencia del día"]):::start
+  A11["A11 · Registrar la marcación de asistencia<br/>P28 · F35"]:::task
+  G5{"G5 · ¿RN08: ya existe asistencia<br/>para este día?"}:::gw
+  G6{"G6 · ¿RN09: la hora de salida<br/>es posterior a la de entrada?"}:::gw
+  A12["A12 · Calcular el estado<br/>Presente o Falta · RN10"]:::task
+  A13["A13 · Publicar mi asistencia y el control<br/>P28 · F36, F37 · P29 · F38"]:::task
+  E7(["E7 · Fin por error: asistencia duplicada<br/>para el mismo día"]):::endn
+  E8(["E8 · Fin por error: hora de salida no<br/>posterior a la hora de entrada"]):::endn
+  E9(["E9 · Fin: asistencia registrada<br/>y estado calculado"]):::endn
+
+  S4 --> A11 --> G5
+  G5 -- "No · es la primera" --> G6
+  G6 -- "Sí" --> A12 --> A13 --> E9
+  G5 -- "Sí · ya existe" --> E7
+  G6 -- "No" --> E8
+```
+
+### 4.1 Elementos del proceso de asistencia
+
+| ID | Elemento | Tipo | Carril | Contenido / interfaz | Regla |
+|---|---|---|---|---|---|
+| `S4` | El empleado quiere marcar su asistencia del día | *Start Event* | Empleado | Inicio del proceso | — |
+| `A11` | Registrar la marcación de asistencia | *Task* | Empleado | P28 · F35 · `Asistencia` + `Empleado` | RN07, RN08, RN10 |
+| `G5` | ¿Ya existe asistencia para este día? | *Exclusive Gateway* (`X`) | Sistema de asistencia | Evita duplicar la marcación diaria | RN08 |
+| `G6` | ¿La hora de salida es posterior a la de entrada? | *Exclusive Gateway* (`X`) | Sistema de asistencia | Comprobación de las horas marcadas · `hora_salida > hora_entrada` | RN09 |
+| `A12` | Calcular el estado (Presente o Falta) | *Task* | Sistema de asistencia | Estado derivado de las horas · P28 · F36 | RN10 |
+| `A13` | Publicar mi asistencia y el control del personal | *Task* | Publicación y control | P28 · F36, F37 · P29 · F38 | RN07, RN08, RN10 |
+| `E7` | Fin por error: asistencia duplicada en `G5` | *End Event* de tipo *Error* | — | — | RN08 |
+| `E8` | Fin por error: horas no válidas en `G6` | *End Event* de tipo *Error* | — | — | RN09 |
+| `E9` | Fin: asistencia registrada y estado calculado | *End Event* (borde grueso) | — | — | — |
+
+**Secuencia de flujos:** `S4 → A11 → G5`; en `G5` rama «No · es la primera» `→ G6`, rama «Sí · ya existe» `→ E7`; en `G6` rama «Sí» `→ A12 → A13 → E9`, rama «No» `→ E8`.
+
+**Anotación `AN-03`.** RN07 hace que «Mi asistencia» (P28) sólo muestre las marcaciones del usuario autenticado, sin selector de empleado: Ana Torres ve las suyas y no las de los demás. RN10 hace que el estado *Presente* o *Falta* se calcule a partir de las horas marcadas; no se elige a mano. Datos del corte: Ana Torres 10/09/2026 08:00–17:00 *Presente*, Luis Rojas 10/09/2026 08:00–17:00 *Presente* y Elena Díaz 10/09/2026 08:15–17:00 *Presente*; en «Mi asistencia» de Ana se ven además 09/09/2026 07:58–17:00 *Presente* y 08/09/2026 sin marcación (*Falta*).
+
+---
+
+## 5. Correspondencia con el resto del proyecto
+
+El proyecto completo, al corte del 10/09/2026, tiene **30 interfaces (P01–P30)**, **38 funcionalidades (F01–F38)**, **12 entidades** (incluida `Asistencia`) y **10 reglas de negocio (RN01–RN10)**; la maqueta tiene **31 archivos HTML en la raíz** más esta vista navegable `documentacion/bpmn.html`.
 
 | Proceso | Elementos | Funcionalidades | Interfaces | Reglas | Entidades |
 |---|---|---|---|---|---|
 | Núcleo · Venta | 1 inicio, 5 tareas, 1 subproceso, 2 gateways, 3 fin | F18, F19, F20, F21, F22, F28 | P08, P09, P10, P14, P15 | RN01, RN02, RN05, RN06 | Venta, DetalleVenta, Producto, MovimientoInventario, MovimientoCaja, ConceptoMovimiento |
 | Soporte · Compra | 1 inicio, 1 flujo de mensaje, 4 tareas, 1 call activity, 1 subproceso, 2 gateways, 3 fin | F13, F15, F16, F19, F28 | P12, P14, P15, P20, P21 | RN04, RN06 | Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja, ConceptoMovimiento |
+| Asistencia · Marcación | 1 inicio, 3 tareas, 2 gateways, 3 fin | F35, F36, F37, F38 | P28, P29 | RN07, RN08, RN09, RN10 | Asistencia, Empleado |
 
-**Conciliación de los datos del ejemplo con los dos procesos:**
+**Conciliación de los datos del ejemplo con los tres procesos:**
 
 | Hecho en la maqueta (corte 10/09/2026 12:00) | Elemento BPMN | Interfaz |
 |---|---|---|
@@ -170,19 +222,21 @@ flowchart TB
 | Ventas `V001`, `V002`, `V003` (80 L / S/ 370.00) | `A1`, `A2` | P08 |
 | Salidas `MI004`, `MI005`, `MI006` | `A3` | P14 |
 | Ingresos `MC003`, `MC004`, `MC005` (S/ 50.00, 120.00, 200.00) | `A4` | P15 |
-| Ingreso manual `MC002` (S/ 45.00) y egreso manual `MC006` (S/ 50.00) | Fuera de los dos procesos: son movimientos manuales de `A8` | P16, P17 |
-| Saldo de caja S/ 3,425.00 = 4,410.00 + 415.00 − 1,400.00 | `A8` | P15 |
+| Consulta de solo lectura de ingresos y egresos de caja: F26 lee los ingresos y F27 los egresos | Lectura de `A4` y de `A9` | P16 |
+| Asistencia del 10/09/2026: Ana Torres 08:00–17:00, Luis Rojas 08:00–17:00 y Elena Díaz 08:15–17:00, todo *Presente* | `A11` → `A12` → `A13` | P28, P29 |
+| «Mi asistencia» de Ana: 09/09/2026 07:58–17:00 *Presente* y 08/09/2026 sin marcación (*Falta*) | `A12`, `A13` | P28 |
+| Saldo de caja S/ 3,430.00 = 4,410.00 + 370.00 − 1,350.00 | `A8` | P15 |
 
 ---
 
-## 5. Autocontrol de notación
+## 6. Autocontrol de notación
 
 | Comprobación | Resultado |
 |---|---|
-| ¿Todo proceso tiene un inicio y al menos un fin? | Sí · `S1`/`E1`,`E2`,`E3` y `S3`/`E4`,`E5`,`E6` |
-| ¿Eventos de fin con borde grueso? | Sí · los seis; los cuatro de error van rellenos |
-| ¿Gateways exclusivos marcados con `X` y etiqueta en cada rama? | Sí · `G1`, `G2`, `G3`, `G4` (ocho ramas rotuladas) |
+| ¿Todo proceso tiene un inicio y al menos un fin? | Sí · `S1`/`E1`,`E2`,`E3`, `S3`/`E4`,`E5`,`E6` y `S4`/`E7`,`E8`,`E9` |
+| ¿Eventos de fin con borde grueso? | Sí · los nueve; los seis de error van rellenos |
+| ¿Gateways exclusivos marcados con `X` y etiqueta en cada rama? | Sí · `G1` a `G6` (doce ramas rotuladas) |
 | ¿Flujos de mensaje discontinuos y sólo entre pools? | Sí · `M1`, de `POOL-PROV` a `POOL-SOPORTE` |
-| ¿Cada tarea en un único carril? | Sí · las nueve *Task*, la *Call Activity* `A7` y los dos *Sub-Process* |
-| ¿Existe un camino del inicio a un fin sin saltos? | Sí · se listan las secuencias completas en 2.1 y 3.1 |
+| ¿Cada tarea en un único carril? | Sí · las doce *Task*, la *Call Activity* `A7` y los dos *Sub-Process* |
+| ¿Existe un camino del inicio a un fin sin saltos? | Sí · se listan las secuencias completas en 2.1, 3.1 y 4.1 |
 | ¿Uso de formas no definidas en BPMN 2.0? | Ninguno |

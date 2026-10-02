@@ -23,10 +23,10 @@ Bibliografía a revisar exigida junto a este punto (Coronel/Morris/Rob; Cervante
 
 Vive en [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md) y se dibuja con **Mermaid `erDiagram`** (herramienta basada en código). Contiene:
 
-- Las **11 entidades** oficiales del modelo validado: `Categoria`, `Producto`, `Compra`, `DetalleCompra`, `Empleado`, `Usuario`, `Venta`, `DetalleVenta`, `MovimientoInventario`, `ConceptoMovimiento`, `MovimientoCaja`.
+- Las **12 entidades** oficiales del modelo validado: `Categoria`, `Producto`, `Compra`, `DetalleCompra`, `Empleado`, `Usuario`, `Venta`, `DetalleVenta`, `MovimientoInventario`, `ConceptoMovimiento`, `MovimientoCaja`, `Asistencia`.
 - Claves **PK** y **FK** declaradas en cada entidad y listadas en las tablas de atributos.
-- Las **14 relaciones con cardinalidad** (`1:N`, `1:0..1`), incluida la relación `Categoria 1:N Producto` que sustenta el vínculo categoría → combustible exigido por la especificación.
-- Ninguna entidad ni atributo nuevo: el diagrama es el mismo que auditan [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md) y [07_trazabilidad.md](07_trazabilidad.md).
+- Las **15 relaciones con cardinalidad** (`1:N`, `1:0..1`), incluida la relación `Categoria 1:N Producto` que sustenta el vínculo categoría → combustible exigido por la especificación y la relación `Empleado 1:N Asistencia`.
+- Nada fuera del modelo oficial: el diagrama es el mismo que auditan [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md) y [07_trazabilidad.md](07_trazabilidad.md).
 
 ---
 
@@ -36,24 +36,27 @@ La semántica de cada entidad y de cada atributo está en las tablas de [02_mode
 
 | Entidad | Atributos | PK | FK | Interfaces asociadas |
 |---|---:|---|---|---|
-| Categoria | 4 | `id_categoria` | — | P05 |
+| Categoria | 4 | `id_categoria` | — | P05, P22 |
 | Producto | 7 | `id_producto` | `id_categoria` | P06, P07 |
-| Compra | 6 | `id_compra` | `id_usuario` | P20 |
-| DetalleCompra | 6 | `id_detalle_compra` | `id_compra`, `id_producto` | P20, P21 |
-| Empleado | 7 | `id_empleado` | — | P18 |
-| Usuario | 6 | `id_usuario` | `id_empleado` | P02, P19 |
-| Venta | 5 | `id_venta` | `id_usuario` | P08 |
-| DetalleVenta | 6 | `id_detalle` | `id_venta`, `id_producto` | P08, P09, P10 |
+| Compra | 6 | `id_compra` | `id_usuario` | P20, P23 |
+| DetalleCompra | 6 | `id_detalle_compra` | `id_compra`, `id_producto` | P20, P21, P23 |
+| Empleado | 7 | `id_empleado` | — | P18, P25, P28, P29 |
+| Usuario | 6 | `id_usuario` | `id_empleado` | P02, P19, P26 |
+| Venta | 5 | `id_venta` | `id_usuario` | P08, P24 |
+| DetalleVenta | 6 | `id_detalle` | `id_venta`, `id_producto` | P08, P09, P10, P24 |
 | MovimientoInventario | 7 | `id_movimiento_inventario` | `id_producto`, `id_usuario` | P12, P13, P14 |
-| ConceptoMovimiento | 4 | `id_concepto` | — | P17 |
-| MovimientoCaja | 9 | `id_movimiento_caja` | `id_concepto`, `id_usuario`, `id_venta`, `id_compra` | P15, P16 |
-| **Total** | **67** | 11 PK | 14 FK | 11/11 entidades con interfaz |
+| ConceptoMovimiento | 4 | `id_concepto` | — | P17, P27 |
+| MovimientoCaja | 9 | `id_movimiento_caja` | `id_concepto`, `id_usuario`, `id_venta`, `id_compra` | P15, P16, P30 |
+| **Asistencia** | **7** | **`id_asistencia`** | **`id_empleado`** | **P28, P29** |
+| **Total** | **74** | **12 PK** | **15 FK** | **12/12 entidades con interfaz** |
+
+La entidad `Asistencia` aporta 7 atributos: `id_asistencia` (PK), `id_empleado` (FK), `fecha`, `hora_entrada`, `hora_salida`, `estado` y `observacion` (opcional); con ella el diccionario llega a **74 atributos, 12 PK, 15 FK y 15 relaciones**, siendo la número 15 `Empleado 1:N Asistencia`. Las interfaces de cada entidad ya incluyen los formularios nuevos (P22 categoría, P23 compra, P24 venta, P25 empleado, P26 usuario, P27 concepto) y las páginas nuevas de asistencia (P28, P29) y de caja (P30).
 
 ---
 
 ## 4. Diagramas de secuencia (entregable 3)
 
-Herramienta: **Mermaid `sequenceDiagram`** (código, renderizado por GitHub y VS Code). Son *diagramas de comportamiento* como pide la bibliografía oficial (Cervantes Maceda, «Diagrama de comportamiento — Diagrama de secuencia»). Especifican el flujo previsto para la etapa Spring Boot: **en esta maqueta no se ejecutan**; los participantes, mensajes y alternativas usan sólo IDs existentes.
+Herramienta: **Mermaid `sequenceDiagram`** (código, renderizado por GitHub y VS Code). Son *diagramas de comportamiento* como pide la bibliografía oficial (Cervantes Maceda, «Diagrama de comportamiento — Diagrama de secuencia»). Especifican el flujo previsto para la etapa Spring Boot: **en esta maqueta no se ejecutan**; los participantes, mensajes y alternativas usan sólo IDs existentes. Las entidades que aparecen en las columnas *Entidad* pertenecen al diccionario de 12 entidades y 74 atributos de la §3. Las interfaces nuevas entran donde la misma funcionalidad se maqueta además en un formulario propio (P23 con F13, P24 con F20) o en una página de detalle (P30 con F28); la portada y el contacto (F33 y F34 en P01 y P04) y la asistencia (F35–F38 en P28 y P29) quedan fuera de estos dos procesos BPMN.
 
 ### 4.1 Proceso núcleo · Venta de combustible
 
@@ -86,21 +89,22 @@ sequenceDiagram
         F20-->>P08: Venta rechazada · fin de error E2
     end
     Note over CAJ: Si el ingreso ya existe para la venta, fin de error E3 (RN05)
+    Note over P08, PUB: F20 también se maqueta en P24 (venta-form.html) y F28 se consulta en P15 y en P30 (movimiento-detalle.html)
 ```
 
 | Mensaje | Funcionalidad | Interfaz | Regla | Entidad | Elemento BPMN |
 |---|---|---|---|---|---|
-| Registrar datos de la venta | F20 | P08 | — | Venta, DetalleVenta | `A1` |
+| Registrar datos de la venta | F20 | P08, P24 | — | Venta, DetalleVenta | `A1` |
 | Consultar existencia y estado | F18 | P08 | RN01, RN02 | Producto | `G1` |
-| Confirmar venta y descontar existencias | F20 | P08 | RN01, RN06 | Producto | `A2` |
-| Registrar salida · MI004–MI006 | F20 (origen) · F19 (consulta) | P08, P14 | RN01 | MovimientoInventario | `A3` |
-| Crear ingreso único · MC003–MC005 | F20 (origen) · F28 (consulta) | P08, P15 | RN05, RN06 | MovimientoCaja | `A4`, `G2` |
+| Confirmar venta y descontar existencias | F20 | P08, P24 | RN01, RN06 | Producto | `A2` |
+| Registrar salida · MI004–MI006 | F20 (origen) · F19 (consulta) | P08, P14, P24 | RN01 | MovimientoInventario | `A3` |
+| Crear ingreso único · MC003–MC005 | F20 (origen) · F28 (consulta) | P08, P15, P24, P30 | RN05, RN06 | MovimientoCaja | `A4`, `G2` |
 | Publicar historial y detalle | F21, F22 | P09, P10 | — | Venta, DetalleVenta | `A5` |
-| Conciliar caja del día | F28 | P15 | RN04, RN05 | MovimientoCaja, ConceptoMovimiento | `A8` |
+| Conciliar caja del día | F28 | P15, P30 | RN04, RN05 | MovimientoCaja, ConceptoMovimiento | `A8` |
 | Venta rechazada | — | P08 | RN01, RN02 | — | `E2` |
 | Ingreso duplicado | — | P08 | RN05 | — | `E3` |
 
-La columna *Funcionalidad* distingue el origen del efecto: las salidas (`A3`) y el ingreso (`A4`) los origina la venta F20 y se **consultan** como F19 (P14) y F28 (P15), exactamente como los enlaza [09_bpmn.md](09_bpmn.md). Los códigos de evento de error corresponden a los casos de violación de RN01/RN02 (`E2`) y RN05 (`E3`) y se muestran en la interfaz que originó la transacción.
+La columna *Funcionalidad* distingue el origen del efecto: las salidas (`A3`) y el ingreso (`A4`) los origina la venta F20 —maquetada en P08 y en el formulario P24— y se **consultan** como F19 (P14) y F28 (P15 y P30), exactamente como los enlaza [09_bpmn.md](09_bpmn.md). Los códigos de evento de error corresponden a los casos de violación de RN01/RN02 (`E2`) y RN05 (`E3`) y se muestran en la interfaz que originó la transacción.
 
 ### 4.2 Proceso de soporte · Compra y abastecimiento
 
@@ -133,20 +137,21 @@ sequenceDiagram
     else RN06 violada
         F13-->>P20: Fin de error E4
     end
+    Note over PRV, P21: F13 también se maqueta en P23 (compra-form.html) y el egreso se consulta como F28 en P15 y en P30 (movimiento-detalle.html)
 ```
 
 | Mensaje | Funcionalidad | Interfaz | Regla | Entidad | Elemento BPMN |
 |---|---|---|---|---|---|
 | Factura del proveedor | F13 | P20 | — | Compra | `M1` |
-| Registrar compra con líneas | F13 | P20 | RN06 | Compra, DetalleCompra | `A6` |
+| Registrar compra con líneas | F13 | P20, P23 | RN06 | Compra, DetalleCompra | `A6` |
 | Crear entradas por línea · MI001–MI003 | F16 | P12 | RN04, RN06 | MovimientoInventario | `A7` (call activity) |
 | Sumar existencias | F19 | P14 | RN01, RN04 | Producto | `SP-INV` |
-| Crear egreso único · MC001 | F13 (origen) · F28 (consulta) | P20, P15 | RN04, RN06 | MovimientoCaja | `A9`, `G4` |
+| Crear egreso único · MC001 | F13 (origen) · F28 (consulta) | P20, P15, P23, P30 | RN04, RN06 | MovimientoCaja | `A9`, `G4` |
 | Publicar detalle de la compra | F15 | P21 | RN04 | Compra, DetalleCompra | `A10` |
 | Fin de error por valores no válidos | — | P20 | RN06 | — | `E4` |
 | Fin de error por egreso duplicado | — | P20 | RN04 | — | `E5` |
 
-La columna *Funcionalidad* vuelve a separar origen y consulta: el egreso lo origina la compra F13 y se consulta como F28 en P15, como enlaza [09_bpmn.md](09_bpmn.md). `E4` y `E5` son los casos de violación de RN06 y RN04.
+La columna *Funcionalidad* vuelve a separar origen y consulta: el egreso lo origina la compra F13 —maquetada en P20 y en el formulario P23— y se consulta como F28 en P15 y en P30, como enlaza [09_bpmn.md](09_bpmn.md). `E4` y `E5` son los casos de violación de RN06 y RN04.
 
 ---
 
@@ -189,6 +194,12 @@ end note
 note left of UC19
   F19 participa tambien en el proceso de soporte (P14).
 end note
+note left of UC20
+  F20 se registra en P08 y en el formulario P24 (venta-form.html).
+end note
+note right of UC28
+  F28 se consulta en P15 y en P30 (movimiento-detalle.html).
+end note
 @enduml
 ```
 
@@ -220,18 +231,22 @@ note right of UC13
   RN04 y RN06.
   Camino BPMN: A6 - G3 - A7 - SP-INV - G4 - A9 - A10.
   El proveedor aporta el mensaje M1 (factura).
+  F13 se registra en P20 y en el formulario P23 (compra-form.html).
+end note
+note right of UC28
+  F28 se consulta en P15 y en P30 (movimiento-detalle.html).
 end note
 @enduml
 ```
 
 **Correspondencia de los dos diagramas:**
 
-| Diagrama | Casos de uso (funcionalidades) | Actores | Reglas | Entidades |
-|---|---|---|---|---|
-| Núcleo | F01, F18, F19, F20, F21, F22, F28 | Operador / Vendedor, Administrador | RN01, RN02, RN04, RN05, RN06 | Venta, DetalleVenta, Producto, MovimientoInventario, MovimientoCaja, ConceptoMovimiento |
-| Soporte | F13, F14, F15, F16, F19, F28 | Administrador, Proveedor | RN01, RN04, RN06 | Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja, ConceptoMovimiento |
+| Diagrama | Casos de uso (funcionalidades) | Interfaces | Actores | Reglas | Entidades |
+|---|---|---|---|---|---|
+| Núcleo | F01, F18, F19, F20, F21, F22, F28 | P02, P08, P09, P10, P11, P13, P14, P15, P24, P30 | Operador / Vendedor, Administrador | RN01, RN02, RN04, RN05, RN06 | Venta, DetalleVenta, Producto, MovimientoInventario, MovimientoCaja, ConceptoMovimiento |
+| Soporte | F13, F14, F15, F16, F19, F28 | P12, P14, P15, P20, P21, P23, P30 | Administrador, Proveedor | RN01, RN04, RN06 | Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja, ConceptoMovimiento |
 
-Los casos de uso fuera de estos dos procesos (catálogo F04–F12, finanzas manuales F23–F27, personal F29–F32, tablero F03) pertenecen a los módulos de soporte administrativo y están completos en [04_funcionalidades.md](04_funcionalidades.md) y en la matriz de [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md): el punto 5.10 pide los dos procesos, no el inventario total.
+Los casos de uso fuera de estos dos procesos quedan así: catálogo (F04–F12, con formulario en P07 y P22), finanzas (F23–F27, con formulario en P27 y consultas en P16 y P17), personal (F29–F32, con formularios en P25 y P26), portada y contacto (F33 y F34 en P01 y P04), asistencia (F35–F38 en P28 y P29) y tablero (F03 en P03). Todos pertenecen a los módulos de soporte administrativo y están completos en [04_funcionalidades.md](04_funcionalidades.md) y en la matriz de [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md): el punto 5.10 pide los dos procesos, no el inventario total de 38 funcionalidades.
 
 ---
 
@@ -244,15 +259,15 @@ Para no presentar como «implementado» algo que sólo está previsto, los patro
 | Patrón / convención | Qué resuelve | Dónde se usa en Estación Nexo | Evidencia |
 |---|---|---|---|
 | **Design tokens (variables CSS)** | Un mismo lenguaje de color compartido por todos los componentes | La paleta `:root` de `css/estilos.css` gobierna botones, tarjetas y gráficos | Extracto 1 de esta sección |
-| **Navegación consistente** | Un mismo menú, con el mismo orden de módulos, en todas las páginas internas | Las **18 páginas internas** repiten el mismo bloque `<nav>` con el mismo orden de módulos (sólo cambia `aria-current="page"`); las 4 páginas públicas (index, publicidad, contacto, login) usan una variante reducida de 4 enlaces. **No es un include/partial de servidor ni de plantilla:** en HTML estático el bloque está duplicado en cada archivo y se mantiene idéntico por convención | Extracto 2 de esta sección |
-| **Convención de bloque de comentario por página** | Trazabilidad legible de qué cubre cada archivo | Cada uno de los 22 HTML arranca en su línea 3 con `Interfaz: Pnn …`, `Funcionalidades:`, `Entidades:`, `Reglas:` y `Estado:` | Propio de los 22 archivos HTML |
+| **Navegación consistente** | Un mismo menú, con el mismo orden de módulos, en todas las páginas internas | Las **27 páginas con barra lateral** repiten el mismo bloque `<nav>` con el mismo orden de módulos, de 13 enlaces que cubren los 12 módulos oficiales (sólo cambia `aria-current="page"`); las 4 páginas públicas (index, publicidad, contacto, login) usan una variante reducida de 4 enlaces. **No es un include/partial de servidor ni de plantilla:** en HTML estático el bloque está duplicado en cada archivo y se mantiene idéntico por convención | Extracto 2 de esta sección |
+| **Convención de bloque de comentario por página** | Trazabilidad legible de qué cubre cada archivo | Cada uno de los 31 HTML arranca en su línea 3 con `Interfaz: Pnn …`, `Funcionalidades:`, `Entidades:`, `Reglas:` y `Estado:` | Propio de los 31 archivos HTML |
 
 ### B. Arquitectura prevista para la etapa Spring Boot (no implementada en esta etapa)
 
 | Patrón | Qué resuelve | Dónde está definido | Estado |
 |---|---|---|---|
-| **Modelo-Vista-Controlador (MVC)** | Separar datos, presentación y lógica | Modelo: las 11 entidades de [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md); Vista: 22 HTML + `css/estilos.css`; Controlador: los F01–F32 que ejecutará Spring (README sección 16) | **Previsto para Spring Boot.** La maqueta separa ya modelo y vista, pero **no existe controlador en ejecución: 0 de 32 funcionalidades implementadas** (estados DEFINIDA + MAQUETADA) |
-| **Repository / Service (capas)** | Separar acceso a datos y lógica transaccional | README sección 16 «Próxima etapa con Spring Boot» (Spring Data JPA, servicios transaccionales); aplicará RN01–RN06 en una sola transacción sobre compra (F13) y venta (F20) | **Definido, no implementado** |
+| **Modelo-Vista-Controlador (MVC)** | Separar datos, presentación y lógica | Modelo: las 12 entidades de [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md); Vista: 31 HTML + `css/estilos.css`; Controlador: los F01–F38 que ejecutará Spring (README sección 16) | **Previsto para Spring Boot.** La maqueta separa ya modelo y vista, pero **no existe controlador en ejecución: 0 de 38 funcionalidades implementadas** (estados DEFINIDA + MAQUETADA) |
+| **Repository / Service (capas)** | Separar acceso a datos y lógica transaccional | README sección 16 «Próxima etapa con Spring Boot» (Spring Data JPA, servicios transaccionales); aplicará RN01, RN02, RN04, RN05 y RN06 en una sola transacción sobre compra (F13) y venta (F20) | **Definido, no implementado** |
 
 ### C. Patrones revisados en el curso
 
@@ -272,7 +287,7 @@ Para no presentar como «implementado» algo que sólo está previsto, los patro
 }
 ```
 
-**Extracto 2 — navegación consistente (`dashboard.html`, mismo bloque en las 18 páginas internas):**
+**Extracto 2 — navegación consistente (`dashboard.html`, mismo bloque en las 27 páginas con barra lateral):**
 
 ```html
 <nav aria-label="Navegación principal">
@@ -281,7 +296,7 @@ Para no presentar como «implementado» algo que sólo está previsto, los patro
   <a href="categorias.html">Categorías</a>
   <a href="combustibles.html">Combustibles</a>
   <!-- …enlaces restantes en el mismo orden: Compras, Inventario, Ventas,
-       Finanzas, Empleados, Usuarios, Contacto, Cerrar sesión… -->
+       Finanzas, Empleados, Usuarios, Asistencia, Contacto, Cerrar sesión… -->
 </nav>
 ```
 ---
@@ -296,13 +311,13 @@ Las fases siguen el orden real del trabajo realizado y del que queda. **Las fech
 | 2 | Modelo de negocio y modelo entidad-relación | [01_modelo_negocio.md](01_modelo_negocio.md), [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md) | Ejecutado | Sin registrar en el repositorio |
 | 3 | Definición de interfaces, funcionalidades y reglas | [03](03_interfaces.md), [04](04_funcionalidades.md), [05](05_reglas_negocio.md) | Ejecutado | Sin registrar en el repositorio |
 | 4 | Matriz bidimensional y trazabilidad | [06](06_matriz_funcionalidades_interfaces.md), [07](07_trazabilidad.md) | Ejecutado | Sin registrar en el repositorio |
-| 5 | Maquetación de las 21 interfaces (HTML5 + CSS3 + Bootstrap) | 22 archivos HTML navegables + `css/estilos.css` | Ejecutado | Sin registrar en el repositorio |
+| 5 | Maquetación de las 30 interfaces (HTML5 + CSS3 + Bootstrap) | 31 archivos HTML navegables + `css/estilos.css` | Ejecutado | Sin registrar en el repositorio |
 | 6 | BPMN núcleo y de soporte | [09_bpmn.md](09_bpmn.md), [bpmn.html](bpmn.html) | Ejecutado | Sin registrar en el repositorio |
 | 7 | Documentación 5.1–5.8 y auditoría | [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md), [00_auditoria.md](00_auditoria.md) | Ejecutado | Sin registrar en el repositorio |
 | 8 | Cierre de 5.9–5.15 | Este documento, los puntos 5.11–5.14 y [15_anexos.md](15_anexos.md) | Ejecutado | 01/10/2026 |
 | 9 | Revisión del equipo y compilación del informe (A4, Arial 11) | Informe final con carátula, integrantes y glosario en plantilla | Pendiente | **PENDIENTE (equipo)** |
 | 10 | Exposición Avance 1 | Presentación oral y respuesta de preguntas técnicas | Pendiente | **PENDIENTE (equipo)** |
-| 11 | Etapa Spring Boot (fuera del Avance 1) | Implementación de F01–F32 y validación de RN01–RN06 | Pendiente | **PENDIENTE (equipo)** |
+| 11 | Etapa Spring Boot (fuera del Avance 1) | Implementación de F01–F38 y validación de RN01–RN10 | Pendiente | **PENDIENTE (equipo)** |
 
 ---
 
@@ -326,11 +341,11 @@ Ninguna herramienta añade JavaScript al repositorio: son bloques de texto dentr
 | Comprobación | Resultado |
 |---|---|
 | ¿Se usaron sólo IDs existentes? | Sí · todos los códigos F, P, RN y entidades citados en este documento existen en los HTML y en la matriz (verificado por el control 8 de [00_auditoria.md](00_auditoria.md)) |
-| ¿Se crearon funcionalidades, interfaces, reglas o entidades nuevas? | No · siguen siendo 32 F, 21 P, 6 RN y 11 entidades |
+| ¿Se crearon funcionalidades, interfaces, reglas o entidades nuevas? | No se inventó nada fuera de la especificación · conteos oficiales: 38 F (F01–F38), 30 P (P01–P30), 10 RN (RN01–RN10) y 12 entidades |
 | ¿Los diagramas de secuencia cubren compra y venta como exige el BPMN? | Sí · §4.2 refleja `A6, G3, A7, SP-INV, G4, A9, A10` con `E4/E5`; §4.1 refleja `A1, G1, A2, A3, G2, A4, A5, A8` con `E2/E3` |
 | ¿Los casos de uso corresponden a procesos reales? | Sí · núcleo = proceso de venta; soporte = proceso de abastecimiento (los dos de [09_bpmn.md](09_bpmn.md)) |
 | ¿Algún entregable se inventó fuera de la especificación? | No · las seis filas de la sección 1 son textualmente las del punto 5.10 oficial |
-| ¿Se presentó como implementado algo que sólo está previsto? | No · §6 separa lo implementado en la maqueta (A) de lo previsto para Spring Boot (B) y de los patrones de clase pendientes (C); 0 de 32 funcionalidades con lógica real |
+| ¿Se presentó como implementado algo que sólo está previsto? | No · §6 separa lo implementado en la maqueta (A) de lo previsto para Spring Boot (B) y de los patrones de clase pendientes (C); 0 de 38 funcionalidades con lógica real |
 | ¿Qué queda en pendiente humano? | Los 7 pendientes clasificados en [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md) — ver la sección 10 de este documento |
 
 ---

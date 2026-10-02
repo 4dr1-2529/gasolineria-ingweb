@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <!--
-Interfaz: P16 - Movimiento económico
+Interfaz: P16 - Ingresos y egresos de caja
 Funcionalidades: F26, F27
 Entidades: MovimientoCaja ConceptoMovimiento
-Reglas: RN06
+Reglas: RN04, RN05
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
 <html lang="es">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Representar un ingreso manual o un gasto. Proyecto académico de Ingeniería Web, G1.">
+    <meta name="description" content="Consultar los ingresos y los egresos de la caja. Proyecto académico de Ingeniería Web, G1.">
     <title>
-      Movimiento económico | Estación Nexo · G1
+      Ingresos y egresos de caja | Estación Nexo · G1
     </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/estilos.css" rel="stylesheet">
@@ -64,6 +64,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="usuarios.html">
           Usuarios
         </a>
+        <a href="mi-asistencia.html">
+          Asistencia
+        </a>
         <a href="contacto.html">
           Contacto
         </a>
@@ -94,106 +97,201 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               OPERACIÓN DIARIA / P16
             </p>
             <h1>
-              Movimiento económico
+              Ingresos y egresos de caja
             </h1>
             <p class="subtitle">
-              Representar un ingreso manual o un gasto.
+              Consultar los ingresos y los egresos de la caja del día.
             </p>
           </div>
           <div class="actions">
             <a class="btn btn-secondary" href="finanzas.html">
               ← Resumen financiero
             </a>
+            <a class="btn btn-secondary" href="movimiento-detalle.html">
+              Detalle de movimientos
+            </a>
           </div>
         </div>
         <section class="panel ">
           <h2>
-            Registrar ingreso o egreso
+            Ingresos de caja (F26)
           </h2>
-          <form id="registro">
-            <div class="form-grid">
-              <div class="field">
-                <label for="campo-61">
-                  Tipo
-                </label>
-                <select class="form-select" id="campo-61">
-                  <option>
-                    Ingreso
-                  </option>
-                  <option selected>
-                    Egreso
-                  </option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="campo-62">
-                  Concepto
-                </label>
-                <select class="form-select" id="campo-62">
-                  <option selected>
-                    Mantenimiento
-                  </option>
-                  <option>
-                    Otros ingresos
-                  </option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="campo-63">
-                  Monto (S/)
-                </label>
-                <input class="form-control" id="campo-63" type="number" value="50.00" min="0.01" step="0.01">
-              </div>
-              <div class="field">
-                <label for="campo-64">
-                  Fecha y hora
-                </label>
-                <input class="form-control" id="campo-64" type="datetime-local" value="2026-09-10T12:00">
-              </div>
-              <div class="field">
-                <label for="campo-65">
-                  Descripción
-                </label>
-                <textarea class="form-control" id="campo-65" rows="3">
-                  Mantenimiento de estación
-                </textarea>
-              </div>
-              <div class="field">
-                <label for="campo-66">
-                  Origen
-                </label>
-                <select class="form-select" id="campo-66">
-                  <option selected>
-                    Manual
-                  </option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="campo-67">
-                  Responsable
-                </label>
-                <select class="form-select" id="campo-67">
-                  <option selected>
+          <div class="table-responsive">
+            <table class="table">
+              <caption>
+                3 ingresos · Generados por las ventas del día · Total S/ 370.00
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">
+                    Código
+                  </th>
+                  <th scope="col">
+                    Fecha
+                  </th>
+                  <th scope="col">
+                    Concepto
+                  </th>
+                  <th scope="col">
+                    Monto
+                  </th>
+                  <th scope="col">
+                    Origen
+                  </th>
+                  <th scope="col">
+                    Responsable
+                  </th>
+                  <th scope="col">
+                    Detalle
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    MC003
+                  </td>
+                  <td>
+                    10/09/2026 09:00
+                  </td>
+                  <td>
+                    Venta de combustible
+                  </td>
+                  <td>
+                    S/ 50.00
+                  </td>
+                  <td>
+                    V001
+                  </td>
+                  <td>
                     Ana Torres
-                  </option>
-                  <option>
+                  </td>
+                  <td>
+                    <a href="movimiento-detalle.html#MC003">
+                      Ver MC003
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    MC004
+                  </td>
+                  <td>
+                    10/09/2026 10:00
+                  </td>
+                  <td>
+                    Venta de combustible
+                  </td>
+                  <td>
+                    S/ 120.00
+                  </td>
+                  <td>
+                    V002
+                  </td>
+                  <td>
+                    Ana Torres
+                  </td>
+                  <td>
+                    <a href="movimiento-detalle.html#MC004">
+                      Ver MC004
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    MC005
+                  </td>
+                  <td>
+                    10/09/2026 11:00
+                  </td>
+                  <td>
+                    Venta de combustible
+                  </td>
+                  <td>
+                    S/ 200.00
+                  </td>
+                  <td>
+                    V003
+                  </td>
+                  <td>
                     Luis Rojas
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="actions">
-              <button type="button" class="btn btn-primary">
-                Registrar movimiento · visual
-              </button>
-            </div>
-            <p class="form-help">
-              Formulario de demostración; los cambios no se guardan.
-            </p>
-          </form>
+                  </td>
+                  <td>
+                    <a href="movimiento-detalle.html#MC005">
+                      Ver MC005
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="panel ">
+          <h2>
+            Egresos de caja (F27)
+          </h2>
+          <div class="table-responsive">
+            <table class="table">
+              <caption>
+                1 egreso · Generado por la compra del día · Total S/ 1,350.00
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">
+                    Código
+                  </th>
+                  <th scope="col">
+                    Fecha
+                  </th>
+                  <th scope="col">
+                    Concepto
+                  </th>
+                  <th scope="col">
+                    Monto
+                  </th>
+                  <th scope="col">
+                    Origen
+                  </th>
+                  <th scope="col">
+                    Responsable
+                  </th>
+                  <th scope="col">
+                    Detalle
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    MC001
+                  </td>
+                  <td>
+                    10/09/2026 07:00
+                  </td>
+                  <td>
+                    Compra de combustible
+                  </td>
+                  <td>
+                    S/ 1,350.00
+                  </td>
+                  <td>
+                    C001
+                  </td>
+                  <td>
+                    Ana Torres
+                  </td>
+                  <td>
+                    <a href="movimiento-detalle.html#MC001">
+                      Ver MC001
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
         <p class="notice">
-          Ingreso manual → Otros ingresos. Egreso manual → Mantenimiento. El egreso de una compra no se registra aquí: lo genera la compra C001 (MC001, RN04). Los ingresos por venta se generarán desde la venta, con su identificador asociado; no se duplican aquí. Esta correspondencia la comprobará Spring Boot.
+          RN04 y RN05 · Aquí sólo se consultan movimientos: cada ingreso nace de una venta confirmada y el egreso de la compra C001. Ningún monto se escribe a mano. Apertura 4,410.00 + ingresos 370.00 − egresos 1,350.00 = saldo 3,430.00. Esta correspondencia la comprobará Spring Boot.
         </p>
       </main>
       <footer>

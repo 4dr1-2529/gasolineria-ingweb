@@ -64,6 +64,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="usuarios.html" aria-current="page">
           Usuarios
         </a>
+        <a href="mi-asistencia.html">
+          Asistencia
+        </a>
         <a href="contacto.html">
           Contacto
         </a>
@@ -101,6 +104,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             </p>
           </div>
           <div class="actions">
+            <a class="btn btn-primary" href="usuario-form.html">
+              + Usuario
+            </a>
           </div>
         </div>
         <section class="panel ">
@@ -148,7 +154,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     </span>
                   </td>
                   <td>
-                    <a href="#editar">
+                    <a href="usuario-form.html#editar">
                       Editar / estado
                     </a>
                   </td>
@@ -169,7 +175,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     </span>
                   </td>
                   <td>
-                    <a href="#editar">
+                    <a href="usuario-form.html#editar">
                       Editar / estado
                     </a>
                   </td>
@@ -190,7 +196,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                     </span>
                   </td>
                   <td>
-                    <a href="#editar">
+                    <a href="usuario-form.html#editar">
                       Editar / estado
                     </a>
                   </td>
@@ -199,144 +205,8 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             </table>
           </div>
         </section>
-        <section class="panel ">
-          <h2>
-            Registrar usuario
-          </h2>
-          <form id="registro">
-            <div class="form-grid">
-              <div class="field">
-                <label for="campo-88">
-                  Empleado
-                </label>
-                <select class="form-select" id="campo-88">
-                  <option>
-                    Seleccionar empleado sin cuenta
-                  </option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="campo-89">
-                  Username
-                </label>
-                <input class="form-control" id="campo-89" type="text" value="">
-              </div>
-              <div class="field">
-                <label for="campo-90">
-                  Contraseña de demostración
-                </label>
-                <input class="form-control" id="campo-90" type="password" value="">
-              </div>
-              <div class="field">
-                <label for="campo-91">
-                  Rol
-                </label>
-                <select class="form-select" id="campo-91">
-                  <option>
-                    Administrador
-                  </option>
-                  <option>
-                    Operador / Vendedor
-                  </option>
-                  <option selected>
-                    Empleado
-                  </option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="campo-92">
-                  Estado
-                </label>
-                <select class="form-select" id="campo-92">
-                  <option selected>
-                    Activo
-                  </option>
-                  <option>
-                    Inactivo
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="actions">
-              <button type="button" class="btn btn-primary">
-                Registrar usuario · visual
-              </button>
-            </div>
-            <p class="form-help">
-              Formulario de demostración; los cambios no se guardan.
-            </p>
-          </form>
-        </section>
-        <section class="panel ">
-          <h2>
-            Editar usuario / estado
-          </h2>
-          <form id="editar">
-            <div class="form-grid">
-              <div class="field">
-                <label for="campo-93">
-                  Empleado
-                </label>
-                <select class="form-select" id="campo-93">
-                  <option selected>
-                    Ana Torres
-                  </option>
-                  <option>
-                    Luis Rojas
-                  </option>
-                  <option>
-                    Elena Díaz
-                  </option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="campo-94">
-                  Username
-                </label>
-                <input class="form-control" id="campo-94" type="text" value="atorres">
-              </div>
-              <div class="field">
-                <label for="campo-95">
-                  Rol
-                </label>
-                <select class="form-select" id="campo-95">
-                  <option>
-                    Administrador
-                  </option>
-                  <option selected>
-                    Operador / Vendedor
-                  </option>
-                  <option>
-                    Empleado
-                  </option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="campo-96">
-                  Estado
-                </label>
-                <select class="form-select" id="campo-96">
-                  <option selected>
-                    Activo
-                  </option>
-                  <option>
-                    Inactivo
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="actions">
-              <button type="button" class="btn btn-primary">
-                Guardar edición · visual
-              </button>
-            </div>
-            <p class="form-help">
-              Formulario de demostración; los cambios no se guardan.
-            </p>
-          </form>
-        </section>
         <p class="notice">
-          Los tres empleados del ejemplo ya tienen cuenta. Un nuevo usuario requerirá un empleado sin cuenta. Los roles no restringen navegación. No se muestran ni almacenan contraseñas.
+          Los tres empleados del ejemplo ya tienen cuenta. Un nuevo usuario requerirá un empleado sin cuenta. Registrar y editar usuarios se hace en la pantalla de formulario (P26). Los roles no restringen navegación. No se muestran ni almacenan contraseñas.
         </p>
       </main>
       <footer>

@@ -64,6 +64,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="usuarios.html">
           Usuarios
         </a>
+        <a href="mi-asistencia.html">
+          Asistencia
+        </a>
         <a href="contacto.html">
           Contacto
         </a>
@@ -106,6 +109,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
             </a>
             <a class="btn btn-secondary" href="compra-detalle.html#C001">
               Ver C001
+            </a>
+            <a class="btn btn-secondary" href="compra-form.html">
+              Abrir formulario
             </a>
           </div>
         </div>
@@ -226,19 +232,19 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="compra-proveedor">
                   Proveedor
                 </label>
-                <input class="form-control" id="compra-proveedor" name="proveedor" type="text" value="Petroandes S.A.">
+                <input class="form-control" id="compra-proveedor" name="proveedor" type="text" value="Petroandes S.A." required minlength="3" maxlength="60">
               </div>
               <div class="field">
                 <label for="compra-fecha">
                   Fecha y hora
                 </label>
-                <input class="form-control" id="compra-fecha" name="fecha" type="text" value="10/09/2026 07:00">
+                <input class="form-control" id="compra-fecha" name="fecha" type="text" value="10/09/2026 07:00" required pattern="\d{2}/\d{2}/\d{4} \d{2}:\d{2}" title="Formato: dd/mm/aaaa hh:mm">
               </div>
               <div class="field">
                 <label for="compra-producto">
                   Combustible
                 </label>
-                <select class="form-select" id="compra-producto" name="producto">
+                <select class="form-select" id="compra-producto" name="producto" required>
                   <option>
                     Gasolina Regular
                   </option>
@@ -254,19 +260,19 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="compra-cantidad">
                   Cantidad (L)
                 </label>
-                <input class="form-control" id="compra-cantidad" name="cantidad" type="text" value="100">
+                <input class="form-control" id="compra-cantidad" name="cantidad" type="number" min="1" max="10000" step="1" value="100" required>
               </div>
               <div class="field">
                 <label for="compra-precio">
                   Precio de compra (S/ por litro)
                 </label>
-                <input class="form-control" id="compra-precio" name="precio" type="text" value="4.50">
+                <input class="form-control" id="compra-precio" name="precio" type="number" min="0.01" max="20" step="0.01" value="4.50" required>
               </div>
               <div class="field">
                 <label for="compra-responsable">
                   Responsable
                 </label>
-                <select class="form-select" id="compra-responsable" name="responsable">
+                <select class="form-select" id="compra-responsable" name="responsable" required>
                   <option>
                     Ana Torres
                   </option>
@@ -280,7 +286,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
             </div>
             <div class="actions">
-              <button class="btn btn-primary" type="button">
+              <button class="btn btn-primary" type="submit">
                 Registrar compra · visual
               </button>
             </div>

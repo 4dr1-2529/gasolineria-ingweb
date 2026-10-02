@@ -64,6 +64,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="usuarios.html">
           Usuarios
         </a>
+        <a href="mi-asistencia.html">
+          Asistencia
+        </a>
         <a href="contacto.html">
           Contacto
         </a>
@@ -102,7 +105,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           </div>
           <div class="actions">
             <a class="btn btn-primary" href="movimiento-economico.html">
-              + Movimiento
+              Ingresos y egresos
             </a>
             <a class="btn btn-secondary" href="conceptos.html">
               Conceptos
@@ -115,10 +118,10 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               Ingresos de hoy
             </p>
             <strong>
-              S/ 415.00
+              S/ 370.00
             </strong>
             <small>
-              S/ 370.00 por ventas + S/ 45.00 otros
+              Tres ingresos por ventas (V001–V003)
             </small>
           </section>
           <section class="kpi">
@@ -126,10 +129,10 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               Egresos de hoy
             </p>
             <strong>
-              S/ 1,400.00
+              S/ 1,350.00
             </strong>
             <small>
-              Compra C001 y mantenimiento
+              Compra de combustible C001
             </small>
           </section>
           <section class="kpi">
@@ -137,7 +140,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               Saldo de caja
             </p>
             <strong>
-              S/ 3,425.00
+              S/ 3,430.00
             </strong>
             <small>
               Apertura de caja: S/ 4,410.00
@@ -151,7 +154,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           <div class="table-responsive">
             <table class="table">
               <caption>
-                Movimientos económicos en soles · Apertura 4,410.00 + ingresos 415.00 − egresos 1,400.00 = saldo 3,425.00
+                Movimientos económicos en soles · Apertura 4,410.00 + ingresos 370.00 − egresos 1,350.00 = saldo 3,430.00
               </caption>
               <thead>
                 <tr>
@@ -175,6 +178,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                   </th>
                   <th scope="col">
                     Responsable
+                  </th>
+                  <th scope="col">
+                    Detalle
                   </th>
                 </tr>
               </thead>
@@ -203,30 +209,10 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                   <td>
                     Ana Torres
                   </td>
-                </tr>
-                <tr>
                   <td>
-                    MC002
-                  </td>
-                  <td>
-                    10/09/2026 08:30
-                  </td>
-                  <td>
-                    Otros ingresos
-                  </td>
-                  <td>
-                    <span class="badge ">
-                      Ingreso
-                    </span>
-                  </td>
-                  <td>
-                    S/ 45.00
-                  </td>
-                  <td>
-                    Manual
-                  </td>
-                  <td>
-                    Elena Díaz
+                    <a href="movimiento-detalle.html#MC001">
+                      Ver MC001
+                    </a>
                   </td>
                 </tr>
                 <tr>
@@ -253,6 +239,11 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                   <td>
                     Ana Torres
                   </td>
+                  <td>
+                    <a href="movimiento-detalle.html#MC003">
+                      Ver MC003
+                    </a>
+                  </td>
                 </tr>
                 <tr>
                   <td>
@@ -277,6 +268,11 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                   </td>
                   <td>
                     Ana Torres
+                  </td>
+                  <td>
+                    <a href="movimiento-detalle.html#MC004">
+                      Ver MC004
+                    </a>
                   </td>
                 </tr>
                 <tr>
@@ -303,30 +299,10 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                   <td>
                     Luis Rojas
                   </td>
-                </tr>
-                <tr>
                   <td>
-                    MC006
-                  </td>
-                  <td>
-                    10/09/2026 11:30
-                  </td>
-                  <td>
-                    Mantenimiento
-                  </td>
-                  <td>
-                    <span class="badge muted">
-                      Egreso
-                    </span>
-                  </td>
-                  <td>
-                    S/ 50.00
-                  </td>
-                  <td>
-                    Manual
-                  </td>
-                  <td>
-                    Ana Torres
+                    <a href="movimiento-detalle.html#MC005">
+                      Ver MC005
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -334,7 +310,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           </div>
         </section>
         <p class="notice">
-          Inventario expresa litros; finanzas expresa soles. Los tres ingresos de venta se vinculan individualmente a V001, V002 y V003, y MC001 es el egreso de la compra C001 (RN04).
+          Inventario expresa litros; finanzas expresa soles. Aquí sólo se consultan movimientos: los tres ingresos nacen de las ventas V001, V002 y V003 y el único egreso nace de la compra C001 (RN04). Ningún monto se escribe a mano.
         </p>
       </main>
       <footer>

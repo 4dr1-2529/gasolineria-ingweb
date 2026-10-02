@@ -64,6 +64,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="usuarios.html">
           Usuarios
         </a>
+        <a href="mi-asistencia.html">
+          Asistencia
+        </a>
         <a href="contacto.html">
           Contacto
         </a>
@@ -119,7 +122,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-56">
                   Producto
                 </label>
-                <select class="form-select" id="campo-56">
+                <select class="form-select" id="campo-56" required>
                   <option selected>
                     Gasolina Regular
                   </option>
@@ -135,19 +138,19 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-57">
                   Cantidad (L)
                 </label>
-                <input class="form-control" id="campo-57" type="number" value="10" min="0.01" step="0.01">
+                <input class="form-control" id="campo-57" type="number" value="10" min="0.01" step="0.01" required>
               </div>
               <div class="field">
                 <label for="campo-58">
                   Fecha y hora
                 </label>
-                <input class="form-control" id="campo-58" type="datetime-local" value="2026-09-10T12:00">
+                <input class="form-control" id="campo-58" type="datetime-local" value="2026-09-10T12:00" required>
               </div>
               <div class="field">
                 <label for="campo-59">
                   Motivo
                 </label>
-                <textarea class="form-control" id="campo-59" rows="3">
+                <textarea class="form-control" id="campo-59" rows="3" required minlength="5" maxlength="200">
                   Retiro técnico de muestra
                 </textarea>
               </div>
@@ -155,7 +158,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-60">
                   Responsable
                 </label>
-                <select class="form-select" id="campo-60">
+                <select class="form-select" id="campo-60" required>
                   <option selected>
                     Ana Torres
                   </option>
@@ -166,7 +169,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
             </div>
             <div class="actions">
-              <button type="button" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 Registrar salida · visual
               </button>
             </div>

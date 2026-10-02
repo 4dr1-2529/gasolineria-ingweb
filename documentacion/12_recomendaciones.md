@@ -22,9 +22,9 @@ Defina primero la cadena de valor (categoría → combustible → compra → inv
 
 **Deriva de:** Conclusión 2.
 
-Distinga y comunique sin ambigüedad los estados **DEFINIDA**, **MAQUETADA** e **IMPLEMENTADA** de cada funcionalidad, y no presente la maqueta como sistema operativo: aquí nada autentica, guarda ni valida. Aproveche que las reglas ya están escritas con caso de cumplimiento y caso de violación (RN01–RN06 en [05_reglas_negocio.md](05_reglas_negocio.md)) para planificar la etapa de implementación con esas mismas pruebas: control de stock en transacción y concurrencia (RN01), productos inactivos (RN02), desactivar en lugar de eliminar (RN03), unicidad de egreso por compra (RN04), unicidad de ingreso por venta (RN05) y valores positivos con dos decimales (RN06).
+Distinga y comunique sin ambigüedad los estados **DEFINIDA**, **MAQUETADA** e **IMPLEMENTADA** de cada funcionalidad, y no presente la maqueta como sistema operativo: aquí nada autentica, guarda ni valida. Aproveche que las reglas ya están escritas con caso de cumplimiento y caso de violación (RN01–RN10 en [05_reglas_negocio.md](05_reglas_negocio.md)) para planificar la etapa de implementación con esas mismas pruebas: control de stock en transacción y concurrencia (RN01), productos inactivos (RN02), desactivar en lugar de eliminar (RN03), unicidad de egreso por compra (RN04), unicidad de ingreso por venta (RN05), valores positivos con dos decimales (RN06), asistencia propia del empleado autenticado (RN07), una asistencia por empleado y día (RN08), orden de las horas (RN09) y estado derivado de las horas (RN10).
 
-**Acción concreta:** llevar a la exposición la lista 0/32 implementadas y el plan de pruebas de las seis reglas, en lugar de prometer funciones que la maqueta no ejecuta.
+**Acción concreta:** llevar a la exposición la lista 0/38 implementadas y el plan de pruebas de las diez reglas, en lugar de prometer funciones que la maqueta no ejecuta.
 
 ---
 

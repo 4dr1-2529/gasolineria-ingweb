@@ -1,6 +1,6 @@
 # Modelo entidad relación
 
-Once entidades oficiales. Modelo conceptual preparado para Spring Boot; no existe esquema de base de datos implementado. PK identifica el registro; FK referencia una entidad.
+Doce entidades oficiales. Modelo conceptual preparado para Spring Boot; no existe esquema de base de datos implementado. PK identifica el registro; FK referencia una entidad.
 
 ## Categoria
 
@@ -65,7 +65,7 @@ Relaciones: Compra → DetalleCompra (1:N); Producto → DetalleCompra (1:N).
 | telefono | Atributo | Telefono |
 | estado | Atributo | Situación del registro según su ciclo de vida. |
 
-Relaciones: Empleado → Usuario (1:0..1).
+Relaciones: Empleado → Usuario (1:0..1); Empleado → Asistencia (1:N).
 
 ## Usuario
 
@@ -146,6 +146,22 @@ Relaciones: ConceptoMovimiento → MovimientoCaja (1:N).
 
 Relaciones: ConceptoMovimiento → MovimientoCaja (1:N); Venta → MovimientoCaja (1:0..1); Compra → MovimientoCaja (1:0..1); Usuario → MovimientoCaja (1:N).
 
+## Asistencia
+
+| Atributo | Clave / condición | Descripción |
+|---|---|---|
+| id_asistencia | PK | Identificador de Asistencia |
+| id_empleado | FK | Referencia a Empleado |
+| fecha | Atributo | Día de la marcación (DATE). |
+| hora_entrada | Atributo | Hora de entrada de la jornada (TIME). |
+| hora_salida | Atributo | Hora de salida de la jornada (TIME); debe ser posterior a la hora de entrada. |
+| estado | Atributo | Presente o Falta; se calcula a partir de las horas (ENUM). |
+| observacion | Atributo opcional | Nota de la marcación, p. ej. motivo de una falta; admite nulo (VARCHAR 120). |
+
+Relaciones: Empleado → Asistencia (1:N).
+
+Interfaces asociadas: P28 (Mi asistencia) y P29 (Control de asistencia).
+
 ## Relaciones y cardinalidades
 
 - **Categoria 1:N Producto**: Cada producto pertenece a una categoría; una categoría puede agrupar muchos productos. Ejemplo: Gasolinas → Gasolina Regular y Gasolina Premium; Diésel → Diésel.
@@ -162,14 +178,16 @@ Relaciones: ConceptoMovimiento → MovimientoCaja (1:N); Venta → MovimientoCaj
 - **Compra 1:0..1 MovimientoCaja**: Una compra tiene cero o un movimiento asociado; al confirmarse exige exactamente un egreso por su total por RN04.
 - **Usuario 1:N MovimientoInventario**: Relación adicional derivada de id_usuario: identifica al responsable del movimiento físico.
 - **Usuario 1:N MovimientoCaja**: Relación adicional derivada de id_usuario: identifica al responsable del movimiento económico.
+- **Empleado 1:N Asistencia**: Un empleado tiene muchas marcaciones; cada marcación pertenece a un solo empleado (RN07). Ejemplo: Ana Torres, 10/09/2026, 08:00–17:00, Presente.
 
 ## Condiciones de diseño futuro
 - Unicidad de Usuario.id_empleado (un usuario por empleado), username y DNI. No son funcionalidades adicionales.
 - MovimientoCaja.id_venta e id_compra admiten nulo para movimientos manuales y serán únicos cuando tengan valor. En venta confirmada RN05 exige exactamente un ingreso por su total; en compra confirmada RN04 exige exactamente un egreso por su total.
 - Producto.precio_actual, DetalleVenta.precio_unitario, DetalleCompra.precio_compra, subtotales, Venta.total, Compra.total y monto usarán decimales exactos; cantidades y stock también admitirán fracciones. No usar punto flotante para dinero.
 - Producto.stock y MovimientoInventario deben cambiar de forma atómica; RN01 requiere controlar concurrencia.
-- Estados de catálogos: Activo / Inactivo. Venta y Compra: Pendiente / Confirmada en esta maqueta.
-- No se añade ninguna entidad. El proveedor es un atributo de texto de Compra; las capacidades y el umbral visual de stock no son atributos base persistentes.
+- Estados de catálogos: Activo / Inactivo. Venta y Compra: Pendiente / Confirmada en esta maqueta. Asistencia: Presente / Falta según RN10.
+- Unicidad de Asistencia (id_empleado, fecha) por RN08; el estado se calcula a partir de las horas por RN10.
+- Con las 12 entidades oficiales no se añade ninguna otra. El proveedor es un atributo de texto de Compra; las capacidades y el umbral visual de stock no son atributos base persistentes.
 - En relaciones 1:N se permite cero registros dependientes antes de operar; Venta y Compra confirmadas exigen uno o más detalles.
 
 ## Diagrama ER (solo documentación)
@@ -177,6 +195,7 @@ Relaciones: ConceptoMovimiento → MovimientoCaja (1:N); Venta → MovimientoCaj
 erDiagram
     Categoria ||--o{ Producto : clasifica
     Empleado ||--o| Usuario : tiene
+    Empleado ||--o{ Asistencia : registra
     Usuario ||--o{ Venta : registra
     Usuario ||--o{ Compra : registra
     Compra ||--|{ DetalleCompra : contiene
@@ -278,6 +297,15 @@ erDiagram
         string descripcion
         datetime fecha_hora
     }
+    Asistencia {
+        int id_asistencia PK
+        int id_empleado FK
+        date fecha
+        time hora_entrada
+        time hora_salida
+        string estado
+        string observacion
+    }
 ```
 
 ## Conteo
@@ -295,5 +323,8 @@ erDiagram
 | MovimientoInventario | ✔ |
 | ConceptoMovimiento | ✔ |
 | MovimientoCaja | ✔ |
+| Asistencia | ✔ |
 
-**Total: 11 entidades.**
+**Total: 12 entidades.**
+
+**Diccionario: 74 atributos, 12 PK, 15 FK y 15 relaciones.**

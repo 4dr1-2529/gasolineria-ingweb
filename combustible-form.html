@@ -64,6 +64,9 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <a href="usuarios.html">
           Usuarios
         </a>
+        <a href="mi-asistencia.html">
+          Asistencia
+        </a>
         <a href="contacto.html">
           Contacto
         </a>
@@ -119,13 +122,13 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-20">
                   Nombre
                 </label>
-                <input class="form-control" id="campo-20" type="text" value="">
+                <input class="form-control" id="campo-20" type="text" value="" required minlength="3" maxlength="40">
               </div>
               <div class="field">
                 <label for="campo-21">
                   Categoría
                 </label>
-                <select class="form-select" id="campo-21">
+                <select class="form-select" id="campo-21" required>
                   <option selected>
                     Gasolinas
                   </option>
@@ -138,7 +141,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-22">
                   Unidad
                 </label>
-                <select class="form-select" id="campo-22">
+                <select class="form-select" id="campo-22" required>
                   <option selected>
                     Litro
                   </option>
@@ -148,19 +151,19 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-23">
                   Precio actual (S/ por L)
                 </label>
-                <input class="form-control" id="campo-23" type="number" value="" min="0.01" step="0.01">
+                <input class="form-control" id="campo-23" type="number" value="" min="0.01" step="0.01" required>
               </div>
               <div class="field">
                 <label for="campo-24">
                   Stock de referencia (L)
                 </label>
-                <input class="form-control" id="campo-24" type="number" value="" min="0.01" step="0.01">
+                <input class="form-control" id="campo-24" type="number" value="" min="0.01" step="0.01" required>
               </div>
               <div class="field">
                 <label for="campo-25">
                   Estado
                 </label>
-                <select class="form-select" id="campo-25">
+                <select class="form-select" id="campo-25" required>
                   <option selected>
                     Activo
                   </option>
@@ -171,7 +174,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
             </div>
             <div class="actions">
-              <button type="button" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 Registrar combustible · visual
               </button>
             </div>
@@ -190,13 +193,13 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-26">
                   Nombre
                 </label>
-                <input class="form-control" id="campo-26" type="text" value="Gasolina Regular">
+                <input class="form-control" id="campo-26" type="text" value="Gasolina Regular" required minlength="3" maxlength="40">
               </div>
               <div class="field">
                 <label for="campo-27">
                   Categoría
                 </label>
-                <select class="form-select" id="campo-27">
+                <select class="form-select" id="campo-27" required>
                   <option selected>
                     Gasolinas
                   </option>
@@ -209,7 +212,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-28">
                   Unidad
                 </label>
-                <select class="form-select" id="campo-28">
+                <select class="form-select" id="campo-28" required>
                   <option selected>
                     Litro
                   </option>
@@ -219,19 +222,19 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-29">
                   Precio actual (S/ por L)
                 </label>
-                <input class="form-control" id="campo-29" type="number" value="5.00" min="0.01" step="0.01">
+                <input class="form-control" id="campo-29" type="number" value="5.00" min="0.01" step="0.01" required>
               </div>
               <div class="field">
                 <label for="campo-30">
                   Stock de referencia (L)
                 </label>
-                <input class="form-control" id="campo-30" type="number" value="1990" min="0.01" step="0.01">
+                <input class="form-control" id="campo-30" type="number" value="1990" min="0.01" step="0.01" required>
               </div>
               <div class="field">
                 <label for="campo-31">
                   Estado
                 </label>
-                <select class="form-select" id="campo-31">
+                <select class="form-select" id="campo-31" required>
                   <option selected>
                     Activo
                   </option>
@@ -242,7 +245,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
             </div>
             <div class="actions">
-              <button type="button" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 Guardar edición · visual
               </button>
             </div>
@@ -261,13 +264,13 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-32">
                   Nombre
                 </label>
-                <input class="form-control" id="campo-32" type="text" value="Gasolina Premium">
+                <input class="form-control" id="campo-32" type="text" value="Gasolina Premium" required minlength="3" maxlength="40">
               </div>
               <div class="field">
                 <label for="campo-33">
                   Categoría
                 </label>
-                <select class="form-select" id="campo-33">
+                <select class="form-select" id="campo-33" required>
                   <option selected>
                     Gasolinas
                   </option>
@@ -280,7 +283,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-34">
                   Unidad
                 </label>
-                <select class="form-select" id="campo-34">
+                <select class="form-select" id="campo-34" required>
                   <option selected>
                     Litro
                   </option>
@@ -290,19 +293,19 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-35">
                   Precio actual (S/ por L)
                 </label>
-                <input class="form-control" id="campo-35" type="number" value="6.00" min="0.01" step="0.01">
+                <input class="form-control" id="campo-35" type="number" value="6.00" min="0.01" step="0.01" required>
               </div>
               <div class="field">
                 <label for="campo-36">
                   Stock de referencia (L)
                 </label>
-                <input class="form-control" id="campo-36" type="number" value="980" min="0.01" step="0.01">
+                <input class="form-control" id="campo-36" type="number" value="980" min="0.01" step="0.01" required>
               </div>
               <div class="field">
                 <label for="campo-37">
                   Estado
                 </label>
-                <select class="form-select" id="campo-37">
+                <select class="form-select" id="campo-37" required>
                   <option selected>
                     Activo
                   </option>
@@ -313,7 +316,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
             </div>
             <div class="actions">
-              <button type="button" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 Guardar edición · visual
               </button>
             </div>
@@ -332,13 +335,13 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-38">
                   Nombre
                 </label>
-                <input class="form-control" id="campo-38" type="text" value="Diésel">
+                <input class="form-control" id="campo-38" type="text" value="Diésel" required minlength="3" maxlength="40">
               </div>
               <div class="field">
                 <label for="campo-39">
                   Categoría
                 </label>
-                <select class="form-select" id="campo-39">
+                <select class="form-select" id="campo-39" required>
                   <option>
                     Gasolinas
                   </option>
@@ -351,7 +354,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-40">
                   Unidad
                 </label>
-                <select class="form-select" id="campo-40">
+                <select class="form-select" id="campo-40" required>
                   <option selected>
                     Litro
                   </option>
@@ -361,19 +364,19 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                 <label for="campo-41">
                   Precio actual (S/ por L)
                 </label>
-                <input class="form-control" id="campo-41" type="number" value="4.00" min="0.01" step="0.01">
+                <input class="form-control" id="campo-41" type="number" value="4.00" min="0.01" step="0.01" required>
               </div>
               <div class="field">
                 <label for="campo-42">
                   Stock de referencia (L)
                 </label>
-                <input class="form-control" id="campo-42" type="number" value="3950" min="0.01" step="0.01">
+                <input class="form-control" id="campo-42" type="number" value="3950" min="0.01" step="0.01" required>
               </div>
               <div class="field">
                 <label for="campo-43">
                   Estado
                 </label>
-                <select class="form-select" id="campo-43">
+                <select class="form-select" id="campo-43" required>
                   <option selected>
                     Activo
                   </option>
@@ -384,7 +387,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </div>
             </div>
             <div class="actions">
-              <button type="button" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 Guardar edición · visual
               </button>
             </div>

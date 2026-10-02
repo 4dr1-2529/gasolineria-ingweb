@@ -11,7 +11,7 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.15 Anexos** — «Ma
 | ID | Anexo | Archivo(s) | Complementa a | Estado |
 |---|---|---|---|---|
 | A-1 | Diagrama BPMN de los procesos núcleo y de soporte, con diccionario de notación | [09_bpmn.md](09_bpmn.md) y su versión navegable [bpmn.html](bpmn.html) | 5.6 · 5.10 | **Incluido** |
-| A-2 | Matriz de cobertura Funcionalidad × Interfaz (32 × 21; 34 pares) | [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md) | 5.7 · 5.8 | **Incluido** |
+| A-2 | Matriz de cobertura Funcionalidad × Interfaz (38 × 30; 47 pares) | [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md) | 5.7 · 5.8 | **Incluido** |
 | A-3 | Cadenas de trazabilidad modelo → regla → funcionalidad → interfaz → entidad → HTML | [07_trazabilidad.md](07_trazabilidad.md) | 5.6 · 5.8 | **Incluido** |
 | A-4 | Evidencias de validación de la entrega (controles, resultados y método de la auditoría) | [00_auditoria.md](00_auditoria.md) | Todo el documento | **Incluido** |
 | A-5 | Capturas de interfaces renderizadas (evidencia visual de la maqueta) | `anexos/` → 5 archivos PNG (ver §B) | 5.6 · 5.7 | **Incluido** |
@@ -47,4 +47,4 @@ El PDF usa la palabra «anexo» en dos sentidos distintos:
 
 ---
 
-**Autocontrol:** 5 anexos, todos verificables por archivo propio; 0 archivos de contenido creados para rellenar anexos (sólo este índice y las 5 capturas copiadas de la validación ya ejecutada); conteos oficiales intactos (32 F · 21 P · 6 RN · 11 entidades); JavaScript = 0; único anexo con pendiente humano es la aclaración de la §D (registro oficial del proceso).
+**Autocontrol:** 5 anexos, todos verificables por archivo propio; 0 archivos de contenido creados para rellenar anexos (sólo este índice y las 5 capturas copiadas de la validación ya ejecutada); conteos oficiales intactos (38 F · 30 P · 10 RN · 12 entidades · diccionario 74 atributos · 47 pares en la matriz); JavaScript = 0; único anexo con pendiente humano es la aclaración de la §D (registro oficial del proceso).

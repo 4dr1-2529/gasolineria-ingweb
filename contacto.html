@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 Interfaz: P04 - Contacto
-Funcionalidades: No aplica
+Funcionalidades: F34
 Entidades: No aplica
 Reglas: No aplica
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
@@ -124,30 +124,30 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
                   <label for="campo-3">
                     Nombre
                   </label>
-                  <input class="form-control" id="campo-3" type="text" value="">
+                  <input class="form-control" id="campo-3" type="text" value="" required minlength="2" maxlength="60">
                 </div>
                 <div class="field">
                   <label for="campo-4">
                     Correo
                   </label>
-                  <input class="form-control" id="campo-4" type="email" value="">
+                  <input class="form-control" id="campo-4" type="email" value="" required maxlength="80">
                 </div>
                 <div class="field">
                   <label for="campo-5">
                     Asunto
                   </label>
-                  <input class="form-control" id="campo-5" type="text" value="">
+                  <input class="form-control" id="campo-5" type="text" value="" required minlength="3" maxlength="80">
                 </div>
                 <div class="field">
                   <label for="campo-6">
                     Mensaje
                   </label>
-                  <textarea class="form-control" id="campo-6" rows="3">
+                  <textarea class="form-control" id="campo-6" rows="3" required minlength="10" maxlength="500">
                   </textarea>
                 </div>
               </div>
               <div class="actions">
-                <button type="button" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary">
                   Enviar mensaje · visual
                 </button>
               </div>

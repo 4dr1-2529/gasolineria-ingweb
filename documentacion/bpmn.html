@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!--
-Documento: documentacion/bpmn.html - BPMN de los procesos núcleo y de soporte
-Funcionalidades: F13, F15, F16, F18, F19, F20, F21, F22, F28
-Entidades: Compra DetalleCompra Venta DetalleVenta Producto MovimientoInventario MovimientoCaja ConceptoMovimiento
-Reglas: RN01, RN02, RN04, RN05, RN06
+Documento: documentacion/bpmn.html - BPMN de los procesos núcleo, de soporte y de asistencia
+Funcionalidades: F13, F15, F16, F18, F19, F20, F21, F22, F28, F35, F36, F37, F38
+Entidades: Compra DetalleCompra Venta DetalleVenta Producto MovimientoInventario MovimientoCaja ConceptoMovimiento Empleado Asistencia
+Reglas: RN01, RN02, RN04, RN05, RN06, RN07, RN08, RN09, RN10
 Estado: Diagrama estático HTML/CSS sin backend
 -->
 <html lang="es">
@@ -633,8 +633,185 @@ Estado: Diagrama estático HTML/CSS sin backend
 
         <section class="panel">
           <h2>
+            Proceso de asistencia · Marcación y control
+          </h2>
+          <div class="bpmn-figure">
+            <div class="bpmn-pool">
+              <div class="bpmn-pool-name">
+                Pool · Nexo · Asistencia
+              </div>
+              <div class="bpmn-grid">
+                <div class="bpmn-row">
+                  <div class="bpmn-lane-head">
+                    Empleado
+                  </div>
+                  <div class="bpmn-lane-head">
+                    Sistema de asistencia
+                  </div>
+                  <div class="bpmn-lane-head">
+                    Publicación y control
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-start">
+                      Inicio
+                    </div>
+                    <p class="bpmn-caption">
+                      S4 · El empleado quiere marcar su asistencia
+                    </p>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell bpmn-vflow"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      A11 · Registrar la marcación (entrada y salida) en P28
+                    </div>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell bpmn-move span2">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      Cambio de carril → sistema de asistencia
+                    </span>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-gw">
+                      <span>X</span>
+                    </div>
+                    <p class="bpmn-gw-label">
+                      G5 · ¿RN08 ya existe asistencia para este día?
+                    </p>
+                  </div>
+                  <div class="bpmn-cell"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-vflow">
+                    <span class="lbl">
+                      No · es la primera
+                    </span>
+                  </div>
+                  <div class="bpmn-cell bpmn-move branch">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      Sí · ya existe
+                    </span>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-gw">
+                      <span>X</span>
+                    </div>
+                    <p class="bpmn-gw-label">
+                      G6 · ¿RN09 la hora de salida es posterior a la de entrada?
+                    </p>
+                  </div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-end">
+                      Fin · error
+                    </div>
+                    <p class="bpmn-caption">
+                      E7 · Asistencia duplicada para el mismo día
+                    </p>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-vflow">
+                    <span class="lbl">
+                      Sí
+                    </span>
+                  </div>
+                  <div class="bpmn-cell bpmn-move branch">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      No
+                    </span>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      A12 · Calcular el estado: Presente o Falta (RN10)
+                    </div>
+                  </div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-end">
+                      Fin · error
+                    </div>
+                    <p class="bpmn-caption">
+                      E8 · La hora de salida no es posterior a la de entrada
+                    </p>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-move span2">
+                    <span class="tail"></span>
+                    <span class="lbl">
+                      Cambio de carril → publicación
+                    </span>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-task">
+                      A13 · Publicar mi asistencia (P28) y el control del personal (P29)
+                    </div>
+                  </div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell bpmn-vflow"></div>
+                </div>
+                <div class="bpmn-row">
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell"></div>
+                  <div class="bpmn-cell">
+                    <div class="bpmn-node bpmn-end">
+                      Fin
+                    </div>
+                    <p class="bpmn-caption">
+                      E9 · Asistencia registrada y estado calculado
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="bpmn-caption">
+              Figura 3 · Pool <strong>POOL-ASIST</strong> con tres carriles. Secuencia completa: S4 → A11 → G5; en G5 la rama «No · es la primera» → G6, y la rama «Sí · ya existe» → E7; en G6 la rama «Sí» → A12 → A13 → E9, y la rama «No» → E8. Anotación: RN07 limita «Mi asistencia» (P28) al empleado autenticado y RN10 calcula el estado Presente o Falta a partir de las horas marcadas.
+            </p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>
             Correspondencia con interfaces, reglas y datos
           </h2>
+          <p class="notice">
+            El proyecto completo tiene 30 interfaces (P01–P30), 38 funcionalidades (F01–F38), 12 entidades (incluida Asistencia) y 10 reglas de negocio (RN01–RN10); la maqueta tiene 31 archivos HTML en la raíz más esta página de documentación. Los tres procesos de esta página representan las reglas RN01, RN02 y RN04 a RN10.
+          </p>
           <div class="table-responsive">
             <table class="table">
               <caption>
@@ -743,21 +920,49 @@ Estado: Diagrama estático HTML/CSS sin backend
                 </tr>
                 <tr>
                   <td>
-                    Movimientos manuales MC002 y MC006
+                    Consulta de solo lectura de ingresos y egresos de caja (F26 y F27)
                   </td>
                   <td>
-                    Fuera de los dos procesos: movimientos manuales de A8
+                    Lectura de A4 y de A9
                   </td>
                   <td>
-                    P16, P17
+                    P16
                   </td>
                   <td>
-                    RN06
+                    RN04, RN05
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    Saldo de caja S/ 3,425.00 = 4,410.00 + 415.00 − 1,400.00
+                    Asistencia del 10/09/2026: Ana Torres 08:00–17:00, Luis Rojas 08:00–17:00 y Elena Díaz 08:15–17:00 · Presente
+                  </td>
+                  <td>
+                    A11 → A12 → A13
+                  </td>
+                  <td>
+                    P28, P29
+                  </td>
+                  <td>
+                    RN07, RN08, RN10
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    «Mi asistencia» de Ana: 09/09/2026 07:58–17:00 Presente y 08/09/2026 sin marcación (Falta)
+                  </td>
+                  <td>
+                    A12, A13
+                  </td>
+                  <td>
+                    P28
+                  </td>
+                  <td>
+                    RN07, RN09, RN10
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Saldo de caja S/ 3,430.00 = 4,410.00 + 370.00 − 1,350.00
                   </td>
                   <td>
                     A8
@@ -781,7 +986,7 @@ Estado: Diagrama estático HTML/CSS sin backend
           <div class="table-responsive">
             <table class="table">
               <caption>
-                Comprobaciones de la notación BPMN 2.0 sobre los dos diagramas de esta página
+                Comprobaciones de la notación BPMN 2.0 sobre los tres diagramas de esta página
               </caption>
               <thead>
                 <tr>
@@ -799,7 +1004,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     Todo proceso tiene un evento de inicio y al menos un evento de fin
                   </td>
                   <td>
-                    Sí · S1 con E1 y E2; S3 con E4, E5 y E6
+                    Sí · S1 con E1, E2 y E3; S3 con E4, E5 y E6; S4 con E7, E8 y E9
                   </td>
                 </tr>
                 <tr>
@@ -807,7 +1012,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     Eventos de fin con borde grueso e inicio con borde fino
                   </td>
                   <td>
-                    Sí · los seis eventos de fin y los dos de inicio
+                    Sí · los nueve eventos de fin y los tres de inicio
                   </td>
                 </tr>
                 <tr>
@@ -815,7 +1020,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     Gateways exclusivos marcados con X y etiqueta en cada rama
                   </td>
                   <td>
-                    Sí · G1, G2, G3 y G4
+                    Sí · de G1 a G6, doce ramas rotuladas
                   </td>
                 </tr>
                 <tr>
@@ -831,7 +1036,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     Cada tarea pertenece a un único carril
                   </td>
                   <td>
-                    Sí · dos carriles por pool, doce elementos de actividad en total
+                    Sí · quince elementos de actividad, cada uno en un único carril
                   </td>
                 </tr>
                 <tr>

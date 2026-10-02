@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <!--
-Interfaz: P12 - Entrada combustible
-Funcionalidades: F16
-Entidades: MovimientoInventario Producto Usuario Compra
-Reglas: RN04, RN06
+Interfaz: P27 - Formulario concepto
+Funcionalidades: F23, F25
+Entidades: ConceptoMovimiento
+Reglas: RN03
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
 <html lang="es">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Representar la entrada de combustible por compra o por ajuste. Proyecto académico de Ingeniería Web, G1.">
+    <meta name="description" content="Representar el registro y la edición de un concepto económico. Proyecto académico de Ingeniería Web, G1.">
     <title>
-      Entrada combustible | Estación Nexo · G1
+      Formulario concepto | Estación Nexo · G1
     </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/estilos.css" rel="stylesheet">
@@ -94,83 +94,66 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         <div class="page-heading">
           <div>
             <p class="eyebrow">
-              OPERACIÓN DIARIA / P12
+              OPERACIÓN DIARIA / P27
             </p>
             <h1>
-              Entrada combustible
+              Formulario concepto
             </h1>
             <p class="subtitle">
-              Representar la entrada de combustible por compra o por ajuste.
+              Representar el registro y la edición de un concepto económico.
             </p>
           </div>
           <div class="actions">
-            <a class="btn btn-secondary" href="inventario.html">
-              ← Existencias
+            <a class="btn btn-secondary" href="conceptos.html">
+              ← Catálogo
             </a>
           </div>
         </div>
         <p class="notice">
-          RN04 · Una entrada originada en una compra recibe litros y genera también su egreso económico: así ocurrió con MI001–MI003 y MC001. Una entrada por ajuste, en cambio, no mueve dinero.
+          RN03 · Un concepto con movimientos asociados no se elimina: se edita o se desactiva. Los conceptos del corte son CE01 Venta de combustible (Ingreso) y CE02 Compra de combustible (Egreso).
         </p>
         <section class="panel ">
           <h2>
-            Entrada de combustible
+            Registrar concepto · F23
           </h2>
           <form id="registro">
             <div class="form-grid">
               <div class="field">
-                <label for="campo-51">
-                  Producto
+                <label for="campo-139">
+                  Nombre *
                 </label>
-                <select class="form-select" id="campo-51" required>
+                <input class="form-control" id="campo-139" type="text" value="" required minlength="3" maxlength="40">
+              </div>
+              <div class="field">
+                <label for="campo-140">
+                  Tipo *
+                </label>
+                <select class="form-select" id="campo-140" required>
                   <option selected>
-                    Gasolina Regular
+                    Ingreso
                   </option>
                   <option>
-                    Gasolina Premium
-                  </option>
-                  <option>
-                    Diésel
+                    Egreso
                   </option>
                 </select>
               </div>
               <div class="field">
-                <label for="campo-52">
-                  Cantidad (L)
+                <label for="campo-141">
+                  Estado *
                 </label>
-                <input class="form-control" id="campo-52" type="number" value="500" min="0.01" step="0.01" required>
-              </div>
-              <div class="field">
-                <label for="campo-53">
-                  Fecha y hora
-                </label>
-                <input class="form-control" id="campo-53" type="datetime-local" value="2026-09-10T12:00" required>
-              </div>
-              <div class="field">
-                <label for="campo-54">
-                  Motivo
-                </label>
-                <textarea class="form-control" id="campo-54" rows="3" required minlength="5" maxlength="200">
-                  Compra de combustible a proveedor
-                </textarea>
-              </div>
-              <div class="field">
-                <label for="campo-55">
-                  Responsable
-                </label>
-                <select class="form-select" id="campo-55" required>
+                <select class="form-select" id="campo-141" required>
                   <option selected>
-                    Ana Torres
+                    Activo
                   </option>
                   <option>
-                    Luis Rojas
+                    Inactivo
                   </option>
                 </select>
               </div>
             </div>
             <div class="actions">
               <button type="submit" class="btn btn-primary">
-                Registrar entrada · visual
+                Registrar concepto · visual
               </button>
             </div>
             <p class="form-help">
@@ -180,28 +163,69 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
         </section>
         <section class="panel ">
           <h2>
-            Resumen del escenario
+            Editar / activar / desactivar concepto · CE02 Compra de combustible · F25
           </h2>
-          <p>
-            Gasolina Regular · Stock actual:
-            <strong>
-              1,990 L
-            </strong>
-          </p>
-          <p>
-            Entrada propuesta:
-            <strong>
-              500 L
-            </strong>
-            · Stock proyectado:
-            <strong>
-              2,490 L
-            </strong>
-          </p>
-          <p class="muted-text">
-            Proyección fija, sin incorporar al historial ni modificar las existencias. Al confirmar se crearía un movimiento de inventario y su egreso asociado de S/ 2,250.00 (RN04).
-          </p>
+          <form id="editar">
+            <div class="form-grid">
+              <div class="field">
+                <label for="campo-142">
+                  Concepto a editar *
+                </label>
+                <select class="form-select" id="campo-142" required>
+                  <option>
+                    Venta de combustible
+                  </option>
+                  <option selected>
+                    Compra de combustible
+                  </option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="campo-143">
+                  Nuevo nombre *
+                </label>
+                <input class="form-control" id="campo-143" type="text" value="Compra de combustible" required minlength="3" maxlength="40">
+              </div>
+              <div class="field">
+                <label for="campo-144">
+                  Tipo *
+                </label>
+                <select class="form-select" id="campo-144" required>
+                  <option>
+                    Ingreso
+                  </option>
+                  <option selected>
+                    Egreso
+                  </option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="campo-145">
+                  Estado *
+                </label>
+                <select class="form-select" id="campo-145" required>
+                  <option selected>
+                    Activo
+                  </option>
+                  <option>
+                    Inactivo
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="submit" class="btn btn-primary">
+                Guardar edición · visual
+              </button>
+            </div>
+            <p class="form-help">
+              Formulario de demostración; los cambios no se guardan.
+            </p>
+          </form>
         </section>
+        <p class="notice">
+          Este formulario comparte F23 y F25 con P17 conceptos.html: el catálogo de consulta y este formulario dedicado son dos interfaces para las mismas funcionalidades.
+        </p>
       </main>
       <footer>
         <span>
