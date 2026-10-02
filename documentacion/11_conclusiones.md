@@ -4,6 +4,8 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.11 Conclusiones** �
 
 Se entregan **3 conclusiones** (el máximo oficial). Se apoyan únicamente en evidencia existente del repositorio: datos del corte del 10/09/2026, documentación 5.1–5.8, BPMN y resultados de la auditoría. **No se afirma ningún resultado de implementación**, porque la etapa Spring Boot no se ha realizado (0 de 32 funcionalidades con lógica real).
 
+> **[PENDIENTE — decisión humana]**: validación de la redacción de estas conclusiones por el equipo (clasificación oficial en [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md), ítem (e)). Hasta esa validación, este punto se considera **Entregado, no cerrado**.
+
 ---
 
 ## Conclusión 1 · El modelo resuelve a nivel de diseño la oportunidad detectada: una sola historia que debe cuadrar en litros y en soles

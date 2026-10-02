@@ -12,7 +12,7 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.10 Productos y entre
 | 2 | Diccionario de datos de todo el modelo (semántica de cada entidad y sus atributos) | [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md) §cada entidad + §Condiciones de diseño futuro; resumen en la sección 3 de este documento | **Entregado** |
 | 3 | Diagramas de secuencia del proceso core y del proceso de soporte | Sección 4 de este documento (Mermaid `sequenceDiagram`) | **Entregado** |
 | 4 | Diagramas de casos de uso del proceso core y del proceso de soporte | Sección 5 de este documento (PlantUML) | **Entregado** |
-| 5 | Patrones de desarrollo usados y su respectiva implementación (capturas de los patrones revisados en el curso) | Sección 6 de este documento | **Parcial** — patrones del proyecto con extractos de código; las *capturas de los patrones revisados en clase* son **PENDIENTE humano** |
+| 5 | Patrones de desarrollo usados y su respectiva implementación (capturas de los patrones revisados en el curso) | Sección 6 de este documento | **Parcial** — §6.A registra lo realmente implementado en la maqueta con extractos, §6.B lo previsto para Spring Boot; las *capturas de los patrones revisados en clase* (§6.C) son **PENDIENTE · requiere evidencia** |
 | 6 | Cronograma del proyecto | Sección 7 de este documento | **Parcial** — fases reales ordenadas; las fechas del ciclo son **PENDIENTE humano** |
 
 Bibliografía a revisar exigida junto a este punto (Coronel/Morris/Rob; Cervantes Maceda, Velasco-Elizondo y Castro Careaga): registrada como pendiente en [14_bibliografia.md](14_bibliografia.md).
@@ -237,12 +237,26 @@ Los casos de uso fuera de estos dos procesos (catálogo F04–F12, finanzas manu
 
 ## 6. Patrones de desarrollo usados (entregable 5)
 
-| Patrón | Qué resuelve | Dónde se usa en Estación Nexo | Implementación / evidencia | Estado |
-|---|---|---|---|---|
-| **Modelo-Vista-Controlador (MVC)** | Separar datos, presentación y lógica | Modelo: las 11 entidades de [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md); Vista: 22 HTML + `css/estilos.css`; Controlador: los F01–F32 que ejecutará Spring | Estructura del repositorio (README sección 11) y estados DEFINIDA / MAQUETADA / IMPLEMENTADA | **Parcial:** Modelo y Vista definidos; Controlador pendiente de la etapa Spring |
-| **Plantilla compartida (partial / include)** | Un mismo menú y pie en todas las páginas sin duplicar decisiones | Los 22 HTML usan el mismo `<nav>` con el mismo orden de módulos y el mismo `<footer>` | Extracto de `dashboard.html` (idéntico en las páginas internas, con `aria-current="page"` en la activa) | **Usado** en la maqueta |
-| **Design tokens (variables CSS)** | Tokens de color compartidos por todos los componentes | La paleta `:root` de `css/estilos.css` gobierna botones, tarjetas y gráficos | Extracto de `css/estilos.css` | **Usado** en la maqueta |
-| **Repository / Service (capas)** | Separar acceso a datos y lógica transaccional | Definido para registrar compra (F13) y venta (F20) aplicando RN01–RN06 en una sola transacción | README sección 16 «Próxima etapa con Spring Boot» (Spring Data JPA, servicios transaccionales) | **Definido, no implementado** en esta etapa |
+Para no presentar como «implementado» algo que sólo está previsto, los patrones se separan en tres grupos.
+
+### A. Implementado realmente en la maqueta estática
+
+| Patrón / convención | Qué resuelve | Dónde se usa en Estación Nexo | Evidencia |
+|---|---|---|---|
+| **Design tokens (variables CSS)** | Un mismo lenguaje de color compartido por todos los componentes | La paleta `:root` de `css/estilos.css` gobierna botones, tarjetas y gráficos | Extracto 1 de esta sección |
+| **Navegación consistente** | Un mismo menú, con el mismo orden de módulos, en todas las páginas internas | Las **18 páginas internas** repiten el mismo bloque `<nav>` con el mismo orden de módulos (sólo cambia `aria-current="page"`); las 4 páginas públicas (index, publicidad, contacto, login) usan una variante reducida de 4 enlaces. **No es un include/partial de servidor ni de plantilla:** en HTML estático el bloque está duplicado en cada archivo y se mantiene idéntico por convención | Extracto 2 de esta sección |
+| **Convención de bloque de comentario por página** | Trazabilidad legible de qué cubre cada archivo | Cada uno de los 22 HTML arranca en su línea 3 con `Interfaz: Pnn …`, `Funcionalidades:`, `Entidades:`, `Reglas:` y `Estado:` | Propio de los 22 archivos HTML |
+
+### B. Arquitectura prevista para la etapa Spring Boot (no implementada en esta etapa)
+
+| Patrón | Qué resuelve | Dónde está definido | Estado |
+|---|---|---|---|
+| **Modelo-Vista-Controlador (MVC)** | Separar datos, presentación y lógica | Modelo: las 11 entidades de [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md); Vista: 22 HTML + `css/estilos.css`; Controlador: los F01–F32 que ejecutará Spring (README sección 16) | **Previsto para Spring Boot.** La maqueta separa ya modelo y vista, pero **no existe controlador en ejecución: 0 de 32 funcionalidades implementadas** (estados DEFINIDA + MAQUETADA) |
+| **Repository / Service (capas)** | Separar acceso a datos y lógica transaccional | README sección 16 «Próxima etapa con Spring Boot» (Spring Data JPA, servicios transaccionales); aplicará RN01–RN06 en una sola transacción sobre compra (F13) y venta (F20) | **Definido, no implementado** |
+
+### C. Patrones revisados en el curso
+
+> **[PENDIENTE — requiere evidencia]** el punto 5.10 pide además «capturas explicativas de los patrones revisados en el curso». El material de clase (diapositivas y prácticas de patrones) no está en el repositorio: **no se inventa** ni se sustituye por capturas ajenas, y ningún patrón se lista como «revisado en clase» sin ese material. Al recibirlo, esta sección debe añadir las capturas y, si el curso revisó otros patrones (por ejemplo del catálogo de Arquitectura de Software), incorporarlos con su implementación en Spring Boot.
 
 **Extracto 1 — design tokens (`css/estilos.css`):**
 
@@ -258,7 +272,7 @@ Los casos de uso fuera de estos dos procesos (catálogo F04–F12, finanzas manu
 }
 ```
 
-**Extracto 2 — plantilla compartida (`dashboard.html`, mismo bloque en las páginas internas):**
+**Extracto 2 — navegación consistente (`dashboard.html`, mismo bloque en las 18 páginas internas):**
 
 ```html
 <nav aria-label="Navegación principal">
@@ -270,9 +284,6 @@ Los casos de uso fuera de estos dos procesos (catálogo F04–F12, finanzas manu
        Finanzas, Empleados, Usuarios, Contacto, Cerrar sesión… -->
 </nav>
 ```
-
-> **[PENDIENTE — decisión humana]** el punto 5.10 pide además «capturas explicativas de los patrones revisados en el curso». El material de clase (diapositivas y prácticas de patrones) no está en el repositorio: **no se inventa** ni se sustituye por capturas ajenas. Al recibir ese material, esta sección debe añadir las capturas y, si el curso revisó otros patrones (por ejemplo de catálogo de patrones de Arquitectura de Software), incorporarlos con su implementación en Spring Boot.
-
 ---
 
 ## 7. Cronograma del proyecto (entregable 6)
@@ -319,4 +330,21 @@ Ninguna herramienta añade JavaScript al repositorio: son bloques de texto dentr
 | ¿Los diagramas de secuencia cubren compra y venta como exige el BPMN? | Sí · §4.2 refleja `A6, G3, A7, SP-INV, G4, A9, A10` con `E4/E5`; §4.1 refleja `A1, G1, A2, A3, G2, A4, A5, A8` con `E2/E3` |
 | ¿Los casos de uso corresponden a procesos reales? | Sí · núcleo = proceso de venta; soporte = proceso de abastecimiento (los dos de [09_bpmn.md](09_bpmn.md)) |
 | ¿Algún entregable se inventó fuera de la especificación? | No · las seis filas de la sección 1 son textualmente las del punto 5.10 oficial |
-| ¿Qué queda en pendiente humano? | Capturas de los patrones revisados en clase y fechas del cronograma (sección 6 y 7) |
+| ¿Se presentó como implementado algo que sólo está previsto? | No · §6 separa lo implementado en la maqueta (A) de lo previsto para Spring Boot (B) y de los patrones de clase pendientes (C); 0 de 32 funcionalidades con lógica real |
+| ¿Qué queda en pendiente humano? | Los 7 pendientes clasificados en [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md) — ver la sección 10 de este documento |
+
+---
+
+## 10. Pendientes humanos (espejo de la clasificación oficial)
+
+Estado idéntico al de [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md) §*Clasificación de los pendientes*; ante cualquier cambio, manda ese documento. **Nada de esto está resuelto ni se inventó:**
+
+| Pendiente | Clasificación | Afecta a |
+|---|---|---|
+| Integrantes y coordinador del G1 | pendiente humano | Carátula del informe (punto 3) |
+| Capturas reales de los patrones revisados en clase | requiere evidencia | **5.10 §6.C** |
+| Fechas reales del cronograma (inicio, exposición, cierre) | pendiente humano | **5.10 §7** |
+| Lectura y citación de las 2 obras obligatorias (Coronel/Morris/Rob; Cervantes Maceda, Velasco-Elizondo y Castro Careaga) | pendiente humano | **5.10 §1 y 5.14 §D** |
+| Validación del equipo sobre conclusiones y recomendaciones | pendiente humano | 5.11 y 5.12 |
+| Volcado del glosario a la plantilla del informe (A4, Arial 11) | pendiente humano | 5.13 |
+| Evidencia oficial del proceso de gasolinera (Anexo 1/4) | requiere evidencia | Punto 4 y 5.15 §D |

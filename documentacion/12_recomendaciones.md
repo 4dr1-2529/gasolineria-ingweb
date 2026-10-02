@@ -4,6 +4,8 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.12 Recomendaciones**
 
 Se entregan **3 recomendaciones** (el máximo oficial), cada una derivada de una de las tres [conclusiones](11_conclusiones.md). Ninguna introduce tecnologías fuera del alcance: se mantienen HTML5 + CSS3 + Bootstrap 5.3.3 CSS y la prohibición de JavaScript, backend y base de datos en esta etapa.
 
+> **[PENDIENTE — decisión humana]**: validación de la redacción de estas recomendaciones por el equipo (clasificación oficial en [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md), ítem (e)). Hasta esa validación, este punto se considera **Entregado, no cerrado**.
+
 ---
 
 ## Recomendación 1 · Cuadre el modelo y los números del ejemplo antes de maquetar

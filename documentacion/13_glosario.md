@@ -2,7 +2,7 @@
 
 Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.13 Glosario** — «Listado de términos técnicos o nuevos que requieren definición». Se usan sólo términos que realmente aparecen en este proyecto y en su documentación, ordenados por prioridad: dominio de la estación de servicio, modelo de datos, ingeniería web, y vocabulario específico de esta documentación. No se añadieron términos para aumentar la cantidad.
 
-> **Formato:** la estructura oficial no exige plantilla de glosario; al compilar el informe final este listado debe volcarse en el formato general del documento (hoja A4, Arial 11, interlineado simple — sección 6 de la estructura oficial).
+> **Formato — [PENDIENTE — decisión humana]:** la estructura oficial no exige plantilla de glosario; al compilar el informe final este listado debe volcarse en el formato general del documento (hoja A4, Arial 11, interlineado simple — sección 6 de la estructura oficial). Clasificación oficial en [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md), ítem (f). Hasta ese volcado, este punto se considera **Entregado, no cerrado**.
 
 ---
 
