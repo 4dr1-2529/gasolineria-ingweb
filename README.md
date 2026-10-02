@@ -177,13 +177,6 @@ Los datos son fijos. No hay autenticación, autorización, cálculos dinámicos,
 ## 16. Próxima etapa con Spring Boot
 Crear entidades JPA, repositorios, servicios transaccionales, controladores y vistas integradas. Incorporar base de datos y migraciones, Bean Validation, Spring Security, hash de contraseñas, roles, protección CSRF y sesiones. Implementar RN01–RN06, control de concurrencia en stock, importes decimales exactos, unicidad de ingreso por venta y de egreso por compra, e idempotencia. Integrar formularios con respuestas de éxito/error y consultas reales. Probar las reglas con casos válidos, inválidos y operaciones concurrentes. Decidir el vínculo estructurado entre venta y movimiento físico antes de ampliar el modelo.
 
-## 17. Guía breve para exposición
-1. Presentar problema, objetivo y alcance estático del grupo G1.
-2. Recorrer Inicio → Login → Dashboard y explicar sus cinco indicadores de estado puntual y sus cinco series temporales.
-3. Mostrar V001: 10 L × S/ 5.00 = S/ 50.00; encontrar MI004 y MC003. Distinguir litros y soles.
-4. Mostrar la compra C001 (300 L / S/ 1,350.00): tres entradas MI001–MI003 y **un único** egreso MC001; explicar RN04.
-5. Explicar empleados frente a usuarios y el rol de la cuenta.
-6. Presentar las once entidades, las cardinalidades y las seis reglas con un ejemplo de cumplimiento y uno de violación.
-7. Enseñar la matriz F/P, la trazabilidad y el BPMN; cerrar explicando lo que implementará Spring Boot.
+
 
 Documento académico: [Puntos 1 al 5.8](documentacion/08_puntos_1_al_5_8.md) · [BPMN](documentacion/09_bpmn.md) · [Puntos 5.9 a 5.14](documentacion/10_productos_y_entregables.md) · [Anexos 5.15](documentacion/15_anexos.md). Pendientes de decisión humana: integrantes, anexo oficial del proceso, capturas de patrones y fechas del cronograma (5.10), obras bibliográficas obligatorias (5.14) y validación del equipo sobre conclusiones, recomendaciones y glosario; no se inventaron nombres del grupo ni estadísticas.
