@@ -3,7 +3,7 @@
 Interfaz: P28 - Mi asistencia
 Funcionalidades: F35, F36, F37
 Entidades: Asistencia Empleado
-Reglas: RN07, RN08, RN09, RN10
+Reglas: RN05
 Estado: Maqueta HTML/CSS/Bootstrap sin backend
 -->
 <html lang="es">
@@ -113,7 +113,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           </div>
         </div>
         <p class="notice">
-          RN07 · Esta interfaz no tiene selector de empleado: en la futura implementación, Spring Security resolverá el usuario autenticado, lo vinculará a su empleado y mostrará sólo su asistencia.
+          RN05 · Esta interfaz no tiene selector de empleado: en la futura implementación, Spring Security resolverá el usuario autenticado, lo vinculará a su empleado y mostrará sólo su asistencia.
         </p>
         <section class="panel ">
           <h2>
@@ -146,7 +146,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
               </button>
             </div>
             <p class="form-help">
-              Formulario de demostración; los cambios no se guardan. RN09 se representa con el mínimo 08:01 de la hora de salida; RN08 y RN10 los comprobará Spring Boot: una sola asistencia por empleado y día, y estado calculado a partir de las horas.
+              Formulario de demostración; los cambios no se guardan. RN05 se representa con el mínimo 08:01 de la hora de salida; Spring Boot comprobará la regla completa: una sola asistencia por empleado y día, y estado calculado a partir de las horas.
             </p>
           </form>
         </section>
@@ -281,7 +281,7 @@ Estado: Maqueta HTML/CSS/Bootstrap sin backend
           </div>
         </section>
         <p class="notice">
-          RN07, RN08, RN09 y RN10 · Sólo se consulta la asistencia del empleado autenticado; cada fecha aparece una sola vez; la salida es posterior a la entrada; y el estado se deriva de las horas registradas. Esta correspondencia la comprobará Spring Boot.
+          RN05 · Sólo se consulta la asistencia del empleado autenticado; cada fecha aparece una sola vez; la salida es posterior a la entrada; y el estado se deriva de las horas registradas. Esta correspondencia la comprobará Spring Boot.
         </p>
       </main>
       <footer>

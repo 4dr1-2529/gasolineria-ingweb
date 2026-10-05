@@ -1,46 +1,72 @@
-# Modelo de negocio · G1
+# Modelo de negocio · Estación Nexo
 
-## Contexto y alcance
-Estación Nexo representa un sistema de venta de gasolina: categorías y tipos de combustible, compra o abastecimiento de combustible, inventario en litros, ventas, ingresos y egresos en soles, tablero de control, gestión de usuarios y empleados y control de asistencia del personal. El alcance actual es una maqueta académica estática; ningún registro se persiste. Los datos son ficticios y el corte es el 10/09/2026 a las 12:00, hora de referencia de Perú.
+## Principio general
 
-La cadena de valor central es única y sin módulos ajenos al negocio:
+Estación Nexo es un sistema web para la gestión de una estación de servicio. Gestiona categorías, combustibles, compras, ventas, inventario, movimientos de caja, empleados, usuarios y asistencia.
 
-**Categoría de combustible → Combustible → Compra/abastecimiento → Inventario (L) → Venta → Ingreso/Egreso (S/) → Dashboard → Usuarios/Empleados**
+La versión actual de desarrollo se construye con Spring Boot 3.5.0, Java 17, patrón MVC (Controller → Service → ServiceImpl), clases Java, vistas JSP/JSTL y datos en memoria (listas `List<T>`). La aplicación no consume base de datos todavía: no hay esquema persistente, ni capa de Repositorio, ni mapeo ORM. Tampoco hay autenticación real, Spring Security ni interfaces REST: las vistas se consultan por rutas HTTP internas y los registros viven mientras la aplicación está en ejecución.
 
-## Roles conceptuales
-- Administrador: categorías, productos, compras, conceptos económicos, empleados, usuarios, control de asistencia del personal y supervisión de la operación.
-- Operador / Vendedor: consultas de disponibilidad, ventas y movimientos autorizados de inventario y caja; registra y consulta su propia asistencia.
-No existe autorización real. Todos los HTML internos son accesibles directamente.
+La versión V1 (31 archivos HTML + CSS) es la maqueta navegable de la que nacen las 30 interfaces P01–P30. La versión V2 replica esos módulos con lógica real sobre datos en memoria.
 
-## Proceso de compra y abastecimiento
-Inicio → Login → Compras → indicar proveedor, fecha, combustible, litros y precio de compra → confirmar compra → registrar una entrada de inventario por cada línea → aumentar existencias en litros → registrar un único egreso económico por el importe total.
-En Spring Boot la confirmación será atómica y aplicará RN04 y RN06: crear Compra y sus DetalleCompra, crear un MovimientoInventario de entrada por cada línea, aumentar Producto.stock y crear un único MovimientoCaja de egreso. Ante un fallo se revertirá todo. La maqueta muestra la compra C001 ya confirmada.
+## Objetivos
 
-## Proceso de venta y flujo completo
-Inicio → Login → Dashboard → seleccionar combustible → consultar disponibilidad → representar venta → registrar detalle → descontar inventario → generar ingreso económico → consultar historial.
-En Spring Boot, la confirmación comprobará RN01, RN02, RN05 y RN06 y se realizará en una transacción: crear Venta y DetalleVenta, descontar Producto.stock, registrar MovimientoInventario de salida y crear un único MovimientoCaja de ingreso (RN05). Ante un fallo, se revertirá toda la operación. La maqueta muestra el resultado de tres ventas ya confirmadas y un escenario nuevo sin confirmar.
+**Objetivo general**
 
-## Inventario: movimiento físico
-Entrada por compra → Seleccionar la compra → recibir litros → registrar entrada → aumentar existencias (RN04).
-Retiro → Seleccionar producto, cantidad y motivo → comprobar stock → registrar salida → disminuir existencias.
-Venta → Salida física asociada mediante el motivo de MovimientoInventario. El modelo base no incluye id_venta en esa entidad; el motivo documenta la referencia del ejemplo. Stock es el saldo físico en litros. Las cantidades se presentan positivas; el tipo determina suma o resta. El saldo inicial del día es el cierre físico del día anterior.
+Definir y desarrollar Estación Nexo como un sistema web para gestionar las operaciones principales de una estación de servicio, integrando el catálogo de combustibles, compras, ventas, control de inventario, movimientos económicos, administración de empleados y usuarios, y control de asistencia.
 
-## Finanzas: movimiento económico
-Venta confirmada → ingreso automático de igual importe y vinculado a id_venta (RN05).
-Compra confirmada → egreso automático por el importe total de la compra y vinculado a id_compra (RN04).
-Sólo existen dos conceptos económicos: **CE01 Venta de combustible (Ingreso)** y **CE02 Compra de combustible (Egreso)**. No hay altas de movimientos de caja por fuera de una venta o de una compra: P16 «Ingresos y egresos de caja» es una consulta de solo lectura que muestra los ingresos del día (F26: MC003, MC004 y MC005) y los egresos del día (F27: MC001).
-Saldo demostrativo = saldo de apertura + ingresos − egresos. Un movimiento físico no determina por sí solo un movimiento de dinero, y un movimiento de dinero no siempre nace de un movimiento físico: la compra es el único caso en que ambos ocurren a la vez. No se modelan contabilidad tributaria, clientes ni proveedores como entidades; el proveedor es un atributo de texto de Compra.
+**Objetivos específicos**
 
-## Usuarios y empleados
-Empleado conserva la identidad y situación laboral. Usuario representa el acceso conceptual: cada empleado puede tener cero o una cuenta; cada cuenta pertenece a un empleado. El rol pertenece a Usuario. Se desactivan registros con historial en lugar de eliminarlos (RN03).
+1. Gestionar las categorías y combustibles de la estación, manteniendo su información, estado y relación dentro del catálogo.
+2. Gestionar empleados y usuarios asociados, manteniendo la información necesaria para identificar a los responsables de las operaciones del sistema.
+3. Registrar y consultar compras y ventas de combustibles, relacionando cada operación con sus detalles y con el producto correspondiente.
+4. Controlar las existencias de combustible mediante entradas y salidas de inventario, evitando que el stock llegue a valores negativos.
+5. Controlar los movimientos económicos originados por compras y ventas y mantener la trazabilidad de ingresos, egresos y saldo de caja.
+6. Controlar el registro de asistencia del personal, permitiendo registrar la entrada, salida e historial de cada empleado de acuerdo con las reglas del sistema.
 
-## Asistencia del personal
-Relación Empleado 1:N Asistencia: un empleado tiene muchos registros de asistencia y cada registro pertenece a un solo empleado. La entidad Asistencia guarda fecha, hora de entrada, hora de salida, estado (Presente o Falta) y una observación opcional. Sólo puede haber un registro por empleado y por fecha (RN08), la hora de salida debe ser posterior a la de entrada (RN09) y el estado se calcula a partir de las horas (RN10).
+## Narrativa del negocio
 
-P28 «Mi asistencia» es la interfaz del empleado autenticado: registrar su marcación (F35), consultar su historial (F36) y ver su resumen (F37); cada quien sólo ve y registra la suya (RN07), sin selector de empleado. P29 «Control de asistencia» es la consulta del administrador sobre la asistencia de todo el personal (F38). Todas las reglas están definidas y maquetadas con avisos; ninguna está implementada.
+**CATÁLOGO — Categoria → Producto/Combustible.** Las categorías agrupan los combustibles (Gasolinas: Regular y Premium; Diésel: Diésel). Cada producto guarda su unidad de medida (litro), su precio por litro, su stock y su estado (Activo/Inactivo).
 
-## Datos y conciliación del ejemplo
-Saldo físico de apertura al 10/09/2026: 6,700 L.
+**ABASTECIMIENTO — Compra → DetalleCompra → Entrada de inventario → Egreso.** Una compra a proveedor (el proveedor es un texto de la compra, no una entidad) contiene una o más líneas con producto, litros y precio de compra. Al confirmarse crea sus detalles, suma una entrada de inventario por línea y produce un único egreso de caja por el importe total.
+
+**OPERACIÓN — Venta → DetalleVenta → Salida de inventario → Ingreso.** Una venta contiene sus líneas con producto y litros al precio vigente. Al confirmarse descuenta el stock, registra una salida de inventario y produce un único ingreso de caja por el total cobrado. Solo puede venderse lo que existe y solo productos activos.
+
+**CONTROL — Inventario → existencias → movimientos.** El inventario expresa las existencias en litros por producto y el libro de entradas y salidas. Las entradas manuales suman; las salidas manuales restan comprobando stock. Las existencias son el saldo físico que respalda cada venta.
+
+**PERSONAL — Empleado → Usuario → Asistencia.** Empleado conserva la identidad y el cargo; Usuario es la cuenta de acceso que pertenece a un empleado (cada empleado tiene como máximo una cuenta); Asistencia guarda la jornada de cada empleado: fecha, entrada, salida, estado (Presente/Falta) y observación opcional.
+
+**FINANZAS — Ingresos + Egresos → Saldo.** Los movimientos de caja nacen únicamente de operaciones: los ingresos de las ventas y los egresos de las compras. No hay altas manuales de caja. El saldo del día es apertura + ingresos − egresos, y los conceptos económicos clasifican cada movimiento (CE01 Venta de combustible — Ingreso; CE02 Compra de combustible — Egreso).
+
+## Roles
+
+- **Administrador:** categorías, combustibles, compras, conceptos, empleados, usuarios, control de asistencia y supervisión de la operación.
+- **Operador / Vendedor:** consultas de existencias, ventas, salidas de inventario y su propia asistencia.
+
+En la versión actual no hay autenticación: los roles describen quién realiza cada acción en la operación, no permisos verificados por sesión.
+
+## Baja lógica
+
+La eliminación física no existe en Estación Nexo. Los registros se desactivan:
+
+> Un combustible que ya tiene ventas registradas no se elimina físicamente. Se marca como Inactivo para impedir nuevas operaciones, pero sus ventas e inventario histórico permanecen disponibles.
+
+**DESACTIVAR** significa, en el sistema:
+
+- **desaparece de nuevas operaciones:** un producto Inactivo no puede venderse (la venta lo rechaza) y un empleado Inactivo no puede registrar asistencia;
+- **permanece en consultas históricas:** los listados siguen mostrando el registro con su estado Inactivo y sus detalles, movimientos y caja conservan la referencia;
+- **no rompe relaciones existentes:** los detalles de venta, los movimientos de inventario y los movimientos de caja que ya apuntan al registro siguen resolviendo correctamente.
+
+Aplica a categorías, combustibles, conceptos económicos, empleados y usuarios: las cinco entidades con estado y con historial. En la versión actual ningún servicio expone operaciones de borrado.
+
+## Roles de la operación
+
+La cadena de valor central, sin módulos ajenos al negocio, es:
+
+**Categoría → Combustible → Compra/abastecimiento → Inventario (L) → Venta → Ingreso/Egreso (S/) → Caja → Personal**
+
+## Datos del corte
+
+Datos de demostración al 10/09/2026, hora de referencia de Perú. Saldo físico de apertura: 6,700 L.
 
 | Combustible | Apertura | Entrada C001 | Salida por venta | Existencia | Precio / L |
 |---|---:|---:|---:|---:|---:|
@@ -51,11 +77,21 @@ Saldo físico de apertura al 10/09/2026: 6,700 L.
 
 Compra C001 (10/09/2026 07:00, Petroandes S.A., confirmada): Regular 100 L × 4.50 = S/ 450.00; Premium 100 L × 5.40 = S/ 540.00; Diésel 100 L × 3.60 = S/ 360.00. **Total: S/ 1,350.00.** Efectos: MI001, MI002 y MI003 (entradas) + MC001 (egreso).
 
-V001: 10 × 5.00 = S/ 50.00 → MC003. V002: 20 × 6.00 = S/ 120.00 → MC004. V003: 50 × 4.00 = S/ 200.00 → MC005. Total de ventas: 3 ventas, 80 L, S/ 370.00.
+Ventas del día: V001 (10 L × 5.00 = S/ 50.00 → MC003), V002 (20 L × 6.00 = S/ 120.00 → MC004), V003 (50 L × 4.00 = S/ 200.00 → MC005). Total: 3 ventas, 80 L, S/ 370.00.
 
-Caja del 10/09/2026: apertura S/ 4,410.00; ingresos S/ 370.00 (MC003 S/ 50.00 + MC004 S/ 120.00 + MC005 S/ 200.00); egresos S/ 1,350.00 (MC001, compra C001); **saldo S/ 3,430.00**.
+Caja del 10/09/2026: apertura S/ 4,410.00; ingresos S/ 370.00; egresos S/ 1,350.00 (MC001, compra C001); **saldo S/ 3,430.00**.
 
 Asistencia del 10/09/2026: Ana Torres 08:00–17:00 Presente; Luis Rojas 08:00–17:00 Presente; Elena Díaz 08:15–17:00 Presente. En «Mi asistencia» de Ana Torres se muestran además 09/09/2026 07:58–17:00 Presente y 08/09/2026 sin marcación (Falta).
 
-## Estados del avance
-DEFINIDA: requisitos y comportamiento documentados. MAQUETADA: representación HTML/CSS navegable. IMPLEMENTADA: lógica operativa con persistencia y validación; pendiente. La navegación entre archivos está disponible, pero no equivale a implementar autenticación, compras o ventas.
+## Alcance actual
+
+La versión V2 en desarrollo opera los nueve módulos internos con datos en memoria:
+
+- **Categorías, Combustibles, Empleados, Usuarios:** alta y consulta con persistencia mientras la aplicación corre; empleado y usuario además se editan, incluido su estado.
+- **Compras:** registro con proveedor, fecha y líneas; crea detalles, entradas de inventario y egreso de caja en un solo guardado.
+- **Ventas:** registro con producto, cantidad y operador; comprueba producto activo y stock, y crea venta, detalle, salida de inventario e ingreso de caja en un solo guardado.
+- **Inventario:** existencias por producto, entradas y salidas manuales con comprobación de stock, y libro de movimientos.
+- **Finanzas:** consulta de ingresos, egresos, detalle de movimientos y saldo conciliado; sin altas manuales.
+- **Asistencia:** entrada y salida del empleado actual con validación de jornada, más historial, resumen y control del personal.
+
+Quedan fuera de la versión V2 actual las páginas públicas (portada y contacto), el acceso con credenciales, el tablero y la gestión de conceptos económicos; esas capacidades existen sólo en la maqueta V1.

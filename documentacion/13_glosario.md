@@ -20,7 +20,7 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.13 Glosario** — «
 | Precio de referencia | Precio que la OSINERGMIN publica con periodicidad fija como referencia de la banda minorista. Fuente central de la variable económica del diagnóstico (5.3). |
 | Margen | Diferencia entre el precio de compra y el precio de venta por litro. Es la utilidad que la estación necesita calcular y que una hoja de cálculo aislada no conecta con las existencias. |
 | Apertura de caja | Saldo con el que inicia el día la caja (S/ 4,410.00 en el corte). Base de la conciliación `apertura + ingresos − egresos = saldo`. |
-| Ingreso | Movimiento de caja que aumenta el saldo. Nace automáticamente de cada venta (RN05, concepto CE01 «Venta de combustible») y se consulta con F26 en P16. |
+| Ingreso | Movimiento de caja que aumenta el saldo. Nace automáticamente de cada venta (RN04, concepto CE01 «Venta de combustible») y se consulta con F26 en P16. |
 | Egreso | Movimiento de caja que disminuye el saldo. Nace automáticamente de cada compra (RN04, concepto CE02 «Compra de combustible») y se consulta con F27 en P16. |
 | Saldo de caja | Resultado de la conciliación del día: S/ 3,430.00 en el corte (apertura S/ 4,410.00 + ingresos S/ 370.00 − egresos S/ 1,350.00). Es también la quinta serie temporal del dashboard. |
 | Conciliación de caja | F28 (interfaz P15 y P30): cotejo de apertura, ingresos y egresos del día para explicar el saldo. |
@@ -38,10 +38,10 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.13 Glosario** — «
 | Cardinalidad | Número posible de participaciones en una relación: `1:N` (una categoría, muchos productos) y `1:0..1` (una venta, cero o un movimiento de caja). |
 | Modelo entidad-relación (ER) | Representación conceptual de entidades, atributos y relaciones con sus claves. Entregable del punto 5.10, en Mermaid. |
 | Diccionario de datos | Semántica de cada entidad y de cada uno de sus atributos, con tipo y dominio. Entregable del punto 5.10. |
-| Historial | Conjunto de registros que referencian a un catálogo (por ejemplo, ventas que citan un producto). Obliga a desactivar en vez de eliminar: es RN03. |
+| Historial | Conjunto de registros que referencian a un catálogo (por ejemplo, ventas que citan un producto). Obliga a desactivar en vez de eliminar: es RN02. |
 | Transacción | Operación que se confirma completa o se revierte entera. Es el diseño previsto para F13 (compra) y F20 (venta) en la etapa Spring Boot. |
-| Idempotencia | Propiedad de que repetir la misma operación no altera el resultado. La exigen RN04 (un solo egreso por compra) y RN05 (un solo ingreso por venta). |
-| Estado (del registro) | Situación de un registro en su ciclo de vida: `Activo / Inactivo` en catálogos; `Pendiente / Confirmada` en `Compra` y `Venta`; `Presente / Falta` en `Asistencia` (calculado a partir de las horas, RN10). |
+| Idempotencia | Propiedad de que repetir la misma operación no altera el resultado. La exige RN04 (un solo egreso por compra y un solo ingreso por venta). |
+| Estado (del registro) | Situación de un registro en su ciclo de vida: `Activo / Inactivo` en catálogos; `Pendiente / Confirmada` en `Compra` y `Venta`; `Presente / Falta` en `Asistencia` (calculado a partir de las horas, RN05). |
 | Asistencia | Entidad de la jornada laboral: 7 atributos (`id_asistencia` PK, `id_empleado` FK, `fecha`, `hora_entrada`, `hora_salida`, `estado`, `observacion`). Se relaciona con `Empleado` en `1:N` y alimenta las interfaces P28 y P29. |
 
 ## C. Términos de ingeniería web y de la documentación
@@ -50,13 +50,10 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.13 Glosario** — «
 |---|---|
 | Funcionalidad | Unidad funcional completa que permite cumplir un objetivo de negocio de principio a fin (definición oficial del punto 5.8). Hay 38: F01–F38. |
 | Interfaz | Pantalla del sistema que representa funcionalidades. Hay 30: P01–P30 (31 archivos HTML en la raíz; `publicidad.html` es la segunda presentación de P01). |
-| Mi asistencia (P28) | Interfaz del empleado autenticado: registra y consulta su propia marcación (F35, F36, F37; RN07–RN10). Ejemplo del corte: Ana Torres, 10/09/2026, 08:00–17:00, Presente. Archivo `mi-asistencia.html`. |
-| Control de asistencia (P29) | Interfaz del administrador para consultar la asistencia de todo el personal (F38; RN08, RN10). Archivo `control-asistencia.html`. |
-| Regla de negocio | Declaración formal, atómica, declarativa, estable y obligatoria que restringe el negocio (punto 5.9). Hay 10: RN01–RN10. |
-| RN07 · Asistencia propia | Cada registro de asistencia pertenece a un solo empleado y «Mi asistencia» sólo muestra la marcación del usuario autenticado (F35, F36, F37 · P28). |
-| RN08 · Una asistencia por empleado y día | Un empleado sólo puede tener un registro de asistencia por fecha (F35, F36, F38 · P28, P29). |
-| RN09 · Orden de las horas | La hora de salida de una asistencia debe ser posterior a su hora de entrada (F36 · P28). |
-| RN10 · Estado derivado de las horas | El estado de la asistencia (`Presente` o `Falta`) se calcula a partir de las horas marcadas (F35, F36, F38 · P28, P29). |
+| Mi asistencia (P28) | Interfaz del empleado autenticado: registra y consulta su propia marcación (F35, F36, F37; RN05). Ejemplo del corte: Ana Torres, 10/09/2026, 08:00–17:00, Presente. Archivo `mi-asistencia.html`. |
+| Control de asistencia (P29) | Interfaz del administrador para consultar la asistencia de todo el personal (F38; RN05). Archivo `control-asistencia.html`. |
+| Regla de negocio | Declaración formal, atómica, declarativa, estable y obligatoria que restringe el negocio (punto 5.9). Hay 5: RN01–RN05. |
+| RN05 · Control de asistencia del personal | Sólo los empleados activos registran su propia jornada: cada registro pertenece a un solo empleado, «Mi asistencia» sólo muestra la marcación del usuario autenticado, no puede haber dos asistencias para la misma jornada, la hora de salida debe ser posterior a la de entrada y el estado (`Presente` o `Falta`) se calcula a partir de las horas marcadas (F35–F38 · P28, P29). |
 | Caso de cumplimiento | Ejemplo concreto en que la regla se respeta, por ejemplo «vender 10 L con 1,990 L disponibles» en RN01. |
 | Caso de violación | Ejemplo concreto en que la regla se quiebra, por ejemplo «retirar 2,000 L con 1,990 L disponibles» en RN01. |
 | Matriz bidimensional | Tabla de dos dimensiones —funcionalidades × interfaces— exigida por el punto 5.7: 38 × 30 con 47 pares marcados. |
@@ -71,7 +68,7 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.13 Glosario** — «
 | Serie de tiempo | Métrica con eje X temporal. El dashboard tiene 5, todas del 04 al 10 de septiembre de 2026. |
 | CDN | Red de distribución de contenidos. Por ella se carga el CSS de Bootstrap 5.3.3 (`cdn.jsdelivr.net`); no se descargó copia local. |
 | Bootstrap | Framework CSS usado únicamente para estilos. Su JavaScript no se incluye: el proyecto no contiene ningún `<script>`. |
-| Spring Boot | Framework Java de la etapa posterior (persistencia, validación de RN01–RN10, seguridad). Fuera del alcance de esta maqueta. |
+| Spring Boot | Framework Java de la etapa posterior (persistencia, validación de RN01–RN05, seguridad). Fuera del alcance de esta maqueta. |
 
 ## D. Vocabulario específico de esta documentación
 

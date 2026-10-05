@@ -36,7 +36,7 @@ Contenido del alcance:
 | Interfaces | 30 | P01–P30 |
 | Archivos HTML | 31 | `publicidad.html` es una segunda presentación de P01 (más `documentacion/bpmn.html`) |
 | Funcionalidades | 38 | F01–F38 (mínimo exigido: 20) |
-| Reglas de negocio | 10 | RN01–RN10 con caso de cumplimiento y de violación (mínimo exigido: 5) |
+| Reglas de negocio | 5 | RN01–RN05 con caso de cumplimiento y de violación (mínimo exigido: 5) |
 | Entidades | 12 | Categoría, Producto, Compra, DetalleCompra, Empleado, Usuario, Venta, DetalleVenta, MovimientoInventario, ConceptoMovimiento, MovimientoCaja, Asistencia |
 | Métricas de serie de tiempo (eje X temporal) | 5 | Dashboard, gráficos 1–5 (exigido: 5) |
 | KPI de estado puntual | 5 | Dashboard, tarjetas superiores |
@@ -51,7 +51,7 @@ Contenido del alcance:
 
 Estación Nexo es la maqueta de un sistema de gestión de estación de servicio que cubre la cadena **categoría → combustible → compra → inventario en litros → venta → ingreso/egreso en soles → tablero de control**, más la administración de empleados y usuarios y el control de asistencia del personal.
 
-Se entregan 31 archivos HTML navegables, 30 interfaces oficiales (P01–P30), 38 funcionalidades (F01–F38), 10 reglas de negocio (RN01–RN10) y 12 entidades del modelo entidad-relación. Incluye las dos partes estáticas exigidas (publicidad y contacto), el acceso por login, las interfaces de asistencia (P28 y P29) y un tablero con cinco métricas de serie de tiempo —ventas diarias en soles, litros vendidos, ingresos, egresos y saldo de caja, todas con eje X de fechas— más cinco indicadores de estado puntual.
+Se entregan 31 archivos HTML navegables, 30 interfaces oficiales (P01–P30), 38 funcionalidades (F01–F38), 5 reglas de negocio (RN01–RN05) y 12 entidades del modelo entidad-relación. Incluye las dos partes estáticas exigidas (publicidad y contacto), el acceso por login, las interfaces de asistencia (P28 y P29) y un tablero con cinco métricas de serie de tiempo —ventas diarias en soles, litros vendidos, ingresos, egresos y saldo de caja, todas con eje X de fechas— más cinco indicadores de estado puntual.
 
 Toda la documentación de negocio, modelo, interfaces, funcionalidades, reglas, matriz bidimensional y trazabilidad vive en `documentacion/`; el BPMN de los procesos núcleo y de soporte se entrega como diagrama de código (`09_bpmn.md`) y como vista navegable (`bpmn.html`). Los datos mostrados son ficticios con corte al **10/09/2026 12:00** y se concilian entre inventario y finanzas: 6,920 L en existencias y S/ 3,430.00 de saldo de caja.
 
@@ -64,7 +64,7 @@ La ingeniería web exige que el negocio se acuerde antes de programar. Por eso e
 - **La identidad laboral** (`Empleado`) **frente a la cuenta de acceso** (`Usuario`): una persona no es su usuario; el rol pertenece a la cuenta.
 - **El catálogo frente al historial**: `Categoria` y `Producto` se desactivan, nunca se eliminan, porque hay ventas que los referencian.
 
-La distinción se vuelve operativa en dos reglas que sostienen el proyecto completo: **RN04** (la compra genera a la vez entrada de inventario y un único egreso) y **RN05** (cada venta genera exactamente un ingreso). Con ellas, una misma historia —comprar 300 L y vender 80 L— se puede contar dos veces sin que las dos cuentas se contradigan: una en litros y otra en soles.
+La distinción se vuelve operativa en dos reglas que sostienen el proyecto completo: **RN03** (la compra genera a la vez su entrada de inventario por línea) y **RN04** (cada compra produce un único egreso y cada venta exactamente un ingreso). Con ellas, una misma historia —comprar 300 L y vender 80 L— se puede contar dos veces sin que las dos cuentas se contradigan: una en litros y otra en soles.
 
 **Impacto esperado en el entorno.** El diagnóstico del punto 5.3 muestra que la venta minorista de combustibles crece con el parque automotor, que los precios se publican con periodicidad y son de banda obligatoria, y que la facturación electrónica es obligatoria. En ese contexto, una estación que controla existencias y caja «a mano» pierde trazabilidad entre la compra al proveedor y la venta al cliente. El proyecto propone discutir un modelo que resuelve esa pérdida de trazabilidad, y deja medido qué falta para implementarlo.
 
@@ -129,7 +129,7 @@ Los tres objetivos cumplen con los criterios exigidos de **medible**, **alcanzab
 Maquetar en HTML5, CSS3 y Bootstrap 5.3.3 **30 interfaces (P01–P30) que cubran 38 funcionalidades (F01–F38)**, dejando en **0** el número de funcionalidades sin interfaz y de interfaces internas sin funcionalidad, con navegación íntegra entre los 31 archivos HTML y **0 enlaces rotos**, antes del cierre de la **Semana 8**.
 
 **OBJ 3.2 — Medible, alcanzable, con tiempo.**
-Documentar **10 reglas de negocio (RN01–RN10)**, cada una con código, nombre, descripción, condición, caso de cumplimiento, caso de violación, funcionalidades, interfaces y entidades asociadas —mínimo exigido: 5 reglas completas—, dejando en **0** el número de reglas sin funcionalidad y sin interfaz, antes del cierre de la **Semana 8**.
+Documentar **5 reglas de negocio (RN01–RN05)**, cada una con código, nombre, descripción, condición, caso de cumplimiento, caso de violación, funcionalidades, interfaces y entidades asociadas —mínimo exigido: 5 reglas completas—, dejando en **0** el número de reglas sin funcionalidad y sin interfaz, antes del cierre de la **Semana 8**.
 
 **OBJ 3.3 — Medible, alcanzable, con tiempo.**
 Construir un tablero con **5 métricas de serie de tiempo con eje X temporal (no categórico)** y **5 indicadores de estado puntual**, publicar la **matriz bidimensional 38 × 30** funcionalidades–interfaces y el **BPMN de los procesos núcleo (venta) y de soporte (compra)** con notación estándar estricta, antes del cierre de la **Semana 8**.
@@ -144,8 +144,8 @@ Construir un tablero con **5 métricas de serie de tiempo con eje X temporal (no
 
 El proyecto aporta **trazabilidad cruzada entre el inventario físico y la caja económica**, que es el punto donde una estación de servicio pierde dinero sin notarlo. Dos decisiones de diseño sostienen ese aporte:
 
-1. **La compra es el único evento que mueve a la vez litros y soles.** RN04 obliga a que cada compra confirmada genere una entrada de inventario por línea recibida y **un único** egreso por su importe total. Sin esa regla, la estación puede terminar con el tanque lleno y la caja sin registro, o viceversa.
-2. **Cada venta genera exactamente un ingreso.** RN05 impide ingresos duplicados y ventas sin ingreso, que son las dos formas de distorsionar el estado de caja.
+1. **La compra es el único evento que mueve a la vez litros y soles.** RN03 y RN04 obligan a que cada compra confirmada genere una entrada de inventario por línea recibida y **un único** egreso por su importe total. Sin esa regla, la estación puede terminar con el tanque lleno y la caja sin registro, o viceversa.
+2. **Cada venta genera exactamente un ingreso.** RN04 impide ingresos duplicados y ventas sin ingreso, que son las dos formas de distorsionar el estado de caja.
 
 Sobre ese modelo, la maqueta permite discutir con el usuario los flujos reales (BPMN), las interfaces y los reportes antes de invertir en el backend. El impacto es **de proceso**: reducir la diferencia entre «lo que dice el tanque» y «lo que dice la caja», y dejar preparado el modelo que más adelante se conectará con los comprobantes electrónicos exigidos por SUNAT.[^sun-cpe]
 
@@ -174,13 +174,13 @@ Personas en la zona de influencia del proyecto que se ven impactadas por su uso:
 ### 5.6.1 Cómo funciona el sistema
 
 **Proceso núcleo — Venta.**
-Inicio → Login (P02) → Dashboard (P03) → selección del combustible en P08 → verificación de existencias (F18, RN01) y de estado activo (RN02) → registro de la venta (F20, con formulario propio en P24) → salida de inventario → ingreso económico único (RN05) → consulta en historial (P09) y detalle (P10) → conciliación en finanzas (P15).
+Inicio → Login (P02) → Dashboard (P03) → selección del combustible en P08 → verificación de existencias (F18, RN01) y de estado activo (RN02) → registro de la venta (F20, con formulario propio en P24) → salida de inventario → ingreso económico único (RN04) → consulta en historial (P09) y detalle (P10) → conciliación en finanzas (P15).
 
 **Proceso de soporte — Compra y abastecimiento.**
-P20 → alta de la compra con proveedor, líneas, cantidades y precio de compra (F13, con formulario propio en P23) → confirmación → una entrada de inventario por línea (MI001–MI003) → **un único** egreso económico por el importe total (MC001) → conciliación en P14 y P15. Regla aplicable: RN04.
+P20 → alta de la compra con proveedor, líneas, cantidades y precio de compra (F13, con formulario propio en P23) → confirmación → una entrada de inventario por línea (MI001–MI003) → **un único** egreso económico por el importe total (MC001) → conciliación en P14 y P15. Reglas aplicables: RN03 y RN04.
 
 **Proceso de soporte — Asistencia del personal.**
-Inicio → Login (P02) → el empleado marca su entrada y su salida en «Mi asistencia» (P28, F35) → consulta su historial y su resumen (F36, F37) → el administrador revisa la asistencia de todo el personal en «Control de asistencia» (P29, F38). Reglas aplicables: RN07, RN08, RN09 y RN10.
+Inicio → Login (P02) → el empleado marca su entrada y su salida en «Mi asistencia» (P28, F35) → consulta su historial y su resumen (F36, F37) → el administrador revisa la asistencia de todo el personal en «Control de asistencia» (P29, F38). Regla aplicable: RN05.
 
 **Alcance funcional incluido:** catálogo de categorías y de productos; compras y abastecimiento; inventario con entradas, salidas y libro de movimientos; ventas con historial y detalle; conceptos económicos (CE01 venta y CE02 compra) con consulta de ingresos y egresos de caja; conciliación de caja; empleados y usuarios; asistencia del personal con marcación, historial y control; tablero con métricas; partes estáticas de publicidad y contacto.
 
@@ -198,7 +198,7 @@ flowchart TB
     G1{"G1 · ¿RN01 existencia suficiente<br/>y RN02 producto activo?"}
     A2["A2 · Confirmar venta y descontar existencias"]
     A3["A3 · Registrar salida de inventario (MI004–MI006)"]
-    G2{"G2 · ¿RN05 ingreso único por venta?"}
+    G2{"G2 · ¿RN04 ingreso único por venta?"}
     A4["A4 · Registrar ingreso económico (MC003–MC005)"]
     A5["A5 · Publicar historial P09 y detalle P10"]
     A8["A8 · Conciliar caja del día en P15"]
@@ -215,7 +215,7 @@ flowchart TB
   subgraph SOPORTE["Proceso de soporte · Compra y abastecimiento · POOL-SOPORTE"]
     S3(["S3 · Inicio: reposición de combustible"])
     A6["A6 · Registrar compra con proveedor y líneas en P20"]
-    G3{"G3 · ¿RN06 valores válidos<br/>de litros y precios?"}
+    G3{"G3 · ¿RN03 valores válidos<br/>de litros y precios?"}
     A7["A7 · Crear entradas por línea (MI001–MI003)"]
     SPINV["SP-INV · Subproceso: contabilizar<br/>inventario en litros · P14"]
     G4{"G4 · ¿RN04 ya existe el egreso<br/>de esta compra?"}
@@ -241,7 +241,7 @@ flowchart TB
 | [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md) | 12 entidades, atributos, PK/FK, cardinalidades y diagrama ER (Mermaid) | 5.6, 5.10 |
 | [03_interfaces.md](03_interfaces.md) | Catálogo de P01–P30 con actor, campos, acciones, origen y destino | 5.7 |
 | [04_funcionalidades.md](04_funcionalidades.md) | Ficha de F01–F38 con entrada, proceso, resultado, reglas y estado | 5.8 |
-| [05_reglas_negocio.md](05_reglas_negocio.md) | RN01–RN10 completas con casos de cumplimiento y violación | 5.9 (fuera de este documento) |
+| [05_reglas_negocio.md](05_reglas_negocio.md) | RN01–RN05 completas con casos de cumplimiento y violación | 5.9 (fuera de este documento) |
 | [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md) | Matriz bidimensional 38 × 30 con cobertura por interfaz y por funcionalidad | 5.7 |
 | [07_trazabilidad.md](07_trazabilidad.md) | Modelo → entidad → funcionalidad → regla → interfaz → archivo | 5.6 |
 | [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md) | Este documento | 5.1–5.8 |
@@ -266,32 +266,32 @@ flowchart TB
 | P02 | Login | `login.html` | F01 | No aplica |
 | P03 | Dashboard | `dashboard.html` | F02, F03 | No aplica |
 | P04 | Contacto | `contacto.html` | No aplica (público) | No aplica |
-| P05 | Categorías | `categorias.html` | F04–F08 | RN03 |
-| P06 | Combustibles | `combustibles.html` | F10, F12 | RN02, RN03 |
-| P07 | Formulario de combustible | `combustible-form.html` | F09, F11 | RN02, RN03, RN06 |
-| P08 | Registrar venta | `ventas.html` | F18, F20 | RN01, RN02, RN05, RN06 |
-| P09 | Historial de ventas | `ventas-historial.html` | F21 | RN05 |
-| P10 | Detalle de venta | `venta-detalle.html` | F22 | RN05 |
+| P05 | Categorías | `categorias.html` | F04–F08 | RN02 |
+| P06 | Combustibles | `combustibles.html` | F10, F12 | RN02 |
+| P07 | Formulario de combustible | `combustible-form.html` | F09, F11 | RN02 |
+| P08 | Registrar venta | `ventas.html` | F18, F20 | RN01, RN02, RN03, RN04 |
+| P09 | Historial de ventas | `ventas-historial.html` | F21 | RN03, RN04 |
+| P10 | Detalle de venta | `venta-detalle.html` | F22 | RN03, RN04 |
 | P11 | Existencias | `inventario.html` | F18 | RN01 |
-| P12 | Entrada de combustible | `inventario-entrada.html` | F16 | RN04, RN06 |
-| P13 | Salida de combustible | `inventario-salida.html` | F17, F18 | RN01, RN06 |
-| P14 | Movimientos de inventario | `inventario-movimientos.html` | F19 | RN01, RN04 |
-| P15 | Resumen financiero | `finanzas.html` | F28 | RN04, RN05 |
-| P16 | Ingresos y egresos de caja | `movimiento-economico.html` | F26, F27 | RN04, RN05 |
+| P12 | Entrada de combustible | `inventario-entrada.html` | F16 | RN01, RN03 |
+| P13 | Salida de combustible | `inventario-salida.html` | F17, F18 | RN01 |
+| P14 | Movimientos de inventario | `inventario-movimientos.html` | F19 | RN01, RN03 |
+| P15 | Resumen financiero | `finanzas.html` | F28 | RN04 |
+| P16 | Ingresos y egresos de caja | `movimiento-economico.html` | F26, F27 | RN04 |
 | P17 | Conceptos económicos | `conceptos.html` | F24 | No aplica |
 | P18 | Empleados | `empleados.html` | F30 | No aplica |
-| P19 | Usuarios | `usuarios.html` | F32 | RN03 |
-| P20 | Compras | `compras.html` | F13, F14 | RN04, RN06 |
-| P21 | Detalle de compra | `compra-detalle.html` | F15 | RN04 |
-| P22 | Formulario de categoría | `categoria-form.html` | F04, F07, F08 | RN03 |
-| P23 | Formulario de compra | `compra-form.html` | F13 | RN04, RN06 |
-| P24 | Formulario de venta | `venta-form.html` | F20 | RN01, RN02, RN05, RN06 |
-| P25 | Formulario de empleado | `empleado-form.html` | F29, F31 | RN03 |
-| P26 | Formulario de usuario | `usuario-form.html` | F32 | RN03 |
-| P27 | Formulario de concepto | `concepto-form.html` | F23, F25 | RN03 |
-| P28 | Mi asistencia | `mi-asistencia.html` | F35, F36, F37 | RN07, RN08, RN09, RN10 |
-| P29 | Control de asistencia | `control-asistencia.html` | F38 | RN08, RN10 |
-| P30 | Detalle de movimiento de caja | `movimiento-detalle.html` | F28 | RN04, RN05 |
+| P19 | Usuarios | `usuarios.html` | F32 | RN02 |
+| P20 | Compras | `compras.html` | F13, F14 | RN03, RN04 |
+| P21 | Detalle de compra | `compra-detalle.html` | F15 | RN03, RN04 |
+| P22 | Formulario de categoría | `categoria-form.html` | F04, F07, F08 | RN02 |
+| P23 | Formulario de compra | `compra-form.html` | F13 | RN03, RN04 |
+| P24 | Formulario de venta | `venta-form.html` | F20 | RN01, RN02, RN03, RN04 |
+| P25 | Formulario de empleado | `empleado-form.html` | F29, F31 | RN02 |
+| P26 | Formulario de usuario | `usuario-form.html` | F32 | RN02 |
+| P27 | Formulario de concepto | `concepto-form.html` | F23, F25 | RN02 |
+| P28 | Mi asistencia | `mi-asistencia.html` | F35, F36, F37 | RN05 |
+| P29 | Control de asistencia | `control-asistencia.html` | F38 | RN05 |
+| P30 | Detalle de movimiento de caja | `movimiento-detalle.html` | F28 | RN04 |
 
 **Matriz bidimensional funcionalidades × interfaces** (38 filas × 30 columnas, 47 relaciones marcadas con `X`): se entrega completa en [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md). El encabezado de cada archivo HTML declara su interfaz, sus funcionalidades, sus entidades y sus reglas, de modo que la matriz es comprobable sobre el código.
 

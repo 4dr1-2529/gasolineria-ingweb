@@ -77,7 +77,7 @@ sequenceDiagram
     OP->>P08: Solicita combustible con litros
     P08->>F20: Registrar venta con su detalle
     F20->>PRO: Consultar existencia y estado (F18)
-    alt RN01 existencia suficiente, RN02 producto activo y RN06 valores válidos
+    alt RN01 existencia suficiente, RN02 producto activo y RN03 valores válidos
         F20->>VTA: Crear cabecera y detalle de la venta
         F20->>PRO: Descontar stock en litros
         F20->>INV: Registrar salida por venta · MI004, MI005, MI006
@@ -88,7 +88,7 @@ sequenceDiagram
     else RN01 o RN02 violada
         F20-->>P08: Venta rechazada · fin de error E2
     end
-    Note over CAJ: Si el ingreso ya existe para la venta, fin de error E3 (RN05)
+    Note over CAJ: Si el ingreso ya existe para la venta, fin de error E3 (RN04)
     Note over P08, PUB: F20 también se maqueta en P24 (venta-form.html) y F28 se consulta en P15 y en P30 (movimiento-detalle.html)
 ```
 
@@ -96,15 +96,15 @@ sequenceDiagram
 |---|---|---|---|---|---|
 | Registrar datos de la venta | F20 | P08, P24 | — | Venta, DetalleVenta | `A1` |
 | Consultar existencia y estado | F18 | P08 | RN01, RN02 | Producto | `G1` |
-| Confirmar venta y descontar existencias | F20 | P08, P24 | RN01, RN06 | Producto | `A2` |
+| Confirmar venta y descontar existencias | F20 | P08, P24 | RN01, RN03 | Producto | `A2` |
 | Registrar salida · MI004–MI006 | F20 (origen) · F19 (consulta) | P08, P14, P24 | RN01 | MovimientoInventario | `A3` |
-| Crear ingreso único · MC003–MC005 | F20 (origen) · F28 (consulta) | P08, P15, P24, P30 | RN05, RN06 | MovimientoCaja | `A4`, `G2` |
+| Crear ingreso único · MC003–MC005 | F20 (origen) · F28 (consulta) | P08, P15, P24, P30 | RN04 | MovimientoCaja | `A4`, `G2` |
 | Publicar historial y detalle | F21, F22 | P09, P10 | — | Venta, DetalleVenta | `A5` |
-| Conciliar caja del día | F28 | P15, P30 | RN04, RN05 | MovimientoCaja, ConceptoMovimiento | `A8` |
+| Conciliar caja del día | F28 | P15, P30 | RN04 | MovimientoCaja, ConceptoMovimiento | `A8` |
 | Venta rechazada | — | P08 | RN01, RN02 | — | `E2` |
-| Ingreso duplicado | — | P08 | RN05 | — | `E3` |
+| Ingreso duplicado | — | P08 | RN04 | — | `E3` |
 
-La columna *Funcionalidad* distingue el origen del efecto: las salidas (`A3`) y el ingreso (`A4`) los origina la venta F20 —maquetada en P08 y en el formulario P24— y se **consultan** como F19 (P14) y F28 (P15 y P30), exactamente como los enlaza [09_bpmn.md](09_bpmn.md). Los códigos de evento de error corresponden a los casos de violación de RN01/RN02 (`E2`) y RN05 (`E3`) y se muestran en la interfaz que originó la transacción.
+La columna *Funcionalidad* distingue el origen del efecto: las salidas (`A3`) y el ingreso (`A4`) los origina la venta F20 —maquetada en P08 y en el formulario P24— y se **consultan** como F19 (P14) y F28 (P15 y P30), exactamente como los enlaza [09_bpmn.md](09_bpmn.md). Los códigos de evento de error corresponden a los casos de violación de RN01/RN02 (`E2`) y RN04 (`E3`) y se muestran en la interfaz que originó la transacción.
 
 ### 4.2 Proceso de soporte · Compra y abastecimiento
 
@@ -124,7 +124,7 @@ sequenceDiagram
     PRV-->>P20: M1 · factura de la compra
     P20->>F13: Registrar la compra con sus líneas
     F13->>DTC: Crear un detalle por combustible recibido
-    alt RN06 litros y precios válidos
+    alt RN03 litros y precios válidos
         F13->>INV: Crear una entrada por línea · MI001, MI002, MI003
         INV->>PRO: Sumar existencias · subproceso SP-INV
         alt RN04 aún no existe egreso de esta compra
@@ -134,7 +134,7 @@ sequenceDiagram
         end
         F13-->>P20: Compra confirmada
         P20->>P21: Publicar detalle de la compra · A10 · F15
-    else RN06 violada
+    else RN03 violada
         F13-->>P20: Fin de error E4
     end
     Note over PRV, P21: F13 también se maqueta en P23 (compra-form.html) y el egreso se consulta como F28 en P15 y en P30 (movimiento-detalle.html)
@@ -143,15 +143,15 @@ sequenceDiagram
 | Mensaje | Funcionalidad | Interfaz | Regla | Entidad | Elemento BPMN |
 |---|---|---|---|---|---|
 | Factura del proveedor | F13 | P20 | — | Compra | `M1` |
-| Registrar compra con líneas | F13 | P20, P23 | RN06 | Compra, DetalleCompra | `A6` |
-| Crear entradas por línea · MI001–MI003 | F16 | P12 | RN04, RN06 | MovimientoInventario | `A7` (call activity) |
-| Sumar existencias | F19 | P14 | RN01, RN04 | Producto | `SP-INV` |
-| Crear egreso único · MC001 | F13 (origen) · F28 (consulta) | P20, P15, P23, P30 | RN04, RN06 | MovimientoCaja | `A9`, `G4` |
-| Publicar detalle de la compra | F15 | P21 | RN04 | Compra, DetalleCompra | `A10` |
-| Fin de error por valores no válidos | — | P20 | RN06 | — | `E4` |
+| Registrar compra con líneas | F13 | P20, P23 | RN03 | Compra, DetalleCompra | `A6` |
+| Crear entradas por línea · MI001–MI003 | F16 | P12 | RN03 | MovimientoInventario | `A7` (call activity) |
+| Sumar existencias | F19 | P14 | RN01, RN03 | Producto | `SP-INV` |
+| Crear egreso único · MC001 | F13 (origen) · F28 (consulta) | P20, P15, P23, P30 | RN04 | MovimientoCaja | `A9`, `G4` |
+| Publicar detalle de la compra | F15 | P21 | RN03, RN04 | Compra, DetalleCompra | `A10` |
+| Fin de error por valores no válidos | — | P20 | RN03 | — | `E4` |
 | Fin de error por egreso duplicado | — | P20 | RN04 | — | `E5` |
 
-La columna *Funcionalidad* vuelve a separar origen y consulta: el egreso lo origina la compra F13 —maquetada en P20 y en el formulario P23— y se consulta como F28 en P15 y en P30, como enlaza [09_bpmn.md](09_bpmn.md). `E4` y `E5` son los casos de violación de RN06 y RN04.
+La columna *Funcionalidad* vuelve a separar origen y consulta: el egreso lo origina la compra F13 —maquetada en P20 y en el formulario P23— y se consulta como F28 en P15 y en P30, como enlaza [09_bpmn.md](09_bpmn.md). `E4` y `E5` son los casos de violación de RN03 y RN04.
 
 ---
 
@@ -185,7 +185,7 @@ ADM --> UC19
 ADM --> UC28
 UC20 ..> UC18 : <<include>>
 note right of UC20
-  RN01, RN02, RN05 y RN06.
+  RN01, RN02, RN03 y RN04.
   Camino BPMN: A1 - G1 - A2 - A3 - G2 - A4 - A5 - A8.
 end note
 note right of UC18
@@ -228,7 +228,7 @@ ADM --> UC28
 PRV --> UC13
 UC13 ..> UC16 : <<include>>
 note right of UC13
-  RN04 y RN06.
+  RN03 y RN04.
   Camino BPMN: A6 - G3 - A7 - SP-INV - G4 - A9 - A10.
   El proveedor aporta el mensaje M1 (factura).
   F13 se registra en P20 y en el formulario P23 (compra-form.html).
@@ -243,8 +243,8 @@ end note
 
 | Diagrama | Casos de uso (funcionalidades) | Interfaces | Actores | Reglas | Entidades |
 |---|---|---|---|---|---|
-| Núcleo | F01, F18, F19, F20, F21, F22, F28 | P02, P08, P09, P10, P11, P13, P14, P15, P24, P30 | Operador / Vendedor, Administrador | RN01, RN02, RN04, RN05, RN06 | Venta, DetalleVenta, Producto, MovimientoInventario, MovimientoCaja, ConceptoMovimiento |
-| Soporte | F13, F14, F15, F16, F19, F28 | P12, P14, P15, P20, P21, P23, P30 | Administrador, Proveedor | RN01, RN04, RN06 | Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja, ConceptoMovimiento |
+| Núcleo | F01, F18, F19, F20, F21, F22, F28 | P02, P08, P09, P10, P11, P13, P14, P15, P24, P30 | Operador / Vendedor, Administrador | RN01, RN02, RN03, RN04 | Venta, DetalleVenta, Producto, MovimientoInventario, MovimientoCaja, ConceptoMovimiento |
+| Soporte | F13, F14, F15, F16, F19, F28 | P12, P14, P15, P20, P21, P23, P30 | Administrador, Proveedor | RN01, RN03, RN04 | Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja, ConceptoMovimiento |
 
 Los casos de uso fuera de estos dos procesos quedan así: catálogo (F04–F12, con formulario en P07 y P22), finanzas (F23–F27, con formulario en P27 y consultas en P16 y P17), personal (F29–F32, con formularios en P25 y P26), portada y contacto (F33 y F34 en P01 y P04), asistencia (F35–F38 en P28 y P29) y tablero (F03 en P03). Todos pertenecen a los módulos de soporte administrativo y están completos en [04_funcionalidades.md](04_funcionalidades.md) y en la matriz de [06_matriz_funcionalidades_interfaces.md](06_matriz_funcionalidades_interfaces.md): el punto 5.10 pide los dos procesos, no el inventario total de 38 funcionalidades.
 
@@ -267,7 +267,7 @@ Para no presentar como «implementado» algo que sólo está previsto, los patro
 | Patrón | Qué resuelve | Dónde está definido | Estado |
 |---|---|---|---|
 | **Modelo-Vista-Controlador (MVC)** | Separar datos, presentación y lógica | Modelo: las 12 entidades de [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md); Vista: 31 HTML + `css/estilos.css`; Controlador: los F01–F38 que ejecutará Spring (README sección 16) | **Previsto para Spring Boot.** La maqueta separa ya modelo y vista, pero **no existe controlador en ejecución: 0 de 38 funcionalidades implementadas** (estados DEFINIDA + MAQUETADA) |
-| **Repository / Service (capas)** | Separar acceso a datos y lógica transaccional | README sección 16 «Próxima etapa con Spring Boot» (Spring Data JPA, servicios transaccionales); aplicará RN01, RN02, RN04, RN05 y RN06 en una sola transacción sobre compra (F13) y venta (F20) | **Definido, no implementado** |
+| **Repository / Service (capas)** | Separar acceso a datos y lógica transaccional | README sección 16 «Próxima etapa con Spring Boot» (Spring Data JPA, servicios transaccionales); aplicará RN01, RN02, RN03 y RN04 en una sola transacción sobre compra (F13) y venta (F20) | **Definido, no implementado** |
 
 ### C. Patrones revisados en el curso
 
@@ -317,7 +317,7 @@ Las fases siguen el orden real del trabajo realizado y del que queda. **Las fech
 | 8 | Cierre de 5.9–5.15 | Este documento, los puntos 5.11–5.14 y [15_anexos.md](15_anexos.md) | Ejecutado | 01/10/2026 |
 | 9 | Revisión del equipo y compilación del informe (A4, Arial 11) | Informe final con carátula, integrantes y glosario en plantilla | Pendiente | **PENDIENTE (equipo)** |
 | 10 | Exposición Avance 1 | Presentación oral y respuesta de preguntas técnicas | Pendiente | **PENDIENTE (equipo)** |
-| 11 | Etapa Spring Boot (fuera del Avance 1) | Implementación de F01–F38 y validación de RN01–RN10 | Pendiente | **PENDIENTE (equipo)** |
+| 11 | Etapa Spring Boot (fuera del Avance 1) | Implementación de F01–F38 y validación de RN01–RN05 | Pendiente | **PENDIENTE (equipo)** |
 
 ---
 
@@ -341,7 +341,7 @@ Ninguna herramienta añade JavaScript al repositorio: son bloques de texto dentr
 | Comprobación | Resultado |
 |---|---|
 | ¿Se usaron sólo IDs existentes? | Sí · todos los códigos F, P, RN y entidades citados en este documento existen en los HTML y en la matriz (verificado por el control 8 de [00_auditoria.md](00_auditoria.md)) |
-| ¿Se crearon funcionalidades, interfaces, reglas o entidades nuevas? | No se inventó nada fuera de la especificación · conteos oficiales: 38 F (F01–F38), 30 P (P01–P30), 10 RN (RN01–RN10) y 12 entidades |
+| ¿Se crearon funcionalidades, interfaces, reglas o entidades nuevas? | No se inventó nada fuera de la especificación · conteos oficiales: 38 F (F01–F38), 30 P (P01–P30), 5 RN (RN01–RN05) y 12 entidades |
 | ¿Los diagramas de secuencia cubren compra y venta como exige el BPMN? | Sí · §4.2 refleja `A6, G3, A7, SP-INV, G4, A9, A10` con `E4/E5`; §4.1 refleja `A1, G1, A2, A3, G2, A4, A5, A8` con `E2/E3` |
 | ¿Los casos de uso corresponden a procesos reales? | Sí · núcleo = proceso de venta; soporte = proceso de abastecimiento (los dos de [09_bpmn.md](09_bpmn.md)) |
 | ¿Algún entregable se inventó fuera de la especificación? | No · las seis filas de la sección 1 son textualmente las del punto 5.10 oficial |

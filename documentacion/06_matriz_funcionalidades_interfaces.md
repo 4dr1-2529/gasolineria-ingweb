@@ -1,6 +1,6 @@
-# Matriz funcionalidades / interfaces
+# Matriz funcionalidades / interfaces · Estación Nexo
 
-X indica representación directa de la capacidad en la interfaz. La matriz tiene **38 funcionalidades** (F01–F38) y **30 interfaces** (P01–P30), con **47 X** en total: 38 filas y 30 columnas. La relación es de 1 funcionalidad → ≥1 interfaz y de 1 interfaz → muchas funcionalidades; ninguna fila queda sin X y ninguna columna queda vacía. P01 (Inicio/Publicidad) y P04 (Contacto) son contenido público estático y se atienden con F33 y F34. F02 figura en P03 como origen de referencia y está accesible también en toda la navegación interna.
+X indica representación directa de la capacidad en la interfaz. La matriz tiene **38 funcionalidades** (F01–F38) y **30 interfaces** (P01–P30), con **47 X** en total: 38 filas y 30 columnas. La relación es de 1 funcionalidad → ≥1 interfaz y de 1 interfaz → muchas funcionalidades; ninguna fila queda sin X y ninguna columna queda vacía. Cada X corresponde a lo que la interfaz hace realmente: funcionalidad → interfaz → actor → entidad → regla, verificado contra [03_interfaces.md](03_interfaces.md) y [04_funcionalidades.md](04_funcionalidades.md). P01 (Inicio/Publicidad) y P04 (Contacto) son contenido público estático y se atienden con F33 y F34. F02 figura en P03 como origen de referencia y está accesible también en toda la navegación interna.
 
 | Funcionalidad | P01 | P02 | P03 | P04 | P05 | P06 | P07 | P08 | P09 | P10 | P11 | P12 | P13 | P14 | P15 | P16 | P17 | P18 | P19 | P20 | P21 | P22 | P23 | P24 | P25 | P26 | P27 | P28 | P29 | P30 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -90,37 +90,37 @@ X indica representación directa de la capacidad en la interfaz. La matriz tiene
 | F04 Registrar categoría | Categorías | P05, P22 | No aplica |
 | F05 Consultar categorías | Categorías | P05 | No aplica |
 | F06 Consultar combustibles por categoría | Categorías | P05 | No aplica |
-| F07 Editar categoría | Categorías | P05, P22 | RN03 |
-| F08 Activar/desactivar categoría | Categorías | P05, P22 | RN03 |
-| F09 Registrar combustible | Combustibles | P07 | RN02, RN06 |
-| F10 Consultar combustibles | Combustibles | P06 | RN02 |
-| F11 Editar combustible | Combustibles | P07 | RN02, RN03, RN06 |
-| F12 Activar/desactivar combustible | Combustibles | P06 | RN02, RN03 |
-| F13 Registrar compra de combustible | Compras | P20, P23 | RN04, RN06 |
-| F14 Consultar compras | Compras | P20 | RN04 |
-| F15 Consultar detalle de compra | Compras | P21 | RN04 |
-| F16 Registrar entrada de combustible | Inventario | P12 | RN04, RN06 |
-| F17 Registrar salida de combustible | Inventario | P13 | RN01, RN06 |
+| F07 Editar categoría | Categorías | P05, P22 | RN02 |
+| F08 Activar/desactivar categoría | Categorías | P05, P22 | RN02 |
+| F09 Registrar combustible | Combustibles | P07 | No aplica |
+| F10 Consultar combustibles | Combustibles | P06 | No aplica |
+| F11 Editar combustible | Combustibles | P07 | RN02 |
+| F12 Activar/desactivar combustible | Combustibles | P06 | RN02 |
+| F13 Registrar compra de combustible | Compras | P20, P23 | RN03, RN04 |
+| F14 Consultar compras | Compras | P20 | RN03, RN04 |
+| F15 Consultar detalle de compra | Compras | P21 | RN03, RN04 |
+| F16 Registrar entrada de combustible | Inventario | P12 | RN01, RN03 |
+| F17 Registrar salida de combustible | Inventario | P13 | RN01 |
 | F18 Consultar existencias | Inventario | P08, P11, P13 | RN01 |
-| F19 Consultar movimientos de inventario | Inventario | P14 | RN01, RN04 |
-| F20 Registrar venta | Ventas | P08, P24 | RN01, RN02, RN05, RN06 |
-| F21 Consultar ventas | Ventas | P09 | RN05 |
-| F22 Consultar detalle de venta | Ventas | P10 | RN05 |
+| F19 Consultar movimientos de inventario | Inventario | P14 | RN01, RN03 |
+| F20 Registrar venta | Ventas | P08, P24 | RN01, RN02, RN03, RN04 |
+| F21 Consultar ventas | Ventas | P09 | RN03, RN04 |
+| F22 Consultar detalle de venta | Ventas | P10 | RN03, RN04 |
 | F23 Registrar concepto económico | Finanzas | P27 | No aplica |
 | F24 Consultar conceptos económicos | Finanzas | P17 | No aplica |
-| F25 Editar/activar/desactivar concepto económico | Finanzas | P27 | RN03 |
-| F26 Consultar ingresos de caja | Finanzas | P16 | RN05 |
+| F25 Editar/activar/desactivar concepto económico | Finanzas | P27 | RN02 |
+| F26 Consultar ingresos de caja | Finanzas | P16 | RN04 |
 | F27 Consultar egresos de caja | Finanzas | P16 | RN04 |
-| F28 Consultar movimientos y saldo de caja | Finanzas | P15, P30 | RN04, RN05 |
+| F28 Consultar movimientos y saldo de caja | Finanzas | P15, P30 | RN04 |
 | F29 Registrar empleado | Empleados | P25 | No aplica |
 | F30 Consultar empleados | Empleados | P18 | No aplica |
-| F31 Editar/activar/desactivar empleado | Empleados | P25 | RN03 |
-| F32 Gestionar usuarios | Usuarios | P19, P26 | RN03 |
+| F31 Editar/activar/desactivar empleado | Empleados | P25 | RN02 |
+| F32 Gestionar usuarios | Usuarios | P19, P26 | RN02 |
 | F33 Consultar la portada pública | Portada y contacto | P01 | No aplica |
 | F34 Enviar mensaje de contacto | Portada y contacto | P04 | No aplica |
-| F35 Registrar asistencia | Asistencia | P28 | RN07, RN08, RN10 |
-| F36 Consultar mi asistencia | Asistencia | P28 | RN07, RN08, RN09, RN10 |
-| F37 Consultar mi resumen de asistencia | Asistencia | P28 | RN07 |
-| F38 Consultar asistencia del personal | Asistencia | P29 | RN08, RN10 |
+| F35 Registrar asistencia | Asistencia | P28 | RN05 |
+| F36 Consultar mi asistencia | Asistencia | P28 | RN05 |
+| F37 Consultar mi resumen de asistencia | Asistencia | P28 | RN05 |
+| F38 Consultar asistencia del personal | Asistencia | P29 | RN05 |
 
-**Reglas sin funcionalidad: 0. Doce funcionalidades carecen de regla porque son consultas o gestión sin restricción de negocio: F01, F02, F03, F04, F05, F06, F23, F24, F29, F30, F33 y F34. Las 26 restantes tienen al menos una regla (RN01–RN10).**
+**Reglas sin funcionalidad: 0. Catorce funcionalidades carecen de regla porque son acceso, consultas o altas sin restricción de negocio: F01, F02, F03, F04, F05, F06, F09, F10, F23, F24, F29, F30, F33 y F34. Las 24 restantes tienen al menos una de las cinco reglas (RN01–RN05).**

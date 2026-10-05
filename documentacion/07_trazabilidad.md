@@ -1,88 +1,81 @@
-# Trazabilidad integral
+# Trazabilidad integral · Estación Nexo
 
-Modelo de negocio → entidad → funcionalidad → regla → interfaz → archivo HTML. Las relaciones se refieren a representación estática, no a ejecución de lógica. Hay **47 pares** funcionalidad–interfaz, **38 funcionalidades** y **30 interfaces**; las **12 entidades** y las **10 reglas de negocio (RN01–RN10)** completan la cadena. Los 31 archivos HTML de la raíz cubren esas 30 interfaces porque publicidad.html es la segunda presentación de P01.
+Cadena de trazabilidad: **Proceso → Regla de negocio → Funcionalidad → Interfaz → Entidad** (y su archivo HTML). *Proceso* es el bloque narrativo del modelo de negocio: Catálogo, Abastecimiento, Operación, Control (inventario), Personal, Finanzas, Acceso y Público. Las relaciones se refieren a lo que el sistema representa y, en la versión V2, a lo que ejecuta sobre datos en memoria.
 
-| Modelo de negocio | Entidades | Funcionalidad | Regla | Interfaz | Archivo HTML |
-|---|---|---|---|---|---|
-| Acceso | Usuario | F01 Iniciar sesión | No aplica | P02 | [login.html](../login.html) |
-| Acceso | Venta DetalleVenta Producto MovimientoCaja | F02 Cerrar sesión | No aplica | P03 | [dashboard.html](../dashboard.html) |
-| Dashboard | Venta DetalleVenta Producto MovimientoCaja | F03 Consultar dashboard | No aplica | P03 | [dashboard.html](../dashboard.html) |
-| Categorías | Categoria | F04 Registrar categoría | No aplica | P05 | [categorias.html](../categorias.html) |
-| Categorías | Categoria | F04 Registrar categoría | No aplica | P22 | [categoria-form.html](../categoria-form.html) |
-| Categorías | Categoria | F05 Consultar categorías | No aplica | P05 | [categorias.html](../categorias.html) |
-| Categorías | Categoria | F06 Consultar combustibles por categoría | No aplica | P05 | [categorias.html](../categorias.html) |
-| Categorías | Categoria | F07 Editar categoría | RN03 | P05 | [categorias.html](../categorias.html) |
-| Categorías | Categoria | F07 Editar categoría | RN03 | P22 | [categoria-form.html](../categoria-form.html) |
-| Categorías | Categoria | F08 Activar/desactivar categoría | RN03 | P05 | [categorias.html](../categorias.html) |
-| Categorías | Categoria | F08 Activar/desactivar categoría | RN03 | P22 | [categoria-form.html](../categoria-form.html) |
-| Combustibles | Producto Categoria | F09 Registrar combustible | RN02, RN06 | P07 | [combustible-form.html](../combustible-form.html) |
-| Combustibles | Producto Categoria | F10 Consultar combustibles | RN02 | P06 | [combustibles.html](../combustibles.html) |
-| Combustibles | Producto Categoria | F11 Editar combustible | RN02, RN03, RN06 | P07 | [combustible-form.html](../combustible-form.html) |
-| Combustibles | Producto Categoria | F12 Activar/desactivar combustible | RN02, RN03 | P06 | [combustibles.html](../combustibles.html) |
-| Compras | Compra DetalleCompra Producto MovimientoInventario MovimientoCaja | F13 Registrar compra de combustible | RN04, RN06 | P20 | [compras.html](../compras.html) |
-| Compras | Compra DetalleCompra Producto MovimientoInventario MovimientoCaja | F13 Registrar compra de combustible | RN04, RN06 | P23 | [compra-form.html](../compra-form.html) |
-| Compras | Compra DetalleCompra Producto MovimientoInventario MovimientoCaja | F14 Consultar compras | RN04 | P20 | [compras.html](../compras.html) |
-| Compras | Compra DetalleCompra Producto MovimientoInventario MovimientoCaja | F15 Consultar detalle de compra | RN04 | P21 | [compra-detalle.html](../compra-detalle.html) |
-| Inventario | MovimientoInventario Producto Usuario Compra | F16 Registrar entrada de combustible | RN04, RN06 | P12 | [inventario-entrada.html](../inventario-entrada.html) |
-| Inventario | MovimientoInventario Producto Usuario | F17 Registrar salida de combustible | RN01, RN06 | P13 | [inventario-salida.html](../inventario-salida.html) |
-| Inventario | Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja | F18 Consultar existencias | RN01 | P08 | [ventas.html](../ventas.html) |
-| Inventario | Producto | F18 Consultar existencias | RN01 | P11 | [inventario.html](../inventario.html) |
-| Inventario | MovimientoInventario Producto Usuario | F18 Consultar existencias | RN01 | P13 | [inventario-salida.html](../inventario-salida.html) |
-| Inventario | MovimientoInventario Producto Usuario Compra | F19 Consultar movimientos de inventario | RN01, RN04 | P14 | [inventario-movimientos.html](../inventario-movimientos.html) |
-| Ventas | Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja | F20 Registrar venta | RN01, RN02, RN05, RN06 | P08 | [ventas.html](../ventas.html) |
-| Ventas | Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja | F20 Registrar venta | RN01, RN02, RN05, RN06 | P24 | [venta-form.html](../venta-form.html) |
-| Ventas | Venta DetalleVenta Producto Usuario MovimientoCaja | F21 Consultar ventas | RN05 | P09 | [ventas-historial.html](../ventas-historial.html) |
-| Ventas | Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja | F22 Consultar detalle de venta | RN05 | P10 | [venta-detalle.html](../venta-detalle.html) |
-| Finanzas | ConceptoMovimiento | F23 Registrar concepto económico | No aplica | P27 | [concepto-form.html](../concepto-form.html) |
-| Finanzas | ConceptoMovimiento | F24 Consultar conceptos económicos | No aplica | P17 | [conceptos.html](../conceptos.html) |
-| Finanzas | ConceptoMovimiento | F25 Editar/activar/desactivar concepto económico | RN03 | P27 | [concepto-form.html](../concepto-form.html) |
-| Finanzas | MovimientoCaja ConceptoMovimiento | F26 Consultar ingresos de caja | RN05 | P16 | [movimiento-economico.html](../movimiento-economico.html) |
-| Finanzas | MovimientoCaja ConceptoMovimiento | F27 Consultar egresos de caja | RN04 | P16 | [movimiento-economico.html](../movimiento-economico.html) |
-| Finanzas | MovimientoCaja ConceptoMovimiento Venta Compra | F28 Consultar movimientos y saldo de caja | RN04, RN05 | P15 | [finanzas.html](../finanzas.html) |
-| Finanzas | MovimientoCaja ConceptoMovimiento Venta Compra | F28 Consultar movimientos y saldo de caja | RN04, RN05 | P30 | [movimiento-detalle.html](../movimiento-detalle.html) |
-| Empleados | Empleado | F29 Registrar empleado | No aplica | P25 | [empleado-form.html](../empleado-form.html) |
-| Empleados | Empleado | F30 Consultar empleados | No aplica | P18 | [empleados.html](../empleados.html) |
-| Empleados | Empleado | F31 Editar/activar/desactivar empleado | RN03 | P25 | [empleado-form.html](../empleado-form.html) |
-| Usuarios | Usuario Empleado | F32 Gestionar usuarios | RN03 | P19 | [usuarios.html](../usuarios.html) |
-| Usuarios | Usuario Empleado | F32 Gestionar usuarios | RN03 | P26 | [usuario-form.html](../usuario-form.html) |
-| Portada y contacto | No aplica | F33 Consultar la portada pública | No aplica | P01 | [index.html](../index.html) y [publicidad.html](../publicidad.html) |
-| Portada y contacto | No aplica | F34 Enviar mensaje de contacto | No aplica | P04 | [contacto.html](../contacto.html) |
-| Asistencia | Asistencia Empleado | F35 Registrar asistencia | RN07, RN08, RN10 | P28 | [mi-asistencia.html](../mi-asistencia.html) |
-| Asistencia | Asistencia Empleado | F36 Consultar mi asistencia | RN07, RN08, RN09, RN10 | P28 | [mi-asistencia.html](../mi-asistencia.html) |
-| Asistencia | Asistencia Empleado | F37 Consultar mi resumen de asistencia | RN07 | P28 | [mi-asistencia.html](../mi-asistencia.html) |
-| Asistencia | Asistencia Empleado | F38 Consultar asistencia del personal | RN08, RN10 | P29 | [control-asistencia.html](../control-asistencia.html) |
-
-P01 → presentación pública → sin entidad persistente → F33 → index.html y publicidad.html. P04 → contacto público → sin entidad persistente → F34 → contacto.html. La relación nueva del modelo es Empleado 1:N Asistencia y las 12 entidades son Categoria, Producto, Compra, DetalleCompra, Empleado, Usuario, Venta, DetalleVenta, MovimientoInventario, ConceptoMovimiento, MovimientoCaja y Asistencia.
+Hay **47 pares** funcionalidad–interfaz, **38 funcionalidades**, **30 interfaces**, **12 entidades** y **5 reglas de negocio (RN01–RN05)**; ninguna funcionalidad carece de interfaz y ninguna regla se queda sin funcionalidad. Los 31 archivos HTML de la raíz cubren esas 30 interfaces porque publicidad.html es la segunda presentación de P01.
 
 ## Cadenas principales
 
-### Compra y abastecimiento (RN04)
+- **Venta** → RN01/RN03/RN04 → F20 → P24/P09/P10 → Venta / DetalleVenta / Producto / MovimientoInventario / MovimientoCaja
+- **Compra** → RN03/RN04 → F13 → P23/P20/P21 → Compra / DetalleCompra / Producto / MovimientoInventario / MovimientoCaja
+- **Asistencia** → RN05 → F35-F38 → P28/P29 → Empleado / Usuario / Asistencia
 
-Compra → Compra / DetalleCompra / Producto / MovimientoInventario / MovimientoCaja → F13, F14, F15, F16, F19, F27, F28 → RN04, RN06 → P12, P14, P15, P16, P20, P21, P23, P30 → compras.html, compra-form.html, compra-detalle.html, inventario-entrada.html, inventario-movimientos.html, finanzas.html, movimiento-economico.html, movimiento-detalle.html.
+En la venta, el detalle y la salida de inventario se crean una sola vez (RN03) y el ingreso de caja queda vinculado a la venta (RN04). En la compra, los detalles y las entradas por línea se crean juntos con ella (RN03) y el egreso queda vinculado a la compra (RN04). En asistencia, cada empleado registra su propia jornada sin duplicados (RN05).
 
-Las entradas MI001–MI003 son efecto de F16 y se consultan en F15 y en F19; el egreso MC001 es efecto de F13 y se consulta en F27 y en F28.
+## Trazabilidad completa (47 pares)
 
-### Venta e ingreso (RN05)
+| Proceso | Regla | Funcionalidad | Interfaz | Entidades | Archivo HTML |
+|---|---|---|---|---|---|
+| Acceso | No aplica | F01 Iniciar sesión | P02 | Usuario | [login.html](../login.html) |
+| Acceso | No aplica | F02 Cerrar sesión | P03 | No aplica | [dashboard.html](../dashboard.html) |
+| Operación | No aplica | F03 Consultar dashboard | P03 | Venta DetalleVenta Producto MovimientoCaja | [dashboard.html](../dashboard.html) |
+| Catálogo | No aplica | F04 Registrar categoría | P05 | Categoria | [categorias.html](../categorias.html) |
+| Catálogo | No aplica | F04 Registrar categoría | P22 | Categoria | [categoria-form.html](../categoria-form.html) |
+| Catálogo | No aplica | F05 Consultar categorías | P05 | Categoria | [categorias.html](../categorias.html) |
+| Catálogo | No aplica | F06 Consultar combustibles por categoría | P05 | Categoria Producto | [categorias.html](../categorias.html) |
+| Catálogo | RN02 | F07 Editar categoría | P05 | Categoria | [categorias.html](../categorias.html) |
+| Catálogo | RN02 | F07 Editar categoría | P22 | Categoria | [categoria-form.html](../categoria-form.html) |
+| Catálogo | RN02 | F08 Activar/desactivar categoría | P05 | Categoria | [categorias.html](../categorias.html) |
+| Catálogo | RN02 | F08 Activar/desactivar categoría | P22 | Categoria | [categoria-form.html](../categoria-form.html) |
+| Catálogo | No aplica | F09 Registrar combustible | P07 | Producto Categoria | [combustible-form.html](../combustible-form.html) |
+| Catálogo | No aplica | F10 Consultar combustibles | P06 | Producto Categoria | [combustibles.html](../combustibles.html) |
+| Catálogo | RN02 | F11 Editar combustible | P07 | Producto Categoria | [combustible-form.html](../combustible-form.html) |
+| Catálogo | RN02 | F12 Activar/desactivar combustible | P06 | Producto Categoria | [combustibles.html](../combustibles.html) |
+| Abastecimiento | RN03, RN04 | F13 Registrar compra de combustible | P20 | Compra DetalleCompra Producto MovimientoInventario MovimientoCaja | [compras.html](../compras.html) |
+| Abastecimiento | RN03, RN04 | F13 Registrar compra de combustible | P23 | Compra DetalleCompra Producto MovimientoInventario MovimientoCaja | [compra-form.html](../compra-form.html) |
+| Abastecimiento | RN03, RN04 | F14 Consultar compras | P20 | Compra DetalleCompra Producto | [compras.html](../compras.html) |
+| Abastecimiento | RN03, RN04 | F15 Consultar detalle de compra | P21 | Compra DetalleCompra Producto MovimientoInventario MovimientoCaja | [compra-detalle.html](../compra-detalle.html) |
+| Control (inventario) | RN01, RN03 | F16 Registrar entrada de combustible | P12 | MovimientoInventario Producto Usuario Compra | [inventario-entrada.html](../inventario-entrada.html) |
+| Control (inventario) | RN01 | F17 Registrar salida de combustible | P13 | MovimientoInventario Producto Usuario | [inventario-salida.html](../inventario-salida.html) |
+| Control (inventario) | RN01 | F18 Consultar existencias | P08 | Producto | [ventas.html](../ventas.html) |
+| Control (inventario) | RN01 | F18 Consultar existencias | P11 | Producto | [inventario.html](../inventario.html) |
+| Control (inventario) | RN01 | F18 Consultar existencias | P13 | Producto | [inventario-salida.html](../inventario-salida.html) |
+| Control (inventario) | RN01, RN03 | F19 Consultar movimientos de inventario | P14 | MovimientoInventario Producto Usuario Compra | [inventario-movimientos.html](../inventario-movimientos.html) |
+| Operación | RN01, RN02, RN03, RN04 | F20 Registrar venta | P08 | Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja | [ventas.html](../ventas.html) |
+| Operación | RN01, RN02, RN03, RN04 | F20 Registrar venta | P24 | Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja | [venta-form.html](../venta-form.html) |
+| Operación | RN03, RN04 | F21 Consultar ventas | P09 | Venta DetalleVenta Producto Usuario MovimientoCaja | [ventas-historial.html](../ventas-historial.html) |
+| Operación | RN03, RN04 | F22 Consultar detalle de venta | P10 | Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja | [venta-detalle.html](../venta-detalle.html) |
+| Finanzas | No aplica | F23 Registrar concepto económico | P27 | ConceptoMovimiento | [concepto-form.html](../concepto-form.html) |
+| Finanzas | No aplica | F24 Consultar conceptos económicos | P17 | ConceptoMovimiento | [conceptos.html](../conceptos.html) |
+| Finanzas | RN02 | F25 Editar/activar/desactivar concepto económico | P27 | ConceptoMovimiento | [concepto-form.html](../concepto-form.html) |
+| Finanzas | RN04 | F26 Consultar ingresos de caja | P16 | MovimientoCaja ConceptoMovimiento | [movimiento-economico.html](../movimiento-economico.html) |
+| Finanzas | RN04 | F27 Consultar egresos de caja | P16 | MovimientoCaja ConceptoMovimiento | [movimiento-economico.html](../movimiento-economico.html) |
+| Finanzas | RN04 | F28 Consultar movimientos y saldo de caja | P15 | MovimientoCaja ConceptoMovimiento Venta Compra | [finanzas.html](../finanzas.html) |
+| Finanzas | RN04 | F28 Consultar movimientos y saldo de caja | P30 | MovimientoCaja ConceptoMovimiento Venta Compra | [movimiento-detalle.html](../movimiento-detalle.html) |
+| Personal | No aplica | F29 Registrar empleado | P25 | Empleado | [empleado-form.html](../empleado-form.html) |
+| Personal | No aplica | F30 Consultar empleados | P18 | Empleado | [empleados.html](../empleados.html) |
+| Personal | RN02 | F31 Editar/activar/desactivar empleado | P25 | Empleado | [empleado-form.html](../empleado-form.html) |
+| Personal | RN02 | F32 Gestionar usuarios | P19 | Usuario Empleado | [usuarios.html](../usuarios.html) |
+| Personal | RN02 | F32 Gestionar usuarios | P26 | Usuario Empleado | [usuario-form.html](../usuario-form.html) |
+| Público | No aplica | F33 Consultar la portada pública | P01 | No aplica | [index.html](../index.html) y [publicidad.html](../publicidad.html) |
+| Público | No aplica | F34 Enviar mensaje de contacto | P04 | No aplica | [contacto.html](../contacto.html) |
+| Personal (asistencia) | RN05 | F35 Registrar asistencia | P28 | Asistencia Empleado Usuario | [mi-asistencia.html](../mi-asistencia.html) |
+| Personal (asistencia) | RN05 | F36 Consultar mi asistencia | P28 | Asistencia Empleado | [mi-asistencia.html](../mi-asistencia.html) |
+| Personal (asistencia) | RN05 | F37 Consultar mi resumen de asistencia | P28 | Asistencia Empleado | [mi-asistencia.html](../mi-asistencia.html) |
+| Personal (asistencia) | RN05 | F38 Consultar asistencia del personal | P29 | Asistencia Empleado | [control-asistencia.html](../control-asistencia.html) |
 
-Venta → Venta / DetalleVenta / Producto / MovimientoInventario / MovimientoCaja → F18, F20, F21, F22, F26, F28 → RN01, RN02, RN05, RN06 → P08, P09, P10, P11, P13, P14, P15, P16, P24, P30 → ventas.html, venta-form.html, ventas-historial.html, venta-detalle.html, inventario.html, inventario-salida.html, inventario-movimientos.html, finanzas.html, movimiento-economico.html, movimiento-detalle.html.
+P01 → presentación pública → sin entidad persistente → F33 → index.html y publicidad.html. P04 → contacto público → sin entidad persistente → F34 → contacto.html. La relación nueva del modelo es Empleado 1:N Asistencia y las 12 entidades son Categoria, Producto, Compra, DetalleCompra, Empleado, Usuario, Venta, DetalleVenta, MovimientoInventario, ConceptoMovimiento, MovimientoCaja y Asistencia.
 
-La salida por venta es efecto de F20 y se consulta en F19. El ingreso asociado es efecto de F20 y se consulta en F21 y en F26; F26 muestra los ingresos del día (MC003, MC004, MC005) y F27 muestra el egreso de la compra (MC001).
+## Cadenas por proceso
 
-### Catálogo (RN02, RN03, RN06)
-
-Categoría → Producto → F04–F12 → RN02, RN03, RN06 → P05, P06, P07, P22 → categorias.html, categoria-form.html, combustibles.html, combustible-form.html. Los productos con historial se desactivan, nunca se eliminan.
-
-### Control de acceso y personal (RN03)
-
-Empleado → Usuario → F29–F32 → RN03 → P18, P19, P25, P26 → empleados.html, empleado-form.html, usuarios.html, usuario-form.html. F01 y F02 no aplican reglas de negocio: son navegación.
-
-### Asistencia (RN07, RN08, RN09, RN10)
-
-Empleado → Asistencia → F35, F36, F37, F38 → RN07, RN08, RN09, RN10 → P28, P29 → mi-asistencia.html, control-asistencia.html. Cada empleado tiene un solo registro de asistencia por fecha (RN08) y el estado se calcula a partir de las horas (RN10).
-
-### Portada y contacto (sin reglas)
-
-Portada y contacto → sin entidad persistente → F33, F34 → P01, P04 → index.html, publicidad.html, contacto.html. Son contenido público y no añaden reglas de negocio.
+- **Catálogo → RN02:** Categoría → Producto con F04–F12 en P05, P06, P07 y P22 (categorias.html, categoria-form.html, combustibles.html, combustible-form.html). Los productos con historial se desactivan, nunca se eliminan.
+- **Abastecimiento → RN03, RN04:** F13–F15 en P20, P21 y P23; las entradas generadas (MI001–MI003) se consultan en P12 y P14, y el egreso MC001 en P16 y P30.
+- **Operación → RN01, RN02, RN03, RN04:** F18–F22 en P08, P09, P10, P11, P13, P14, P24; la salida por venta se consulta en P14 y el ingreso (MC003–MC005) en P16 y P30.
+- **Control (inventario) → RN01, RN03:** F16–F19 en P12, P13, P14, P11, P08; el libro de movimientos concilia con las existencias.
+- **Finanzas → RN04:** F26–F28 en P15, P16, P30; sólo consulta, sin altas manuales de caja.
+- **Personal → RN02:** F29–F32 en P18, P19, P25, P26 (empleados.html, empleado-form.html, usuarios.html, usuario-form.html). F01 y F02 no aplican reglas: son acceso.
+- **Personal (asistencia) → RN05:** F35–F38 en P28 y P29 (mi-asistencia.html, control-asistencia.html). Cada empleado tiene un solo registro por fecha y el estado se calcula a partir de las horas.
+- **Público → sin reglas:** F33 y F34 en P01 y P04 (index.html, publicidad.html, contacto.html).
 
 ## Contadores
 
@@ -90,10 +83,11 @@ Portada y contacto → sin entidad persistente → F33, F34 → P01, P04 → ind
 |---|---:|
 | Funcionalidades totales | 38 |
 | Funcionalidades sin interfaz | 0 |
-| Funcionalidades sin regla | 12 |
+| Funcionalidades sin regla | 14 |
 | Interfaces totales | 30 |
 | Interfaces sin funcionalidad | 0 |
-| Reglas totales | 10 |
+| Interfaces sin regla | 6 |
+| Reglas totales | 5 |
 | Reglas sin funcionalidad | 0 |
 | Reglas sin interfaz | 0 |
 | Entidades totales | 12 |

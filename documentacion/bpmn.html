@@ -3,7 +3,7 @@
 Documento: documentacion/bpmn.html - BPMN de los procesos núcleo, de soporte y de asistencia
 Funcionalidades: F13, F15, F16, F18, F19, F20, F21, F22, F28, F35, F36, F37, F38
 Entidades: Compra DetalleCompra Venta DetalleVenta Producto MovimientoInventario MovimientoCaja ConceptoMovimiento Empleado Asistencia
-Reglas: RN01, RN02, RN04, RN05, RN06, RN07, RN08, RN09, RN10
+Reglas: RN01, RN02, RN03, RN04, RN05
 Estado: Diagrama estático HTML/CSS sin backend
 -->
 <html lang="es">
@@ -275,7 +275,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                       <span>X</span>
                     </div>
                     <p class="bpmn-gw-label">
-                      G2 · ¿RN05 ya existe un ingreso para esta venta?
+                      G2 · ¿RN04 ya existe un ingreso para esta venta?
                     </p>
                   </div>
                   <div class="bpmn-cell"></div>
@@ -373,7 +373,7 @@ Estado: Diagrama estático HTML/CSS sin backend
               </div>
             </div>
             <p class="bpmn-caption">
-              Figura 1 · Pool <strong>POOL-CORE</strong> con cuatro carriles. Secuencia completa: S1 → A1 → G1; rama «Sí» → A2 → A3 → G2; en G2 la rama «No · aún no existe» → A4 → A5 → A8 → E1, y la rama «Sí · ya existe» → E3; en G1 la rama «No» → E2. Anotación: los gateways G1 y G2 son la representación de los casos de violación de RN01/RN02 y de RN05.
+              Figura 1 · Pool <strong>POOL-CORE</strong> con cuatro carriles. Secuencia completa: S1 → A1 → G1; rama «Sí» → A2 → A3 → G2; en G2 la rama «No · aún no existe» → A4 → A5 → A8 → E1, y la rama «Sí · ya existe» → E3; en G1 la rama «No» → E2. Anotación: los gateways G1 y G2 son la representación de los casos de violación de RN01/RN02 y de RN04.
             </p>
           </div>
         </section>
@@ -471,7 +471,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                       <span>X</span>
                     </div>
                     <p class="bpmn-gw-label">
-                      G3 · ¿RN06 litros y precios válidos?
+                      G3 · ¿RN03 litros y precios válidos?
                     </p>
                   </div>
                   <div class="bpmn-cell"></div>
@@ -626,7 +626,7 @@ Estado: Diagrama estático HTML/CSS sin backend
               </div>
             </div>
             <p class="bpmn-caption">
-              Figura 2 · Pools <strong>POOL-PROV</strong> y <strong>POOL-SOPORTE</strong>. El pool externo se comunica con el proceso sólo mediante el flujo de mensajes M1. Secuencia completa: S3 → A6 → G3; rama «Sí» → A7 → SP-INV → G4; en G4 la rama «No · es el primero» → A9 → A10 → E6, y la rama «Sí · ya existe» → E5; en G3 la rama «No» → E4. Anotación: A7 y A9 son consecutivas y de aparición única por RN04.
+              Figura 2 · Pools <strong>POOL-PROV</strong> y <strong>POOL-SOPORTE</strong>. El pool externo se comunica con el proceso sólo mediante el flujo de mensajes M1. Secuencia completa: S3 → A6 → G3; rama «Sí» → A7 → SP-INV → G4; en G4 la rama «No · es el primero» → A9 → A10 → E6, y la rama «Sí · ya existe» → E5; en G3 la rama «No» → E4. Anotación: A7 y A9 son consecutivas y de aparición única por RN03 y RN04.
             </p>
           </div>
         </section>
@@ -694,7 +694,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                       <span>X</span>
                     </div>
                     <p class="bpmn-gw-label">
-                      G5 · ¿RN08 ya existe asistencia para este día?
+                      G5 · ¿RN05 ya existe asistencia para este día?
                     </p>
                   </div>
                   <div class="bpmn-cell"></div>
@@ -720,7 +720,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                       <span>X</span>
                     </div>
                     <p class="bpmn-gw-label">
-                      G6 · ¿RN09 la hora de salida es posterior a la de entrada?
+                      G6 · ¿RN05 la hora de salida es posterior a la de entrada?
                     </p>
                   </div>
                   <div class="bpmn-cell">
@@ -750,7 +750,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                   <div class="bpmn-cell"></div>
                   <div class="bpmn-cell">
                     <div class="bpmn-node bpmn-task">
-                      A12 · Calcular el estado: Presente o Falta (RN10)
+                      A12 · Calcular el estado: Presente o Falta (RN05)
                     </div>
                   </div>
                   <div class="bpmn-cell">
@@ -800,7 +800,7 @@ Estado: Diagrama estático HTML/CSS sin backend
               </div>
             </div>
             <p class="bpmn-caption">
-              Figura 3 · Pool <strong>POOL-ASIST</strong> con tres carriles. Secuencia completa: S4 → A11 → G5; en G5 la rama «No · es la primera» → G6, y la rama «Sí · ya existe» → E7; en G6 la rama «Sí» → A12 → A13 → E9, y la rama «No» → E8. Anotación: RN07 limita «Mi asistencia» (P28) al empleado autenticado y RN10 calcula el estado Presente o Falta a partir de las horas marcadas.
+              Figura 3 · Pool <strong>POOL-ASIST</strong> con tres carriles. Secuencia completa: S4 → A11 → G5; en G5 la rama «No · es la primera» → G6, y la rama «Sí · ya existe» → E7; en G6 la rama «Sí» → A12 → A13 → E9, y la rama «No» → E8. Anotación: RN05 limita «Mi asistencia» (P28) al empleado autenticado y calcula el estado Presente o Falta a partir de las horas marcadas.
             </p>
           </div>
         </section>
@@ -810,7 +810,7 @@ Estado: Diagrama estático HTML/CSS sin backend
             Correspondencia con interfaces, reglas y datos
           </h2>
           <p class="notice">
-            El proyecto completo tiene 30 interfaces (P01–P30), 38 funcionalidades (F01–F38), 12 entidades (incluida Asistencia) y 10 reglas de negocio (RN01–RN10); la maqueta tiene 31 archivos HTML en la raíz más esta página de documentación. Los tres procesos de esta página representan las reglas RN01, RN02 y RN04 a RN10.
+            El proyecto completo tiene 30 interfaces (P01–P30), 38 funcionalidades (F01–F38), 12 entidades (incluida Asistencia) y 5 reglas de negocio (RN01–RN05); la maqueta tiene 31 archivos HTML en la raíz más esta página de documentación. Los tres procesos de esta página representan las reglas RN01 a RN05.
           </p>
           <div class="table-responsive">
             <table class="table">
@@ -845,7 +845,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     P20, P21
                   </td>
                   <td>
-                    RN04, RN06
+                    RN03, RN04
                   </td>
                 </tr>
                 <tr>
@@ -859,7 +859,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     P12, P14
                   </td>
                   <td>
-                    RN04
+                    RN03
                   </td>
                 </tr>
                 <tr>
@@ -887,7 +887,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     P08
                   </td>
                   <td>
-                    RN01, RN02, RN05
+                    RN01, RN02, RN04
                   </td>
                 </tr>
                 <tr>
@@ -915,7 +915,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     P15
                   </td>
                   <td>
-                    RN05
+                    RN04
                   </td>
                 </tr>
                 <tr>
@@ -929,7 +929,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     P16
                   </td>
                   <td>
-                    RN04, RN05
+                    RN04
                   </td>
                 </tr>
                 <tr>
@@ -943,7 +943,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     P28, P29
                   </td>
                   <td>
-                    RN07, RN08, RN10
+                    RN05
                   </td>
                 </tr>
                 <tr>
@@ -957,7 +957,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     P28
                   </td>
                   <td>
-                    RN07, RN09, RN10
+                    RN05
                   </td>
                 </tr>
                 <tr>
@@ -971,7 +971,7 @@ Estado: Diagrama estático HTML/CSS sin backend
                     P15
                   </td>
                   <td>
-                    RN04, RN05
+                    RN04
                   </td>
                 </tr>
               </tbody>

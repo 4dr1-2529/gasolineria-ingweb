@@ -1,461 +1,345 @@
-# Catálogo oficial de interfaces P01–P30
+# Catálogo de interfaces P01–P30 · Estación Nexo
 
-30 interfaces y 31 archivos HTML en la raíz: publicidad.html es una segunda presentación de P01, no una interfaz adicional. Además, [bpmn.html](bpmn.html) es un diagrama del proceso que queda fuera de este catálogo. El proyecto define 38 funcionalidades (F01–F38), 12 entidades y 10 reglas de negocio (RN01–RN10). Las acciones de registro, edición y activación son visuales; los enlaces sí permiten recorrer todos los archivos. Cada interfaz tiene al menos una funcionalidad y ninguna funcionalidad carece de interfaz; las públicas P01 y P04 son las únicas sin reglas de negocio.
+Estación Nexo define **30 interfaces** (P01–P30) y tiene **31 archivos HTML** en la raíz: publicidad.html es una segunda presentación de P01, no una interfaz adicional. Además, [bpmn.html](bpmn.html) es un diagrama del proceso y queda fuera de este catálogo. Cada interfaz indica propósito, actor, archivo, funcionalidades, entidades, reglas y su contenido concreto. Cada interfaz tiene al menos una funcionalidad y ninguna funcionalidad carece de interfaz.
+
+De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y vistas JSP; **6 existen sólo en la maqueta V1**: P01 (portada), P02 (login), P03 (tablero), P04 (contacto), P17 y P27 (gestión de conceptos económicos, que en V2 son datos internos de Finanzas).
+
+**Interfaces sin regla de negocio: 6** — P01 y P04 (contenido público), P02 y P03 (acceso y tablero) y P17 y P18 (consultas de catálogo y personal). Las 24 restantes se rigen por RN01–RN05.
 
 ## Índice
 
-| Código | Interfaz | Archivo(s) | Funcionalidades | Reglas |
-|---|---|---|---|---|
-| [P01](#p01--inicio--publicidad) | Inicio / Publicidad | index.html, publicidad.html | F33 | No aplica |
-| [P02](#p02--login) | Login | login.html | F01 | No aplica |
-| [P03](#p03--dashboard) | Dashboard | dashboard.html | F02, F03 | No aplica |
-| [P04](#p04--contacto) | Contacto | contacto.html | F34 | No aplica |
-| [P05](#p05--categorías) | Categorías | categorias.html | F04, F05, F06, F07, F08 | RN03 |
-| [P06](#p06--combustibles) | Combustibles | combustibles.html | F10, F12 | RN02, RN03 |
-| [P07](#p07--formulario-combustible) | Formulario combustible | combustible-form.html | F09, F11 | RN02, RN03, RN06 |
-| [P08](#p08--registrar-venta) | Registrar venta | ventas.html | F18, F20 | RN01, RN02, RN05, RN06 |
-| [P09](#p09--historial-de-ventas) | Historial de ventas | ventas-historial.html | F21 | RN05 |
-| [P10](#p10--detalle-de-venta) | Detalle de venta | venta-detalle.html | F22 | RN05 |
-| [P11](#p11--existencias) | Existencias | inventario.html | F18 | RN01 |
-| [P12](#p12--entrada-de-combustible) | Entrada de combustible | inventario-entrada.html | F16 | RN04, RN06 |
-| [P13](#p13--salida-de-combustible) | Salida de combustible | inventario-salida.html | F17, F18 | RN01, RN06 |
-| [P14](#p14--movimientos-de-inventario) | Movimientos de inventario | inventario-movimientos.html | F19 | RN01, RN04 |
-| [P15](#p15--resumen-financiero) | Resumen financiero | finanzas.html | F28 | RN04, RN05 |
-| [P16](#p16--ingresos-y-egresos-de-caja) | Ingresos y egresos de caja | movimiento-economico.html | F26, F27 | RN04, RN05 |
-| [P17](#p17--conceptos-económicos) | Conceptos económicos | conceptos.html | F24 | No aplica |
-| [P18](#p18--empleados) | Empleados | empleados.html | F30 | No aplica |
-| [P19](#p19--usuarios) | Usuarios | usuarios.html | F32 | RN03 |
-| [P20](#p20--compras) | Compras | compras.html | F13, F14 | RN04, RN06 |
-| [P21](#p21--detalle-de-compra) | Detalle de compra | compra-detalle.html | F15 | RN04 |
-| [P22](#p22--formulario-categoría) | Formulario categoría | categoria-form.html | F04, F07, F08 | RN03 |
-| [P23](#p23--formulario-compra) | Formulario compra | compra-form.html | F13 | RN04, RN06 |
-| [P24](#p24--formulario-venta) | Formulario venta | venta-form.html | F20 | RN01, RN02, RN05, RN06 |
-| [P25](#p25--formulario-empleado) | Formulario empleado | empleado-form.html | F29, F31 | RN03 |
-| [P26](#p26--formulario-usuario) | Formulario usuario | usuario-form.html | F32 | RN03 |
-| [P27](#p27--formulario-concepto) | Formulario concepto | concepto-form.html | F23, F25 | RN03 |
-| [P28](#p28--mi-asistencia) | Mi asistencia | mi-asistencia.html | F35, F36, F37 | RN07, RN08, RN09, RN10 |
-| [P29](#p29--control-de-asistencia) | Control de asistencia | control-asistencia.html | F38 | RN08, RN10 |
-| [P30](#p30--detalle-de-movimiento-de-caja) | Detalle de movimiento de caja | movimiento-detalle.html | F28 | RN04, RN05 |
+| Código | Interfaz | Archivo V1 | Funcionalidades | Reglas | Versión V2 |
+|---|---|---|---|---|---|
+| [P01](#p01--inicio--publicidad) | Inicio / Publicidad | index.html, publicidad.html | F33 | No aplica | Sólo V1 |
+| [P02](#p02--login) | Login | login.html | F01 | No aplica | Sólo V1 |
+| [P03](#p03--dashboard) | Dashboard | dashboard.html | F02, F03 | No aplica | Sólo V1 |
+| [P04](#p04--contacto) | Contacto | contacto.html | F34 | No aplica | Sólo V1 |
+| [P05](#p05--categorías) | Categorías | categorias.html | F04, F05, F06, F07, F08 | RN02 | /categorias/list |
+| [P06](#p06--combustibles) | Combustibles | combustibles.html | F10, F12 | RN02 | /combustibles/list |
+| [P07](#p07--formulario-combustible) | Formulario combustible | combustible-form.html | F09, F11 | RN02 | /combustibles/crear |
+| [P08](#p08--registrar-venta) | Registrar venta | ventas.html | F18, F20 | RN01, RN02, RN03, RN04 | /ventas/crear |
+| [P09](#p09--historial-de-ventas) | Historial de ventas | ventas-historial.html | F21 | RN03, RN04 | /ventas/list |
+| [P10](#p10--detalle-de-venta) | Detalle de venta | venta-detalle.html | F22 | RN03, RN04 | /ventas/detalle |
+| [P11](#p11--existencias) | Existencias | inventario.html | F18 | RN01 | /inventario/list |
+| [P12](#p12--entrada-de-combustible) | Entrada de combustible | inventario-entrada.html | F16 | RN01, RN03 | /inventario/entrada/crear |
+| [P13](#p13--salida-de-combustible) | Salida de combustible | inventario-salida.html | F17, F18 | RN01 | /inventario/salida/crear |
+| [P14](#p14--movimientos-de-inventario) | Movimientos de inventario | inventario-movimientos.html | F19 | RN01, RN03 | /inventario/entradas y /inventario/salidas |
+| [P15](#p15--resumen-financiero) | Resumen financiero | finanzas.html | F28 | RN04 | /finanzas/list |
+| [P16](#p16--ingresos-y-egresos-de-caja) | Ingresos y egresos de caja | movimiento-economico.html | F26, F27 | RN04 | /finanzas/ingresos y /finanzas/egresos |
+| [P17](#p17--conceptos-económicos) | Conceptos económicos | conceptos.html | F24 | No aplica | Sólo V1 |
+| [P18](#p18--empleados) | Empleados | empleados.html | F30 | No aplica | /empleados/list |
+| [P19](#p19--usuarios) | Usuarios | usuarios.html | F32 | RN02 | /usuarios/list |
+| [P20](#p20--compras) | Compras | compras.html | F13, F14 | RN03, RN04 | /compras/list |
+| [P21](#p21--detalle-de-compra) | Detalle de compra | compra-detalle.html | F15 | RN03, RN04 | /compras/detalle |
+| [P22](#p22--formulario-categoría) | Formulario categoría | categoria-form.html | F04, F07, F08 | RN02 | /categorias/crear |
+| [P23](#p23--formulario-compra) | Formulario compra | compra-form.html | F13 | RN03, RN04 | /compras/crear |
+| [P24](#p24--formulario-venta) | Formulario venta | venta-form.html | F20 | RN01, RN02, RN03, RN04 | /ventas/crear |
+| [P25](#p25--formulario-empleado) | Formulario empleado | empleado-form.html | F29, F31 | RN02 | /empleados/crear y /empleados/editar |
+| [P26](#p26--formulario-usuario) | Formulario usuario | usuario-form.html | F32 | RN02 | /usuarios/crear y /usuarios/editar |
+| [P27](#p27--formulario-concepto) | Formulario concepto | concepto-form.html | F23, F25 | RN02 | Sólo V1 |
+| [P28](#p28--mi-asistencia) | Mi asistencia | mi-asistencia.html | F35, F36, F37 | RN05 | /asistencia/mi |
+| [P29](#p29--control-de-asistencia) | Control de asistencia | control-asistencia.html | F38 | RN05 | /asistencia/control |
+| [P30](#p30--detalle-de-movimiento-de-caja) | Detalle de movimiento de caja | movimiento-detalle.html | F28 | RN04 | /finanzas/detalle |
 
 ## P01 · Inicio / Publicidad
 
-- **Objetivo:** Presentar la estación y acceder al login.
+- **Propósito:** Presentar la estación con sus precios de referencia, sus beneficios y la navegación pública, y enlazar al acceso y al contacto. La interfaz publicidad.html repite esta presentación.
 - **Actor:** Visitante.
-- **Archivo:** [index.html](../index.html), [publicidad.html](../publicidad.html).
-- **Entidades:** No aplica; contenido público.
+- **Archivo:** [index.html](../index.html), [publicidad.html](../publicidad.html). Versión V2: no existe portada; cada módulo se abre por su ruta.
 - **Funcionalidades:** F33.
+- **Entidades:** No aplica — contenido público.
 - **Reglas:** No aplica.
-- **Campos / contenido:** Precios de referencia, beneficios, acceso y contacto.
-- **Acciones:** Navegar a contacto, a la sección de beneficios y al acceso.
-- **Origen:** Navegación pública.
-- **Destino:** login.html, contacto.html, publicidad.html#combustibles-beneficios.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Contenido:** Precios de referencia por litro (S/ 5.00, S/ 6.00, S/ 4.00), beneficios del surtidor digital, contacto y acceso al sistema.
 
 ## P02 · Login
 
-- **Objetivo:** Representar el acceso de demostración.
+- **Propósito:** Representar el acceso con usuario y contraseña. En la maqueta V1 el envío navega al tablero sin comprobar credenciales.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [login.html](../login.html).
-- **Entidades:** Usuario.
+- **Archivo:** [login.html](../login.html). Versión V2: no existe este módulo — no hay autenticación ni sesión.
 - **Funcionalidades:** F01.
+- **Entidades:** Usuario.
 - **Reglas:** No aplica.
-- **Campos / contenido:** Usuario, contraseña, recordarme.
-- **Acciones:** Iniciar sesión.
-- **Origen:** index.html o cierre de sesión.
-- **Destino:** dashboard.html, index.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Contenido:** Campos de usuario y contraseña, opción «recordarme» y enlace de registro visual.
 
 ## P03 · Dashboard
 
-- **Objetivo:** Consultar un panorama de la operación del día y de la semana.
+- **Propósito:** Consultar un panorama de la operación del día y de la semana con cinco indicadores y cinco series diarias, y navegar a cada módulo.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [dashboard.html](../dashboard.html).
-- **Entidades:** Venta DetalleVenta Producto MovimientoCaja.
+- **Archivo:** [dashboard.html](../dashboard.html). Versión V2: no existe tablero; el resumen económico vive en /finanzas/list.
 - **Funcionalidades:** F02, F03.
+- **Entidades:** Venta, DetalleVenta, Producto, MovimientoCaja.
 - **Reglas:** No aplica.
-- **Campos / contenido:** Cinco indicadores (ventas, stock, ingresos, egresos y saldo): ingresos S/ 370.00, egresos S/ 1,350.00 y saldo S/ 3,430.00; cinco series temporales diarias 04–10 sep. 2026, más las últimas ventas.
-- **Acciones:** Cerrar sesión; navegar a cada módulo.
-- **Origen:** Tras iniciar sesión y navegación común.
-- **Destino:** index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Contenido:** Indicadores de ventas, litros, ingresos (S/ 370.00), egresos (S/ 1,350.00) y saldo (S/ 3,430.00); series diarias del 04 al 10 de septiembre de 2026; últimas ventas; enlaces a los once módulos y cierre de sesión.
 
 ## P04 · Contacto
 
-- **Objetivo:** Mostrar los canales ficticios de contacto.
+- **Propósito:** Mostrar los canales de contacto y recibir un mensaje con nombre, correo, asunto y texto.
 - **Actor:** Visitante.
-- **Archivo:** [contacto.html](../contacto.html).
-- **Entidades:** No aplica; contenido público.
+- **Archivo:** [contacto.html](../contacto.html). Versión V2: no existe este módulo; el mensaje no se almacena.
 - **Funcionalidades:** F34.
+- **Entidades:** No aplica — contenido público.
 - **Reglas:** No aplica.
-- **Campos / contenido:** Nombre, correo, asunto y mensaje.
-- **Acciones:** Enviar mensaje (visual).
-- **Origen:** Navegación pública.
-- **Destino:** index.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Contenido:** Formulario de contacto y datos de la estación.
 
 ## P05 · Categorías
 
-- **Objetivo:** Organizar las familias de combustible y mostrar qué combustibles agrupa cada una.
+- **Propósito:** Listar las familias de combustible con su nombre, descripción y estado, y representar el alta, la edición y el cambio de estado de una categoría. En V2, /categorias/list muestra las familias y enlaza al catálogo de combustibles.
 - **Actor:** Administrador.
-- **Archivo:** [categorias.html](../categorias.html).
-- **Entidades:** Categoria.
+- **Archivo:** [categorias.html](../categorias.html). Versión V2: `GET /categorias/list` → categoria/lista.jsp.
 - **Funcionalidades:** F04, F05, F06, F07, F08.
-- **Reglas:** RN03.
-- **Campos / contenido:** Código, nombre, descripción, combustibles asociados y estado.
-- **Acciones:** Registrar, editar y cambiar estado de la categoría; abrir el formulario independiente.
-- **Origen:** Navegación interna y dashboard.
-- **Destino:** categoria-form.html, combustibles.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Categoria, Producto (los combustibles que cada familia agrupa).
+- **Reglas:** RN02 — la categoría se edita y se desactiva, nunca se elimina.
+- **Contenido:** Código, nombre, descripción, combustibles asociados y estado; enlace al formulario de categoría.
 
 ## P06 · Combustibles
 
-- **Objetivo:** Consultar el catálogo de combustibles con su categoría, precio y existencias.
+- **Propósito:** Listar el catálogo de combustibles con su categoría, precio por litro, existencias y estado, y representar el cambio de estado de un combustible.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [combustibles.html](../combustibles.html).
-- **Entidades:** Producto Categoria.
+- **Archivo:** [combustibles.html](../combustibles.html). Versión V2: `GET /combustibles/list` → producto/lista.jsp.
 - **Funcionalidades:** F10, F12.
-- **Reglas:** RN02, RN03.
-- **Campos / contenido:** Código, nombre, categoría, unidad, precio por litro, stock y estado.
-- **Acciones:** Editar el combustible; cambiar su estado.
-- **Origen:** Navegación interna y dashboard.
-- **Destino:** combustible-form.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Producto, Categoria.
+- **Reglas:** RN02 — un producto Inactivo permanece en la lista con su estado y no se elimina.
+- **Contenido:** Código, nombre, categoría, unidad, precio por litro, stock y estado; enlace al formulario de combustible.
 
 ## P07 · Formulario combustible
 
-- **Objetivo:** Dar de alta o editar un combustible.
+- **Propósito:** Dar de alta un combustible con categoría, nombre, unidad, precio por litro, stock inicial y estado; en la maqueta V1 el mismo formulario edita el producto existente.
 - **Actor:** Administrador.
-- **Archivo:** [combustible-form.html](../combustible-form.html).
-- **Entidades:** Producto Categoria.
+- **Archivo:** [combustible-form.html](../combustible-form.html). Versión V2: `GET/POST /combustibles/crear` → producto/crear.jsp (alta con seis campos obligatorios; sin edición).
 - **Funcionalidades:** F09, F11.
-- **Reglas:** RN02, RN03, RN06.
-- **Campos / contenido:** Categoría, nombre, unidad, precio por litro, stock y estado.
-- **Acciones:** Guardar (visual) y cancelar.
-- **Origen:** combustibles.html y navegación interna.
-- **Destino:** combustibles.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Producto, Categoria.
+- **Reglas:** RN02 — el alta y la edición conservan el registro; la baja es por estado.
+- **Contenido:** Categoría, nombre, unidad, precio por litro, stock y estado.
 
 ## P08 · Registrar venta
 
-- **Objetivo:** Representar una venta de combustible con disponibilidad y detalle.
+- **Propósito:** Representar una venta con el producto, la cantidad, las existencias al confirmar y el importe, enlazando al formulario de venta y al historial.
 - **Actor:** Operador / Vendedor.
-- **Archivo:** [ventas.html](../ventas.html).
-- **Entidades:** Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja.
+- **Archivo:** [ventas.html](../ventas.html). Versión V2: `GET /ventas/crear` → venta/crear.jsp (el alta efectiva, con comprobación de existencias, ocurre en el formulario de venta).
 - **Funcionalidades:** F18, F20.
-- **Reglas:** RN01, RN02, RN05, RN06.
-- **Campos / contenido:** Producto, cantidad, descuento, existencias al confirmar e importe.
-- **Acciones:** Registrar venta (visual), abrir el formulario de venta y cancelar el escenario.
-- **Origen:** Navegación interna y dashboard.
-- **Destino:** venta-form.html, ventas-historial.html, venta-detalle.html, inventario.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Venta, DetalleVenta, Producto, Usuario, MovimientoInventario, MovimientoCaja.
+- **Reglas:** RN01 (no vende más de lo existente), RN02 (sólo productos activos), RN03 (detalle y salida una sola vez) y RN04 (ingreso único de caja).
+- **Contenido:** Producto, cantidad, existencias al confirmar e importe; enlaces al formulario de venta, al historial y al detalle.
 
 ## P09 · Historial de ventas
 
-- **Objetivo:** Consultar las ventas confirmadas y su ingreso económico asociado.
+- **Propósito:** Listar las ventas confirmadas con su ingreso de caja asociado y enlazar al detalle de cada una.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [ventas-historial.html](../ventas-historial.html).
-- **Entidades:** Venta DetalleVenta Producto Usuario MovimientoCaja.
+- **Archivo:** [ventas-historial.html](../ventas-historial.html). Versión V2: `GET /ventas/list` → venta/lista.jsp.
 - **Funcionalidades:** F21.
-- **Reglas:** RN05.
-- **Campos / contenido:** Código, fecha, combustible, litros, total, ingreso asociado, operador y estado.
-- **Acciones:** Ver detalle de la venta.
-- **Origen:** ventas.html y navegación interna.
-- **Destino:** venta-detalle.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Venta, DetalleVenta, Producto, Usuario, MovimientoCaja.
+- **Reglas:** RN03, RN04 — cada fila muestra una venta con sus detalles y su único ingreso.
+- **Contenido:** Código, fecha, combustible, litros, total, ingreso asociado, operador y estado.
 
 ## P10 · Detalle de venta
 
-- **Objetivo:** Consultar cada venta con sus detalles, su salida de inventario y su ingreso.
+- **Propósito:** Consultar una venta con sus líneas, su salida de inventario y su ingreso de caja, de forma trazable.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [venta-detalle.html](../venta-detalle.html).
-- **Entidades:** Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja.
+- **Archivo:** [venta-detalle.html](../venta-detalle.html). Versión V2: `GET /ventas/detalle` → venta/detalle.jsp.
 - **Funcionalidades:** F22.
-- **Reglas:** RN05.
-- **Campos / contenido:** Cabecera de la venta (V001, V002, V003), detalle, total, movimiento de inventario y movimiento de caja; el día acumula 80 litros y S/ 370.00.
-- **Acciones:** Volver al historial.
-- **Origen:** ventas-historial.html y navegación interna.
-- **Destino:** ventas-historial.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Venta, DetalleVenta, Producto, Usuario, MovimientoInventario, MovimientoCaja.
+- **Reglas:** RN03, RN04.
+- **Contenido:** Cabecera de la venta (V001, V002, V003), detalle de líneas, total, movimiento de inventario y movimiento de caja; acumulado del día de 80 litros y S/ 370.00.
 
 ## P11 · Existencias
 
-- **Objetivo:** Consultar la disponibilidad física en litros.
+- **Propósito:** Consultar la disponibilidad física en litros por producto con su umbral visual y el total del día.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [inventario.html](../inventario.html).
-- **Entidades:** Producto.
+- **Archivo:** [inventario.html](../inventario.html). Versión V2: `GET /inventario/list` → inventario/lista.jsp (marca «Stock bajo» por debajo de 1,000 L).
 - **Funcionalidades:** F18.
-- **Reglas:** RN01.
-- **Campos / contenido:** Existencia por producto, umbral visual y total físico del día (6,700 + 300 − 80 = 6,920 litros).
-- **Acciones:** Navegar a entrada, salida y libro de movimientos.
-- **Origen:** Navegación interna y dashboard.
-- **Destino:** inventario-entrada.html, inventario-salida.html, inventario-movimientos.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Producto.
+- **Reglas:** RN01 — la consulta sostiene la comprobación de existencias antes de operar.
+- **Contenido:** Existencia por producto, umbral visual y total físico del día (6,700 + 300 − 80 = 6,920 litros); enlaces a entrada, salida y libro de movimientos.
 
 ## P12 · Entrada de combustible
 
-- **Objetivo:** Representar la entrada de combustible por compra o por ajuste.
+- **Propósito:** Registrar una entrada manual de inventario con producto, litros, motivo y responsable; las entradas originadas en una compra se crean con la compra y se consultan en el libro.
 - **Actor:** Administrador.
-- **Archivo:** [inventario-entrada.html](../inventario-entrada.html).
-- **Entidades:** MovimientoInventario Producto Usuario Compra.
+- **Archivo:** [inventario-entrada.html](../inventario-entrada.html). Versión V2: `GET/POST /inventario/entrada/crear` → inventario/entrada.jsp; el listado de entradas, `/inventario/entradas` → inventario/entradas.jsp.
 - **Funcionalidades:** F16.
-- **Reglas:** RN04, RN06.
-- **Campos / contenido:** Producto, cantidad en litros, fecha y hora, motivo y responsable.
-- **Acciones:** Registrar entrada (visual).
-- **Origen:** inventario.html y navegación interna.
-- **Destino:** inventario-movimientos.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** MovimientoInventario, Producto, Usuario, Compra.
+- **Reglas:** RN01 — la entrada incrementa las existencias; RN03 — la entrada de una compra se produce una sola vez con la compra.
+- **Contenido:** Producto, cantidad en litros, fecha y hora, motivo y responsable.
 
 ## P13 · Salida de combustible
 
-- **Objetivo:** Representar un retiro físico justificado con comprobación de stock.
+- **Propósito:** Registrar un retiro físico de combustible con comprobación de stock antes de descontar, mostrando la existencia actual y la proyectada.
 - **Actor:** Operador / Vendedor.
-- **Archivo:** [inventario-salida.html](../inventario-salida.html).
-- **Entidades:** MovimientoInventario Producto Usuario.
+- **Archivo:** [inventario-salida.html](../inventario-salida.html). Versión V2: `GET/POST /inventario/salida/crear` → inventario/salida.jsp; el listado de salidas, `/inventario/salidas` → inventario/salidas.jsp.
 - **Funcionalidades:** F17, F18.
-- **Reglas:** RN01, RN06.
-- **Campos / contenido:** Producto, cantidad en litros, motivo y responsable, con existencia actual y proyectada.
-- **Acciones:** Registrar salida (visual).
-- **Origen:** inventario.html y navegación interna.
-- **Destino:** inventario-movimientos.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** MovimientoInventario, Producto, Usuario.
+- **Reglas:** RN01 — la salida se rechaza si supera el stock disponible.
+- **Contenido:** Producto, cantidad en litros, motivo y responsable, con existencia actual y proyectada.
 
 ## P14 · Movimientos de inventario
 
-- **Objetivo:** Consultar la trazabilidad física del combustible.
+- **Propósito:** Consultar el libro de entradas y salidas con el saldo inicial del día, para verificar la trazabilidad física del combustible.
 - **Actor:** Administrador.
-- **Archivo:** [inventario-movimientos.html](../inventario-movimientos.html).
-- **Entidades:** MovimientoInventario Producto Usuario Compra.
+- **Archivo:** [inventario-movimientos.html](../inventario-movimientos.html). Versión V2: `GET /inventario/entradas` y `GET /inventario/salidas` → inventario/entradas.jsp e inventario/salidas.jsp.
 - **Funcionalidades:** F19.
-- **Reglas:** RN01, RN04.
-- **Campos / contenido:** Libro de entradas y salidas con saldo inicial, entradas de la compra y salidas por venta.
-- **Acciones:** Navegar a entrada y salida.
-- **Origen:** inventario.html y navegación interna.
-- **Destino:** inventario-entrada.html, inventario-salida.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** MovimientoInventario, Producto, Usuario, Compra.
+- **Reglas:** RN01, RN03 — permite comprobar que el stock nunca queda negativo y que cada compra y venta produjeron sus efectos una sola vez.
+- **Contenido:** Libro de entradas y salidas con saldo inicial, entradas de la compra C001 (MI001–MI003) y salidas por venta (MI004–MI006).
 
 ## P15 · Resumen financiero
 
-- **Objetivo:** Consultar los movimientos de dinero y la conciliación de caja.
+- **Propósito:** Consultar la conciliación de caja del día y el listado de movimientos con su detalle.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [finanzas.html](../finanzas.html).
-- **Entidades:** MovimientoCaja ConceptoMovimiento Venta Compra.
+- **Archivo:** [finanzas.html](../finanzas.html). Versión V2: `GET /finanzas/list` → finanzas/lista.jsp.
 - **Funcionalidades:** F28.
-- **Reglas:** RN04, RN05.
-- **Campos / contenido:** KPI de ingresos (S/ 370.00), egresos (S/ 1,350.00) y saldo (S/ 3,430.00) con su apertura de S/ 4,410.00, más el listado de movimientos con código, fecha, concepto, tipo, monto, origen y responsable, y su detalle.
-- **Acciones:** Consultar los ingresos y los egresos de caja; ver el detalle de cada movimiento y los conceptos económicos.
-- **Origen:** Navegación interna y dashboard.
-- **Destino:** movimiento-economico.html, movimiento-detalle.html, conceptos.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** MovimientoCaja, ConceptoMovimiento, Venta, Compra.
+- **Reglas:** RN04 — la conciliación sólo cierra si cada compra y cada venta tienen su único movimiento.
+- **Contenido:** KPI de ingresos (S/ 370.00), egresos (S/ 1,350.00) y saldo (S/ 3,430.00) sobre una apertura de S/ 4,410.00; movimientos con código, fecha, concepto, tipo, monto, origen y responsable.
 
 ## P16 · Ingresos y egresos de caja
 
-- **Objetivo:** Consultar, en una pantalla de solo lectura, los ingresos y los egresos de la caja del día.
+- **Propósito:** Consultar en dos paneles de solo lectura los ingresos y los egresos del día con el detalle de cada movimiento.
 - **Actor:** Administrador.
-- **Archivo:** [movimiento-economico.html](../movimiento-economico.html).
-- **Entidades:** MovimientoCaja ConceptoMovimiento.
+- **Archivo:** [movimiento-economico.html](../movimiento-economico.html). Versión V2: `GET /finanzas/ingresos` y `GET /finanzas/egresos` → finanzas/ingresos.jsp y finanzas/egresos.jsp.
 - **Funcionalidades:** F26, F27.
-- **Reglas:** RN04, RN05.
-- **Campos / contenido:** Panel «Ingresos de caja (F26)» con MC003, MC004 y MC005 (total S/ 370.00) y panel «Egresos de caja (F27)» con MC001 (S/ 1,350.00); no lleva formulario.
-- **Acciones:** Ver el detalle de cada movimiento de caja.
-- **Origen:** finanzas.html y navegación interna.
-- **Destino:** movimiento-detalle.html, finanzas.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** MovimientoCaja, ConceptoMovimiento.
+- **Reglas:** RN04 — todos los movimientos mostrados nacen de una venta o de una compra y llevan su vínculo; no hay altas manuales.
+- **Contenido:** Panel «Ingresos de caja (F26)» con MC003, MC004 y MC005 (total S/ 370.00) y panel «Egresos de caja (F27)» con MC001 (S/ 1,350.00); sin formulario.
 
 ## P17 · Conceptos económicos
 
-- **Objetivo:** Clasificar los movimientos económicos por tipo.
+- **Propósito:** Listar los conceptos que clasifican los movimientos de caja con su tipo y estado: sólo CE01 Venta de combustible (Ingreso) y CE02 Compra de combustible (Egreso).
 - **Actor:** Administrador.
-- **Archivo:** [conceptos.html](../conceptos.html).
-- **Entidades:** ConceptoMovimiento.
+- **Archivo:** [conceptos.html](../conceptos.html). Versión V2: sin pantalla propia — los conceptos se usan como columna de los movimientos en /finanzas/list.
 - **Funcionalidades:** F24.
+- **Entidades:** ConceptoMovimiento.
 - **Reglas:** No aplica.
-- **Campos / contenido:** Nombre, tipo (ingreso o egreso) y estado; sólo CE01 Venta de combustible (Ingreso) y CE02 Compra de combustible (Egreso); el alta y la edición viven en el formulario de concepto.
-- **Acciones:** Consultar los conceptos económicos; abrir el formulario de concepto.
-- **Origen:** Navegación interna y dashboard.
-- **Destino:** concepto-form.html, finanzas.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Contenido:** Nombre, tipo (ingreso o egreso) y estado; enlace al formulario de concepto.
 
 ## P18 · Empleados
 
-- **Objetivo:** Representar la administración del personal.
+- **Propósito:** Listar el personal con su identidad, cargo, teléfono y estado, y enlazar al formulario de empleado y al control de asistencia.
 - **Actor:** Administrador.
-- **Archivo:** [empleados.html](../empleados.html).
-- **Entidades:** Empleado.
+- **Archivo:** [empleados.html](../empleados.html). Versión V2: `GET /empleados/list` → empleado/lista.jsp.
 - **Funcionalidades:** F30.
+- **Entidades:** Empleado.
 - **Reglas:** No aplica.
-- **Campos / contenido:** DNI, nombres, apellidos, cargo, teléfono y estado; el alta y la edición viven en el formulario de empleado.
-- **Acciones:** Consultar el personal; abrir el formulario de empleado y el control de asistencia.
-- **Origen:** Navegación interna y dashboard.
-- **Destino:** empleado-form.html, control-asistencia.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Contenido:** DNI, nombres, apellidos, cargo, teléfono y estado; enlaces al formulario y al control de asistencia.
 
 ## P19 · Usuarios
 
-- **Objetivo:** Representar las cuentas de acceso y sus roles conceptuales.
+- **Propósito:** Listar las cuentas de acceso con su empleado asociado, rol y estado, y enlazar al formulario de cuenta.
 - **Actor:** Administrador.
-- **Archivo:** [usuarios.html](../usuarios.html).
-- **Entidades:** Usuario Empleado.
+- **Archivo:** [usuarios.html](../usuarios.html). Versión V2: `GET /usuarios/list` → usuario/lista.jsp.
 - **Funcionalidades:** F32.
-- **Reglas:** RN03.
-- **Campos / contenido:** Usuario, empleado asociado, rol y estado; una cuenta como máximo por empleado; la alta y la edición viven en el formulario de usuario.
-- **Acciones:** Consultar las cuentas de acceso; abrir el formulario de usuario.
-- **Origen:** Navegación interna y dashboard.
-- **Destino:** usuario-form.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Usuario, Empleado.
+- **Reglas:** RN02 — la cuenta se edita y se desactiva, nunca se elimina, y conserva la responsabilidad de sus operaciones.
+- **Contenido:** Username, empleado asociado, rol y estado; una cuenta como máximo por empleado; enlace al formulario.
 
 ## P20 · Compras
 
-- **Objetivo:** Registrar y consultar el abastecimiento de combustible.
+- **Propósito:** Registrar y consultar el abastecimiento: listado de compras con su efecto en inventario y caja, y acceso al alta y al detalle.
 - **Actor:** Administrador.
-- **Archivo:** [compras.html](../compras.html).
-- **Entidades:** Compra DetalleCompra Producto MovimientoInventario MovimientoCaja.
+- **Archivo:** [compras.html](../compras.html). Versión V2: `GET /compras/list` → compra/lista.jsp.
 - **Funcionalidades:** F13, F14.
-- **Reglas:** RN04, RN06.
-- **Campos / contenido:** KPI de compras, litros adquiridos y efecto en inventario; listado con código, fecha, proveedor, combustibles, litros, total, estado y detalle; formulario de registro.
-- **Acciones:** Nueva compra (visual); abrir el formulario de compra; ver detalle de la compra.
-- **Origen:** Navegación interna y dashboard.
-- **Destino:** compra-form.html, compra-detalle.html, inventario.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja.
+- **Reglas:** RN03 — cada compra con sus detalles y entradas una sola vez; RN04 — su egreso único.
+- **Contenido:** KPI de compras, litros adquiridos y efecto en inventario; listado con código, fecha, proveedor, combustibles, litros, total, estado y detalle; enlace al formulario de compra.
 
 ## P21 · Detalle de compra
 
-- **Objetivo:** Consultar cada compra y sus efectos en inventario y caja.
+- **Propósito:** Consultar una compra con sus líneas, el egreso asociado y las entradas de inventario que generó.
 - **Actor:** Administrador.
-- **Archivo:** [compra-detalle.html](../compra-detalle.html).
-- **Entidades:** Compra DetalleCompra Producto MovimientoInventario MovimientoCaja.
+- **Archivo:** [compra-detalle.html](../compra-detalle.html). Versión V2: `GET /compras/detalle` → compra/detalle.jsp.
 - **Funcionalidades:** F15.
-- **Reglas:** RN04.
-- **Campos / contenido:** Cabecera de la compra C001 con proveedor y egreso asociado (300 litros, S/ 1,350.00), líneas con cantidad, precio de compra y subtotal, total, y tabla de entradas generadas.
-- **Acciones:** Volver a compras; ver movimientos de inventario.
-- **Origen:** compras.html y navegación interna.
-- **Destino:** compras.html, inventario-movimientos.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja.
+- **Reglas:** RN03, RN04.
+- **Contenido:** Cabecera de la compra C001 con proveedor y egreso asociado (300 litros, S/ 1,350.00), líneas con cantidad, precio de compra y subtotal, total, y tabla de entradas generadas.
 
 ## P22 · Formulario categoría
 
-- **Objetivo:** Dar de alta, editar y cambiar el estado de una categoría.
+- **Propósito:** Dar de alta una categoría con nombre, descripción y estado; en la maqueta V1 el mismo formulario edita una categoría existente y cambia su estado.
 - **Actor:** Administrador.
-- **Archivo:** [categoria-form.html](../categoria-form.html).
-- **Entidades:** Categoria.
+- **Archivo:** [categoria-form.html](../categoria-form.html). Versión V2: `GET/POST /categorias/crear` → categoria/crear.jsp (alta; el nombre es el campo obligatorio).
 - **Funcionalidades:** F04, F07, F08.
-- **Reglas:** RN03.
-- **Campos / contenido:** Código, nombre, descripción y estado.
-- **Acciones:** Guardar (visual) y cancelar.
-- **Origen:** categorias.html y navegación interna.
-- **Destino:** categorias.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Categoria.
+- **Reglas:** RN02 — guardar actualiza el registro y la baja es por estado, no por borrado.
+- **Contenido:** Código, nombre, descripción y estado.
 
 ## P23 · Formulario compra
 
-- **Objetivo:** Dar de alta una compra de combustible con sus líneas y sus efectos en inventario y caja.
+- **Propósito:** Registrar una compra con proveedor, fecha y líneas de producto, guardando en un solo paso la compra, sus detalles, las entradas de inventario y el egreso de caja.
 - **Actor:** Administrador.
-- **Archivo:** [compra-form.html](../compra-form.html).
-- **Entidades:** Compra DetalleCompra Producto MovimientoInventario MovimientoCaja.
+- **Archivo:** [compra-form.html](../compra-form.html). Versión V2: `GET/POST /compras/crear` → compra/crear.jsp (proveedor de 3 a 60 caracteres, fecha y líneas obligatorias).
 - **Funcionalidades:** F13.
-- **Reglas:** RN04, RN06.
-- **Campos / contenido:** Proveedor, fecha, líneas con producto y cantidad en litros, y total de la compra.
-- **Acciones:** Guardar (visual) y cancelar.
-- **Origen:** compras.html y navegación interna.
-- **Destino:** compras.html, compra-detalle.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja.
+- **Reglas:** RN03 — detalles y entradas una sola vez; RN04 — egreso único vinculado a la compra.
+- **Contenido:** Proveedor, fecha, líneas con producto y cantidad en litros, y total de la compra.
 
 ## P24 · Formulario venta
 
-- **Objetivo:** Registrar una venta de combustible comprobando existencias y estado.
+- **Propósito:** Registrar una venta de combustible comprobando que el producto esté activo y que la cantidad no supere el stock, y guardando en un solo paso venta, detalle, salida de inventario e ingreso de caja.
 - **Actor:** Operador / Vendedor.
-- **Archivo:** [venta-form.html](../venta-form.html).
-- **Entidades:** Venta DetalleVenta Producto Usuario MovimientoInventario MovimientoCaja.
+- **Archivo:** [venta-form.html](../venta-form.html). Versión V2: `GET/POST /ventas/crear` → venta/crear.jsp (producto, cantidad y operador obligatorios; rechazo sin efectos si falla alguna comprobación).
 - **Funcionalidades:** F20.
-- **Reglas:** RN01, RN02, RN05, RN06.
-- **Campos / contenido:** Producto, cantidad, descuento, existencias al confirmar e importe.
-- **Acciones:** Registrar la venta (visual) y cancelar.
-- **Origen:** ventas.html y navegación interna.
-- **Destino:** ventas.html, inventario.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Venta, DetalleVenta, Producto, Usuario, MovimientoInventario, MovimientoCaja.
+- **Reglas:** RN01 (stock suficiente), RN02 (producto activo), RN03 (detalle y salida únicos) y RN04 (ingreso único).
+- **Contenido:** Producto, cantidad, existencias al confirmar e importe.
 
 ## P25 · Formulario empleado
 
-- **Objetivo:** Dar de alta, editar y cambiar el estado de un empleado.
+- **Propósito:** Dar de alta un empleado con sus datos de personal; en la maqueta V1 y en V2 el mismo formulario edita al empleado y cambia su estado.
 - **Actor:** Administrador.
-- **Archivo:** [empleado-form.html](../empleado-form.html).
-- **Entidades:** Empleado.
+- **Archivo:** [empleado-form.html](../empleado-form.html). Versión V2: `GET/POST /empleados/crear` y `GET/POST /empleados/editar` → empleado/crear.jsp y empleado/editar.jsp (seis campos obligatorios, incluido el estado).
 - **Funcionalidades:** F29, F31.
-- **Reglas:** RN03.
-- **Campos / contenido:** DNI, nombres, apellidos, cargo, teléfono y estado.
-- **Acciones:** Guardar (visual) y cancelar.
-- **Origen:** empleados.html y navegación interna.
-- **Destino:** empleados.html, usuario-form.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Empleado.
+- **Reglas:** RN02 — la edición y la desactivación conservan el registro y su historial.
+- **Contenido:** DNI, nombres, apellidos, cargo, teléfono y estado.
 
 ## P26 · Formulario usuario
 
-- **Objetivo:** Dar de alta, editar y cambiar el estado de una cuenta de acceso.
+- **Propósito:** Dar de alta una cuenta de acceso; en la maqueta V1 y en V2 el mismo formulario edita la cuenta y cambia su estado.
 - **Actor:** Administrador.
-- **Archivo:** [usuario-form.html](../usuario-form.html).
-- **Entidades:** Usuario Empleado.
+- **Archivo:** [usuario-form.html](../usuario-form.html). Versión V2: `GET/POST /usuarios/crear` y `GET/POST /usuarios/editar` → usuario/crear.jsp y usuario/editar.jsp.
 - **Funcionalidades:** F32.
-- **Reglas:** RN03.
-- **Campos / contenido:** Usuario, contraseña, empleado asociado, rol y estado; una cuenta como máximo por empleado.
-- **Acciones:** Guardar (visual) y cancelar.
-- **Origen:** usuarios.html y navegación interna.
-- **Destino:** usuarios.html, empleado-form.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Usuario, Empleado.
+- **Reglas:** RN02 — la cuenta se desactiva, no se elimina.
+- **Contenido:** Username, contraseña, empleado asociado, rol y estado; una cuenta como máximo por empleado.
 
 ## P27 · Formulario concepto
 
-- **Objetivo:** Dar de alta, editar y cambiar el estado de un concepto económico.
+- **Propósito:** Dar de alta un concepto económico con nombre, tipo y estado; en la maqueta V1 el mismo formulario edita el concepto y cambia su estado.
 - **Actor:** Administrador.
-- **Archivo:** [concepto-form.html](../concepto-form.html).
-- **Entidades:** ConceptoMovimiento.
+- **Archivo:** [concepto-form.html](../concepto-form.html). Versión V2: sin formulario propio — la gestión de conceptos no está implementada en V2.
 - **Funcionalidades:** F23, F25.
-- **Reglas:** RN03.
-- **Campos / contenido:** Nombre, tipo (ingreso o egreso) y estado.
-- **Acciones:** Guardar (visual) y cancelar.
-- **Origen:** conceptos.html y navegación interna.
-- **Destino:** conceptos.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** ConceptoMovimiento.
+- **Reglas:** RN02 — el concepto se edita y se desactiva, nunca se elimina.
+- **Contenido:** Nombre, tipo (ingreso o egreso) y estado.
 
 ## P28 · Mi asistencia
 
-- **Objetivo:** Registrar la propia asistencia y consultar el historial personal de marcaciones.
-- **Actor:** Operador / Vendedor (empleado autenticado).
-- **Archivo:** [mi-asistencia.html](../mi-asistencia.html).
-- **Entidades:** Asistencia Empleado.
+- **Propósito:** Permite al empleado registrar su entrada, registrar su salida y consultar su historial y su resumen de asistencia, sin selector de empleado: opera sobre el empleado actual.
+- **Actor:** Operador / Vendedor (empleado actual de la demostración).
+- **Archivo:** [mi-asistencia.html](../mi-asistencia.html). Versión V2: `GET /asistencia/mi` con `POST /asistencia/entrada` y `POST /asistencia/salida` → asistencia/mi.jsp.
 - **Funcionalidades:** F35, F36, F37.
-- **Reglas:** RN07, RN08, RN09, RN10.
-- **Campos / contenido:** Fecha, hora de entrada, hora de salida, estado (Presente o Falta) y observación opcional; sólo se muestran las marcaciones del usuario autenticado, sin selector de empleado.
-- **Acciones:** Registrar la marcación (visual); consultar el historial y el resumen personal.
-- **Origen:** Barra lateral (sección Asistencia), dashboard y control de asistencia.
-- **Destino:** control-asistencia.html, empleados.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Asistencia, Empleado.
+- **Reglas:** RN05 — empleado activo, jornada propia, un registro por jornada y salida posterior a la entrada.
+- **Contenido:** Fecha, hora de entrada, hora de salida, estado (Presente o Falta) y observación opcional; historial propio y bloque «Resumen del periodo» con días presentes y faltas.
 
 ## P29 · Control de asistencia
 
-- **Objetivo:** Consultar la asistencia de todo el personal.
+- **Propósito:** Consultar la asistencia de todo el personal con filtro por empleado, una fila por empleado y fecha.
 - **Actor:** Administrador.
-- **Archivo:** [control-asistencia.html](../control-asistencia.html).
-- **Entidades:** Asistencia Empleado.
+- **Archivo:** [control-asistencia.html](../control-asistencia.html). Versión V2: `GET /asistencia/control` → asistencia/control.jsp (selector «Todo el personal»).
 - **Funcionalidades:** F38.
-- **Reglas:** RN08, RN10.
-- **Campos / contenido:** Empleado, fecha, hora de entrada, hora de salida, estado (Presente o Falta) y observación; una sola fila por empleado y día.
-- **Acciones:** Navegar entre los registros del personal; volver a mi asistencia.
-- **Origen:** mi-asistencia.html, empleados.html y navegación interna.
-- **Destino:** mi-asistencia.html, empleados.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** Asistencia, Empleado.
+- **Reglas:** RN05 — un solo registro por empleado y fecha, con estado calculado a partir de las horas.
+- **Contenido:** Empleado, fecha, hora de entrada, hora de salida, estado (Presente o Falta) y observación; una sola fila por empleado y día.
 
 ## P30 · Detalle de movimiento de caja
 
-- **Objetivo:** Consultar un movimiento de caja con su concepto, su origen y su efecto.
+- **Propósito:** Consultar un movimiento de caja con su concepto, su origen (venta o compra) y el responsable que lo originó.
 - **Actor:** Administrador.
-- **Archivo:** [movimiento-detalle.html](../movimiento-detalle.html).
-- **Entidades:** MovimientoCaja ConceptoMovimiento Venta Compra.
+- **Archivo:** [movimiento-detalle.html](../movimiento-detalle.html). Versión V2: `GET /finanzas/detalle` → finanzas/detalle.jsp.
 - **Funcionalidades:** F28.
-- **Reglas:** RN04, RN05.
-- **Campos / contenido:** Código, fecha, concepto, tipo, monto, origen (venta o compra) y responsable del movimiento.
-- **Acciones:** Volver al resumen financiero; ver los ingresos y egresos de caja.
-- **Origen:** finanzas.html y movimiento-economico.html.
-- **Destino:** finanzas.html, movimiento-economico.html, index.html, dashboard.html, categorias.html, combustibles.html, compras.html, inventario.html, ventas.html, finanzas.html, empleados.html, usuarios.html, mi-asistencia.html, contacto.html, login.html.
-- **Estado:** DEFINIDA + MAQUETADA; lógica de negocio no IMPLEMENTADA.
+- **Entidades:** MovimientoCaja, ConceptoMovimiento, Venta, Compra.
+- **Reglas:** RN04 — el movimiento identifica siempre la operación que lo originó.
+- **Contenido:** Código, fecha, concepto, tipo, monto, origen (venta o compra) y responsable del movimiento.
 
 ## Contadores
 
@@ -465,7 +349,10 @@
 | Archivos HTML en la raíz | 31 |
 | Funcionalidades totales | 38 |
 | Entidades | 12 |
-| Reglas de negocio | 10 |
+| Reglas de negocio | 5 |
 | Interfaces con al menos una funcionalidad | 30 |
-| Interfaces públicas sin regla | 2 |
-| Funcionalidades sin interfaz | 0 |
+| Interfaces sin funcionalidad | 0 |
+| Interfaces con al menos una regla | 24 |
+| Interfaces sin regla | 6 |
+| Interfaces con ruta en la versión V2 | 24 |
+| Interfaces sólo en la maqueta V1 | 6 |
