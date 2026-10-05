@@ -8,7 +8,7 @@ Documento que cubre los puntos **5.1 a 5.8** de la estructura del proyecto, exig
 
 Una estación de servicio sostiene una operación física diaria —combustible en tanques, surtidores, ventas y caja— que cambia de estado muchas veces por día y en la que confundir **litros** con **soles**, o **compras** con **ventas**, produce diferencias de inventario y de caja difíciles de detectar a tiempo. La ingeniería web permite acordar primero el modelo de información, las reglas de negocio y las interfaces, y sólo después construir la solución.
 
-Este trabajo materializa ese acuerdo: una maqueta navegable, sin JavaScript, que permite discutir con el equipo docente y con el usuario la estructura de datos y los recorridos antes de escribir la implementación con Spring Boot. Se parte de los requisitos académicos oficiales del curso; no se atribuyen resultados a una investigación empírica propia.
+Este trabajo materializa ese acuerdo: una maqueta navegable, sin JavaScript, que permitió discutir con el equipo docente y con el usuario la estructura de datos y los recorridos antes de escribir la implementación con Spring Boot; esa implementación —la V2— ya está iniciada e integrada en `main` (commit `9084263`) y opera 25 de 38 funcionalidades con datos en memoria, sin base de datos ni persistencia. Se parte de los requisitos académicos oficiales del curso; no se atribuyen resultados a una investigación empírica propia.
 
 ## 2. Objetivo
 
@@ -43,7 +43,7 @@ Contenido del alcance:
 | Hojas de estilo | 1 | `css/estilos.css` |
 | Documentos Markdown | 10 | `documentacion/00` a `09` |
 
-**Tecnología:** HTML5, CSS3 y Bootstrap 5.3.3 únicamente por CDN (`cdn.jsdelivr.net`, CSS). **Sin JavaScript**: no hay archivos `.js`, ni etiquetas `<script>`, ni atributos `onclick`, ni Bootstrap JS, ni Node.js, ni APIs, ni backend, ni base de datos, ni `localStorage`. Los formularios y botones son visuales y no persisten nada; la navegación entre archivos sí funciona. Spring Boot queda definido como etapa posterior.
+**Tecnología (V1, maqueta estática):** HTML5, CSS3 y Bootstrap 5.3.3 únicamente por CDN (`cdn.jsdelivr.net`, CSS). **Sin JavaScript**: no hay archivos `.js`, ni etiquetas `<script>`, ni atributos `onclick`, ni Bootstrap JS, ni Node.js, ni APIs, ni backend, ni base de datos, ni `localStorage`. Los formularios y botones son visuales y no persisten nada; la navegación entre archivos sí funciona. **V2 = Spring Boot ya iniciada e integrada en `main`** (commit `9084263`): `@Controller` → `Service` → `ServiceImpl` sobre datos en memoria, **25 de 38 funcionalidades operativas**, sin base de datos ni persistencia; la etapa posterior añadirá persistencia y seguridad.
 
 ---
 
@@ -100,7 +100,7 @@ El entorno regulatorio ya obliga a digitalizar la transacción. La SUNAT ha elim
 
 En paralelo, la operación física está sujeta a un marco de seguridad que también exige registro: OSINERGMIN aprueba el Reglamento de Seguridad para las Actividades de Hidrocarburos, que fija requisitos de seguridad operativa y protección contra incendio para las estaciones de servicio,[^os-seg] y publica los derechos y deberes que los grifos deben cumplir con el usuario.[^os-dere]
 
-> **Oportunidad:** la maqueta define ya el modelo de datos (venta, detalle, movimiento de caja, compra, detalle de compra) que una futura implementación con Spring Boot podrá conectar con el comprobante electrónico. Cada `MovimientoCaja` de este prototipo es el antecedente natural de un comprobante electrónico, y cada `Compra` el antecedente de la factura del proveedor.
+> **Oportunidad:** la maqueta define ya el modelo de datos (venta, detalle, movimiento de caja, compra, detalle de compra) que la V2 en Spring Boot —ya integrada en `main`— podrá conectar con el comprobante electrónico en la etapa de persistencia. Cada `MovimientoCaja` de este prototipo es el antecedente natural de un comprobante electrónico, y cada `Compra` el antecedente de la factura del proveedor.
 
 ### Variable 4 · Ecológica
 
@@ -153,7 +153,7 @@ Sobre ese modelo, la maqueta permite discutir con el usuario los flujos reales (
 
 Personas que participan directamente en el proyecto o que usarán el producto:
 
-- **Equipo G1 (desarrolladores)**: obtienen el modelo, la matriz y las reglas como base para la implementación con Spring Boot del curso.
+- **Equipo G1 (desarrolladores)**: obtienen el modelo, la matriz y las reglas como base de la implementación con Spring Boot del curso; la V2, ya integrada en `main`, es la primera etapa de esa implementación (25/38 funcionalidades, datos en memoria).
 - **Docente evaluador**: dispone de una maqueta navegable y de una documentación trazable para evaluar comprensión, no sólo entrega.
 - **Administrador de la estación**: usuario principal de las interfaces de catálogo, compras, finanzas, personal y asistencia; se beneficia de la conciliación automática inventario–caja.
 - **Operador / Vendedor de turno**: quien registra ventas, consultas de existencias y su propia asistencia; se beneficia de que su rendición de caja quede respaldada por movimientos identificados y su jornada por marcaciones verificables.

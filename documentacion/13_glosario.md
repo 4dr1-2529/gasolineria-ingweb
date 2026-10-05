@@ -39,7 +39,7 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.13 Glosario** — «
 | Modelo entidad-relación (ER) | Representación conceptual de entidades, atributos y relaciones con sus claves. Entregable del punto 5.10, en Mermaid. |
 | Diccionario de datos | Semántica de cada entidad y de cada uno de sus atributos, con tipo y dominio. Entregable del punto 5.10. |
 | Historial | Conjunto de registros que referencian a un catálogo (por ejemplo, ventas que citan un producto). Obliga a desactivar en vez de eliminar: es RN02. |
-| Transacción | Operación que se confirma completa o se revierte entera. Es el diseño previsto para F13 (compra) y F20 (venta) en la etapa Spring Boot. |
+| Transacción | Operación que se confirma completa o se revierte entera. F13 (compra) y F20 (venta) ya se ejecutan en la V2 en memoria; la transacción completa sobre base de datos llega con la etapa posterior. |
 | Idempotencia | Propiedad de que repetir la misma operación no altera el resultado. La exige RN04 (un solo egreso por compra y un solo ingreso por venta). |
 | Estado (del registro) | Situación de un registro en su ciclo de vida: `Activo / Inactivo` en catálogos; `Pendiente / Confirmada` en `Compra` y `Venta`; `Presente / Falta` en `Asistencia` (calculado a partir de las horas, RN05). |
 | Asistencia | Entidad de la jornada laboral: 7 atributos (`id_asistencia` PK, `id_empleado` FK, `fecha`, `hora_entrada`, `hora_salida`, `estado`, `observacion`). Se relaciona con `Empleado` en `1:N` y alimenta las interfaces P28 y P29. |
@@ -68,13 +68,13 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.13 Glosario** — «
 | Serie de tiempo | Métrica con eje X temporal. El dashboard tiene 5, todas del 04 al 10 de septiembre de 2026. |
 | CDN | Red de distribución de contenidos. Por ella se carga el CSS de Bootstrap 5.3.3 (`cdn.jsdelivr.net`); no se descargó copia local. |
 | Bootstrap | Framework CSS usado únicamente para estilos. Su JavaScript no se incluye: el proyecto no contiene ningún `<script>`. |
-| Spring Boot | Framework Java de la etapa posterior (persistencia, validación de RN01–RN05, seguridad). Fuera del alcance de esta maqueta. |
+| Spring Boot | Framework Java de la V2, ya integrada en `main` (commit `9084263`): `@Controller` → `Service` → `ServiceImpl` sobre datos en memoria, operando 25 de 38 funcionalidades y validando RN01–RN05 en el servidor. La etapa posterior añadirá persistencia, base de datos y seguridad. Sin JavaScript ni Bootstrap JS. |
 
 ## D. Vocabulario específico de esta documentación
 
 | Término | Definición en este proyecto |
 |---|---|
-| DEFINIDA / MAQUETADA / IMPLEMENTADA | Estados de avance de cada requisito: documentado / representado en HTML / con lógica real. Hoy: 38 DEFINIDAS + MAQUETADAS, 0 IMPLEMENTADAS. |
+| DEFINIDA / MAQUETADA / IMPLEMENTADA | Estados de avance de cada requisito: documentado / representado en HTML / con lógica real. Hoy: 38 DEFINIDAS, 38 MAQUETADAS en la V1 y 25 IMPLEMENTADAS en la V2 (Spring Boot, datos en memoria); 13 pendientes. |
 | Módulo funcional | Agrupación de interfaces y funcionalidades. Los doce son Acceso, Portada y contacto, Dashboard, Categorías, Combustibles, Compras, Inventario, Ventas, Finanzas, Empleados, Usuarios y Asistencia. |
 | Partes estáticas | Las dos páginas exigidas sin funcionalidad de negocio: Publicidad (P01) y Contacto (P04). |
 | Par F×P | Cada relación marcada en la matriz entre una funcionalidad y una interfaz. Hay 47. |
@@ -83,4 +83,4 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.13 Glosario** — «
 
 ---
 
-**Total de términos: 58** (16 de dominio, 12 de modelo, 24 de ingeniería web y 6 específicos del proyecto). Todos aparecen en los HTML o en la documentación del repositorio.
+**Total de términos: 55** (16 de dominio, 12 de modelo, 21 de ingeniería web y 6 específicos del proyecto). Todos aparecen en los HTML o en la documentación del repositorio.

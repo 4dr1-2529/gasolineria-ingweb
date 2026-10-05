@@ -1,7 +1,7 @@
 # Sistema Web de Gestión para Estación de Servicio - G1
 
 ## 1. Descripción
-**Estación Nexo** es un sistema web para la gestión de una estación de servicio. Gestiona categorías, combustibles, compras, ventas, inventario, movimientos de caja, empleados, usuarios y asistencia, con identidad visual propia en verde petróleo y lima, navegación consistente y datos ficticios relacionados. El repositorio contiene la maqueta V1 (31 HTML + CSS en la raíz) y la versión V2 en Spring Boot sobre la rama `feature/version-2-spring`, que opera los nueve módulos internos con datos en memoria.
+**Estación Nexo** es un sistema web para la gestión de una estación de servicio. Gestiona categorías, combustibles, compras, ventas, inventario, movimientos de caja, empleados, usuarios y asistencia, con identidad visual propia en verde petróleo y lima, navegación consistente y datos ficticios relacionados. El repositorio contiene la maqueta V1 (31 HTML + CSS en la raíz) y la versión V2 en Spring Boot, integrada en `main` desde el commit `9084263` (la rama `feature/version-2-spring` apunta al mismo commit), que opera los nueve módulos internos con datos en memoria.
 
 ## 2. Tema
 Venta de combustibles organizados por categoría y producto, compra y abastecimiento al proveedor, control de inventario en litros, registro de ventas, ingresos y egresos de caja en soles, tablero de control, gestión de empleados y usuarios, y control de asistencia del personal.
@@ -193,7 +193,7 @@ La navegación interna reúne los módulos en este orden, sin dropdowns: Inicio,
 ## 13. Estado del avance
 - **DEFINIDA:** 38/38 funcionalidades, 30/30 interfaces, 5/5 reglas y 12/12 entidades documentadas.
 - **MAQUETADA (V1):** 30/30 interfaces (100 %) y representación visual de las 38 capacidades. Los botones de mutación son visuales.
-- **IMPLEMENTADA (V2, datos en memoria):** 25/38 funcionalidades operan con lógica real en `feature/version-2-spring`: F04, F05, F09, F10, F13–F22, F26–F32 y F35–F38. El servidor aplica RN01–RN05 (rechazo por stock, sin borrados, efectos de compra/venta una sola vez, ingreso/egreso únicos con origen, y asistencia con jornada única).
+- **IMPLEMENTADA (V2, datos en memoria):** 25/38 funcionalidades operan con lógica real en la V2 integrada en `main` (commit `9084263`): F04, F05, F09, F10, F13–F22, F26–F32 y F35–F38. El servidor aplica RN01–RN05 (rechazo por stock, sin borrados, efectos de compra/venta una sola vez, ingreso/egreso únicos con origen, y asistencia con jornada única).
 - **SIN IMPLEMENTAR aún (sólo V1):** 13/38 — F01–F03 (acceso y tablero), F06 (combustibles por categoría), F07, F08, F11, F12 (edición y estado de catálogo), F23–F25 (gestión de conceptos económicos), F33 y F34 (portada y contacto).
 
 [Auditoría y alcance de comprobaciones](documentacion/00_auditoria.md) · [Matriz](documentacion/06_matriz_funcionalidades_interfaces.md) · [Trazabilidad](documentacion/07_trazabilidad.md) · [BPMN](documentacion/09_bpmn.md) · [Productos y entregables 5.10](documentacion/10_productos_y_entregables.md) · [Conclusiones 5.11](documentacion/11_conclusiones.md) · [Recomendaciones 5.12](documentacion/12_recomendaciones.md) · [Glosario 5.13](documentacion/13_glosario.md) · [Bibliografía 5.14](documentacion/14_bibliografia.md) · [Anexos 5.15](documentacion/15_anexos.md).

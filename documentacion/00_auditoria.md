@@ -50,8 +50,8 @@ La herramienta de navegador del agente no estaba conectada durante la medición.
 
 ## Interpretación de avance
 - **DEFINIDA:** 30 interfaces, 38 funcionalidades, 5 reglas y 12 entidades.
-- **MAQUETADA:** 30 de 30 interfaces = **100 %** del alcance visual. Las 38 capacidades tienen representación visual o navegación correspondiente; la matriz confirma 47 pares funcionalidad × interfaz.
-- **IMPLEMENTADA:** **0 de 38 funcionalidades con lógica real de negocio.** La navegación entre archivos existe, pero nada se autentica, guarda, calcula ni aplica reglas: validaciones, sesiones y cálculos los hará Spring Boot.
+- **MAQUETADA (V1):** 30 de 30 interfaces = **100 %** del alcance visual, medición correspondiente a la maqueta V1. Las 38 capacidades tienen representación visual o navegación correspondiente; la matriz confirma 47 pares funcionalidad × interfaz.
+- **IMPLEMENTADA (V2):** **25 de 38 funcionalidades operan con lógica real de negocio** en la versión V2 con Spring Boot — `@Controller` → `Service` → `ServiceImpl` sobre datos en memoria (`List<T>`), integrada en `main` (commit `9084263`) — aplicando RN01–RN05 en el servidor, sin base de datos ni persistencia. En la medición correspondiente a la maqueta V1 ninguna funcionalidad tenía lógica real de negocio (todo en estado DEFINIDA + MAQUETADA). Las 13 restantes (F01–F03, F06–F08, F11, F12, F23–F25, F33 y F34) siguen pendientes de implementación.
 
 ## Decisiones y límites
 - El módulo de **asistencia quedó agregado** en esta corrección: entidad Asistencia (id_asistencia, id_empleado, fecha, hora_entrada, hora_salida, estado y observación opcional) con relación Empleado 1:N, regla RN05, funcionalidades F35–F38 e interfaces P28 (mi asistencia, sin selector de empleado: el usuario lo resolverá Spring Security) y P29 (control del personal).
@@ -70,4 +70,4 @@ La herramienta de navegador del agente no estaba conectada durante la medición.
 ## Pendientes
 Quedan clasificados y marcados en `08_puntos_1_al_5_8.md` como *pendiente humano* o *requiere evidencia*: integrantes y coordinador del G1; el anexo o registro oficial que respalda el proceso de gasolinera (el Anexo 1 de la estructura no incluye una estación de servicio); capturas de los patrones revisados en clase y fechas reales del cronograma (5.10); lectura y cita de las dos obras bibliográficas obligatorias (5.10/5.14); validación del equipo sobre conclusiones y recomendaciones (5.11/5.12); volcado del glosario a la plantilla del informe (5.13).
 
-Para Spring Boot: persistencia, validación de RN01–RN05, seguridad y roles (incluida la sesión que resuelve el empleado en P28), transacciones de venta/stock/caja, concurrencia, formularios conectados, mensajes de resultado y pruebas de reglas. El detalle está en el README, sección 16.
+Para la etapa posterior de la V2 (ya integrada en `main` y operando 25 de 38 funcionalidades con RN01–RN05 aplicadas en el servidor): persistencia con base de datos, seguridad y roles (incluida la sesión que resuelve el empleado en P28), transacciones de venta/stock/caja sobre base de datos, concurrencia, las 13 funcionalidades restantes y pruebas automatizadas de reglas. El detalle está en el README, sección 16.

@@ -2,7 +2,7 @@
 
 Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.12 Recomendaciones** — «Principales recomendaciones para quienes intenten desarrollar un proyecto similar para la misma oportunidad de mejora o en el mismo contexto. Deben ser tres recomendaciones como máximo».
 
-Se entregan **3 recomendaciones** (el máximo oficial), cada una derivada de una de las tres [conclusiones](11_conclusiones.md). Ninguna introduce tecnologías fuera del alcance: se mantienen HTML5 + CSS3 + Bootstrap 5.3.3 CSS y la prohibición de JavaScript, backend y base de datos en esta etapa.
+Se entregan **3 recomendaciones** (el máximo oficial), cada una derivada de una de las tres [conclusiones](11_conclusiones.md). Ninguna introduce tecnologías fuera del alcance: la V1 se mantiene como maqueta HTML5 + CSS3 + Bootstrap 5.3.3 CSS sin JavaScript; la V2 es un backend Spring Boot con datos en memoria, sin base de datos ni persistencia; ninguna recomienda JavaScript, Bootstrap JS, JPA ni base de datos en esta etapa.
 
 > **[PENDIENTE — decisión humana]**: validación de la redacción de estas recomendaciones por el equipo (clasificación oficial en [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md), ítem (e)). Hasta esa validación, este punto se considera **Entregado, no cerrado**.
 
@@ -22,9 +22,9 @@ Defina primero la cadena de valor (categoría → combustible → compra → inv
 
 **Deriva de:** Conclusión 2.
 
-Distinga y comunique sin ambigüedad los estados **DEFINIDA**, **MAQUETADA** e **IMPLEMENTADA** de cada funcionalidad, y no presente la maqueta como sistema operativo: aquí nada autentica, guarda ni valida. Aproveche que las reglas ya están escritas con caso de cumplimiento y caso de violación (RN01–RN05 en [05_reglas_negocio.md](05_reglas_negocio.md)) para planificar la etapa de implementación con esas mismas pruebas: control de stock en transacción y concurrencia (RN01), productos inactivos y desactivar en lugar de eliminar (RN02), detalles y movimientos de inventario con valores positivos de litros y precios, una sola vez (RN03), unicidad de egreso por compra y de ingreso por venta (RN04) y asistencia propia del empleado autenticado, una sola por jornada y con salida posterior a la entrada (RN05).
+Distinga y comunique sin ambigüedad los estados **DEFINIDA**, **MAQUETADA** e **IMPLEMENTADA** de cada funcionalidad sin mezclar capas: la V1 es una maqueta sin backend que no autentica, guarda ni valida —no la presente como sistema operativo—; la V2 es el backend Spring Boot en memoria que hoy opera 25 de 38 funcionalidades; y la futura persistencia es una etapa aparte. Aproveche que las reglas ya están escritas con caso de cumplimiento y caso de violación (RN01–RN05 en [05_reglas_negocio.md](05_reglas_negocio.md)) para planificar esa etapa de implementación con esas mismas pruebas: control de stock en transacción y concurrencia (RN01), productos inactivos y desactivar en lugar de eliminar (RN02), detalles y movimientos de inventario con valores positivos de litros y precios, una sola vez (RN03), unicidad de egreso por compra y de ingreso por venta (RN04) y asistencia propia del empleado autenticado, una sola por jornada y con salida posterior a la entrada (RN05).
 
-**Acción concreta:** llevar a la exposición la lista 0/38 implementadas y el plan de pruebas de las cinco reglas, en lugar de prometer funciones que la maqueta no ejecuta.
+**Acción concreta:** llevar a la exposición el estado real —25 de 38 funcionalidades implementadas en V2 y 13 pendientes— junto con el plan de pruebas de las cinco reglas, en lugar de prometer funciones que la maqueta V1 no ejecuta.
 
 ---
 
@@ -37,4 +37,4 @@ Asigne códigos estables desde el inicio (funcionalidad `Fnn`, interfaz `Pnn`, r
 
 ---
 
-> **[Revisión humana]**: recomendaciones derivadas del alcance realmente desarrollado (maqueta estática + documentación). El equipo debe validar la redacción final; no se recomienda ninguna tecnología prohibida en esta etapa ni ninguna fuera del proyecto.
+> **[Revisión humana]**: recomendaciones derivadas del alcance realmente desarrollado (maqueta V1 + documentación + V2 Spring Boot con 25/38 funcionalidades en memoria). El equipo debe validar la redacción final; no se recomienda ninguna tecnología prohibida en esta etapa ni ninguna fuera del proyecto.

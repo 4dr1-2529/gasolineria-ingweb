@@ -47,4 +47,4 @@ El PDF usa la palabra «anexo» en dos sentidos distintos:
 
 ---
 
-**Autocontrol:** 5 anexos, todos verificables por archivo propio; 0 archivos de contenido creados para rellenar anexos (sólo este índice y las 5 capturas copiadas de la validación ya ejecutada); conteos oficiales intactos (38 F · 30 P · 10 RN · 12 entidades · diccionario 74 atributos · 47 pares en la matriz); JavaScript = 0; único anexo con pendiente humano es la aclaración de la §D (registro oficial del proceso).
+**Autocontrol:** 5 anexos, todos verificables por archivo propio; 0 archivos de contenido creados para rellenar anexos (sólo este índice y las 5 capturas copiadas de la validación ya ejecutada); conteos oficiales intactos (38 F · 30 P · 5 RN · 12 entidades · diccionario 74 atributos · 47 pares en la matriz); JavaScript = 0; único anexo con pendiente humano es la aclaración de la §D (registro oficial del proceso).

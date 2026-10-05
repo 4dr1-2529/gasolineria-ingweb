@@ -12,7 +12,7 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.10 Productos y entre
 | 2 | Diccionario de datos de todo el modelo (semántica de cada entidad y sus atributos) | [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md) §cada entidad + §Condiciones de diseño futuro; resumen en la sección 3 de este documento | **Entregado** |
 | 3 | Diagramas de secuencia del proceso core y del proceso de soporte | Sección 4 de este documento (Mermaid `sequenceDiagram`) | **Entregado** |
 | 4 | Diagramas de casos de uso del proceso core y del proceso de soporte | Sección 5 de este documento (PlantUML) | **Entregado** |
-| 5 | Patrones de desarrollo usados y su respectiva implementación (capturas de los patrones revisados en el curso) | Sección 6 de este documento | **Parcial** — §6.A registra lo realmente implementado en la maqueta con extractos, §6.B lo previsto para Spring Boot; las *capturas de los patrones revisados en clase* (§6.C) son **PENDIENTE · requiere evidencia** |
+| 5 | Patrones de desarrollo usados y su respectiva implementación (capturas de los patrones revisados en el curso) | Sección 6 de este documento | **Parcial** — §6.A registra lo realmente implementado en la maqueta V1 con extractos, §6.B registra lo implementado en la V2 (Spring Boot) y lo que sigue pendiente; las *capturas de los patrones revisados en clase* (§6.C) son **PENDIENTE · requiere evidencia** |
 | 6 | Cronograma del proyecto | Sección 7 de este documento | **Parcial** — fases reales ordenadas; las fechas del ciclo son **PENDIENTE humano** |
 
 Bibliografía a revisar exigida junto a este punto (Coronel/Morris/Rob; Cervantes Maceda, Velasco-Elizondo y Castro Careaga): registrada como pendiente en [14_bibliografia.md](14_bibliografia.md).
@@ -262,12 +262,13 @@ Para no presentar como «implementado» algo que sólo está previsto, los patro
 | **Navegación consistente** | Un mismo menú, con el mismo orden de módulos, en todas las páginas internas | Las **27 páginas con barra lateral** repiten el mismo bloque `<nav>` con el mismo orden de módulos, de 13 enlaces que cubren los 12 módulos oficiales (sólo cambia `aria-current="page"`); las 4 páginas públicas (index, publicidad, contacto, login) usan una variante reducida de 4 enlaces. **No es un include/partial de servidor ni de plantilla:** en HTML estático el bloque está duplicado en cada archivo y se mantiene idéntico por convención | Extracto 2 de esta sección |
 | **Convención de bloque de comentario por página** | Trazabilidad legible de qué cubre cada archivo | Cada uno de los 31 HTML arranca en su línea 3 con `Interfaz: Pnn …`, `Funcionalidades:`, `Entidades:`, `Reglas:` y `Estado:` | Propio de los 31 archivos HTML |
 
-### B. Arquitectura prevista para la etapa Spring Boot (no implementada en esta etapa)
+### B. Arquitectura de la etapa Spring Boot (V2): implementada parcialmente; persistencia pendiente
 
 | Patrón | Qué resuelve | Dónde está definido | Estado |
 |---|---|---|---|
-| **Modelo-Vista-Controlador (MVC)** | Separar datos, presentación y lógica | Modelo: las 12 entidades de [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md); Vista: 31 HTML + `css/estilos.css`; Controlador: los F01–F38 que ejecutará Spring (README sección 16) | **Previsto para Spring Boot.** La maqueta separa ya modelo y vista, pero **no existe controlador en ejecución: 0 de 38 funcionalidades implementadas** (estados DEFINIDA + MAQUETADA) |
-| **Repository / Service (capas)** | Separar acceso a datos y lógica transaccional | README sección 16 «Próxima etapa con Spring Boot» (Spring Data JPA, servicios transaccionales); aplicará RN01, RN02, RN03 y RN04 en una sola transacción sobre compra (F13) y venta (F20) | **Definido, no implementado** |
+| **Modelo-Vista-Controlador (MVC)** | Separar datos, presentación y lógica | Modelo: las 12 entidades de [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md); Vista: 31 HTML + `css/estilos.css` (V1) y 27 vistas JSP (V2); Controlador: los F01–F38 (README sección 16) | **Implementado en V2 para 25/38 funcionalidades** (`@Controller`, `@GetMapping`/`@PostMapping`, `Controller → Service → ServiceImpl` sobre `List<T>` en memoria); las 13 restantes siguen pendientes |
+| **Service / ServiceImpl (capa de lógica)** | Separar la lógica de negocio del controlador | README sección 16 «Versión V2 y etapa posterior»; aplica RN01, RN02, RN03 y RN04 sobre compra (F13) y venta (F20) | **Implementado en V2** — servicios sobre datos en memoria (`List<T>`), sin base de datos |
+| **Repository / DAO y base de datos (capa de persistencia)** | Separar el acceso a datos persistidos | README sección 16 «Versión V2 y etapa posterior» (Spring Data JPA cuando exista base de datos) | **Pendiente para la etapa posterior** — hoy no hay Repository, DAO, JPA, Hibernate, JdbcTemplate ni conexiones a BD |
 
 ### C. Patrones revisados en el curso
 
@@ -317,7 +318,7 @@ Las fases siguen el orden real del trabajo realizado y del que queda. **Las fech
 | 8 | Cierre de 5.9–5.15 | Este documento, los puntos 5.11–5.14 y [15_anexos.md](15_anexos.md) | Ejecutado | 01/10/2026 |
 | 9 | Revisión del equipo y compilación del informe (A4, Arial 11) | Informe final con carátula, integrantes y glosario en plantilla | Pendiente | **PENDIENTE (equipo)** |
 | 10 | Exposición Avance 1 | Presentación oral y respuesta de preguntas técnicas | Pendiente | **PENDIENTE (equipo)** |
-| 11 | Etapa Spring Boot (fuera del Avance 1) | Implementación de F01–F38 y validación de RN01–RN05 | Pendiente | **PENDIENTE (equipo)** |
+| 11 | Etapa Spring Boot (fuera del Avance 1) | Implementación de F01–F38 y validación de RN01–RN05 — V2 en `main` (commit `9084263`) con 25/38 operativas | **En curso** — iniciada; 13 funcionalidades y la persistencia siguen pendientes | Sin registrar en el repositorio |
 
 ---
 
@@ -345,7 +346,7 @@ Ninguna herramienta añade JavaScript al repositorio: son bloques de texto dentr
 | ¿Los diagramas de secuencia cubren compra y venta como exige el BPMN? | Sí · §4.2 refleja `A6, G3, A7, SP-INV, G4, A9, A10` con `E4/E5`; §4.1 refleja `A1, G1, A2, A3, G2, A4, A5, A8` con `E2/E3` |
 | ¿Los casos de uso corresponden a procesos reales? | Sí · núcleo = proceso de venta; soporte = proceso de abastecimiento (los dos de [09_bpmn.md](09_bpmn.md)) |
 | ¿Algún entregable se inventó fuera de la especificación? | No · las seis filas de la sección 1 son textualmente las del punto 5.10 oficial |
-| ¿Se presentó como implementado algo que sólo está previsto? | No · §6 separa lo implementado en la maqueta (A) de lo previsto para Spring Boot (B) y de los patrones de clase pendientes (C); 0 de 38 funcionalidades con lógica real |
+| ¿Se presentó como implementado algo que sólo está previsto? | No · §6 separa lo implementado en la maqueta V1 (A) de lo implementado en la V2 y lo pendiente (B) y de los patrones de clase pendientes (C); hoy 25 de 38 funcionalidades operan con lógica real en V2 y 13 siguen pendientes |
 | ¿Qué queda en pendiente humano? | Los 7 pendientes clasificados en [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md) — ver la sección 10 de este documento |
 
 ---
