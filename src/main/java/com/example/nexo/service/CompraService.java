@@ -1,6 +1,5 @@
 package com.example.nexo.service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.example.nexo.model.Compra;
@@ -19,9 +18,11 @@ public interface CompraService {
     /**
      * Registra una compra confirmada con su detalle (RN03 y RN04): crea la
      * compra, crea la línea de detalle y suma los litros al stock del producto.
+     * La fecha y la hora de la compra las toma el servidor (America/Lima):
+     * no se acepta ninguna fecha desde el formulario.
      * Devuelve null cuando la compra quedó registrada, o el mensaje de error
      * cuando la compra fue rechazada (no se modifica ningún dato).
      */
-    public String crearCompra(Compra compra, DetalleCompra detalle, LocalDate fecha);
+    public String crearCompra(Compra compra, DetalleCompra detalle);
 
 }

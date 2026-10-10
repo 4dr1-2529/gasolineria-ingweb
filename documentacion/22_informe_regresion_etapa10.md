@@ -1,5 +1,7 @@
 # 22 · Informe de regresión integral — ETAPA 10 (09/10/2026)
 
+> **Documento histórico.** Ronda de la ETAPA 10 con 126 pruebas (09/10/2026), conservado tal como se ejecutó. La revisión final del 10/10/2026 con 133 pruebas está en [23_informe_regresion_revision_final.md](23_informe_regresion_revision_final.md).
+
 Regresión completa de Estación Nexo V2 contra la aplicación en marcha, con datos en memoria restablecidos a la semilla antes de la ronda final. Todas las pruebas son peticiones HTTP reales (curl) con sesiones autenticadas y token CSRF auténtico, no inspección de código.
 
 ## 1. Resumen ejecutivo

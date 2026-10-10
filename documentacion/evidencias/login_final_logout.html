@@ -1,6 +1,6 @@
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Acceso al sistema de gestión de Estación Nexo">
     <title>Iniciar sesión · Estación Nexo</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilos.css">
+    <link rel="stylesheet" href="/css/estilos.css">
 </head>
 <body class="login-cuerpo">
     <main id="contenido" class="login-pagina">
         <header class="login-cabecera">
-            <a class="brand login-brand" href="${pageContext.request.contextPath}/login">
+            <a class="brand login-brand" href="/login">
                 <span class="brand-mark" aria-hidden="true">N</span>
                 <span>NEXO<small>ESTACIÓN NEXO</small></span>
             </a>
@@ -23,20 +23,16 @@
         </header>
 
         <!-- role="alert": el leedor de pantalla anuncia el error sin mover el foco -->
-        <c:if test="${not empty error}">
-            <p class="notice error login-aviso" role="alert">
-                <c:out value="${error}"/>
-            </p>
-        </c:if>
-        <c:if test="${not empty mensaje}">
+        
+        
             <p class="notice ok login-aviso" role="status">
-                <c:out value="${mensaje}"/>
+                Sesión cerrada correctamente.
             </p>
-        </c:if>
+        
 
         <section class="panel login-tarjeta" aria-label="Formulario de inicio de sesión">
             <!-- El token CSRF se agrega solo con form:form -->
-            <form:form action="${pageContext.request.contextPath}/login" method="post">
+            <form id="command" action="/login" method="post">
                 <div class="form-grid login-campos">
                     <div class="field">
                         <label for="username">Usuario</label>
@@ -56,7 +52,9 @@
                 <div class="actions login-acciones">
                     <button type="submit" class="btn btn-primary">Ingresar</button>
                 </div>
-            </form:form>
+            <div>
+<input type="hidden" name="_csrf" value="[TOKEN-OCULTO]" />
+</div></form>
 
             <aside class="login-demo" aria-label="Cuentas de prueba">
                 <p class="login-demo-titulo">Cuentas de acceso (datos de prueba, no personas reales)</p>

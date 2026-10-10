@@ -75,8 +75,7 @@
             </div>
 
             <p class="notice">
-                El usuario se guarda en memoria mientras la aplicación está en ejecución.
-                No hay base de datos.
+                Los campos con * son obligatorios: revise los datos de la cuenta antes de guardar.
             </p>
 
             <c:if test="${not empty mensaje}">
@@ -126,7 +125,7 @@
                         <a class="btn btn-secondary" href="${pageContext.request.contextPath}/usuarios/list">Cancelar</a>
                     </div>
                     <p class="form-help">
-                        La contraseña no se guarda en memoria; el identificador se asigna automáticamente.
+                        La contraseña se guarda cifrada y nunca se muestra; el identificador se asigna automáticamente.
                     </p>
                 </form:form>
             </section>

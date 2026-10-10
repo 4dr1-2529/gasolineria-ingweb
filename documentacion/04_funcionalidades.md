@@ -228,7 +228,7 @@ Finanzas no tiene proceso propio de alta: los movimientos de caja nacen de la co
 
 - **Tipo:** Proceso.
 - **Actor:** Administrador.
-- **Descripción:** Registra una compra con proveedor (3 a 60 caracteres), fecha y una o más líneas de producto con litros y precio de compra. En la versión V2, `/compras/crear` crea en un solo guardado la compra, sus detalles, una entrada de inventario por línea y el egreso de caja; si alguna comprobación falla, no se guarda nada.
+- **Descripción:** Registra una compra con proveedor (3 a 60 caracteres) y una o más líneas de producto con litros y precio de compra; la fecha y la hora las toma el servidor (America/Lima) y no se digitan en el formulario. En la versión V2, `/compras/crear` crea en un solo guardado la compra, sus detalles, una entrada de inventario por línea y el egreso de caja; si alguna comprobación falla, no se guarda nada.
 - **Resultado:** Compra Confirmada con todos sus efectos: detalles, entradas de inventario (MI…) y un único egreso (MC…).
 - **Interfaces:** P20 ([compras.html](../compras.html)), P23 ([compra-form.html](../compra-form.html)).
 - **Entidades:** Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja.

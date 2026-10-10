@@ -86,7 +86,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <caption>
-                            <c:out value="${fn:length(productos)}"/> combustibles en memoria
+                            <c:out value="${fn:length(productos)}"/> combustibles registrados
                         </caption>
                         <thead>
                             <tr>

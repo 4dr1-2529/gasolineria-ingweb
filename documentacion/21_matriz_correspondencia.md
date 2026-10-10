@@ -52,4 +52,4 @@ Convención: «filtro S.S.» = la petición la procesa el motor de Spring Securi
 - **Reglas**: 24 funcionalidades con al menos una regla y 14 sin restricción de negocio, tal como en la matriz oficial; RN01–RN05 con casos de cumplimiento y violación probados (bloques C/P/E/U/K/D/V/I/F/AS y cierre R01–R05).
 - **Cobertura de pruebas**: 35/38 funcionalidades con pruebas HTTP reales en ETAPA 10; F02 con verificación directa de logout; F03/F33/F34 no tienen implementación V2 que probar (por diseño).
 
-*Verificación de los conteos (38 F, 30 P, 5 RN, 47 asociaciones) realizada el 09/10/2026 sobre los archivos originales; ver informe [22_informe_regresion_etapa10.md](22_informe_regresion_etapa10.md).*
+*Verificación de los conteos (38 F, 30 P, 5 RN, 47 asociaciones) realizada el 09/10/2026 sobre los archivos originales; ver informe [22_informe_regresion_etapa10.md](22_informe_regresion_etapa10.md). Re-verificados sin cambios el 10/10/2026 en la revisión final: ver [23_informe_regresion_revision_final.md](23_informe_regresion_revision_final.md).*

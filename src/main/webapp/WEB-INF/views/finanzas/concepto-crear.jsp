@@ -83,8 +83,7 @@
             </c:if>
 
             <p class="notice">
-                El concepto se guarda en memoria mientras la aplicación está en ejecución.
-                No hay base de datos.
+                Los campos con * son obligatorios: revise los datos del concepto antes de guardar.
             </p>
 
             <section class="panel">

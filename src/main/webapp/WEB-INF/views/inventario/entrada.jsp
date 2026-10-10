@@ -110,8 +110,11 @@
                             <input class="form-control" id="cantidad" name="cantidad" type="number" value="${not empty movimiento.cantidad ? movimiento.cantidad : '500'}" required min="0.01" step="0.01">
                         </div>
                         <div class="form-field">
-                            <label for="fechaHora">Fecha y hora *</label>
-                            <input class="form-control" id="fechaHora" name="fechaHora" type="datetime-local" value="${not empty movimiento.fechaHora ? movimiento.fechaHora : '2026-09-10T12:00'}" required>
+                            <label for="fechaHora">Fecha y hora de registro</label>
+                            <%-- Sólo informativa: la fecha y la hora las fija el servidor --%>
+                            <input class="form-control" id="fechaHora" type="text"
+                                   value="${marcaTiempo}" readonly aria-describedby="ayuda-fecha-hora">
+                            <p class="form-help" id="ayuda-fecha-hora">La registra el servidor (America/Lima); no se digita.</p>
                         </div>
                         <div class="form-field">
                             <label for="motivo">Motivo *</label>
@@ -129,8 +132,8 @@
                         <a class="btn btn-secondary" href="${pageContext.request.contextPath}/inventario/list">Cancelar</a>
                     </div>
                     <p class="form-help">
-                        La entrada se guarda en memoria y suma los litros al stock del producto
-                        seleccionado, una sola vez (RN03).
+                        Al registrar, la entrada suma los litros al stock del producto
+                        seleccionado, una sola vez (RN03), con la fecha y hora del servidor.
                     </p>
                 </form:form>
             </section>

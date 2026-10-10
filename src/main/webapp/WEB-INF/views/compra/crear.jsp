@@ -100,9 +100,11 @@
                                 required="required" minlength="3" maxlength="60"/>
                         </div>
                         <div class="field">
-                            <label for="fecha">Fecha *</label>
-                            <%-- La hora la toma el servidor al registrar la compra --%>
-                            <input class="form-control" id="fecha" name="fecha" type="date" value="${fechaCompra}" required>
+                            <label for="fechaRegistro">Fecha de registro</label>
+                            <%-- Sólo informativa: la fecha y la hora de la compra las fija el servidor --%>
+                            <input class="form-control" id="fechaRegistro" type="text"
+                                   value="${fechaRegistro}" readonly aria-describedby="ayuda-fecha">
+                            <p class="form-help" id="ayuda-fecha">La registra el servidor (America/Lima); no se digita.</p>
                         </div>
                         <div class="field">
                             <label for="idProducto">Combustible *</label>
@@ -133,9 +135,9 @@
                         <button type="submit" class="btn btn-primary">Registrar compra</button>
                     </div>
                     <p class="form-help">
-                        La compra se guarda en memoria, suma los litros al stock del producto y
-                        registra su entrada de inventario; el egreso de caja se consulta en el
-                        módulo Finanzas.
+                        Al registrar, la compra toma la fecha y hora del servidor, suma los litros
+                        al stock del producto y crea su entrada de inventario; el egreso de caja
+                        se consulta en el módulo Finanzas.
                     </p>
                 </form:form>
             </section>
@@ -149,7 +151,8 @@
                 </p>
                 <p class="muted-text">
                     Proyección fija: 100 L a S/ 4.50 por litro = S/ 450.00. Al registrar, la compra
-                    se guarda en memoria y suma sus litros al stock del producto seleccionado.
+                    se registra con la fecha del servidor y suma sus litros al stock del producto
+                    seleccionado.
                 </p>
             </section>
 

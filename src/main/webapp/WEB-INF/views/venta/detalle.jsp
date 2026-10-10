@@ -140,7 +140,7 @@
             </section>
 
             <p class="notice">
-                Los litros de esta venta se descontaron del stock del producto en memoria y su
+                Los litros de esta venta se descontaron del stock del producto y su
                 salida de inventario quedó registrada en el módulo Inventario. El ingreso de caja
                 se consulta en el módulo Finanzas.
             </p>

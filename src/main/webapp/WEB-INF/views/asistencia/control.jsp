@@ -96,7 +96,7 @@
                         <button type="submit" class="btn btn-primary">Consultar asistencia</button>
                     </div>
                     <p class="form-help">
-                        La consulta se ejecuta sobre los registros en memoria; el filtro es opcional.
+                        La consulta muestra los registros de asistencia del personal; el filtro por empleado es opcional.
                     </p>
                 </form>
             </section>
@@ -106,7 +106,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <caption>
-                            <c:out value="${fn:length(asistencias)}"/> asistencias en memoria
+                            <c:out value="${fn:length(asistencias)}"/> asistencias registradas
                         </caption>
                         <thead>
                             <tr>

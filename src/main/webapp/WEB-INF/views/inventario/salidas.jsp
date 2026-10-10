@@ -91,7 +91,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <caption>
-                            Salidas en memoria: <c:out value="${fn:length(movimientos)}"/> · Total:
+                            Salidas registradas: <c:out value="${fn:length(movimientos)}"/> · Total:
                             <fmt:formatNumber value="${totalLitros}" type="number" maxFractionDigits="2"/> L
                         </caption>
                         <thead>

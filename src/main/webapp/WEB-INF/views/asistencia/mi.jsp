@@ -132,9 +132,8 @@
                     </form:form>
                 </div>
                 <p class="form-help">
-                    La fecha y la hora se generan en el servidor a la hora de Perú (America/Lima)
-                    al momento de registrar; los cambios quedan en memoria mientras la
-                    aplicación está en ejecución.
+                    La fecha y la hora de cada marcación las registra el servidor
+                    con la hora de Perú (America/Lima).
                 </p>
             </section>
 

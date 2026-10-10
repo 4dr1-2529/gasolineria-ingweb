@@ -431,3 +431,27 @@ Informe completo en [22_informe_regresion_etapa10.md](22_informe_regresion_etapa
 - **Guion de pruebas: 11 aserciones corregidas** (token CSRF faltante en el POST de login, 200 vs 403 en permisos, método GET donde hacía falta POST, seguimiento de redirecciones, anclas con acento y mensaje en la página de formulario en vez de la lista). Detalle en el informe §4.
 - **Recuentos verificados sin alterar**: 38 funcionalidades, 30 interfaces, 5 reglas, 47 asociaciones F×P.
 - **Documentos actualizados** (autorizado): `README.md` y `10_productos_y_entregables.md` a 35/38 con F03/F33/F34 fuera del alcance V2 y Spring Security reconocido; nuevos `20_explicacion_tecnica_modulos.md` y `21_matriz_correspondencia.md`.
+
+---
+
+## REVISIÓN FINAL · Regresión de cierre (10/10/2026)
+
+**Fecha:** 10/10/2026 · **Estado:** completada — **133/133 pruebas PASS, 0 errores en la aplicación**.
+
+Informe completo en [23_informe_regresion_revision_final.md](23_informe_regresion_revision_final.md). Amplía la ETAPA 10 (informe histórico [22_informe_regresion_etapa10.md](22_informe_regresion_etapa10.md)) después de las correcciones visuales y funcionales autorizadas:
+
+| Bloque | Pruebas | PASS |
+|---|---|---|
+| Nuevas: formularios sin campo de fecha y textos de interfaz (D12, I12, V12, M01–M04) | 7 | 7 |
+| Ampliadas con fecha del servidor (D02, D08, I02, I05, I08, V06) | 6 | 6 |
+| Heredadas de la ETAPA 10 sin cambio | 120 | 120 |
+| **Total** | **133** | **133** |
+
+### Cambios de esta revisión
+
+- **Login** (`login.jsp`): tarjeta accesible con avisos `role="alert"`/`role="status"`, clases de aviso que existen en el CSS y sin contraseña de demostración visible en la página pública.
+- **Mensajes**: ~22 JSP sin «en memoria»/«en ejecución»/«base de datos»/«almacenamiento temporal»; M01–M04 lo verifican en vivo sobre 18 páginas.
+- **Fechas del servidor (America/Lima)**: compra e inventario ya no reciben fecha del formulario (`CompraServiceImpl.crearCompra`, `InventarioController.crearEntrada/crearSalida`); venta (`VentaServiceImpl.crearVenta`) y asistencia (`AsistenciaServiceImpl`) ya eran de servidor; caja hereda la fecha de la operación.
+- **Documentación**: `03`, `04`, `10`, `16`, `20` y `21` actualizados para coincidir con el código; `22` conservado como histórico de 126 pruebas.
+- **Repositorio**: `.vscode` retirado de Git sin borrarlo del equipo; evidencias verificables en `documentacion/evidencias/` (sin contraseñas, sesiones, cookies ni tokens).
+- **Recuentos re-verificados sin alterar**: 38 funcionalidades, 30 interfaces, 5 reglas, 47 asociaciones F×P.

@@ -89,7 +89,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <caption>
-                            <c:out value="${fn:length(conceptos)}"/> conceptos en memoria ·
+                            <c:out value="${fn:length(conceptos)}"/> conceptos registrados ·
                             Clasificación económica; no describe movimientos de litros
                         </caption>
                         <thead>

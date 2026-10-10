@@ -62,7 +62,7 @@ El login (`POST /login`) lo procesa el filtro propio de Spring Security (`Userna
 - **Validaciones** (devueltas como mensaje y mostradas como `notice error`): «El nombre de la categoría es obligatorio», «debe tener entre 3 y 40 caracteres», «La descripción no puede superar los 200 caracteres», «El estado debe ser Activo o Inactivo», «Ya existe una categoría con el nombre …» (C01–C03).
 - **Colección**: `List<Categoria> categorias` — semilla: *Gasolinas*, *Diésel*.
 - **Model**: `categorias` (lista), `categoria` (objeto del formulario), `mensaje`, `mensajeTipo`.
-- **JSP**: `categoria/lista.jsp` («N categorías en memoria», botón Cambiar estado, RN02), `categoria/crear.jsp`, `categoria/editar.jsp`.
+- **JSP**: `categoria/lista.jsp` («N categorías registradas», botón Cambiar estado, RN02), `categoria/crear.jsp`, `categoria/editar.jsp`.
 - **Respuesta**: error → `redirect:/categorias/crear` conservando lo digitado (C04); éxito → `redirect:/categorias/list` con «La categoría se registró/editó correctamente».
 - **Pruebas ETAPA 10**: C01–C12.
 
@@ -101,11 +101,11 @@ El login (`POST /login`) lo procesa el filtro propio de Spring Security (`Userna
 
 - **URL**: `GET /compras/list`, `GET/POST /compras/crear`, `GET /compras/detalle?id=`.
 - **Controller** (`CompraController`): `listarCompras`, `mostrarFormulario`, `crearCompra`, `mostrarDetalle`.
-- **Service/Impl**: `CompraService` / `CompraServiceImpl` — `crearCompra(Compra, DetalleCompra, LocalDate)`, `listaCompras`, `listaDetallesPorCompra`.
-- **Validaciones**: «La fecha de la compra es obligatoria», «El proveedor debe tener entre 3 y 60 caracteres», «El producto seleccionado no existe/está inactivo: sólo los combustibles activos pueden comprarse», «La cantidad de litros y el precio de compra son obligatorios», «… deben ser mayor que cero», «El responsable seleccionado no existe/está inactivo: elija una cuenta activa» (D02–D05).
+- **Service/Impl**: `CompraService` / `CompraServiceImpl` — `crearCompra(Compra, DetalleCompra)`, `listaCompras`, `listaDetallesPorCompra`. La fecha y la hora las fija el servidor (America/Lima) dentro de `crearCompra`: el formulario no recibe ni envía fecha.
+- **Validaciones**: «El proveedor debe tener entre 3 y 60 caracteres», «El producto seleccionado no existe/está inactivo: sólo los combustibles activos pueden comprarse», «La cantidad de litros y el precio de compra son obligatorios», «La cantidad de litros debe ser mayor que cero», «El precio de compra debe ser mayor que cero», «El responsable seleccionado no existe/está inactivo: elija una cuenta activa» (D02–D05). El formulario sólo muestra la fecha de registro como texto informativo (D12).
 - **Efectos atómicos** (RN03/RN04, D08): si todo es válido, `crearCompra` genera **la compra** (C002), **una entrada de inventario por cada línea** y **un único egreso de caja** por el total (concepto CE02 «Compra de combustible»). Si algo falla, **no se crea nada** (D07: sin línea no hay entrada).
-- **Model**: `compras`, `detalles`, `combustiblesPorCompra`, `litrosPorCompra`, `totalMonto`, `totalLitros`, `productos`, `responsables`, `compra`, `detalle`, `fechaCompra` → `compra/lista.jsp`, `compra/crear.jsp`, `compra/detalle.jsp`.
-- **Pruebas ETAPA 10**: D01–D11.
+- **Model**: `compras`, `detalles`, `combustiblesPorCompra`, `litrosPorCompra`, `totalMonto`, `totalLitros`, `productos`, `responsables`, `compra`, `detalle`, `fechaRegistro` → `compra/lista.jsp`, `compra/crear.jsp`, `compra/detalle.jsp`.
+- **Pruebas**: D01–D11 (ETAPA 10), D12 (revisión final: fecha informativa y sin campo editable).
 
 ### 3.7 Ventas — F20–F22 (P08, P09, P10, P24) · crear = OPERADOR/EMPLEADO
 
@@ -115,16 +115,16 @@ El login (`POST /login`) lo procesa el filtro propio de Spring Security (`Userna
 - **Validaciones**: producto existe y activo («… sólo los combustibles activos pueden venderse»), «La cantidad de litros es obligatoria», **RN01** «No hay stock suficiente» (V03: 99999 L rechazados con el stock intacto), «El operador seleccionado está inactivo: elija una cuenta activa» (V04, V05).
 - **Efectos atómicos** (RN03/RN04, V06): venta **V004**, **una única salida** en el libro de inventario y **un único ingreso** de caja (concepto CE01), con el descuento exacto del stock (2090 → 2080 L). Un rechazo no deja efectos parciales (V02: ventas/libro/caja sin mover).
 - **Model**: `ventas`, `detalles`, `combustiblesPorVenta`, `litrosPorVenta`, `operadores`, `totalMonto`, `totalLitros`, `venta`, `detalle`, `productos` → `venta/lista.jsp`, `venta/crear.jsp`, `venta/detalle.jsp`.
-- **Pruebas ETAPA 10**: V01–V11.
+- **Pruebas**: V01–V11 (ETAPA 10), V12 (revisión final: el formulario de venta no tiene campo de fecha).
 
 ### 3.8 Inventario — F16–F19 (P08, P11, P12, P13, P14)
 
 - **URL**: `GET /inventario/list` (existencias + libro), `GET /inventario/entradas` y `GET /inventario/salidas` (consultas filtradas), `GET/POST /inventario/entrada/crear` (**ADMIN**), `GET/POST /inventario/salida/crear` (**OPERADOR/EMPLEADO**).
 - **Controller** (`InventarioController`): `listarInventario`, `listarEntradas`, `listarSalidas` (ambos delegan en el privado `mostrarMovimientos(model, lista, vista)`), `mostrarFormularioEntrada`, `crearEntrada`, `mostrarFormularioSalida`, `crearSalida`.
 - **Service/Impl**: `MovimientoInventarioService` / `MovimientoInventarioServiceImpl` — `registrarEntrada`, `registrarSalida`, `listaMovimientos`, `listaEntradas`, `listaSalidas`.
-- **Validaciones**: producto existe/activo («no se registran movimientos sobre productos inactivos»), responsable existe/activo («elija una cuenta activa»), «La cantidad de litros es obligatoria», **RN01** «No hay stock suficiente para la salida», «La fecha y hora de la operación son obligatorias», «El motivo debe tener entre 5 y 200 caracteres» (I03–I08).
-- **Model**: `movimientos`, `productos`, `productosActivos` (selector sólo de activos), `responsables`, `operadores`, `saldoInicial`, `totalFisico`, `totalLitros`, `bajos`, `movimiento` → `inventario/lista.jsp`, `inventario/entradas.jsp`, `inventario/salidas.jsp`, `inventario/entrada.jsp`, `inventario/salida.jsp`.
-- **Pruebas ETAPA 10**: I01–I11.
+- **Validaciones**: producto existe/activo («no se registran movimientos sobre productos inactivos»), responsable existe/activo («elija una cuenta activa»), «La cantidad de litros es obligatoria», «La cantidad de litros debe ser mayor que cero», **RN01** «No hay stock suficiente para la salida», «El motivo debe tener entre 5 y 200 caracteres» (I03–I08). La fecha y hora de la operación no se digitan: las fija el servidor (America/Lima) y el formulario las muestra como texto informativo (I12).
+- **Model**: `movimientos`, `productos`, `productosActivos` (selector sólo de activos), `responsables`, `operadores`, `saldoInicial`, `totalFisico`, `totalLitros`, `bajos`, `movimiento`, `marcaTiempo` → `inventario/lista.jsp`, `inventario/entradas.jsp`, `inventario/salidas.jsp`, `inventario/entrada.jsp`, `inventario/salida.jsp`.
+- **Pruebas**: I01–I11 (ETAPA 10), I12 (revisión final).
 
 ### 3.9 Finanzas — F23–F28 (P15, P16, P17, P27, P30) · ADMIN
 

@@ -81,8 +81,7 @@
             </c:if>
 
             <p class="notice">
-                Los cambios se actualizan en memoria mientras la aplicación está en ejecución.
-                No hay base de datos.
+                Los campos con * son obligatorios: revise los cambios del empleado antes de guardar.
             </p>
 
             <section class="panel">

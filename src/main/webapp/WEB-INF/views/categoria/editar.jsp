@@ -81,8 +81,7 @@
             </c:if>
 
             <p class="notice">
-                La categoría se guarda en memoria mientras la aplicación está en ejecución.
-                No hay base de datos.
+                Los campos con * son obligatorios: revise los cambios de la categoría antes de guardar.
             </p>
 
             <section class="panel">

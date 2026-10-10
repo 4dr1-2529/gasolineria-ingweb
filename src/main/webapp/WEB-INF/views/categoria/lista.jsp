@@ -86,7 +86,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <caption>
-                            <c:out value="${fn:length(categorias)}"/> categorías en memoria
+                            <c:out value="${fn:length(categorias)}"/> categorías registradas
                         </caption>
                         <thead>
                             <tr>

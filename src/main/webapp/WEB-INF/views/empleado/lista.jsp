@@ -86,7 +86,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <caption>
-                            <c:out value="${fn:length(empleados)}"/> empleados en memoria
+                            <c:out value="${fn:length(empleados)}"/> empleados registrados
                         </caption>
                         <thead>
                             <tr>

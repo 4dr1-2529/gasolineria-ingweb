@@ -2,6 +2,7 @@ package com.example.nexo.controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -36,6 +37,9 @@ import com.example.nexo.service.UsuarioService;
 @Controller
 @RequestMapping("/compras")
 public class CompraController {
+
+    /** Formato de la fecha informativa del formulario (dd/MM/yyyy). */
+    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final CompraService compraService;
     private final ProductoService productoService;
@@ -102,9 +106,8 @@ public class CompraController {
         if (!model.containsAttribute("detalle")) {
             model.addAttribute("detalle", new DetalleCompra());
         }
-        if (!model.containsAttribute("fechaCompra")) {
-            model.addAttribute("fechaCompra", "");
-        }
+        // Fecha de registro (sólo informativa en la vista): la fija el servidor
+        model.addAttribute("fechaRegistro", LocalDate.now().format(FORMATO_FECHA));
         // RN02 · Sólo los combustibles con estado Activo pueden comprarse
         model.addAttribute("productos", productosActivos());
         model.addAttribute("responsables", responsables());
@@ -114,14 +117,13 @@ public class CompraController {
     @PostMapping("/crear")
     public String crearCompra(@ModelAttribute("compra") Compra compra,
             @ModelAttribute("detalle") DetalleCompra detalle,
-            @RequestParam(value = "fecha", required = false) LocalDate fecha,
             RedirectAttributes redirect) {
-        String error = compraService.crearCompra(compra, detalle, fecha);
+        // La fecha no viaja en el formulario: la registra el Service con hora del servidor
+        String error = compraService.crearCompra(compra, detalle);
         if (error != null) {
             // Compra rechazada: se regresa al formulario conservando lo digitado
             redirect.addFlashAttribute("compra", compra);
             redirect.addFlashAttribute("detalle", detalle);
-            redirect.addFlashAttribute("fechaCompra", fecha == null ? "" : fecha.toString());
             redirect.addFlashAttribute("mensaje", error);
             redirect.addFlashAttribute("mensajeTipo", "error");
             return "redirect:/compras/crear";

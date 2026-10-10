@@ -144,7 +144,7 @@
             </section>
 
             <p class="notice">
-                Los litros de esta compra se sumaron al stock de los productos en memoria y sus
+                Los litros de esta compra se sumaron al stock de los productos y sus
                 entradas de inventario quedaron registradas; el egreso de caja se consulta en
                 el módulo Finanzas.
             </p>

@@ -1,0 +1,150 @@
+[PASS] S01-semilla-categorias - 2 categorias en memoria (Gasolinas, Disel)
+[PASS] S02-semilla-combustibles - 3 combustibles (PR01 1990 L, PR02 980 L, PR03 3950 L)
+[PASS] S03-semilla-empleados - 3 empleados (DNI 00000001/2/3)
+[PASS] S04-semilla-conceptos - 2 conceptos (CE01 Ingreso, CE02 Egreso)
+[PASS] S05-semilla-inventario - libro 6 filas, entradas 300 L, salidas 80 L, PR01=1990 L
+[PASS] S06-semilla-finanzas - apertura 4,410.00, saldo 3,430.00, 4 movimientos de caja
+[PASS] S07-semilla-asistencia - 5 marcaciones historicas; ninguna el dia de hoy
+[PASS] A01-anonimo-login - GET /login publico -> 200
+[PASS] A02-anonimo-protegida-redirect - GET /ventas/list anonimo -> 302|http://localhost:8080/login
+[PASS] A03-anonimo-finanzas - GET /finanzas/list anonimo -> 302|http://localhost:8080/login
+[PASS] A04-anonimo-post-sin-efecto - POST anonimo redirige a login y las categorias siguen en 2
+[PASS] A05-login-csrf - POST a /login sin token -> 302|http://localhost:8080/login (CSRF protege el propio login)
+[PASS] A06-login-credenciales-invalidas - clave incorrecta con token valido -> 
+302|http://localhost:8080/login?error=credenciales
+[PASS] A07-login-admin - ediaz ingresa -> 302|http://localhost:8080/ y / abre la lista de categorias (inicio del Admin)
+[PASS] A08-login-operador - atorres ingresa -> 302|http://localhost:8080/ y / abre el historial de ventas (inicio del 
+staff)
+[PASS] A09-login-con-sesion - GET /login con sesion -> 200 (pagina utilizable); la sesion activa se confirma en 
+/categorias/list
+[PASS] C01-cat-duplicado - nombre repetido rechazado en el servidor
+[PASS] C02-cat-nombre-corto - 2 caracteres rechazados (minimo 3)
+[PASS] C03-cat-descripcion-larga - 250 caracteres rechazados (maximo 200)
+[PASS] C04-cat-conserva-digitado - tras el rechazo el formulario conserva el nombre digitado
+[PASS] C05-cat-crear-valido - alta correcta: 3 categorias en memoria
+[PASS] C06-cat-editar-valido - edicion reflejada en la lista
+[PASS] C07-cat-editar-inexistente - id 999 redirige con aviso y sin romper
+[PASS] C08-cat-estado-rn02 - cambio de estado: registro conservado (RN02), 3 filas
+[PASS] C09-cat-eliminar-404-rn02 - POST /categorias/eliminar -> 404 y las 3 categorias siguen (RN02)
+[PASS] C10-cat-csrf-403 - POST sin token CSRF -> 403
+[PASS] C11-cat-operador-403 - POST del Operador -> 403 con aviso de permisos y la lista tambien lo niega
+[PASS] C12-cat-operador-sin-efecto - el intento del Operador no creo categorias
+[PASS] P01-prod-duplicado - nombre repetido rechazado
+[PASS] P02-prod-categoria-inexistente - categoria 99 rechazada
+[PASS] P03-prod-precio-cero - precio 0 rechazado
+[PASS] P04-prod-unidad-invalida - unidad distinta de Litro rechazada
+[PASS] P05-prod-crear-valido - alta correcta: 4 combustibles
+[PASS] P06-prod-editar-valido - precio actualizado a 8.00 en la lista
+[PASS] P07-prod-estado-rn02 - inactivo conservado en catalogo (RN02) y NO ofrecido para nuevas ventas
+[PASS] P08-prod-eliminar-404-rn02 - POST /combustibles/eliminar -> 404, catalogo intacto (RN02)
+[PASS] P09-prod-csrf-403 - POST sin token -> 403
+[PASS] P10-prod-operador-403 - POST del Operador -> 403 con aviso (la lista de combustibles si es visible para todos 
+los autenticados)
+[PASS] P11-prod-operador-sin-efecto - el intento del Operador no creo productos
+[PASS] E01-emp-dni-corto - DNI de 7 digitos rechazado
+[PASS] E02-emp-duplicado - DNI repetido rechazado
+[PASS] E03-emp-telefono-invalido - telefono fuera de formato rechazado
+[PASS] E04-emp-crear-valido - alta correcta: 4 empleados (nuevo id 4, DNI 87654321)
+[PASS] E05-emp-nombre-corto - nombre de 2 letras rechazado en edicion
+[PASS] E06-emp-editar-valido - edicion reflejada en la lista
+[PASS] E07-emp-eliminar-404-rn02 - POST /empleados/eliminar -> 404, 4 empleados conservados (RN02)
+[PASS] E08-emp-operador-403 - Operador sin permiso sobre empleados
+[PASS] E09-emp-csrf-403 - POST sin token -> 403
+[PASS] U01-usu-lista - 3 cuentas de usuario en memoria
+[PASS] U02-usu-operador-403 - Operador sin permiso sobre usuarios
+[PASS] U03-usu-duplicado - usuario repetido rechazado y valor conservado
+[PASS] U04-usu-password-corta - password de 5 caracteres rechazada
+[PASS] U05-usu-rol-fabricado - rol fuera del catalogo rechazado (impide elevar rol por formulario)
+[PASS] U06-usu-empleado-con-cuenta - un empleado no puede tener dos cuentas
+[PASS] U07-usu-sin-empleado - cuenta sin empleado responsable rechazada
+[PASS] U08-usu-crear-valido - alta correcta: 4 cuentas (mtest10 sobre el empleado 4)
+[PASS] U09-usu-password-blanco-conserva-hash - editar sin password no rompe el acceso (hash BCrypt conservado)
+[PASS] U10-usu-desactivar - cuenta mtest10 en estado Inactivo (F32, sin eliminar)
+[PASS] U11-usu-inactivo-no-loguea - login de cuenta inactiva -> 302|http://localhost:8080/login?error=inactivo
+[PASS] U12-usu-eliminar-404-rn02 - POST /usuarios/eliminar -> 404, 4 cuentas conservadas (RN02)
+[PASS] U13-usu-csrf-403 - POST sin token -> 403
+[PASS] U14-usu-operador-post-403 - POST del Operador rechazado con aviso de permisos
+[PASS] U15-usu-doble-control-sin-efecto - ninguno de los POST denegados creo cuentas
+[PASS] K01-con-duplicado - nombre repetido rechazado
+[PASS] K02-con-tipo-invalido - tipo fuera de Ingreso/Egreso rechazado
+[PASS] K03-con-crear-valido - alta correcta: 3 conceptos
+[PASS] K04-con-editar-sin-tocar-caja - renombrar el concepto no corrompe los movimientos de caja (siguen 4)
+[PASS] K05-con-estado-rn02 - cambio a Inactivo con registro conservado (RN02)
+[PASS] K06-con-eliminar-404-rn02 - POST eliminar -> 404, 3 conceptos (RN02)
+[PASS] K07-con-operador-403 - Operador sin permiso sobre finanzas
+[PASS] K08-con-csrf-403 - POST sin token -> 403
+[PASS] K09-con-sin-efectos-colaterales - el catalogo termina con 3 conceptos (CE01, CE02, Ajuste ETAPA10 Editado)
+[PASS] AS01-mi-pantalla - pantalla Mi asistencia operativa para atorres
+[PASS] AS02-entrada-ignora-id spoofeado - idEmpleado=2 del navegador se ignora; la entrada usa la identidad real 
+(atorres, empleado 1)
+[PASS] AS03-entrada-repetida - segunda entrada del dia rechazada (peticion repetida sin doble registro)
+[PASS] AS04-salida-sin-entrada - salida sin entrada previa rechazada (RN05)
+[PASS] AS05-salida-valida - salida de atorres registrada tras su entrada
+[PASS] AS06-salida-repetida - jornada ya cerrada: no se registra una segunda salida
+[PASS] AS07-control-hoy - control con 6 marcaciones (5 de semilla + 1 de atorres de hoy)
+[PASS] AS08-control-operador-403 - el Operador no abre el control (solo Admin)
+[PASS] AS09-csrf-403 - POST sin token valido -> 403
+[PASS] AS10-integridad-final - los intentos repetidos dejaron exactamente 1 marcacion de hoy
+[PASS] D01-com-lista - 1 compra en memoria (C001)
+[PASS] D02-com-sin-fecha-del-formulario - sin campo fecha: la pone el servidor y se valida la cantidad
+[PASS] D03-com-proveedor-corto - proveedor de 2 letras rechazado
+[PASS] D04-com-producto-inactivo - combustible inactivo no puede comprarse (RN02 extendido)
+[PASS] D05-com-responsable-inactivo - responsable inactivo rechazado
+[PASS] D06-com-cantidad-cero - cantidad 0 rechazada
+[PASS] D07-com-sin-detalle - compra sin lineas rechazada (RN03: sin detalle no hay entrada)
+[PASS] D08-com-crear-valido-rn03-rn04 - C002 con fecha del servidor: 2 compras, libro 7 filas (entradas 400 L), caja 5 
+filas (egresos 1,830.00 = 1350+480)
+[PASS] D09-com-detalle-inexistente - id inexistente redirige con aviso (sin 500)
+[PASS] D10-com-operador-403 - Operador sin permiso sobre compras
+[PASS] D11-com-csrf-403 - POST sin token -> 403 y siguen exactamente 2 compras
+[PASS] D12-com-fecha-informativa - fecha de registro informativa del servidor y sin campo editable
+[PASS] V01-ven-lista - 3 ventas en memoria (V001-V003)
+[PASS] V02-ven-sin-cantidad-sin-efectos - rechazo total: ventas 3, libro 7, caja 5 (sin efectos parciales, RN03)
+[PASS] V03-ven-sobre-stock-rn01 - 99999 L rechazados y stock intacto en 2090 L (RN01)
+[PASS] V04-ven-producto-inactivo - combustible inactivo no puede venderse (RN02 extendido)
+[PASS] V05-ven-operador-inactivo - operador inactivo rechazado
+[PASS] V06-ven-crear-valido-rn01-rn03-rn04 - V004: 4 ventas, libro 8 filas (1 salida por venta), caja 6 filas 
+(ingresos 420.00), stock 2090->2080
+[PASS] V07-ven-detalle-inexistente - id inexistente redirige con aviso
+[PASS] V08-ven-admin-403 - el Administrador no registra ventas (seccion de operacion)
+[PASS] V09-ven-operador-lista - Operador si consulta el historial (autenticado)
+[PASS] V10-ven-csrf-403 - POST sin token -> 403 y siguen 4 ventas
+[PASS] V11-ven-salida-unica-rn03 - la venta V004 aporto exactamente una salida al libro
+[PASS] V12-ven-sin-campo-fecha - el formulario de venta no pide fecha (la toma el servidor)
+[PASS] I01-inv-pantalla - existencias con saldo inicial visibles
+[PASS] I02-inv-entrada-valida - entrada manual: libro 9 filas, PR02 980->1030, fecha manipulada ignorada (servidor)
+[PASS] I03-inv-entrada-producto-inactivo - entrada sobre producto inactivo rechazada (RN02)
+[PASS] I04-inv-entrada-sin-cantidad - cantidad vacia rechazada
+[PASS] I05-inv-salida-valida - salida manual: libro 10 filas, PR02 1030->1010, fecha manipulada ignorada (servidor)
+[PASS] I06-inv-salida-sobre-stock-rn01 - aviso en el formulario y rechazo sin efectos: stock 1010 y libro 10 (RN01)
+[PASS] I07-inv-salida-motivo-corto - motivo de 3 letras rechazado
+[PASS] I08-inv-sin-fecha-en-formulario - sin campo fechaHora: la pone el servidor y se valida la cantidad
+[PASS] I09-inv-entrada-operador-403 - el Operador no registra entradas (seccion Admin)
+[PASS] I10-inv-salida-admin-403 - el Administrador no registra salidas manuales (seccion de operacion)
+[PASS] I11-inv-csrf-403 - POST sin token -> 403 y el libro sigue en 10 filas
+[PASS] I12-inv-fecha-informativa - marca de tiempo informativa del servidor y sin campo editable
+[PASS] F01-fin-conciliacion - saldo 3,000.00 = apertura 4,410.00 + ingresos 420.00 - egresos 1,830.00; 6 movimientos
+[PASS] F02-fin-ingresos - filtro de ingresos operativo (V001-V004)
+[PASS] F03-fin-egresos - filtro de egresos operativo (C001, C002)
+[PASS] F04-fin-detalle-inexistente - movimiento inexistente redirige con aviso
+[PASS] F05-fin-operador-403 - Operador sin acceso a finanzas
+[PASS] F06-fin-sin-ruta-manual - no existe ruta para crear/duplicar caja a mano: 404 y 6 movimientos (RN04)
+[PASS] R01-RN01-stock-conciliado - stock final PR01=2080 (1990+100-10), PR02=1010 (980+50-20), Diesel 3,950 sin tocar; 
+nunca negativo
+[PASS] R02-RN02-cambio-de-estado - los cinco catalogos (categorias 3, usuarios 4, conceptos 3, combustibles 4, 
+empleados 4) conservan todos los registros; solo cambian estados y eliminar devuelve 404
+[PASS] R03-RN03-integridad-movimientos - libro 10 filas = 6 semilla + 4 operaciones; cada venta/compra aporto 
+exactamente su movimiento
+[PASS] R04-RN04-caja-conciliada - 6 movimientos de caja = 2 compras + 4 ventas; saldo exacto; sin duplicados ni rutas 
+manuales
+[PASS] R05-RN05-asistencia-integra - una unica jornada de hoy (entrada+salida de atorres); las repeticiones fueron 
+rechazadas
+[PASS] M01-textos-sin-memoria - ninguna pagina visible menciona almacen en memoria
+[PASS] M02-textos-sin-ejecucion - ninguna pagina visible menciona la ejecucion de la aplicacion
+[PASS] M03-textos-sin-base-datos - ninguna pagina visible menciona base de datos
+[PASS] M04-textos-sin-temporal - ninguna pagina visible menciona almacenamiento temporal
+
+================= REVISION FINAL =================
+PASS   133
+TOTAL: 133 pruebas, PASS 133, FAIL 0
+Resultados exportados a %TEMP%\revision_resultados.csv

@@ -75,8 +75,7 @@
             </div>
 
             <p class="notice">
-                Los cambios se actualizan en memoria mientras la aplicación está en ejecución.
-                No hay base de datos.
+                Los campos con * son obligatorios: revise los cambios de la cuenta antes de guardar.
             </p>
 
             <c:if test="${not empty mensaje}">
@@ -122,7 +121,7 @@
                         <a class="btn btn-secondary" href="${pageContext.request.contextPath}/usuarios/list">Cancelar</a>
                     </div>
                     <p class="form-help">
-                        La contraseña no se guarda en memoria; el empleado de la cuenta no se modifica.
+                        La contraseña se guarda cifrada y nunca se muestra; el empleado de la cuenta no se modifica.
                     </p>
                 </form:form>
             </section>

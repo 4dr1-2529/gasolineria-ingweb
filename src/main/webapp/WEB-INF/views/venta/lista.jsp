@@ -89,7 +89,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <caption>
-                            Ventas en memoria: <c:out value="${fn:length(ventas)}"/> ·
+                            Ventas registradas: <c:out value="${fn:length(ventas)}"/> ·
                             Total: <fmt:formatNumber value="${totalLitros}" type="number" maxFractionDigits="2"/> L /
                             S/ <fmt:formatNumber value="${totalMonto}" type="number" minFractionDigits="2"/>
                         </caption>

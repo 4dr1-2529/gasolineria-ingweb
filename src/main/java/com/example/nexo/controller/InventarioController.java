@@ -1,8 +1,8 @@
 package com.example.nexo.controller;
 
 import java.math.BigDecimal;
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.nexo.model.Empleado;
@@ -38,6 +37,9 @@ public class InventarioController {
 
     /** Saldo físico de referencia al cierre del 09/09/2026 (versión 1). */
     private static final BigDecimal SALDO_INICIAL = new BigDecimal("6700");
+
+    /** Formato de la marca de tiempo informativa del formulario. */
+    private static final DateTimeFormatter FORMATO_FECHA_HORA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     private final MovimientoInventarioService movimientoService;
     private final ProductoService productoService;
@@ -105,6 +107,8 @@ public class InventarioController {
         if (!model.containsAttribute("movimiento")) {
             model.addAttribute("movimiento", new MovimientoInventario());
         }
+        // Fecha y hora de registro (sólo informativas en la vista): las fija el servidor
+        model.addAttribute("marcaTiempo", LocalDateTime.now().format(FORMATO_FECHA_HORA));
         // RN02 · Sólo los combustibles con estado Activo reciben movimientos
         model.addAttribute("productosActivos", productosActivos());
         model.addAttribute("productos", productoService.listaProductos());
@@ -114,9 +118,9 @@ public class InventarioController {
 
     @PostMapping("/entrada/crear")
     public String crearEntrada(@ModelAttribute("movimiento") MovimientoInventario movimiento,
-            @RequestParam(value = "fechaHora", required = false) String fechaHora,
             RedirectAttributes redirect) {
-        movimiento.setFechaHora(parseFechaHora(fechaHora));
+        // La fecha y hora no viajan en el formulario: las registra el servidor
+        movimiento.setFechaHora(LocalDateTime.now());
         String error = movimientoService.registrarEntrada(movimiento);
         if (error != null) {
             // Entrada rechazada: se regresa al formulario conservando lo digitado
@@ -137,6 +141,8 @@ public class InventarioController {
         if (!model.containsAttribute("movimiento")) {
             model.addAttribute("movimiento", new MovimientoInventario());
         }
+        // Fecha y hora de registro (sólo informativas en la vista): las fija el servidor
+        model.addAttribute("marcaTiempo", LocalDateTime.now().format(FORMATO_FECHA_HORA));
         // RN02 · Sólo los combustibles con estado Activo reciben movimientos
         model.addAttribute("productosActivos", productosActivos());
         model.addAttribute("productos", productoService.listaProductos());
@@ -146,9 +152,9 @@ public class InventarioController {
 
     @PostMapping("/salida/crear")
     public String crearSalida(@ModelAttribute("movimiento") MovimientoInventario movimiento,
-            @RequestParam(value = "fechaHora", required = false) String fechaHora,
             RedirectAttributes redirect) {
-        movimiento.setFechaHora(parseFechaHora(fechaHora));
+        // La fecha y hora no viajan en el formulario: las registra el servidor
+        movimiento.setFechaHora(LocalDateTime.now());
         String error = movimientoService.registrarSalida(movimiento);
         if (error != null) {
             // Salida rechazada: se regresa al formulario conservando lo digitado
@@ -173,22 +179,6 @@ public class InventarioController {
         model.addAttribute("responsables", nombresUsuarios());
         model.addAttribute("totalLitros", totalLitros);
         return vista;
-    }
-
-    /**
-     * El input datetime-local entrega la fecha en formato ISO (2026-10-04T08:30);
-     * si está vacío o no se puede leer, la fecha queda nula y el Service
-     * rechaza el movimiento.
-     */
-    private LocalDateTime parseFechaHora(String texto) {
-        if (texto == null || texto.trim().isEmpty()) {
-            return null;
-        }
-        try {
-            return LocalDateTime.parse(texto.trim());
-        } catch (DateTimeException e) {
-            return null;
-        }
     }
 
     private Map<String, Producto> productosPorId() {

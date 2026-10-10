@@ -1,0 +1,64 @@
+A) Markdown: 26 archivos, 346 enlaces locales revisados
+B) HTML V1: 31 archivos, 516 enlaces locales revisados
+C) V2 en vivo: 56 paginas recorridas con sesion Admin
+
+ENLACES ROTOS: 0
+REQUIERE VISTA (no rotos):
+  [VISTA] V2: /ventas/crear -> HTTP 403
+  [VISTA] V2: /inventario/salida/crear -> HTTP 403
+  200  /asistencia/control
+  200  /asistencia/mi
+  200  /categorias/crear
+  200  /categorias/editar?id=1
+  200  /categorias/editar?id=2
+  200  /categorias/editar?id=3
+  200  /categorias/list
+  200  /combustibles/crear
+  200  /combustibles/editar?id=PR01
+  200  /combustibles/editar?id=PR02
+  200  /combustibles/editar?id=PR03
+  200  /combustibles/editar?id=PR04
+  200  /combustibles/list
+  200  /compras/crear
+  200  /compras/detalle?id=C001
+  200  /compras/detalle?id=C002
+  200  /compras/list
+  200  /css/estilos.css
+  200  /empleados/crear
+  200  /empleados/editar?id=1
+  200  /empleados/editar?id=2
+  200  /empleados/editar?id=3
+  200  /empleados/editar?id=4
+  200  /empleados/list
+  200  /finanzas/conceptos/crear
+  200  /finanzas/conceptos/editar?id=CE01
+  200  /finanzas/conceptos/editar?id=CE02
+  200  /finanzas/conceptos/editar?id=CE03
+  200  /finanzas/conceptos/list
+  200  /finanzas/detalle?id=MC001
+  200  /finanzas/detalle?id=MC003
+  200  /finanzas/detalle?id=MC004
+  200  /finanzas/detalle?id=MC005
+  200  /finanzas/detalle?id=MC007
+  200  /finanzas/detalle?id=MC008
+  200  /finanzas/egresos
+  200  /finanzas/ingresos
+  200  /finanzas/list
+  200  /inventario/entrada/crear
+  200  /inventario/entradas
+  200  /inventario/list
+  403  /inventario/salida/crear
+  200  /inventario/salidas
+  200  /login
+  200  /usuarios/crear
+  200  /usuarios/editar?id=1
+  200  /usuarios/editar?id=2
+  200  /usuarios/editar?id=3
+  200  /usuarios/editar?id=4
+  200  /usuarios/list
+  403  /ventas/crear
+  200  /ventas/detalle?id=V001
+  200  /ventas/detalle?id=V002
+  200  /ventas/detalle?id=V003
+  200  /ventas/detalle?id=V004
+  200  /ventas/list

@@ -123,10 +123,10 @@
                         <a class="btn btn-secondary" href="${pageContext.request.contextPath}/ventas/list">Cancelar</a>
                     </div>
                     <p class="form-help">
-                        La venta se guarda en memoria con estado Confirmada: el precio unitario se toma
-                        del producto seleccionado, subtotal y total se calculan en el servidor y los
-                        litros se descuentan del stock. La salida de inventario queda registrada en
-                        el módulo Inventario y el ingreso de caja se consulta en el módulo Finanzas.
+                        La venta se registra con estado Confirmada y con la fecha y hora del
+                        servidor: el precio unitario se toma del producto seleccionado, subtotal y
+                        total se calculan en el servidor y los litros se descuentan del stock. La
+                        salida de inventario queda en Inventario y el ingreso de caja en Finanzas.
                     </p>
                 </form:form>
             </section>

@@ -86,7 +86,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <caption>
-                            <c:out value="${fn:length(usuarios)}"/> usuarios en memoria
+                            <c:out value="${fn:length(usuarios)}"/> usuarios registrados
                         </caption>
                         <thead>
                             <tr>

@@ -90,11 +90,11 @@ public class CompraServiceImpl implements CompraService {
      * RN03 · Litros, precios e importes deben ser mayores que cero y con dos
      * decimales como máximo; los valores fuera de ese rango rechazan la compra
      * sin modificar ningún dato en memoria.
+     * La fecha y la hora las fija el servidor con la zona America/Lima: no se
+     * recibe ninguna fecha del formulario, por lo que una fecha manipulada del
+     * navegador no puede alterar la hora de registro de la operación actual.
      */
-    public String crearCompra(Compra compra, DetalleCompra detalle, LocalDate fecha) {
-        if (fecha == null) {
-            return "La fecha de la compra es obligatoria.";
-        }
+    public String crearCompra(Compra compra, DetalleCompra detalle) {
         String proveedor = compra.getProveedor() == null ? "" : compra.getProveedor().trim();
         if (proveedor.length() < 3 || proveedor.length() > 60) {
             return "El proveedor debe tener entre 3 y 60 caracteres.";
@@ -131,8 +131,8 @@ public class CompraServiceImpl implements CompraService {
         // 1) La compra: una sola línea por formulario, por eso el total es su subtotal
         compra.setProveedor(proveedor);
         compra.setId(siguienteId());
-        // La fecha la toma el servidor; no se digita la hora
-        compra.setFechaHora(LocalDateTime.of(fecha, LocalTime.now()));
+        // La fecha y la hora las toma el servidor (America/Lima); no se digitan
+        compra.setFechaHora(LocalDateTime.of(LocalDate.now(), LocalTime.now()));
         compra.setTotal(subtotal);
         compra.setEstado("Confirmada");
         compras.add(compra);

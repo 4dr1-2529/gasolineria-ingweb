@@ -159,7 +159,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 - **Funcionalidades:** F16.
 - **Entidades:** MovimientoInventario, Producto, Usuario, Compra.
 - **Reglas:** RN01 — la entrada incrementa las existencias; RN03 — la entrada de una compra se produce una sola vez con la compra.
-- **Contenido:** Producto, cantidad en litros, fecha y hora, motivo y responsable.
+- **Contenido:** Producto, cantidad en litros, motivo y responsable; fecha y hora de registro, informativas (las fija el servidor con America/Lima).
 
 ## P13 · Salida de combustible
 
@@ -263,13 +263,13 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 ## P23 · Formulario compra
 
-- **Propósito:** Registrar una compra con proveedor, fecha y líneas de producto, guardando en un solo paso la compra, sus detalles, las entradas de inventario y el egreso de caja.
+- **Propósito:** Registrar una compra con proveedor y líneas de producto (la fecha y la hora las fija el servidor con America/Lima), guardando en un solo paso la compra, sus detalles, las entradas de inventario y el egreso de caja.
 - **Actor:** Administrador.
-- **Archivo:** [compra-form.html](../compra-form.html). Versión V2: `GET/POST /compras/crear` → compra/crear.jsp (proveedor de 3 a 60 caracteres, fecha y líneas obligatorias).
+- **Archivo:** [compra-form.html](../compra-form.html). Versión V2: `GET/POST /compras/crear` → compra/crear.jsp (proveedor de 3 a 60 caracteres y líneas obligatorias; la fecha no se digita y se muestra solo informativa).
 - **Funcionalidades:** F13.
 - **Entidades:** Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja.
 - **Reglas:** RN03 — detalles y entradas una sola vez; RN04 — egreso único vinculado a la compra.
-- **Contenido:** Proveedor, fecha, líneas con producto y cantidad en litros, y total de la compra.
+- **Contenido:** Proveedor, líneas con producto y cantidad en litros, y total de la compra; fecha de registro informativa (la fija el servidor).
 
 ## P24 · Formulario venta
 

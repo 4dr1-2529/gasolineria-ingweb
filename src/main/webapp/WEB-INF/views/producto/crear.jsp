@@ -81,8 +81,7 @@
             </c:if>
 
             <p class="notice">
-                El combustible se guarda en memoria mientras la aplicación está en ejecución.
-                No hay base de datos.
+                Los campos con * son obligatorios: revise los datos del combustible antes de guardar.
             </p>
 
             <section class="panel">
