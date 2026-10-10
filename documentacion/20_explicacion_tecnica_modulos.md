@@ -8,7 +8,7 @@ Documento de apoyo para la sustentación: describe cada módulo con los **nombre
 
 1. **El navegador** escribe `http://localhost:8080/categorias/list` o pulsa un enlace `<a>`.
 2. **Tomcat** (embebido en Spring Boot, puerto 8080, context path `/`) recibe la petición y la entrega al servlet raíz de la aplicación.
-3. **La cadena de filtros de Spring Security** (`SecurityFilterChain` del bean `SecurityConfig.cadenaFiltros`, en `src/main/java/com/example/nexo/config/SecurityConfig.java`) se ejecuta antes que nada:
+3. **La cadena de filtros de Spring Security** (`SecurityFilterChain` del bean `SecurityConfig.cadenaFiltros`, en `src/main/java/com/example/nexo/auth/config/SecurityConfig.java`) se ejecuta antes que nada:
    - **Autenticación**: si la ruta no está permitida para anónimos y no hay sesión válida, `ExceptionTranslationFilter` redirige a `/login` (302). Si la sesión existe, se reconstruye el `Authentication` desde la cookie `JSESSIONID`.
    - **Autorización**: `authorizeHttpRequests` compara la ruta con los `requestMatchers` (ver §2). Si el rol no alcanza, responde 403 con la página de aviso (forward a `/sin-permisos` → `error/permisos.jsp`).
    - **CSRF**: `CsrfFilter` exige el token `_csrf` en todo POST; sin él responde **403** (pruebas C10, P09, E09, U13, K08, D11, V10, I11, AS09).
@@ -42,16 +42,20 @@ El login (`POST /login`) lo procesa el filtro propio de Spring Security (`Userna
 
 ---
 
+### Paquetes Java actuales
+
+El código se organiza por módulo dentro de `com.example.nexo`: `auth` contiene `config`, `controller` y `service`; los módulos `categoria`, `producto`, `compra`, `venta`, `inventario`, `finanzas`, `empleado`, `usuario` y `asistencia` mantienen sus capas `controller`, `service` y `model`; `shared.controller` contiene la ruta general de inicio. `NexoApplication` y `ServletInitializer` permanecen en el paquete raíz para que el escaneo de Spring incluya todos los módulos. El login se resuelve desde `WEB-INF/views/auth/login.jsp` mediante el nombre de vista `auth/login`.
+
 ## 3. Módulo por módulo
 
 ### 3.1 Acceso — F01, F02 (P02, P03)
 
 - **URL**: `GET/POST /login`, `POST /logout`, `GET /`.
-- **Controller**: `AuthController.login(@RequestParam error, @RequestParam mensaje, Model)` → vista `login` con `model:error`; `AuthController.sinPermisos()` (`@RequestMapping("/sin-permisos")`, acepta GET y POST) → vista `error/permisos`; `HomeController.inicio(Authentication)` → `redirect:/categorias/list` o `redirect:/ventas/list` según el rol del `Authentication`.
+- **Controller**: `AuthController.login(@RequestParam error, @RequestParam mensaje, Model)` → vista `auth/login` con `model:error`; `AuthController.sinPermisos()` (`@RequestMapping("/sin-permisos")`, acepta GET y POST) → vista `error/permisos`; `HomeController.inicio(Authentication)` → `redirect:/categorias/list` o `redirect:/ventas/list` según el rol del `Authentication`.
 - **Service**: `UsuarioService` / `UsuarioServiceImpl` (usuarios en memoria) y `NexoUserDetailsService` (puente hacia Spring Security).
 - **Validación**: la realza Spring Security (usuario existe, cuenta activa, BCrypt correcto). El JSP `login.jsp` añade validaciones nativas HTML5 (`required`, `minlength`, `maxlength`).
 - **Colección**: `UsuarioServiceImpl.usuarios` (semilla: `atorres`, `lrojas`, `ediaz`).
-- **Vista**: `login.jsp` (pública) y `error/permisos.jsp` («Esta sección no te corresponde»).
+- **Vista**: `auth/login.jsp` (pública) y `error/permisos.jsp` («Esta sección no te corresponde»).
 - **Pruebas ETAPA 10**: A01–A09 y verificación directa de logout.
 
 ### 3.2 Categorías — F04–F08 (P05, P22) · ADMIN

@@ -158,15 +158,23 @@ ing-web/
 ├── mvnw · mvnw.cmd · .mvn/
 ├── src/
 │   ├── main/java/com/example/nexo/
-│   │   ├── config/SecurityConfig.java
-│   │   ├── controller/               (11 controladores MVC)
-│   │   ├── model/                    (12 clases de entidad/modelo)
-│   │   ├── service/                  (10 interfaces y sus ServiceImpl)
-│   │   └── NexoApplication.java      (Timezone America/Lima)
+│   │   ├── auth/                     (config, controller y service de acceso)
+│   │   ├── categoria/                (controller, service, model)
+│   │   ├── producto/                 (controller, service, model)
+│   │   ├── compra/                   (controller, service, model)
+│   │   ├── venta/                    (controller, service, model)
+│   │   ├── inventario/               (controller, service, model)
+│   │   ├── finanzas/                 (controller, service, model)
+│   │   ├── empleado/                 (controller, service, model)
+│   │   ├── usuario/                  (controller, service, model)
+│   │   ├── asistencia/               (controller, service, model)
+│   │   ├── shared/controller/        (rutas generales)
+│   │   ├── NexoApplication.java      (Timezone America/Lima)
+│   │   └── ServletInitializer.java
 │   ├── main/resources/
 │   │   └── application.properties
 │   └── main/webapp/
-│       ├── WEB-INF/views/            (34 plantillas JSP organizadas por módulo)
+│       ├── WEB-INF/views/            (34 JSP; login en auth/ y vistas por módulo)
 │       └── css/estilos.css
 ├── diseno-original/                 (31 HTML V1 y css/estilos.css; maqueta navegable)
 ├── recurso/                          (9 PDF de consulta y rúbrica)
@@ -189,7 +197,7 @@ ing-web/
     ├── 15_anexos.md
     ├── 16_evidencias_etapas.md
     ├── 17_matriz_cumplimiento_avance1.md
-    ├── 18_correspondencia_avance1.md
+    ├── 18_matriz_cumplimiento_examen_parcial.md
     ├── 19_validacion_requisitos.md
     ├── 20_explicacion_tecnica_modulos.md
     ├── 21_matriz_correspondencia.md

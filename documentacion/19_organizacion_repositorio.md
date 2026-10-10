@@ -98,3 +98,7 @@ Las referencias Markdown a las 31 interfaces se actualizaron y se verificaron de
 | Candidatos a archivo, no a borrado | `22_informe_regresion_etapa10.md` y `23_informe_regresion_revision_final.md` | Mantener ambos hasta aprobar que corte exige la entrega; si se archiva el corte anterior, conservarlo en una carpeta historica y actualizar todos los enlaces. |
 
 No se propone eliminar ningun archivo en esta revision. El documento Word mencionado para el informe no esta presente en el repositorio (no se encontro `.doc` ni `.docx`); el Markdown `08_puntos_1_al_5_8.md` contiene los puntos 5.1-5.8 y el estado de 5.10-5.14, con 5.9 separado en `05_reglas_negocio.md`.
+
+## 7. Organización Java por módulos (10/10/2026)
+
+Las 43 clases de dominio, capa de negocio, controladores y seguridad se movieron bajo sus módulos funcionales, conservando las capas `controller/`, `service/`, `model/` y `config/` donde corresponden. `NexoApplication.java` y `ServletInitializer.java` siguen en `com.example.nexo`. La pantalla funcional de acceso se trasladó a `src/main/webapp/WEB-INF/views/auth/login.jsp`; `AuthController` devuelve `auth/login`. Permanecen intactas las 34 JSP y las rutas HTTP. Se actualizó el árbol del README y la ubicación de `SecurityConfig` y la vista de login en la explicación técnica. Se conservaron las 31 maquetas, documentación, fuentes y evidencias académicas.
