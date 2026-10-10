@@ -5,24 +5,32 @@ import java.util.List;
 import com.example.nexo.model.Asistencia;
 import com.example.nexo.model.Empleado;
 
+/**
+ * F35–F38 · Asistencia del personal (P28 y P29).
+ * La identidad del empleado nunca llega del navegador: el controller resuelve
+ * al empleado dueño de la sesión autenticada y lo pasa aquí (RN05).
+ */
 public interface AsistenciaService {
 
+    /** P29 · todas las marcaciones del periodo. */
     public List<Asistencia> listaAsistencias();
 
-    public List<Asistencia> listaAsistenciasEmpleadoActual();
+    /** RN05 · las marcaciones de un solo empleado (P28 usa el de la sesión). */
+    public List<Asistencia> listaAsistenciasDeEmpleado(Integer idEmpleado);
 
-    public List<Asistencia> listaAsistenciasPorEmpleado(Integer idEmpleado);
+    /** RN05 · la asistencia abierta (entrada sin salida) de hoy, o null. */
+    public Asistencia buscarAsistenciaAbierta(Integer idEmpleado);
 
-    public Asistencia buscarAsistenciaAbierta();
+    /** RN05 · registra la entrada de hoy para ese empleado. */
+    public String registrarEntrada(Integer idEmpleado);
 
-    public String registrarEntrada();
-
-    public String registrarSalida();
+    /** RN05 · cierra la asistencia abierta de ese empleado. */
+    public String registrarSalida(Integer idEmpleado);
 
     /**
-     * TEMPORAL: devuelve el empleado de demostración mientras no existe
-     * autenticación. Con Spring Security se reemplazará por el usuario autenticado.
+     * Empleado dueño de la sesión, para mostrar su nombre en P28.
+     * Devuelve null si la cuenta no tiene empleado asociado.
      */
-    public Empleado getEmpleadoActual();
+    public Empleado buscarEmpleado(Integer idEmpleado);
 
 }

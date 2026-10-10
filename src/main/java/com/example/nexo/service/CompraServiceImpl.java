@@ -99,8 +99,13 @@ public class CompraServiceImpl implements CompraService {
         if (proveedor.length() < 3 || proveedor.length() > 60) {
             return "El proveedor debe tener entre 3 y 60 caracteres.";
         }
-        if (buscarProducto(detalle.getIdProducto()) == null) {
+        Producto producto = buscarProducto(detalle.getIdProducto());
+        if (producto == null) {
             return "El producto seleccionado no existe.";
+        }
+        // RN02 · un producto Inactivo desaparece de las nuevas operaciones
+        if (!"Activo".equals(producto.getEstado())) {
+            return "El producto seleccionado está inactivo: sólo los combustibles activos pueden comprarse.";
         }
         if (detalle.getCantidad() == null || detalle.getPrecioCompra() == null) {
             return "La cantidad de litros y el precio de compra son obligatorios.";
@@ -115,6 +120,10 @@ public class CompraServiceImpl implements CompraService {
         }
         if (compra.getIdUsuario() == null || usuarioService.buscarUsuarioPorId(compra.getIdUsuario()) == null) {
             return "El responsable seleccionado no existe.";
+        }
+        // RN02 · una cuenta Inactiva tampoco se elige en operaciones nuevas
+        if (!"Activo".equals(usuarioService.buscarUsuarioPorId(compra.getIdUsuario()).getEstado())) {
+            return "El responsable seleccionado está inactivo: elija una cuenta activa.";
         }
 
         BigDecimal subtotal = cantidad.multiply(precio).setScale(2, RoundingMode.HALF_UP);
@@ -137,7 +146,6 @@ public class CompraServiceImpl implements CompraService {
         detalles.add(detalle);
 
         // 3) Stock: se modifica el mismo producto en memoria, sin duplicarlo
-        Producto producto = buscarProducto(detalle.getIdProducto());
         BigDecimal stock = producto.getStock().add(cantidad);
         if (stock.stripTrailingZeros().scale() <= 0) {
             // El stock entero se muestra sin decimales, como en la versión 1

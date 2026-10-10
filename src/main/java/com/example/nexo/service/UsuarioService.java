@@ -8,10 +8,15 @@ public interface UsuarioService {
 
     public List<Usuario> listaUsuarios();
 
-    public void crearUsuario(Usuario usuario);
+    /** Crea la cuenta: devuelve null si fue válida o el motivo del rechazo. */
+    public String crearUsuario(Usuario usuario);
 
     public Usuario buscarUsuarioPorId(Integer id);
 
-    public void editarUsuario(Usuario usuario);
+    /** Busca por nombre de usuario ignorando mayúsculas y espacios sobrantes. */
+    public Usuario buscarUsuarioPorUsername(String username);
+
+    /** Guarda los cambios: devuelve null si fue válido o el motivo del rechazo. */
+    public String editarUsuario(Usuario usuario);
 
 }

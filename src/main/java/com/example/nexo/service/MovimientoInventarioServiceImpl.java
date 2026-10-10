@@ -84,6 +84,10 @@ public class MovimientoInventarioServiceImpl implements MovimientoInventarioServ
         if (producto == null) {
             return "El producto seleccionado no existe.";
         }
+        // RN02 · un producto Inactivo no recibe movimientos nuevos (P25)
+        if (!"Activo".equals(producto.getEstado())) {
+            return "El producto seleccionado está inactivo: no se registran movimientos sobre productos inactivos.";
+        }
         String error = validarDatosDelMovimiento(movimiento);
         if (error != null) {
             return error;
@@ -115,6 +119,10 @@ public class MovimientoInventarioServiceImpl implements MovimientoInventarioServ
         Producto producto = buscarProducto(movimiento.getIdProducto());
         if (producto == null) {
             return "El producto seleccionado no existe.";
+        }
+        // RN02 · un producto Inactivo no recibe movimientos nuevos (P26)
+        if (!"Activo".equals(producto.getEstado())) {
+            return "El producto seleccionado está inactivo: no se registran movimientos sobre productos inactivos.";
         }
         String error = validarDatosDelMovimiento(movimiento);
         if (error != null) {
@@ -178,6 +186,10 @@ public class MovimientoInventarioServiceImpl implements MovimientoInventarioServ
         movimiento.setCantidad(cantidad);
         if (movimiento.getIdUsuario() == null || usuarioService.buscarUsuarioPorId(movimiento.getIdUsuario()) == null) {
             return "El responsable seleccionado no existe.";
+        }
+        // RN02 · una cuenta Inactiva tampoco se elige en operaciones nuevas
+        if (!"Activo".equals(usuarioService.buscarUsuarioPorId(movimiento.getIdUsuario()).getEstado())) {
+            return "El responsable seleccionado está inactivo: elija una cuenta activa.";
         }
         String motivo = movimiento.getMotivo() == null ? "" : movimiento.getMotivo().trim();
         if (motivo.length() < 5 || motivo.length() > 200) {

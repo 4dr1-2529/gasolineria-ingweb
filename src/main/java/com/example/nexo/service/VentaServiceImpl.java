@@ -121,6 +121,10 @@ public class VentaServiceImpl implements VentaService {
         if (venta.getIdUsuario() == null || usuarioService.buscarUsuarioPorId(venta.getIdUsuario()) == null) {
             return "El operador seleccionado no existe.";
         }
+        // RN02 · una cuenta Inactiva tampoco se elige en operaciones nuevas
+        if (!"Activo".equals(usuarioService.buscarUsuarioPorId(venta.getIdUsuario()).getEstado())) {
+            return "El operador seleccionado está inactivo: elija una cuenta activa.";
+        }
         BigDecimal precio = producto.getPrecioActual();
         if (precio == null || precio.signum() <= 0) {
             return "El precio del producto no es válido.";

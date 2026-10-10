@@ -88,7 +88,13 @@ public class VentaController {
 
     @GetMapping("/crear")
     public String mostrarFormulario(Model model) {
-        model.addAttribute("venta", new Venta());
+        // Tras un rechazo conserva lo digitado (los atributos vienen por flash)
+        if (!model.containsAttribute("venta")) {
+            model.addAttribute("venta", new Venta());
+        }
+        if (!model.containsAttribute("detalle")) {
+            model.addAttribute("detalle", new DetalleVenta());
+        }
         // RN02 · Sólo los combustibles con estado Activo pueden venderse
         model.addAttribute("productos", productosActivos());
         model.addAttribute("operadores", operadores());
@@ -101,12 +107,16 @@ public class VentaController {
             RedirectAttributes redirect) {
         String error = ventaService.crearVenta(venta, detalle);
         if (error != null) {
-            // Venta rechazada: se regresa al formulario sin modificar ningún dato
+            // Venta rechazada: se regresa al formulario conservando lo digitado
+            redirect.addFlashAttribute("venta", venta);
+            redirect.addFlashAttribute("detalle", detalle);
             redirect.addFlashAttribute("mensaje", error);
+            redirect.addFlashAttribute("mensajeTipo", "error");
             return "redirect:/ventas/crear";
         }
         redirect.addFlashAttribute("mensaje", "Venta " + venta.getId()
                 + " registrada: " + detalle.getCantidad() + " L descontados del stock.");
+        redirect.addFlashAttribute("mensajeTipo", "ok");
         return "redirect:/ventas/list";
     }
 
@@ -156,7 +166,9 @@ public class VentaController {
     private Map<Integer, String> operadores() {
         Map<Integer, String> nombres = new HashMap<>();
         for (Usuario usuario : usuarioService.listaUsuarios()) {
-            if ("Operador / Vendedor".equals(usuario.getRol())) {
+            // RN02: una cuenta Inactiva no se elige en operaciones nuevas
+            if ("Operador / Vendedor".equals(usuario.getRol())
+                    && "Activo".equals(usuario.getEstado())) {
                 nombres.put(usuario.getId(), nombreOperador(usuario.getId()));
             }
         }

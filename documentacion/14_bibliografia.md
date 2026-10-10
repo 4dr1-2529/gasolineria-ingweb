@@ -25,7 +25,7 @@ Las mismas 14 notas al pie del punto 5.3 de [08_puntos_1_al_5_8.md](08_puntos_1_
 | 13 | Infobae Perú | Vehículos de más de 15 años causan el 60% de la contaminación del aire en Lima, según AAP | https://www.infobae.com/peru/2026/05/20/vehiculos-de-mas-de-15-anos-causan-el-60-de-la-contaminacion-del-aire-en-lima-segun-aap/ | 20/05/2026 |
 | 14 | MINAM | Decreto Supremo N.° 029-2021-MINAM: modifican el DS 010-2017-MINAM (límites de emisiones atmosféricas vehiculares) | https://www.gob.pe/institucion/minam/normas-legales/2213166-029-2021-minam | 01/10/2026 |
 
-## B. Material oficial del curso consultado (`recurso/`) — 10 documentos únicos
+## B. Material oficial del curso consultado (`recurso/`) — 9 documentos únicos (tras la limpieza de la ETAPA 9)
 
 | Documento | Qué se consultó | Para qué |
 |---|---|---|
@@ -38,9 +38,8 @@ Las mismas 14 notas al pie del punto 5.3 de [08_puntos_1_al_5_8.md](08_puntos_1_
 | `guia2(1).pdf` | Revisado durante el levantamiento de requisitos | Etapa posterior; no aportó requisitos al Avance 1 |
 | `guia3(1).pdf` | Revisado durante el levantamiento de requisitos | Etapa posterior; no aportó requisitos al Avance 1 |
 | `ejercicio-maquetado-guia3(1).pdf` | Revisado durante el levantamiento de requisitos | Referencia de maquetado; no aportó requisitos nuevos |
-| `e6920ae9-009e-4ab0-891b-72dad466e347(1).pdf` | Revisado durante el levantamiento de requisitos | No aportó requisitos al Avance 1 |
 
-*Nota:* `Proyecto Estructura_v2 (1) (1).pdf` es una copia duplicada del documento oficial ya listado; no se cuenta dos veces.
+*Nota (ETAPA 9):* el repositorio contenía dos pares de copias byte-idénticas (verificadas por MD5): `e6920ae9-009e-4ab0-891b-72dad466e347(1).pdf` era idéntico a `guia3(1).pdf`, y `Proyecto Estructura_v2 (1) (1).pdf` era idéntico a `Proyecto Estructura_v2 (1).pdf`. Las dos copias redundantes fueron eliminadas conservando en cada par el nombre canónico; el detalle está en [19_organizacion_repositorio.md](19_organizacion_repositorio.md).
 
 ## C. Dependencia y herramientas consultadas — 3
 

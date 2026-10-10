@@ -33,7 +33,7 @@ Capturadas con Chrome headless (viewport 1440 × 1100) durante la inspección vi
 | Material | Por qué no es anexo | Clasificación |
 |---|---|---|
 | Capítulos del informe (`01`–`05`, `08`, `10`–`14`) y `README.md` | Son el informe mismo, no material complementario | **no requerido** |
-| `recurso/` (11 PDF del curso, incluido el Anexo 1) | Material oficial de la asignatura; ya citado como bibliografía en [14_bibliografia.md](14_bibliografia.md) §B | **no requerido** |
+| `recurso/` (9 PDF del curso, incluido el Anexo 1; 2 copias duplicadas eliminadas en la ETAPA 9) | Material oficial de la asignatura; ya citado como bibliografía en [14_bibliografia.md](14_bibliografia.md) §B | **no requerido** |
 | Scripts de validación (auditoría, render, diagramas) | Viven fuera del repositorio por decisión documentada en [00_auditoria.md](00_auditoria.md) §Decisiones; sus resultados están en el anexo A-4 | **no requerido** |
 | `.vscode/`, `.gitignore` | Configuración técnica, no material del proyecto | **no requerido** |
 | Diagramas, capturas o evidencias nuevas «para completar» anexos | No existen; fabricarlos sería inventar contenido. Ejemplo: las capturas de los patrones revisados en clase siguen sin material en el repositorio | **requiere evidencia** (pendiente (c) de [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md)) |

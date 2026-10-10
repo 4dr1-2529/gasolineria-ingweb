@@ -30,6 +30,12 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 		</dependency>
 
+		<!-- Autenticación, roles, sesión y hash de contraseñas (BCrypt) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
 		<!-- Soporte JSP para el contenedor embebido -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>

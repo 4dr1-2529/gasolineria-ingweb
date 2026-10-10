@@ -885,3 +885,61 @@ footer{
   .bpmn-node{min-width:118px;font-size:10.5px}
   .bpmn-pool-name{padding:8px 4px;font-size:9.5px}
 }
+
+/* === Sesión y avisos (V2 · Spring Security, ETAPA 2) === */
+.notice.error{
+  border-left-color:#c0392b;
+  background:#fbeceb
+}
+.notice.ok{
+  border-left-color:#93b849;
+  background:#eef4e5
+}
+.sesion{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:10px 14px;
+  border-top:1px solid var(--line);
+  font-size:12px;
+  color:var(--muted)
+}
+.sesion-usuario{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.sesion-salir button{
+  border:1px solid var(--line);
+  background:var(--white);
+  color:var(--ink);
+  border-radius:6px;
+  padding:5px 10px;
+  font-size:12px;
+  cursor:pointer
+}
+.sesion-salir button:hover{
+  background:var(--lime)
+}
+/* Pantalla de acceso (login.jsp) y aviso de permisos */
+.login-pagina{
+  max-width:460px;
+  margin:7vh auto;
+  padding:28px
+}
+.login-pagina .panel{
+  margin-top:18px
+}
+.login-pagina h1{
+  margin:6px 0 4px;
+  font-size:26px
+}
+.inline-accion{
+  display:inline-block;
+  margin-left:6px
+}
+.inline-accion .btn{
+  padding:6px 10px;
+  font-size:12px
+}

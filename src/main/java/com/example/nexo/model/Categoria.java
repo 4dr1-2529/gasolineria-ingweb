@@ -4,14 +4,18 @@ public class Categoria {
 
     private Integer id;
     private String nombre;
+    private String descripcion;
+    private String estado;
 
     public Categoria() {
-        // Constructor vacío
+        // Constructor vac��o
     }
 
-    public Categoria(Integer id, String nombre) {
+    public Categoria(Integer id, String nombre, String descripcion, String estado) {
         this.id = id;
         this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.estado = estado;
     }
 
     public Integer getId() {
@@ -28,6 +32,22 @@ public class Categoria {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.nexo.controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -94,8 +95,18 @@ public class CompraController {
 
     @GetMapping("/crear")
     public String mostrarFormulario(Model model) {
-        model.addAttribute("compra", new Compra());
-        model.addAttribute("productos", productoService.listaProductos());
+        // Tras un rechazo conserva lo digitado (los atributos vienen por flash)
+        if (!model.containsAttribute("compra")) {
+            model.addAttribute("compra", new Compra());
+        }
+        if (!model.containsAttribute("detalle")) {
+            model.addAttribute("detalle", new DetalleCompra());
+        }
+        if (!model.containsAttribute("fechaCompra")) {
+            model.addAttribute("fechaCompra", "");
+        }
+        // RN02 · Sólo los combustibles con estado Activo pueden comprarse
+        model.addAttribute("productos", productosActivos());
         model.addAttribute("responsables", responsables());
         return "compra/crear";
     }
@@ -107,12 +118,17 @@ public class CompraController {
             RedirectAttributes redirect) {
         String error = compraService.crearCompra(compra, detalle, fecha);
         if (error != null) {
-            // Compra rechazada: se regresa al formulario sin modificar ningún dato
+            // Compra rechazada: se regresa al formulario conservando lo digitado
+            redirect.addFlashAttribute("compra", compra);
+            redirect.addFlashAttribute("detalle", detalle);
+            redirect.addFlashAttribute("fechaCompra", fecha == null ? "" : fecha.toString());
             redirect.addFlashAttribute("mensaje", error);
+            redirect.addFlashAttribute("mensajeTipo", "error");
             return "redirect:/compras/crear";
         }
         redirect.addFlashAttribute("mensaje", "Compra " + compra.getId()
                 + " registrada: " + detalle.getCantidad() + " L añadidos al stock.");
+        redirect.addFlashAttribute("mensajeTipo", "ok");
         return "redirect:/compras/list";
     }
 
@@ -145,12 +161,33 @@ public class CompraController {
      * completo de su empleado (como los empleados Ana Torres, Luis Rojas y
      * Elena Díaz de la versión 1).
      */
+    /**
+     * Responsables del formulario: las cuentas Activas con rol "Operador /
+     * Vendedor" (RN02: una cuenta Inactiva no se elige en operaciones nuevas).
+     */
     private Map<Integer, String> responsables() {
         Map<Integer, String> nombres = new HashMap<>();
         for (Usuario usuario : usuarioService.listaUsuarios()) {
-            nombres.put(usuario.getId(), nombreResponsable(usuario.getId()));
+            if ("Operador / Vendedor".equals(usuario.getRol())
+                    && "Activo".equals(usuario.getEstado())) {
+                nombres.put(usuario.getId(), nombreResponsable(usuario.getId()));
+            }
         }
         return nombres;
+    }
+
+    /**
+     * RN02 · Combustibles que pueden comprarse: sólo los productos con
+     * estado Activo, como en la versión 1 (P19).
+     */
+    private List<Producto> productosActivos() {
+        List<Producto> activos = new ArrayList<>();
+        for (Producto producto : productoService.listaProductos()) {
+            if ("Activo".equals(producto.getEstado())) {
+                activos.add(producto);
+            }
+        }
+        return activos;
     }
 
     private String nombreResponsable(Integer idUsuario) {

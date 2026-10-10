@@ -17,20 +17,40 @@
             <span>NEXO<small>ESTACIÓN NEXO</small></span>
         </a>
         <nav>
-            <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
-            <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
+            <c:set var="esAdmin" value="false"/>
+            <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
+                <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}">
+                    <c:set var="esAdmin" value="true"/>
+                </c:if>
+            </c:forEach>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
+                <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/combustibles/list">Combustibles</a>
-            <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
-            <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
-            <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
-            <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
-            <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
+                <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
+                <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
+                <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
+                <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/asistencia/mi">Asistencia</a>
-            <a href="${pageContext.request.contextPath}/compras/list" aria-current="page">Compras</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/compras/list" aria-current="page">Compras</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/inventario/list">Inventario</a>
             <a href="${pageContext.request.contextPath}/ventas/list">Ventas</a>
-            <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
+            </c:if>
         </nav>
+        <div class="sesion">
+            <span class="sesion-usuario">Sesión: <c:out value="${pageContext.request.remoteUser}"/></span>
+            <form:form action="${pageContext.request.contextPath}/logout" method="post" cssClass="sesion-salir">
+                <button type="submit">Cerrar sesión</button>
+            </form:form>
+        </div>
         <div class="sidebar-bottom">
             INGENIERÍA WEB
             <span>GRUPO G1 · 2026</span>
@@ -57,7 +77,7 @@
             </div>
 
             <c:if test="${not empty mensaje}">
-                <p class="notice">
+                <p class="notice ${mensajeTipo}">
                     <c:out value="${mensaje}"/>
                 </p>
             </c:if>
@@ -82,23 +102,24 @@
                         <div class="field">
                             <label for="fecha">Fecha *</label>
                             <%-- La hora la toma el servidor al registrar la compra --%>
-                            <input class="form-control" id="fecha" name="fecha" type="date" required>
+                            <input class="form-control" id="fecha" name="fecha" type="date" value="${fechaCompra}" required>
                         </div>
                         <div class="field">
                             <label for="idProducto">Combustible *</label>
+                            <%-- RN02 · Sólo aparecen los productos con estado Activo --%>
                             <select class="form-select" id="idProducto" name="idProducto" required>
                                 <c:forEach items="${productos}" var="producto">
-                                    <option value="${producto.id}"><c:out value="${producto.nombre}"/></option>
+                                    <option value="${producto.id}" <c:if test="${detalle.idProducto == producto.id}">selected</c:if>><c:out value="${producto.nombre}"/></option>
                                 </c:forEach>
                             </select>
                         </div>
                         <div class="field">
                             <label for="cantidad">Cantidad (L) *</label>
-                            <input class="form-control" id="cantidad" name="cantidad" type="number" value="100" required min="0.01" step="0.01">
+                            <input class="form-control" id="cantidad" name="cantidad" type="number" value="${not empty detalle.cantidad ? detalle.cantidad : '100'}" required min="0.01" step="0.01">
                         </div>
                         <div class="field">
                             <label for="precioCompra">Precio de compra (S/ por litro) *</label>
-                            <input class="form-control" id="precioCompra" name="precioCompra" type="number" value="4.50" required min="0.01" step="0.01">
+                            <input class="form-control" id="precioCompra" name="precioCompra" type="number" value="${not empty detalle.precioCompra ? detalle.precioCompra : '4.50'}" required min="0.01" step="0.01">
                         </div>
                         <div class="field">
                             <form:label path="idUsuario">Responsable *</form:label>

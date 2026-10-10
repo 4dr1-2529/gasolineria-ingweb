@@ -8,6 +8,8 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,10 +24,14 @@ import com.example.nexo.service.UsuarioService;
 
 /**
  * Finanzas: consulta de los movimientos de caja, de sus ingresos y
- * egresos y del detalle de cada movimiento (P15, P16 y P30).
- * No hay formularios de alta: los movimientos nacen de las compras
- * (egreso, RN04) y de las ventas (ingreso, RN04) y el saldo se calcula
- * con BigDecimal como apertura + ingresos − egresos.
+ * egresos y del detalle de cada movimiento (P15, P16 y P30), más el
+ * CRUD del catálogo de conceptos económicos (F23–F25).
+ * No hay formularios de alta de movimientos: los movimientos nacen de
+ * las compras (egreso, RN04) y de las ventas (ingreso, RN04) y el saldo
+ * se calcula con BigDecimal como apertura + ingresos − egresos.
+ * Cualquier validación fallida devuelve al formulario con el aviso del
+ * servidor y conserva lo digitado; el éxito redirige al listado.
+ * RN02: no hay ninguna ruta de eliminación, sólo cambio de estado (F25).
  */
 @Controller
 @RequestMapping("/finanzas")
@@ -96,6 +102,87 @@ public class FinanzasController {
         model.addAttribute("total", total);
         agregarConciliacion(model);
         return vista;
+    }
+
+    /** F24 · P17 · Catálogo de conceptos con su tipo y estado. */
+    @GetMapping("/conceptos/list")
+    public String listarConceptos(Model model) {
+        model.addAttribute("conceptos", movimientoService.listaConceptos());
+        // Los conceptos con movimientos asociados se conservan (RN02)
+        model.addAttribute("cantidadMovimientos", movimientoService.listaMovimientos().size());
+        return "finanzas/conceptos"; // Retorna la vista correspondiente
+    }
+
+    @GetMapping("/conceptos/crear")
+    public String mostrarFormularioCrearConcepto(Model model) {
+        // Se agrega un objeto vacío al modelo para que el formulario pueda vincularse
+        if (!model.containsAttribute("concepto")) {
+            model.addAttribute("concepto", new ConceptoMovimiento());
+        }
+        return "finanzas/concepto-crear"; // Retorna la vista correspondiente
+    }
+
+    @PostMapping("/conceptos/crear")
+    public String crearConcepto(@ModelAttribute("concepto") ConceptoMovimiento concepto,
+            RedirectAttributes redirect) {
+        String error = movimientoService.crearConcepto(concepto);
+        if (error != null) {
+            // Se conserva lo digitado y se muestra el motivo del servidor
+            redirect.addFlashAttribute("concepto", concepto);
+            redirect.addFlashAttribute("mensaje", error);
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/finanzas/conceptos/crear";
+        }
+        redirect.addFlashAttribute("mensaje", "El concepto se registró correctamente.");
+        redirect.addFlashAttribute("mensajeTipo", "ok");
+        return "redirect:/finanzas/conceptos/list";
+    }
+
+    @GetMapping("/conceptos/editar")
+    public String mostrarFormularioEditarConcepto(@RequestParam("id") String id, Model model,
+            RedirectAttributes redirect) {
+        ConceptoMovimiento concepto = movimientoService.buscarConceptoPorId(id);
+        if (concepto == null) {
+            redirect.addFlashAttribute("mensaje", "No se encontró el concepto solicitado.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/finanzas/conceptos/list";
+        }
+        model.addAttribute("concepto", concepto);
+        return "finanzas/concepto-editar"; // Retorna la vista correspondiente
+    }
+
+    @PostMapping("/conceptos/editar")
+    public String editarConcepto(@ModelAttribute("concepto") ConceptoMovimiento concepto,
+            RedirectAttributes redirect) {
+        String error = movimientoService.editarConcepto(concepto);
+        if (error != null) {
+            redirect.addFlashAttribute("concepto", concepto);
+            redirect.addFlashAttribute("mensaje", error);
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/finanzas/conceptos/editar?id=" + concepto.getId();
+        }
+        redirect.addFlashAttribute("mensaje", "El concepto se editó correctamente.");
+        redirect.addFlashAttribute("mensajeTipo", "ok");
+        return "redirect:/finanzas/conceptos/list";
+    }
+
+    /**
+     * F25 · RN02: cambiar estado sin eliminar. El código viaja oculto en el
+     * formulario del listado; el estado lo decide el botón pulsado.
+     */
+    @PostMapping("/conceptos/estado")
+    public String cambiarEstadoConcepto(@RequestParam("id") String id,
+            @RequestParam("estado") String estado, RedirectAttributes redirect) {
+        String error = movimientoService.cambiarEstadoConcepto(id, estado);
+        if (error != null) {
+            redirect.addFlashAttribute("mensaje", error);
+            redirect.addFlashAttribute("mensajeTipo", "error");
+        } else {
+            redirect.addFlashAttribute("mensaje",
+                    "El concepto quedó " + estado + " (el registro se conserva, RN02).");
+            redirect.addFlashAttribute("mensajeTipo", "ok");
+        }
+        return "redirect:/finanzas/conceptos/list";
     }
 
     /** Datos comunes de la conciliación: apertura + ingresos − egresos = saldo. */

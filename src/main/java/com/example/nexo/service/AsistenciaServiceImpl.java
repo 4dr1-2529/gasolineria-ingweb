@@ -16,21 +16,15 @@ import com.example.nexo.model.Empleado;
  * No hay base de datos: la lista vive mientras la aplicación está en ejecución.
  * Los datos iniciales son las marcaciones documentadas de la versión 1.
  *
- * Se aplican aquí las reglas de asistencia de la versión 1:
- * RN05 cada quien registra y consulta su propia asistencia (no hay selector),
+ * RN05 · cada método recibe el idEmpleado resuelto por el controller a partir
+ * del usuario autenticado; el navegador nunca envía ese identificador y aquí
+ * no existe ningún empleado fijo de demostración. Se aplican además:
  * una sola asistencia por empleado y jornada,
  * la hora de salida debe ser posterior a la entrada,
  * el estado se calcula en servidor a partir de las horas.
  */
 @Service
 public class AsistenciaServiceImpl implements AsistenciaService {
-
-    /**
-     * TEMPORAL: mientras no existe Spring Security, la aplicación trabaja con un
-     * empleado de demostración (Ana Torres). Cuando exista autenticación, este
-     * valor será reemplazado por el empleado del usuario autenticado.
-     */
-    private static final Integer EMPLEADO_ACTUAL_DEMO = 1;
 
     private final List<Asistencia> asistencias = new ArrayList<>();
     private final EmpleadoService empleadoService;
@@ -50,37 +44,26 @@ public class AsistenciaServiceImpl implements AsistenciaService {
         return asistencias;
     }
 
-    public List<Asistencia> listaAsistenciasEmpleadoActual() {
+    public List<Asistencia> listaAsistenciasDeEmpleado(Integer idEmpleado) {
         List<Asistencia> propias = new ArrayList<>();
+        if (idEmpleado == null) {
+            return propias;
+        }
         for (Asistencia asistencia : asistencias) {
-            // RN05: sólo la asistencia del empleado actual (no hay selector)
-            if (asistencia.getIdEmpleado().equals(EMPLEADO_ACTUAL_DEMO)) {
+            // RN05: sólo la asistencia del empleado indicado (no hay selector)
+            if (asistencia.getIdEmpleado().equals(idEmpleado)) {
                 propias.add(asistencia);
             }
         }
         return propias;
     }
 
-    public List<Asistencia> listaAsistenciasPorEmpleado(Integer idEmpleado) {
+    public Asistencia buscarAsistenciaAbierta(Integer idEmpleado) {
         if (idEmpleado == null) {
-            return asistencias;
+            return null;
         }
-        List<Asistencia> filtradas = new ArrayList<>();
         for (Asistencia asistencia : asistencias) {
-            if (asistencia.getIdEmpleado().equals(idEmpleado)) {
-                filtradas.add(asistencia);
-            }
-        }
-        return filtradas;
-    }
-
-    /**
-     * Devuelve la asistencia abierta de la jornada de hoy (entrada sin salida)
-     * o null si no existe.
-     */
-    public Asistencia buscarAsistenciaAbierta() {
-        for (Asistencia asistencia : asistencias) {
-            if (asistencia.getIdEmpleado().equals(EMPLEADO_ACTUAL_DEMO)
+            if (asistencia.getIdEmpleado().equals(idEmpleado)
                     && asistencia.getFecha().equals(LocalDate.now())
                     && asistencia.getHoraEntrada() != null
                     && asistencia.getHoraSalida() == null) {
@@ -90,16 +73,16 @@ public class AsistenciaServiceImpl implements AsistenciaService {
         return null;
     }
 
-    public String registrarEntrada() {
-        Empleado empleado = empleadoService.buscarEmpleadoPorId(EMPLEADO_ACTUAL_DEMO);
+    public String registrarEntrada(Integer idEmpleado) {
+        Empleado empleado = empleadoService.buscarEmpleadoPorId(idEmpleado);
         if (empleado == null) {
-            return "No se encontró el empleado de la demostración.";
+            return "No se encontró el empleado de tu cuenta: contacta al Administrador.";
         }
         if (!"Activo".equals(empleado.getEstado())) {
             // Sólo los empleados activos pueden registrar asistencia
             return "Sólo los empleados activos pueden registrar asistencia.";
         }
-        if (buscarAsistenciaAbierta() != null) {
+        if (buscarAsistenciaAbierta(idEmpleado) != null) {
             // RN05: no puede haber una segunda asistencia abierta
             return "Ya registraste la entrada de hoy: no puede haber una segunda asistencia abierta.";
         }
@@ -117,12 +100,12 @@ public class AsistenciaServiceImpl implements AsistenciaService {
         return "Entrada registrada a las " + hora(horaEntrada) + ".";
     }
 
-    public String registrarSalida() {
-        Empleado empleado = empleadoService.buscarEmpleadoPorId(EMPLEADO_ACTUAL_DEMO);
+    public String registrarSalida(Integer idEmpleado) {
+        Empleado empleado = empleadoService.buscarEmpleadoPorId(idEmpleado);
         if (empleado == null) {
-            return "No se encontró el empleado de la demostración.";
+            return "No se encontró el empleado de tu cuenta: contacta al Administrador.";
         }
-        Asistencia abierta = buscarAsistenciaAbierta();
+        Asistencia abierta = buscarAsistenciaAbierta(idEmpleado);
         if (abierta == null) {
             // No hay asistencia abierta: no se lanza ningún error
             return "No hay una asistencia abierta para registrar la salida.";
@@ -137,8 +120,8 @@ public class AsistenciaServiceImpl implements AsistenciaService {
         return "Salida registrada a las " + hora(horaSalida) + ".";
     }
 
-    public Empleado getEmpleadoActual() {
-        return empleadoService.buscarEmpleadoPorId(EMPLEADO_ACTUAL_DEMO);
+    public Empleado buscarEmpleado(Integer idEmpleado) {
+        return empleadoService.buscarEmpleadoPorId(idEmpleado);
     }
 
     /**

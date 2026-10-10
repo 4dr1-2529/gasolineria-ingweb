@@ -1,3 +1,4 @@
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -16,20 +17,40 @@
             <span>NEXO<small>ESTACIÓN NEXO</small></span>
         </a>
         <nav>
-            <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
-            <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
+            <c:set var="esAdmin" value="false"/>
+            <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
+                <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}">
+                    <c:set var="esAdmin" value="true"/>
+                </c:if>
+            </c:forEach>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
+                <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/combustibles/list">Combustibles</a>
-            <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
-            <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
-            <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
-            <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
-            <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
+                <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
+                <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
+                <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
+                <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/asistencia/mi" aria-current="page">Asistencia</a>
-            <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/inventario/list">Inventario</a>
             <a href="${pageContext.request.contextPath}/ventas/list">Ventas</a>
-            <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
+            </c:if>
         </nav>
+        <div class="sesion">
+            <span class="sesion-usuario">Sesión: <c:out value="${pageContext.request.remoteUser}"/></span>
+            <form:form action="${pageContext.request.contextPath}/logout" method="post" cssClass="sesion-salir">
+                <button type="submit">Cerrar sesión</button>
+            </form:form>
+        </div>
         <div class="sidebar-bottom">
             INGENIERÍA WEB
             <span>GRUPO G1 · 2026</span>
@@ -50,21 +71,18 @@
                     <p class="subtitle">Consultar y registrar la asistencia del empleado autenticado.</p>
                 </div>
                 <div class="actions">
-                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/asistencia/control">Control de asistencia</a>
-                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/empleados/list">Personal</a>
+                    <c:if test="${esAdmin}">
+                        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/asistencia/control">Control de asistencia</a>
+                        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/empleados/list">Personal</a>
+                    </c:if>
                 </div>
             </div>
 
             <c:if test="${not empty mensaje}">
-                <p class="notice">
+                <p class="notice ${mensajeTipo}">
                     <c:out value="${mensaje}"/>
                 </p>
             </c:if>
-
-            <p class="notice">
-                Esta versión utiliza un empleado de demostración. La identificación del usuario será
-                reemplazada por Spring Security en la siguiente etapa.
-            </p>
 
             <section class="panel">
                 <h2>Registrar asistencia del día · F35</h2>
@@ -106,16 +124,17 @@
                     </table>
                 </div>
                 <div class="actions">
-                    <form action="${pageContext.request.contextPath}/asistencia/entrada" method="post">
+                    <form:form action="${pageContext.request.contextPath}/asistencia/entrada" method="post">
                         <button type="submit" class="btn btn-primary">Registrar entrada</button>
-                    </form>
-                    <form action="${pageContext.request.contextPath}/asistencia/salida" method="post">
+                    </form:form>
+                    <form:form action="${pageContext.request.contextPath}/asistencia/salida" method="post">
                         <button type="submit" class="btn btn-secondary">Registrar salida</button>
-                    </form>
+                    </form:form>
                 </div>
                 <p class="form-help">
-                    La fecha y la hora se generan en el servidor al momento de registrar; los cambios
-                    quedan en memoria mientras la aplicación está en ejecución.
+                    La fecha y la hora se generan en el servidor a la hora de Perú (America/Lima)
+                    al momento de registrar; los cambios quedan en memoria mientras la
+                    aplicación está en ejecución.
                 </p>
             </section>
 

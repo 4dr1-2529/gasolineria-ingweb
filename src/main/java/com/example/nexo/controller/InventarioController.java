@@ -3,6 +3,7 @@ package com.example.nexo.controller;
 import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,7 +101,12 @@ public class InventarioController {
 
     @GetMapping("/entrada/crear")
     public String mostrarFormularioEntrada(Model model) {
-        model.addAttribute("movimiento", new MovimientoInventario());
+        // Tras un rechazo conserva lo digitado (el objeto viene por flash)
+        if (!model.containsAttribute("movimiento")) {
+            model.addAttribute("movimiento", new MovimientoInventario());
+        }
+        // RN02 · Sólo los combustibles con estado Activo reciben movimientos
+        model.addAttribute("productosActivos", productosActivos());
         model.addAttribute("productos", productoService.listaProductos());
         model.addAttribute("operadores", operadores());
         return "inventario/entrada";
@@ -113,18 +119,26 @@ public class InventarioController {
         movimiento.setFechaHora(parseFechaHora(fechaHora));
         String error = movimientoService.registrarEntrada(movimiento);
         if (error != null) {
-            // Entrada rechazada: se regresa al formulario sin modificar ningún dato
+            // Entrada rechazada: se regresa al formulario conservando lo digitado
+            redirect.addFlashAttribute("movimiento", movimiento);
             redirect.addFlashAttribute("mensaje", error);
+            redirect.addFlashAttribute("mensajeTipo", "error");
             return "redirect:/inventario/entrada/crear";
         }
         redirect.addFlashAttribute("mensaje", "Entrada " + movimiento.getId()
                 + " registrada: " + movimiento.getCantidad() + " L añadidos al stock.");
+        redirect.addFlashAttribute("mensajeTipo", "ok");
         return "redirect:/inventario/list";
     }
 
     @GetMapping("/salida/crear")
     public String mostrarFormularioSalida(Model model) {
-        model.addAttribute("movimiento", new MovimientoInventario());
+        // Tras un rechazo conserva lo digitado (el objeto viene por flash)
+        if (!model.containsAttribute("movimiento")) {
+            model.addAttribute("movimiento", new MovimientoInventario());
+        }
+        // RN02 · Sólo los combustibles con estado Activo reciben movimientos
+        model.addAttribute("productosActivos", productosActivos());
         model.addAttribute("productos", productoService.listaProductos());
         model.addAttribute("operadores", operadores());
         return "inventario/salida";
@@ -137,12 +151,15 @@ public class InventarioController {
         movimiento.setFechaHora(parseFechaHora(fechaHora));
         String error = movimientoService.registrarSalida(movimiento);
         if (error != null) {
-            // Salida rechazada: se regresa al formulario sin modificar ningún dato
+            // Salida rechazada: se regresa al formulario conservando lo digitado
+            redirect.addFlashAttribute("movimiento", movimiento);
             redirect.addFlashAttribute("mensaje", error);
+            redirect.addFlashAttribute("mensajeTipo", "error");
             return "redirect:/inventario/salida/crear";
         }
         redirect.addFlashAttribute("mensaje", "Salida " + movimiento.getId()
                 + " registrada: " + movimiento.getCantidad() + " L descontados del stock.");
+        redirect.addFlashAttribute("mensajeTipo", "ok");
         return "redirect:/inventario/list";
     }
 
@@ -190,11 +207,28 @@ public class InventarioController {
     private Map<Integer, String> operadores() {
         Map<Integer, String> nombres = new HashMap<>();
         for (Usuario usuario : usuarioService.listaUsuarios()) {
-            if ("Operador / Vendedor".equals(usuario.getRol())) {
+            // RN02: una cuenta Inactiva no se elige en operaciones nuevas
+            if ("Operador / Vendedor".equals(usuario.getRol())
+                    && "Activo".equals(usuario.getEstado())) {
                 nombres.put(usuario.getId(), nombreResponsable(usuario.getId()));
             }
         }
         return nombres;
+    }
+
+    /**
+     * RN02 · Combustibles que pueden recibir movimientos manuales: sólo los
+     * productos con estado Activo. El libro de movimientos (tabla inferior)
+     * sigue mostrando todos, con su estado.
+     */
+    private List<Producto> productosActivos() {
+        List<Producto> activos = new ArrayList<>();
+        for (Producto producto : productoService.listaProductos()) {
+            if ("Activo".equals(producto.getEstado())) {
+                activos.add(producto);
+            }
+        }
+        return activos;
     }
 
     /**

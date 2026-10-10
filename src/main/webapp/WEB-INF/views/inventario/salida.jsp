@@ -20,20 +20,40 @@
             <span>NEXO<small>ESTACIÓN NEXO</small></span>
         </a>
         <nav>
-            <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
-            <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
+            <c:set var="esAdmin" value="false"/>
+            <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
+                <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}">
+                    <c:set var="esAdmin" value="true"/>
+                </c:if>
+            </c:forEach>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
+                <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/combustibles/list">Combustibles</a>
-            <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
-            <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
-            <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
-            <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
-            <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
+                <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
+                <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
+                <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
+                <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/asistencia/mi">Asistencia</a>
-            <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/inventario/list" aria-current="page">Inventario</a>
             <a href="${pageContext.request.contextPath}/ventas/list">Ventas</a>
-            <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
+            </c:if>
         </nav>
+        <div class="sesion">
+            <span class="sesion-usuario">Sesión: <c:out value="${pageContext.request.remoteUser}"/></span>
+            <form:form action="${pageContext.request.contextPath}/logout" method="post" cssClass="sesion-salir">
+                <button type="submit">Cerrar sesión</button>
+            </form:form>
+        </div>
         <div class="sidebar-bottom">
             INGENIERÍA WEB
             <span>GRUPO G1 · 2026</span>
@@ -59,7 +79,7 @@
             </div>
 
             <c:if test="${not empty mensaje}">
-                <p class="notice">
+                <p class="notice ${mensajeTipo}">
                     <c:out value="${mensaje}"/>
                 </p>
             </c:if>
@@ -75,8 +95,9 @@
                     <div class="form-grid">
                         <div class="form-field">
                             <label for="idProducto">Producto *</label>
+                            <%-- RN02 · Sólo los combustibles activos admiten movimientos; la tabla inferior sí muestra todos --%>
                             <select class="form-select" id="idProducto" name="idProducto" required>
-                                <c:forEach items="${productos}" var="producto">
+                                <c:forEach items="${productosActivos}" var="producto">
                                     <option value="${producto.id}" <c:if test="${movimiento.idProducto == producto.id}">selected</c:if>>
                                         <c:out value="${producto.nombre}"/>
                                     </option>
@@ -85,15 +106,15 @@
                         </div>
                         <div class="form-field">
                             <label for="cantidad">Cantidad en litros *</label>
-                            <input class="form-control" id="cantidad" name="cantidad" type="number" value="10" required min="0.01" step="0.01">
+                            <input class="form-control" id="cantidad" name="cantidad" type="number" value="${not empty movimiento.cantidad ? movimiento.cantidad : '10'}" required min="0.01" step="0.01">
                         </div>
                         <div class="form-field">
                             <label for="fechaHora">Fecha y hora *</label>
-                            <input class="form-control" id="fechaHora" name="fechaHora" type="datetime-local" value="2026-09-10T12:00" required>
+                            <input class="form-control" id="fechaHora" name="fechaHora" type="datetime-local" value="${not empty movimiento.fechaHora ? movimiento.fechaHora : '2026-09-10T12:00'}" required>
                         </div>
                         <div class="form-field">
                             <label for="motivo">Motivo *</label>
-                            <textarea class="form-control" id="motivo" name="motivo" rows="3" required minlength="5" maxlength="200">Retiro técnico de muestra</textarea>
+                            <textarea class="form-control" id="motivo" name="motivo" rows="3" required minlength="5" maxlength="200"><c:choose><c:when test="${not empty movimiento.motivo}"><c:out value="${movimiento.motivo}"/></c:when><c:otherwise>Retiro técnico de muestra</c:otherwise></c:choose></textarea>
                         </div>
                         <div class="form-field">
                             <label for="idUsuario">Responsable *</label>

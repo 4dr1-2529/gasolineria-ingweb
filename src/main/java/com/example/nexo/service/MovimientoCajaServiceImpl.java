@@ -106,6 +106,122 @@ public class MovimientoCajaServiceImpl implements MovimientoCajaService {
         return conceptos;
     }
 
+    public ConceptoMovimiento buscarConceptoPorId(String id) {
+        if (id == null) {
+            return null;
+        }
+        for (ConceptoMovimiento concepto : conceptos) {
+            if (id.equals(concepto.getId())) {
+                return concepto;
+            }
+        }
+        return null;
+    }
+
+    public String crearConcepto(ConceptoMovimiento concepto) {
+        String error = validarConcepto(concepto, null);
+        if (error != null) {
+            return error;
+        }
+        normalizarConcepto(concepto);
+        concepto.setId(siguienteCodigoConcepto());
+        conceptos.add(concepto);
+        return null; // alta completada
+    }
+
+    public String editarConcepto(ConceptoMovimiento concepto) {
+        ConceptoMovimiento existente = buscarConceptoPorId(concepto == null ? null : concepto.getId());
+        if (existente == null) {
+            return "No se encontró el concepto solicitado.";
+        }
+        String error = validarConcepto(concepto, concepto.getId());
+        if (error != null) {
+            return error;
+        }
+        normalizarConcepto(concepto);
+        existente.setNombre(concepto.getNombre());
+        existente.setTipo(concepto.getTipo());
+        existente.setEstado(concepto.getEstado());
+        return null; // edición completada: se conserva el código y el historial
+    }
+
+    public String cambiarEstadoConcepto(String id, String estado) {
+        ConceptoMovimiento concepto = buscarConceptoPorId(id);
+        if (concepto == null) {
+            return "No se encontró el concepto solicitado.";
+        }
+        if (!esEstadoValido(estado)) {
+            return "El estado debe ser Activo o Inactivo.";
+        }
+        // RN02: el concepto se conserva con su nuevo estado; no se elimina
+        concepto.setEstado(estado);
+        return null;
+    }
+
+    /**
+     * Reglas comunes de alta y edición (F23 y F25): nombre obligatorio de 3
+     * a 40 caracteres, único ignorando mayúsculas y espacios; tipo del
+     * catálogo (Ingreso / Egreso); estado del catálogo (Activo / Inactivo).
+     * 'idExcluido' es el código que no compite consigo mismo al unicidad.
+     */
+    private String validarConcepto(ConceptoMovimiento concepto, String idExcluido) {
+        if (concepto == null || concepto.getNombre() == null
+                || concepto.getNombre().trim().isEmpty()) {
+            return "El nombre del concepto es obligatorio.";
+        }
+        String nombre = concepto.getNombre().trim();
+        if (nombre.length() < 3 || nombre.length() > 40) {
+            return "El nombre del concepto debe tener entre 3 y 40 caracteres.";
+        }
+        // Unicidad ignorando mayúsculas y espacios (como en los demás catálogos)
+        String normalizado = normalizarTexto(nombre);
+        for (ConceptoMovimiento existente : conceptos) {
+            boolean mismo = idExcluido != null && idExcluido.equals(existente.getId());
+            if (!mismo && normalizado.equals(normalizarTexto(existente.getNombre()))) {
+                return "Ya existe un concepto con el nombre «" + existente.getNombre() + "».";
+            }
+        }
+        if (!"Ingreso".equals(concepto.getTipo()) && !"Egreso".equals(concepto.getTipo())) {
+            return "El tipo debe ser Ingreso o Egreso.";
+        }
+        if (!esEstadoValido(concepto.getEstado())) {
+            return "El estado debe ser Activo o Inactivo.";
+        }
+        return null; // sin errores
+    }
+
+    private boolean esEstadoValido(String estado) {
+        return "Activo".equals(estado) || "Inactivo".equals(estado);
+    }
+
+    /** Guarda el nombre sin los espacios sobrantes. */
+    private void normalizarConcepto(ConceptoMovimiento concepto) {
+        concepto.setNombre(concepto.getNombre().trim());
+    }
+
+    private String normalizarTexto(String texto) {
+        return texto.trim().toLowerCase().replaceAll("\\s+", " ");
+    }
+
+    /** Continúa la numeración de códigos: CE01, CE02 → CE03. */
+    private String siguienteCodigoConcepto() {
+        int maximo = 0;
+        for (ConceptoMovimiento concepto : conceptos) {
+            String id = concepto.getId();
+            if (id != null && id.startsWith("CE")) {
+                try {
+                    int numero = Integer.parseInt(id.substring(2));
+                    if (numero > maximo) {
+                        maximo = numero;
+                    }
+                } catch (NumberFormatException excepcion) {
+                    // Un código fuera del patrón no altera la numeración
+                }
+            }
+        }
+        return String.format("CE%02d", maximo + 1);
+    }
+
     public BigDecimal apertura() {
         return APERTURA;
     }

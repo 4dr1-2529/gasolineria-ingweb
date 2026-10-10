@@ -14,7 +14,7 @@ Los 31 HTML de la raíz son las 30 interfaces más `publicidad.html`, que es la 
 
 La maqueta usa sólo `css/` y `documentacion/` además de los HTML de la raíz. No hay carpetas `js/`, `backend/`, `frontend/`, `node_modules/` ni archivos de dependencias. Los scripts temporales de construcción y comprobación viven fuera del repositorio y no forman parte de la entrega.
 
-En el repositorio también están `recurso/` (11 PDF de la asignatura) y `.vscode/` (`launch.json`, `settings.json`), ajenos a la maqueta: se conservaron sin modificar. `recurso/` es el material oficial del curso citado en `14_bibliografia.md`. No se cuentan entre los 56 archivos ni en los controles de texto.
+En el repositorio también están `recurso/` (9 PDF de la asignatura; la ETAPA 9 eliminó 2 copias byte-idénticas, ver [19_organizacion_repositorio.md](19_organizacion_repositorio.md)) y `.vscode/` (`launch.json`, `settings.json`), ajenos a la maqueta: se conservaron sin modificar. `recurso/` es el material oficial del curso citado en `14_bibliografia.md`. No se cuentan entre los 56 archivos ni en los controles de texto.
 
 ## Controles y resultados
 

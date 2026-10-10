@@ -1,3 +1,4 @@
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -19,20 +20,40 @@
             <span>NEXO<small>ESTACIÓN NEXO</small></span>
         </a>
         <nav>
-            <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
-            <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
+            <c:set var="esAdmin" value="false"/>
+            <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
+                <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}">
+                    <c:set var="esAdmin" value="true"/>
+                </c:if>
+            </c:forEach>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
+                <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/combustibles/list">Combustibles</a>
-            <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
-            <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
-            <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
-            <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
-            <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
+                <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
+                <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
+                <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
+                <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/asistencia/mi">Asistencia</a>
-            <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
+            </c:if>
             <a href="${pageContext.request.contextPath}/inventario/list">Inventario</a>
             <a href="${pageContext.request.contextPath}/ventas/list" aria-current="page">Ventas</a>
-            <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
+            <c:if test="${esAdmin}">
+                <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
+            </c:if>
         </nav>
+        <div class="sesion">
+            <span class="sesion-usuario">Sesión: <c:out value="${pageContext.request.remoteUser}"/></span>
+            <form:form action="${pageContext.request.contextPath}/logout" method="post" cssClass="sesion-salir">
+                <button type="submit">Cerrar sesión</button>
+            </form:form>
+        </div>
         <div class="sidebar-bottom">
             INGENIERÍA WEB
             <span>GRUPO G1 · 2026</span>

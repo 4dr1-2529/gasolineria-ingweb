@@ -266,8 +266,8 @@ Para no presentar como «implementado» algo que sólo está previsto, los patro
 
 | Patrón | Qué resuelve | Dónde está definido | Estado |
 |---|---|---|---|
-| **Modelo-Vista-Controlador (MVC)** | Separar datos, presentación y lógica | Modelo: las 12 entidades de [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md); Vista: 31 HTML + `css/estilos.css` (V1) y 27 vistas JSP (V2); Controlador: los F01–F38 (README sección 16) | **Implementado en V2 para 25/38 funcionalidades** (`@Controller`, `@GetMapping`/`@PostMapping`, `Controller → Service → ServiceImpl` sobre `List<T>` en memoria); las 13 restantes siguen pendientes |
-| **Service / ServiceImpl (capa de lógica)** | Separar la lógica de negocio del controlador | README sección 16 «Versión V2 y etapa posterior»; aplica RN01, RN02, RN03 y RN04 sobre compra (F13) y venta (F20) | **Implementado en V2** — servicios sobre datos en memoria (`List<T>`), sin base de datos |
+| **Modelo-Vista-Controlador (MVC)** | Separar datos, presentación y lógica | Modelo: las 12 entidades de [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md); Vista: 31 HTML + `css/estilos.css` (V1) y 34 vistas JSP (V2); Controlador: los F01–F38 (README sección 16) | **Implementado en V2 para 35/38 funcionalidades** (`@Controller`, `@GetMapping`/`@PostMapping`, `Controller → Service → ServiceImpl` sobre `List<T>` en memoria, verificado por la regresión integral ETAPA 10 con 126/126 pruebas); las 3 restantes (F03, F33 y F34) quedan fuera del alcance V2 y existen sólo en V1 |
+| **Service / ServiceImpl (capa de lógica)** | Separar la lógica de negocio del controlador | README sección 16 «Versión V2 y etapa posterior»; aplica RN01–RN05 sobre compra (F13), venta (F20), inventario (F16 y F17) y asistencia (F35–F38); RN02 rige los cinco catálogos con estado | **Implementado en V2** — servicios sobre datos en memoria (`List<T>`), sin base de datos |
 | **Repository / DAO y base de datos (capa de persistencia)** | Separar el acceso a datos persistidos | README sección 16 «Versión V2 y etapa posterior» (Spring Data JPA cuando exista base de datos) | **Pendiente para la etapa posterior** — hoy no hay Repository, DAO, JPA, Hibernate, JdbcTemplate ni conexiones a BD |
 
 ### C. Patrones revisados en el curso
@@ -318,7 +318,7 @@ Las fases siguen el orden real del trabajo realizado y del que queda. **Las fech
 | 8 | Cierre de 5.9–5.15 | Este documento, los puntos 5.11–5.14 y [15_anexos.md](15_anexos.md) | Ejecutado | 01/10/2026 |
 | 9 | Revisión del equipo y compilación del informe (A4, Arial 11) | Informe final con carátula, integrantes y glosario en plantilla | Pendiente | **PENDIENTE (equipo)** |
 | 10 | Exposición Avance 1 | Presentación oral y respuesta de preguntas técnicas | Pendiente | **PENDIENTE (equipo)** |
-| 11 | Etapa Spring Boot (fuera del Avance 1) | Implementación de F01–F38 y validación de RN01–RN05 — V2 en `main` (commit `9084263`) con 25/38 operativas | **En curso** — iniciada; 13 funcionalidades y la persistencia siguen pendientes | Sin registrar en el repositorio |
+| 11 | Etapa Spring Boot (fuera del Avance 1) | Implementación de F01–F38 y validación de RN01–RN05 — V2 en `main` (commit `9084263`) con 35/38 operativas (regresión integral ETAPA 10: 126/126 pruebas) | **En curso** - F03, F33 y F34 quedan fuera del alcance V2; la persistencia sigue pendiente | Sin registrar en el repositorio |
 
 ---
 
