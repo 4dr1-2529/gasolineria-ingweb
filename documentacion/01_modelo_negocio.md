@@ -4,7 +4,7 @@
 
 Estación Nexo es un sistema web para la gestión de una estación de servicio. Gestiona categorías, combustibles, compras, ventas, inventario, movimientos de caja, empleados, usuarios y asistencia.
 
-La versión actual de desarrollo se construye con Spring Boot 3.5.0, Java 17, patrón MVC (Controller → Service → ServiceImpl), clases Java, vistas JSP/JSTL y datos en memoria (listas `List<T>`). La aplicación no consume base de datos todavía: no hay esquema persistente, ni capa de Repositorio, ni mapeo ORM. Tampoco hay autenticación real, Spring Security ni interfaces REST: las vistas se consultan por rutas HTTP internas y los registros viven mientras la aplicación está en ejecución.
+La versión actual de desarrollo se construye con Spring Boot 3.5.0, Java 17, patrón MVC (Controller → Service → ServiceImpl), clases Java, vistas JSP/JSTL y datos en memoria (listas `List<T>`). La aplicación no consume base de datos todavía: no hay esquema persistente, ni capa de Repositorio, ni mapeo ORM. La autenticación y la autorización se aplican con Spring Security, sesiones, roles, BCrypt y protección CSRF; no se exponen interfaces REST. Los registros viven mientras la aplicación está en ejecución.
 
 La versión V1 (31 archivos HTML + CSS) es la maqueta navegable de la que nacen las 30 interfaces P01–P30. La versión V2 replica esos módulos con lógica real sobre datos en memoria.
 
@@ -42,7 +42,7 @@ Definir y desarrollar Estación Nexo como un sistema web para gestionar las oper
 - **Administrador:** categorías, combustibles, compras, conceptos, empleados, usuarios, control de asistencia y supervisión de la operación.
 - **Operador / Vendedor:** consultas de existencias, ventas, salidas de inventario y su propia asistencia.
 
-En la versión actual no hay autenticación: los roles describen quién realiza cada acción en la operación, no permisos verificados por sesión.
+Los roles de negocio describen quién realiza cada acción. En la V2 esos roles se aplican con Spring Security y una sesión autenticada.
 
 ## Baja lógica
 

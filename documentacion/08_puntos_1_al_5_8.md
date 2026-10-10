@@ -1,6 +1,6 @@
 # Proyecto académico · Ingeniería Web · G1
 
-Documento que cubre los puntos **5.1 a 5.8** de la estructura del proyecto, exigidos por la rúbrica de Avance 1 («Documentación: del punto 5.1 al 5.8 y del 5.10 al 5.14»). Los puntos **5.10 a 5.15** figuran al final con su estado real. El punto **5.9 (Reglas de Negocio)** está deliberadamente fuera de este documento y se encuentra en [05_reglas_negocio.md](05_reglas_negocio.md).
+Documento que cubre los puntos **5.1 a 5.8** de la estructura del proyecto, exigidos por la rúbrica de Avance 1 («Documentación: del punto 5.1 al 5.8 y del 5.10 al 5.14»). Los puntos **5.10 a 5.14** figuran al final con su estado real. El punto **5.9 (Reglas de Negocio)** está deliberadamente fuera de este documento y se encuentra en [05_reglas_negocio.md](05_reglas_negocio.md).
 
 ---
 
@@ -40,7 +40,7 @@ Contenido del alcance:
 | Entidades | 12 | Categoría, Producto, Compra, DetalleCompra, Empleado, Usuario, Venta, DetalleVenta, MovimientoInventario, ConceptoMovimiento, MovimientoCaja, Asistencia |
 | Métricas de serie de tiempo (eje X temporal) | 5 | Dashboard, gráficos 1–5 (exigido: 5) |
 | KPI de estado puntual | 5 | Dashboard, tarjetas superiores |
-| Hojas de estilo | 1 | `css/estilos.css` |
+| Hojas de estilo | 1 | `diseno-original/css/estilos.css` |
 | Documentos Markdown | 10 | `documentacion/00` a `09` |
 
 **Tecnología (V1, maqueta estática):** HTML5, CSS3 y Bootstrap 5.3.3 únicamente por CDN (`cdn.jsdelivr.net`, CSS). **Sin JavaScript**: no hay archivos `.js`, ni etiquetas `<script>`, ni atributos `onclick`, ni Bootstrap JS, ni Node.js, ni APIs, ni backend, ni base de datos, ni `localStorage`. Los formularios y botones son visuales y no persisten nada; la navegación entre archivos sí funciona. **V2 = Spring Boot ya iniciada e integrada en `main`** (commit `9084263`): `@Controller` → `Service` → `ServiceImpl` sobre datos en memoria, **25 de 38 funcionalidades operativas**, sin base de datos ni persistencia; la etapa posterior añadirá persistencia y seguridad.
@@ -329,7 +329,7 @@ La ficha completa de cada funcionalidad —descripción, actor, entrada, proceso
 
 ---
 
-## Puntos 5.10 a 5.15 · Estado
+## Puntos 5.10 a 5.14 · Estado
 
 La rúbrica de Avance 1 exige «del punto 5.1 al 5.8 y el 5.10 al 5.14». Se documenta aquí el estado real de cada uno para que la decisión humana sea explícita.
 
@@ -340,11 +340,10 @@ La rúbrica de Avance 1 exige «del punto 5.1 al 5.8 y el 5.10 al 5.14». Se doc
 | **5.12 Recomendaciones** | Máximo tres recomendaciones para equipos similares | **Entregado (no cerrado)** | Tres recomendaciones derivadas de las conclusiones en [12_recomendaciones.md](12_recomendaciones.md), dentro del alcance HTML5 + CSS3 + Bootstrap sin JavaScript. **Pendiente:** validación del equipo. |
 | **5.13 Glosario** | Términos técnicos o nuevos | **Entregado (no cerrado)** | 51 términos reales del proyecto en [13_glosario.md](13_glosario.md), agrupados por dominio, modelo, ingeniería web y vocabulario propio. **Pendiente:** volcarlo a la plantilla oficial del informe (A4, Arial 11, interlineado simple) al compilar. |
 | **5.14 Bibliografía** | Material bibliográfico consultado | **Entregado (parcial)** | 27 elementos consultados en [14_bibliografia.md](14_bibliografia.md): 14 fuentes web del 5.3 con URL y fecha, 10 documentos del curso y la dependencia/herramientas. **Pendiente humano:** las dos obras obligatorias de 5.10 (Coronel/Morris/Rob; Cervantes Maceda, Velasco-Elizondo y Castro Careaga). |
-| **5.15 Anexos** | Material complementario que permite ampliar la comprensión del proyecto | **Entregado** | Índice en [15_anexos.md](15_anexos.md): 5 anexos listados por referencia (BPMN, matriz, trazabilidad, evidencias de validación y 5 capturas en `anexos/`), material que no es anexo y aclaración del Anexo 1/4 del documento oficial. **Fuera del puntaje de la rúbrica de Avance 1** (sólo puntúa 5.1–5.8 y 5.10–5.14). |
 
 > **[PENDIENTES QUE EXIGEN DECISIÓN HUMANA]**: (a) integrantes y coordinador del G1 — punto 3; (b) confirmación del anexo/registro oficial que respalda el proceso de gasolinera — punto 4; (c) capturas de los patrones revisados en clase y fechas reales del cronograma — 5.10; (d) lectura y cita de las dos obras bibliográficas obligatorias — 5.10 y 5.14; (e) validación por el equipo de la redacción de conclusiones y recomendaciones — 5.11 y 5.12; (f) volcado del glosario a la plantilla del informe — 5.13.
 
-### Clasificación de los pendientes (etapa 5.15)
+### Clasificación de los pendientes
 
 Ninguno se resolvió artificialmente; sólo se etiqueta su estado real (`resuelto` · `pendiente humano` · `requiere evidencia` · `no requerido`):
 
@@ -357,9 +356,7 @@ Ninguno se resolvió artificialmente; sólo se etiqueta su estado real (`resuelt
 | (d) | Lectura y cita de las dos obras bibliográficas obligatorias — 5.10 y 5.14 | **pendiente humano** |
 | (e) | Validación del equipo sobre conclusiones y recomendaciones — 5.11 y 5.12 | **pendiente humano** |
 | (f) | Volcado del glosario a la plantilla del informe (A4, Arial 11, interlineado simple) — 5.13 | **pendiente humano** |
-| — | Índice de anexos 5.15 y sus 5 archivos — [15_anexos.md](15_anexos.md) | **resuelto** (01/10/2026) |
 | — | Capturas de validación de interfaces (anexo A-5) | **resuelto** (01/10/2026) |
-| — | Puntaje del punto 5.15 en la rúbrica de Avance 1 | **no requerido** (la rúbrica sólo puntúa 5.1–5.8 y 5.10–5.14) |
 | — | Scripts de validación como parte de la entrega | **no requerido** (decisión documentada en [00_auditoria.md](00_auditoria.md) §Decisiones) |
 
 ---

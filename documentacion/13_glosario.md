@@ -49,7 +49,7 @@ Fuente: `recurso/Proyecto Estructura_v2 (1).pdf`, punto **5.13 Glosario** — «
 | Término | Definición en este proyecto |
 |---|---|
 | Funcionalidad | Unidad funcional completa que permite cumplir un objetivo de negocio de principio a fin (definición oficial del punto 5.8). Hay 38: F01–F38. |
-| Interfaz | Pantalla del sistema que representa funcionalidades. Hay 30: P01–P30 (31 archivos HTML en la raíz; `publicidad.html` es la segunda presentación de P01). |
+| Interfaz | Pantalla del sistema que representa funcionalidades. Hay 30: P01–P30 (31 archivos HTML en `diseno-original/`; `publicidad.html` es la segunda presentación de P01). |
 | Mi asistencia (P28) | Interfaz del empleado autenticado: registra y consulta su propia marcación (F35, F36, F37; RN05). Ejemplo del corte: Ana Torres, 10/09/2026, 08:00–17:00, Presente. Archivo `mi-asistencia.html`. |
 | Control de asistencia (P29) | Interfaz del administrador para consultar la asistencia de todo el personal (F38; RN05). Archivo `control-asistencia.html`. |
 | Regla de negocio | Declaración formal, atómica, declarativa, estable y obligatoria que restringe el negocio (punto 5.9). Hay 5: RN01–RN05. |

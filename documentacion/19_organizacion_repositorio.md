@@ -2,7 +2,7 @@
 
 Objetivo: ordenar **conceptualmente** los archivos y dejar una estructura clara sin mover código activo. Única operación destructiva autorizada: eliminar los dos PDF duplicados de `recurso/`, verificando antes que sean idénticos. No se borra ningún HTML V1, JSP, Java, diagrama, matriz, Maven Wrapper ni documentación original.
 
-## 1. Mapa conceptual vigente (verificado el 09/10/2026)
+## 1. Mapa conceptual anterior (verificado el 09/10/2026; actualizado abajo)
 
 ```
 raíz del proyecto
@@ -31,7 +31,7 @@ raíz del proyecto
 
 Los scripts temporales de construcción y comprobación viven fuera del repositorio (decisión registrada en [00_auditoria.md](00_auditoria.md)) y no forman parte de la entrega.
 
-## 2. Cambios ejecutados en esta etapa
+## 2. Cambios ejecutados en la etapa anterior
 
 ### 2.1 Eliminación de los dos duplicados autorizados
 
@@ -54,11 +54,11 @@ Ambos archivos estaban versionados en git (recuperables con `git checkout`), y n
 
 No se modificó ningún otro contenido de la documentación original.
 
-## 3. Qué NO se movió y por qué
+## 3. Evaluación anterior al movimiento (09/10/2026; sustituida por la sección 6)
 
 | Elemento | Razón para no moverlo |
 |---|---|
-| Los 31 HTML de la raíz y `css/estilos.css` | Son la interfaz entregable de la V1; están enlazados entre sí (804 enlaces, 0 rotos) y citados por toda la documentación; moverlos rompería la navegación y las citas |
+| Los 31 HTML de la raíz y `css/estilos.css` | En el análisis previo se recomendó no moverlos por ser la interfaz V1 y estar enlazados entre sí. En la revisión del 10/10/2026 se trasladaron juntos a `diseno-original/`; se comprobaron sus enlaces relativos y se actualizaron las referencias documentales. |
 | `src/` (Java y JSP) | Paquete, rutas y nombres de vista están cableados (`@Controller` → JSP); cualquier movimiento exige refactor y recompilación |
 | `documentacion/` | Los 21 archivos se enlazan entre sí y desde el README |
 | `recurso/` | Los PDF se citan por nombre exacto en `14_bibliografia.md` §B y en las cabeceras de `10`–`15_*.md`; moverlos a subcarpetas rompería esas referencias |
@@ -72,8 +72,29 @@ No se modificó ningún otro contenido de la documentación original.
 
 Nada de esto se ejecuta sin autorización explícita.
 
-## 5. Verificación final
+## 5. Verificación de la etapa anterior (09/10/2026; antes del movimiento)
 
 - `recurso/`: **9 archivos PDF, 0 duplicados** (detección completa por MD5).
-- Ningún HTML V1, JSP, Java, diagrama, matriz, Maven Wrapper ni documento original eliminados o movidos.
-- Estado git: los borrados y ediciones quedan como cambios **pendientes en el working tree**; **sin commits** (instrucción vigente de la auditoría).
+- En ese corte no se habían movido HTML V1, JSP, Java, diagramas, matrices, Maven Wrapper ni documentos originales.
+- El estado pendiente de Git descrito correspondía a la etapa anterior; el estado de la rama de reorganización se registra al integrar y validar los movimientos en la sección 6.
+
+
+## 6. Revision de organizacion en la rama de trabajo (10/10/2026)
+
+Se trasladaron los **31 HTML de maqueta** desde la raiz a `diseno-original/` y `css/estilos.css` a `diseno-original/css/estilos.css`. Son evidencia de las 30 interfaces P01-P30 (31 archivos porque `publicidad.html` presenta P01 por segunda vez) y se conservan intactos. El estilo se movio junto con las paginas: las rutas relativas dentro de la maqueta siguen iguales.
+
+La aplicacion Spring Boot no depende de esos prototipos: Maven compila `src/main/java/`; Spring MVC resuelve sus JSP desde `src/main/webapp/WEB-INF/views/`; Spring Security expone `/css/**` para `src/main/webapp/css/estilos.css`; y `login.jsp` enlaza esa hoja por `${pageContext.request.contextPath}/css/estilos.css`. No hay controladores ni recursos Maven que publiquen los HTML de `diseno-original/`. La aplicacion funcional se ejecuta con `./mvnw.cmd spring-boot:run` y abre en `http://localhost:8080/login`; la maqueta se abre desde `diseno-original/index.html`.
+
+Las referencias Markdown a las 31 interfaces se actualizaron y se verificaron despues del movimiento. La revision local detecto 516 enlaces de recursos/navegacion en los HTML originales y no hallo rutas rotas.
+
+### Clasificacion de archivos, sin eliminacion
+
+| Grupo | Inventario actual | Tratamiento propuesto |
+|---|---|---|
+| Entrega academica | `README.md`; `documentacion/00`-`23`; `documentacion/bpmn.html`; 5 capturas en `documentacion/anexos/`; las 31 maquetas en `diseno-original/`; 9 PDF en `recurso/` | Conservar para rubrica, informe, trazabilidad y fuentes. No hay duplicados binarios entre los archivos de `recurso/` y `documentacion/` revisados. |
+| Evidencias de pruebas | `documentacion/evidencias/bateria_revision.ps1`, `resultados_133_pruebas.csv`, `log_133_pruebas.txt`, `verificacion_enlaces.txt` y seis capturas HTML del login | Conservar bajo `documentacion/evidencias/`; separadas del informe y respaldan sus resultados. |
+| Material de consulta docente | Los 9 PDF de `recurso/` (incluyen la rubrica y documentos del curso) | Conservar; son fuentes citadas y no hay copias identicas en el inventario actual. |
+| Historicos o parcialmente solapados | `16_evidencias_etapas.md`, `17_matriz_cumplimiento_avance1.md`, `18_matriz_cumplimiento_examen_parcial.md`, `22_informe_regresion_etapa10.md` | Revisar consolidacion con el equipo: registran etapas y cortes distintos; no son duplicados exactos y su eliminacion romperia la trazabilidad historica. |
+| Candidatos a archivo, no a borrado | `22_informe_regresion_etapa10.md` y `23_informe_regresion_revision_final.md` | Mantener ambos hasta aprobar que corte exige la entrega; si se archiva el corte anterior, conservarlo en una carpeta historica y actualizar todos los enlaces. |
+
+No se propone eliminar ningun archivo en esta revision. El documento Word mencionado para el informe no esta presente en el repositorio (no se encontro `.doc` ni `.docx`); el Markdown `08_puntos_1_al_5_8.md` contiene los puntos 5.1-5.8 y el estado de 5.10-5.14, con 5.9 separado en `05_reglas_negocio.md`.

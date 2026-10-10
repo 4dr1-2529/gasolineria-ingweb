@@ -1,37 +1,37 @@
 # Auditoría de entrega · G1
 
 ## Alcance y fecha
-Revisión final de la maqueta completa, iniciada el 10/09/2026 y actualizada el 02/10/2026 después de la corrección integral de modelo de negocio, reglas, funcionalidades, interfaces, entidades, matriz, trazabilidad, documentación y HTML/CSS. Esa corrección llevó el proyecto a **30 interfaces (P01–P30), 38 funcionalidades (F01–F38), 5 reglas (RN01–RN05) y 12 entidades**, con el módulo de **asistencia agregado** y con las finanzas rediseñadas para que los movimientos de caja nazcan de compras y ventas. Se trabajó sobre los requisitos entregados por el equipo: no se incorporó una aplicación anterior ni se copiaron plantillas externas. Los datos comerciales y del personal son ficticios.
+Revisión final de la maqueta completa, iniciada el 10/09/2026 y actualizada el 02/10/2026 después de la corrección integral de modelo de negocio, reglas, funcionalidades, interfaces, entidades, matriz, trazabilidad, documentación y HTML/CSS. Esa corrección llevó el proyecto a **30 interfaces (P01–P30), 38 funcionalidades (F01–F38), 5 reglas (RN01–RN05) y 12 entidades**, con el módulo de **asistencia agregado** y con las finanzas rediseñadas para que los movimientos de caja nazcan de compras y ventas. Se trabajó sobre los requisitos entregados por el equipo: no se incorporó una aplicación anterior ni se copiaron plantillas externas. Los datos comerciales y del personal son ficticios. Esta auditoria V1 se complemento el 10/10/2026 con el traslado a diseno-original/, la verificacion de enlaces y la regresion V2.
 
 Los resultados que siguen son mediciones de esta revisión: se indican los totales observados en cada control, no estimaciones.
 
 ## Inventario final
-56 archivos de la entrega: 31 HTML en la raíz, 1 CSS (`css/estilos.css`), 17 Markdown (`README.md` + los 16 de `documentacion/`), 1 HTML auxiliar (`documentacion/bpmn.html`), 5 capturas PNG (`documentacion/anexos/`) y `.gitignore`.
+Inventario actual: 31 HTML y 1 CSS en diseno-original/; 24 documentos Markdown de nivel superior (00-23), un README de evidencias, documentacion/bpmn.html, evidencias de pruebas, 5 capturas PNG, 9 PDF de consulta y la aplicacion Spring Boot en src/.
 
-Los 16 documentos de `documentacion/` son `00_auditoria.md`, `01_modelo_negocio.md`, `02_modelo_entidad_relacion.md`, `03_interfaces.md`, `04_funcionalidades.md`, `05_reglas_negocio.md`, `06_matriz_funcionalidades_interfaces.md`, `07_trazabilidad.md`, `08_puntos_1_al_5_8.md`, `09_bpmn.md`, `10_productos_y_entregables.md`, `11_conclusiones.md`, `12_recomendaciones.md`, `13_glosario.md`, `14_bibliografia.md` y `15_anexos.md`, además de la carpeta `anexos/` con las 5 capturas del anexo A-5.
+Los 24 documentos Markdown de nivel superior van de 00_auditoria.md a 23_informe_regresion_revision_final.md. evidencias/ conserva su README, script, CSV y log de 133 pruebas, informe de enlaces y seis capturas HTML del login. anexos/ conserva cinco capturas PNG.
 
-Los 31 HTML de la raíz son las 30 interfaces más `publicidad.html`, que es la segunda presentación de P01. Las 9 interfaces nuevas de esta corrección son `categoria-form.html` (P22), `compra-form.html` (P23), `venta-form.html` (P24), `empleado-form.html` (P25), `usuario-form.html` (P26), `concepto-form.html` (P27), `mi-asistencia.html` (P28), `control-asistencia.html` (P29) y `movimiento-detalle.html` (P30).
+Los 31 HTML de `diseno-original/` son las 30 interfaces más `publicidad.html`, que es la segunda presentación de P01. Las 9 interfaces nuevas de esta corrección son `categoria-form.html` (P22), `compra-form.html` (P23), `venta-form.html` (P24), `empleado-form.html` (P25), `usuario-form.html` (P26), `concepto-form.html` (P27), `mi-asistencia.html` (P28), `control-asistencia.html` (P29) y `movimiento-detalle.html` (P30).
 
-La maqueta usa sólo `css/` y `documentacion/` además de los HTML de la raíz. No hay carpetas `js/`, `backend/`, `frontend/`, `node_modules/` ni archivos de dependencias. Los scripts temporales de construcción y comprobación viven fuera del repositorio y no forman parte de la entrega.
+La maqueta usa diseno-original/css/estilos.css y recursos por CDN. La aplicacion tiene sus vistas en src/main/webapp/WEB-INF/views/ y su hoja en src/main/webapp/css/estilos.css. Los scripts temporales de revision viven fuera del repositorio.
 
-En el repositorio también están `recurso/` (9 PDF de la asignatura; la ETAPA 9 eliminó 2 copias byte-idénticas, ver [19_organizacion_repositorio.md](19_organizacion_repositorio.md)) y `.vscode/` (`launch.json`, `settings.json`), ajenos a la maqueta: se conservaron sin modificar. `recurso/` es el material oficial del curso citado en `14_bibliografia.md`. No se cuentan entre los 56 archivos ni en los controles de texto.
+El repositorio tambien contiene nueve PDF de consulta en recurso/; los nueve tienen SHA-256 distintos (ver 19_organizacion_repositorio.md), junto con .vscode/ launch.json y settings.json. Las fuentes citadas en 14_bibliografia.md permanecen en su carpeta.
 
 ## Controles y resultados
 
 | Control | Resultado | Evidencia / alcance |
 |---|---|---|
-| HTML de la raíz | 31/31 analizados · **0 errores** de estructura | Análisis de etiquetas, cierres e IDs con `HTMLParser`; no equivale a certificación W3C |
+| HTML de `diseno-original/` | 31/31 analizados · **0 errores** de estructura | Análisis de etiquetas, cierres e IDs con `HTMLParser`; no equivale a certificación W3C |
 | `documentacion/bpmn.html` | 1/1 analizado · **0 errores** | Mismo analizador; enlaces con ruta relativa `../` |
 | IDs duplicados | **0** | Recuento por documento de los 32 HTML |
 | Interfaces oficiales | **30/30** | P01–P30 en los comentarios de cada archivo y en la documentación; `publicidad.html` reutiliza P01 |
 | Funcionalidades oficiales | **38/38** | F01–F38 documentadas, representadas y presentes en la matriz |
 | Reglas de negocio | **5/5** | RN01–RN05 con código, nombre, enunciado, condición, justificación, ámbito, funcionalidades, interfaces, entidades, caso de cumplimiento, caso de violación y validación en el sistema |
 | Entidades | **12/12** · 74 atributos · 12 PK · 15 FK · 15 relaciones | Atributos, PK, FK, relaciones, cardinalidades y diagrama ER en Mermaid |
-| Asistencia | **AGREGADA** | Entidad Asistencia (7 atributos) con relación Empleado 1:N; regla RN05; funcionalidades F35–F38; interfaces P28 y P29; enlace «Asistencia» en la barra lateral de las 27 páginas internas |
-| Referencias locales HTML | **599 revisadas · 0 rotas** | `href`, `src` y `action`; navegación, CSS local y anclas; destinos e IDs existentes |
-| Enlaces Markdown locales | **359 revisados · 0 rotos** | Destinos y anclas de `README.md` y de los 16 documentos de `documentacion/` (incluidos los acentos de los encabezados) |
+| Asistencia | AGREGADA | Modelo Asistencia (7 atributos), relacion Empleado 1:N, RN05, F35-F38, P28-P29 y vistas JSP organizadas por modulo |
+| Referencias locales HTML | 525 revisadas; 0 rotas | href, src y action en 31 HTML de maqueta y documentacion/bpmn.html; destinos locales existentes |
+| Enlaces Markdown locales | 326 revisados; 0 rotos | Destinos de archivos en README y los 25 documentos Markdown de documentacion; verificados tras el traslado |
 | JavaScript | **0** | 0 archivos `.js`/`.ts`, 0 etiquetas `<script>`, 0 manejadores de evento inline ni `javascript:` |
-| Bootstrap CSS | 32/32 HTML | CDN 5.3.3 + `css/estilos.css`; sin Bootstrap JS |
+| Bootstrap CSS | 32/32 HTML | CDN 5.3.3 + `diseno-original/css/estilos.css`; sin Bootstrap JS |
 | Semántica | 32/32 HTML | `lang="es"`, `charset`, `viewport`, `<title>`, un `h1`, `main`, `header`, `nav` y `footer` por archivo |
 | Formularios | 28 formularios · 121 controles · 121 etiquetas | `required` en todos los controles de dato, `min`/`max`/`step` en numéricos, `pattern` o longitudes en textos, tipos `date`, `time`, `datetime-local`, `email` y `password`; botones `type="submit"`; 0 incidencias |
 | Tablas | **25/25** | Contenedor `table-responsive`, `caption`, `thead` y `th` en todas |
@@ -43,7 +43,7 @@ En el repositorio también están `recurso/` (9 PDF de la asignatura; la ETAPA 9
 | Desbordamiento horizontal | **0/96** | Comparación de `scrollWidth` frente a `clientWidth` del documento en el DOM ya cargado |
 | Páginas con `<script>` tras el render | **0/96** | Comprobado sobre el DOM renderizado, no sólo en el texto fuente |
 | Datos | Conciliados | 6,700 + 300 − 80 = 6,920 L y 1,990 + 980 + 3,950 = 6,920 L · 10×5.00 + 20×6.00 + 50×4.00 = S/ 370.00 (80 L) · 100×4.50 + 100×5.40 + 100×3.60 = S/ 1,350.00 (300 L) · 4,410.00 + 370.00 − 1,350.00 = S/ 3,430.00 |
-| Documento académico | Alcance declarado | Puntos 1–4 y 5.1–5.8 completos, con BPMN en `09_bpmn.md`/`bpmn.html`; 5.9 en `05_reglas_negocio.md`; 5.10–5.15 entregados en `10`–`15` (5.15 en `15_anexos.md`) con los pendientes clasificados en `08_puntos_1_al_5_8.md` |
+| Documento académico | Alcance declarado | Puntos 1–4 y 5.1–5.8 completos, con BPMN en `09_bpmn.md`/`bpmn.html`; 5.9 en `05_reglas_negocio.md`; 5.10–5.14 documentados en `10`–`14`; anexos descritos en `15_anexos.md`, fuera del alcance puntuado |
 
 ## Método de revisión del navegador
 La herramienta de navegador del agente no estaba conectada durante la medición. Se usó Chrome headless local y su protocolo de depuración desde una utilidad temporal de Python con el módulo `websockets` instalado en el equipo, sin librerías añadidas al proyecto. La utilidad fija el viewport con `Emulation.setDeviceMetricsOverride`, navega, espera `readyState`, lee `scrollWidth`/`clientWidth` y las etiquetas `<script>` del DOM ya cargado. El perfil de Chrome se recrea en cada ejecución para descartar caché. La comprobación no añadió JavaScript ni dependencias al proyecto.
@@ -51,7 +51,7 @@ La herramienta de navegador del agente no estaba conectada durante la medición.
 ## Interpretación de avance
 - **DEFINIDA:** 30 interfaces, 38 funcionalidades, 5 reglas y 12 entidades.
 - **MAQUETADA (V1):** 30 de 30 interfaces = **100 %** del alcance visual, medición correspondiente a la maqueta V1. Las 38 capacidades tienen representación visual o navegación correspondiente; la matriz confirma 47 pares funcionalidad × interfaz.
-- **IMPLEMENTADA (V2):** **25 de 38 funcionalidades operan con lógica real de negocio** en la versión V2 con Spring Boot — `@Controller` → `Service` → `ServiceImpl` sobre datos en memoria (`List<T>`), integrada en `main` (commit `9084263`) — aplicando RN01–RN05 en el servidor, sin base de datos ni persistencia. En la medición correspondiente a la maqueta V1 ninguna funcionalidad tenía lógica real de negocio (todo en estado DEFINIDA + MAQUETADA). Las 13 restantes (F01–F03, F06–F08, F11, F12, F23–F25, F33 y F34) siguen pendientes de implementación.
+- **IMPLEMENTADA (V2):** 35 de 38 funcionalidades operan con logica de negocio en Spring Boot sobre List<T>, con RN01-RN05 aplicadas. F03 (dashboard), F33 (portada) y F34 (contacto) permanecen solo en V1.
 
 ## Decisiones y límites
 - El módulo de **asistencia quedó agregado** en esta corrección: entidad Asistencia (id_asistencia, id_empleado, fecha, hora_entrada, hora_salida, estado y observación opcional) con relación Empleado 1:N, regla RN05, funcionalidades F35–F38 e interfaces P28 (mi asistencia, sin selector de empleado: el usuario lo resolverá Spring Security) y P29 (control del personal).

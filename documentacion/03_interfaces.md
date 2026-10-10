@@ -1,6 +1,6 @@
 # Catálogo de interfaces P01–P30 · Estación Nexo
 
-Estación Nexo define **30 interfaces** (P01–P30) y tiene **31 archivos HTML** en la raíz: publicidad.html es una segunda presentación de P01, no una interfaz adicional. Además, [bpmn.html](bpmn.html) es un diagrama del proceso y queda fuera de este catálogo. Cada interfaz indica propósito, actor, archivo, funcionalidades, entidades, reglas y su contenido concreto. Cada interfaz tiene al menos una funcionalidad y ninguna funcionalidad carece de interfaz.
+Estación Nexo define **30 interfaces** (P01–P30) y tiene **31 archivos HTML** en `diseno-original/`: publicidad.html es una segunda presentación de P01, no una interfaz adicional. Además, [bpmn.html](bpmn.html) es un diagrama del proceso y queda fuera de este catálogo. Cada interfaz indica propósito, actor, archivo, funcionalidades, entidades, reglas y su contenido concreto. Cada interfaz tiene al menos una funcionalidad y ninguna funcionalidad carece de interfaz.
 
 De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y vistas JSP; **6 existen sólo en la maqueta V1**: P01 (portada), P02 (login), P03 (tablero), P04 (contacto), P17 y P27 (gestión de conceptos económicos, que en V2 son datos internos de Finanzas).
 
@@ -45,7 +45,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Presentar la estación con sus precios de referencia, sus beneficios y la navegación pública, y enlazar al acceso y al contacto. La interfaz publicidad.html repite esta presentación.
 - **Actor:** Visitante.
-- **Archivo:** [index.html](../index.html), [publicidad.html](../publicidad.html). Versión V2: no existe portada; cada módulo se abre por su ruta.
+- **Archivo:** [index.html](../diseno-original/index.html), [publicidad.html](../diseno-original/publicidad.html). Versión V2: no existe portada; cada módulo se abre por su ruta.
 - **Funcionalidades:** F33.
 - **Entidades:** No aplica — contenido público.
 - **Reglas:** No aplica.
@@ -55,7 +55,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Representar el acceso con usuario y contraseña. En la maqueta V1 el envío navega al tablero sin comprobar credenciales.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [login.html](../login.html). Versión V2: no existe este módulo — no hay autenticación ni sesión.
+- **Archivo:** [login.html](../diseno-original/login.html). Versión V2: formulario funcional en `login.jsp`, autenticación con Spring Security, sesión y control de acceso por roles.
 - **Funcionalidades:** F01.
 - **Entidades:** Usuario.
 - **Reglas:** No aplica.
@@ -65,7 +65,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Consultar un panorama de la operación del día y de la semana con cinco indicadores y cinco series diarias, y navegar a cada módulo.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [dashboard.html](../dashboard.html). Versión V2: no existe tablero; el resumen económico vive en /finanzas/list.
+- **Archivo:** [dashboard.html](../diseno-original/dashboard.html). Versión V2: no existe tablero; el resumen económico vive en /finanzas/list.
 - **Funcionalidades:** F02, F03.
 - **Entidades:** Venta, DetalleVenta, Producto, MovimientoCaja.
 - **Reglas:** No aplica.
@@ -75,7 +75,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Mostrar los canales de contacto y recibir un mensaje con nombre, correo, asunto y texto.
 - **Actor:** Visitante.
-- **Archivo:** [contacto.html](../contacto.html). Versión V2: no existe este módulo; el mensaje no se almacena.
+- **Archivo:** [contacto.html](../diseno-original/contacto.html). Versión V2: no existe este módulo; el mensaje no se almacena.
 - **Funcionalidades:** F34.
 - **Entidades:** No aplica — contenido público.
 - **Reglas:** No aplica.
@@ -85,7 +85,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Listar las familias de combustible con su nombre, descripción y estado, y representar el alta, la edición y el cambio de estado de una categoría. En V2, /categorias/list muestra las familias y enlaza al catálogo de combustibles.
 - **Actor:** Administrador.
-- **Archivo:** [categorias.html](../categorias.html). Versión V2: `GET /categorias/list` → categoria/lista.jsp.
+- **Archivo:** [categorias.html](../diseno-original/categorias.html). Versión V2: `GET /categorias/list` → categoria/lista.jsp.
 - **Funcionalidades:** F04, F05, F06, F07, F08.
 - **Entidades:** Categoria, Producto (los combustibles que cada familia agrupa).
 - **Reglas:** RN02 — la categoría se edita y se desactiva, nunca se elimina.
@@ -95,7 +95,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Listar el catálogo de combustibles con su categoría, precio por litro, existencias y estado, y representar el cambio de estado de un combustible.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [combustibles.html](../combustibles.html). Versión V2: `GET /combustibles/list` → producto/lista.jsp.
+- **Archivo:** [combustibles.html](../diseno-original/combustibles.html). Versión V2: `GET /combustibles/list` → producto/lista.jsp.
 - **Funcionalidades:** F10, F12.
 - **Entidades:** Producto, Categoria.
 - **Reglas:** RN02 — un producto Inactivo permanece en la lista con su estado y no se elimina.
@@ -105,7 +105,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Dar de alta un combustible con categoría, nombre, unidad, precio por litro, stock inicial y estado; en la maqueta V1 el mismo formulario edita el producto existente.
 - **Actor:** Administrador.
-- **Archivo:** [combustible-form.html](../combustible-form.html). Versión V2: `GET/POST /combustibles/crear` → producto/crear.jsp (alta con seis campos obligatorios; sin edición).
+- **Archivo:** [combustible-form.html](../diseno-original/combustible-form.html). Versión V2: `GET/POST /combustibles/crear` → producto/crear.jsp (alta con seis campos obligatorios; sin edición).
 - **Funcionalidades:** F09, F11.
 - **Entidades:** Producto, Categoria.
 - **Reglas:** RN02 — el alta y la edición conservan el registro; la baja es por estado.
@@ -115,7 +115,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Representar una venta con el producto, la cantidad, las existencias al confirmar y el importe, enlazando al formulario de venta y al historial.
 - **Actor:** Operador / Vendedor.
-- **Archivo:** [ventas.html](../ventas.html). Versión V2: `GET /ventas/crear` → venta/crear.jsp (el alta efectiva, con comprobación de existencias, ocurre en el formulario de venta).
+- **Archivo:** [ventas.html](../diseno-original/ventas.html). Versión V2: `GET /ventas/crear` → venta/crear.jsp (el alta efectiva, con comprobación de existencias, ocurre en el formulario de venta).
 - **Funcionalidades:** F18, F20.
 - **Entidades:** Venta, DetalleVenta, Producto, Usuario, MovimientoInventario, MovimientoCaja.
 - **Reglas:** RN01 (no vende más de lo existente), RN02 (sólo productos activos), RN03 (detalle y salida una sola vez) y RN04 (ingreso único de caja).
@@ -125,7 +125,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Listar las ventas confirmadas con su ingreso de caja asociado y enlazar al detalle de cada una.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [ventas-historial.html](../ventas-historial.html). Versión V2: `GET /ventas/list` → venta/lista.jsp.
+- **Archivo:** [ventas-historial.html](../diseno-original/ventas-historial.html). Versión V2: `GET /ventas/list` → venta/lista.jsp.
 - **Funcionalidades:** F21.
 - **Entidades:** Venta, DetalleVenta, Producto, Usuario, MovimientoCaja.
 - **Reglas:** RN03, RN04 — cada fila muestra una venta con sus detalles y su único ingreso.
@@ -135,7 +135,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Consultar una venta con sus líneas, su salida de inventario y su ingreso de caja, de forma trazable.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [venta-detalle.html](../venta-detalle.html). Versión V2: `GET /ventas/detalle` → venta/detalle.jsp.
+- **Archivo:** [venta-detalle.html](../diseno-original/venta-detalle.html). Versión V2: `GET /ventas/detalle` → venta/detalle.jsp.
 - **Funcionalidades:** F22.
 - **Entidades:** Venta, DetalleVenta, Producto, Usuario, MovimientoInventario, MovimientoCaja.
 - **Reglas:** RN03, RN04.
@@ -145,7 +145,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Consultar la disponibilidad física en litros por producto con su umbral visual y el total del día.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [inventario.html](../inventario.html). Versión V2: `GET /inventario/list` → inventario/lista.jsp (marca «Stock bajo» por debajo de 1,000 L).
+- **Archivo:** [inventario.html](../diseno-original/inventario.html). Versión V2: `GET /inventario/list` → inventario/lista.jsp (marca «Stock bajo» por debajo de 1,000 L).
 - **Funcionalidades:** F18.
 - **Entidades:** Producto.
 - **Reglas:** RN01 — la consulta sostiene la comprobación de existencias antes de operar.
@@ -155,7 +155,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Registrar una entrada manual de inventario con producto, litros, motivo y responsable; las entradas originadas en una compra se crean con la compra y se consultan en el libro.
 - **Actor:** Administrador.
-- **Archivo:** [inventario-entrada.html](../inventario-entrada.html). Versión V2: `GET/POST /inventario/entrada/crear` → inventario/entrada.jsp; el listado de entradas, `/inventario/entradas` → inventario/entradas.jsp.
+- **Archivo:** [inventario-entrada.html](../diseno-original/inventario-entrada.html). Versión V2: `GET/POST /inventario/entrada/crear` → inventario/entrada.jsp; el listado de entradas, `/inventario/entradas` → inventario/entradas.jsp.
 - **Funcionalidades:** F16.
 - **Entidades:** MovimientoInventario, Producto, Usuario, Compra.
 - **Reglas:** RN01 — la entrada incrementa las existencias; RN03 — la entrada de una compra se produce una sola vez con la compra.
@@ -165,7 +165,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Registrar un retiro físico de combustible con comprobación de stock antes de descontar, mostrando la existencia actual y la proyectada.
 - **Actor:** Operador / Vendedor.
-- **Archivo:** [inventario-salida.html](../inventario-salida.html). Versión V2: `GET/POST /inventario/salida/crear` → inventario/salida.jsp; el listado de salidas, `/inventario/salidas` → inventario/salidas.jsp.
+- **Archivo:** [inventario-salida.html](../diseno-original/inventario-salida.html). Versión V2: `GET/POST /inventario/salida/crear` → inventario/salida.jsp; el listado de salidas, `/inventario/salidas` → inventario/salidas.jsp.
 - **Funcionalidades:** F17, F18.
 - **Entidades:** MovimientoInventario, Producto, Usuario.
 - **Reglas:** RN01 — la salida se rechaza si supera el stock disponible.
@@ -175,7 +175,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Consultar el libro de entradas y salidas con el saldo inicial del día, para verificar la trazabilidad física del combustible.
 - **Actor:** Administrador.
-- **Archivo:** [inventario-movimientos.html](../inventario-movimientos.html). Versión V2: `GET /inventario/entradas` y `GET /inventario/salidas` → inventario/entradas.jsp e inventario/salidas.jsp.
+- **Archivo:** [inventario-movimientos.html](../diseno-original/inventario-movimientos.html). Versión V2: `GET /inventario/entradas` y `GET /inventario/salidas` → inventario/entradas.jsp e inventario/salidas.jsp.
 - **Funcionalidades:** F19.
 - **Entidades:** MovimientoInventario, Producto, Usuario, Compra.
 - **Reglas:** RN01, RN03 — permite comprobar que el stock nunca queda negativo y que cada compra y venta produjeron sus efectos una sola vez.
@@ -185,7 +185,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Consultar la conciliación de caja del día y el listado de movimientos con su detalle.
 - **Actor:** Administrador y Operador / Vendedor.
-- **Archivo:** [finanzas.html](../finanzas.html). Versión V2: `GET /finanzas/list` → finanzas/lista.jsp.
+- **Archivo:** [finanzas.html](../diseno-original/finanzas.html). Versión V2: `GET /finanzas/list` → finanzas/lista.jsp.
 - **Funcionalidades:** F28.
 - **Entidades:** MovimientoCaja, ConceptoMovimiento, Venta, Compra.
 - **Reglas:** RN04 — la conciliación sólo cierra si cada compra y cada venta tienen su único movimiento.
@@ -195,7 +195,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Consultar en dos paneles de solo lectura los ingresos y los egresos del día con el detalle de cada movimiento.
 - **Actor:** Administrador.
-- **Archivo:** [movimiento-economico.html](../movimiento-economico.html). Versión V2: `GET /finanzas/ingresos` y `GET /finanzas/egresos` → finanzas/ingresos.jsp y finanzas/egresos.jsp.
+- **Archivo:** [movimiento-economico.html](../diseno-original/movimiento-economico.html). Versión V2: `GET /finanzas/ingresos` y `GET /finanzas/egresos` → finanzas/ingresos.jsp y finanzas/egresos.jsp.
 - **Funcionalidades:** F26, F27.
 - **Entidades:** MovimientoCaja, ConceptoMovimiento.
 - **Reglas:** RN04 — todos los movimientos mostrados nacen de una venta o de una compra y llevan su vínculo; no hay altas manuales.
@@ -205,7 +205,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Listar los conceptos que clasifican los movimientos de caja con su tipo y estado: sólo CE01 Venta de combustible (Ingreso) y CE02 Compra de combustible (Egreso).
 - **Actor:** Administrador.
-- **Archivo:** [conceptos.html](../conceptos.html). Versión V2: sin pantalla propia — los conceptos se usan como columna de los movimientos en /finanzas/list.
+- **Archivo:** [conceptos.html](../diseno-original/conceptos.html). Versión V2: sin pantalla propia — los conceptos se usan como columna de los movimientos en /finanzas/list.
 - **Funcionalidades:** F24.
 - **Entidades:** ConceptoMovimiento.
 - **Reglas:** No aplica.
@@ -215,7 +215,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Listar el personal con su identidad, cargo, teléfono y estado, y enlazar al formulario de empleado y al control de asistencia.
 - **Actor:** Administrador.
-- **Archivo:** [empleados.html](../empleados.html). Versión V2: `GET /empleados/list` → empleado/lista.jsp.
+- **Archivo:** [empleados.html](../diseno-original/empleados.html). Versión V2: `GET /empleados/list` → empleado/lista.jsp.
 - **Funcionalidades:** F30.
 - **Entidades:** Empleado.
 - **Reglas:** No aplica.
@@ -225,7 +225,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Listar las cuentas de acceso con su empleado asociado, rol y estado, y enlazar al formulario de cuenta.
 - **Actor:** Administrador.
-- **Archivo:** [usuarios.html](../usuarios.html). Versión V2: `GET /usuarios/list` → usuario/lista.jsp.
+- **Archivo:** [usuarios.html](../diseno-original/usuarios.html). Versión V2: `GET /usuarios/list` → usuario/lista.jsp.
 - **Funcionalidades:** F32.
 - **Entidades:** Usuario, Empleado.
 - **Reglas:** RN02 — la cuenta se edita y se desactiva, nunca se elimina, y conserva la responsabilidad de sus operaciones.
@@ -235,7 +235,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Registrar y consultar el abastecimiento: listado de compras con su efecto en inventario y caja, y acceso al alta y al detalle.
 - **Actor:** Administrador.
-- **Archivo:** [compras.html](../compras.html). Versión V2: `GET /compras/list` → compra/lista.jsp.
+- **Archivo:** [compras.html](../diseno-original/compras.html). Versión V2: `GET /compras/list` → compra/lista.jsp.
 - **Funcionalidades:** F13, F14.
 - **Entidades:** Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja.
 - **Reglas:** RN03 — cada compra con sus detalles y entradas una sola vez; RN04 — su egreso único.
@@ -245,7 +245,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Consultar una compra con sus líneas, el egreso asociado y las entradas de inventario que generó.
 - **Actor:** Administrador.
-- **Archivo:** [compra-detalle.html](../compra-detalle.html). Versión V2: `GET /compras/detalle` → compra/detalle.jsp.
+- **Archivo:** [compra-detalle.html](../diseno-original/compra-detalle.html). Versión V2: `GET /compras/detalle` → compra/detalle.jsp.
 - **Funcionalidades:** F15.
 - **Entidades:** Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja.
 - **Reglas:** RN03, RN04.
@@ -255,7 +255,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Dar de alta una categoría con nombre, descripción y estado; en la maqueta V1 el mismo formulario edita una categoría existente y cambia su estado.
 - **Actor:** Administrador.
-- **Archivo:** [categoria-form.html](../categoria-form.html). Versión V2: `GET/POST /categorias/crear` → categoria/crear.jsp (alta; el nombre es el campo obligatorio).
+- **Archivo:** [categoria-form.html](../diseno-original/categoria-form.html). Versión V2: `GET/POST /categorias/crear` → categoria/crear.jsp (alta; el nombre es el campo obligatorio).
 - **Funcionalidades:** F04, F07, F08.
 - **Entidades:** Categoria.
 - **Reglas:** RN02 — guardar actualiza el registro y la baja es por estado, no por borrado.
@@ -265,7 +265,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Registrar una compra con proveedor y líneas de producto (la fecha y la hora las fija el servidor con America/Lima), guardando en un solo paso la compra, sus detalles, las entradas de inventario y el egreso de caja.
 - **Actor:** Administrador.
-- **Archivo:** [compra-form.html](../compra-form.html). Versión V2: `GET/POST /compras/crear` → compra/crear.jsp (proveedor de 3 a 60 caracteres y líneas obligatorias; la fecha no se digita y se muestra solo informativa).
+- **Archivo:** [compra-form.html](../diseno-original/compra-form.html). Versión V2: `GET/POST /compras/crear` → compra/crear.jsp (proveedor de 3 a 60 caracteres y líneas obligatorias; la fecha no se digita y se muestra solo informativa).
 - **Funcionalidades:** F13.
 - **Entidades:** Compra, DetalleCompra, Producto, MovimientoInventario, MovimientoCaja.
 - **Reglas:** RN03 — detalles y entradas una sola vez; RN04 — egreso único vinculado a la compra.
@@ -275,7 +275,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Registrar una venta de combustible comprobando que el producto esté activo y que la cantidad no supere el stock, y guardando en un solo paso venta, detalle, salida de inventario e ingreso de caja.
 - **Actor:** Operador / Vendedor.
-- **Archivo:** [venta-form.html](../venta-form.html). Versión V2: `GET/POST /ventas/crear` → venta/crear.jsp (producto, cantidad y operador obligatorios; rechazo sin efectos si falla alguna comprobación).
+- **Archivo:** [venta-form.html](../diseno-original/venta-form.html). Versión V2: `GET/POST /ventas/crear` → venta/crear.jsp (producto, cantidad y operador obligatorios; rechazo sin efectos si falla alguna comprobación).
 - **Funcionalidades:** F20.
 - **Entidades:** Venta, DetalleVenta, Producto, Usuario, MovimientoInventario, MovimientoCaja.
 - **Reglas:** RN01 (stock suficiente), RN02 (producto activo), RN03 (detalle y salida únicos) y RN04 (ingreso único).
@@ -285,7 +285,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Dar de alta un empleado con sus datos de personal; en la maqueta V1 y en V2 el mismo formulario edita al empleado y cambia su estado.
 - **Actor:** Administrador.
-- **Archivo:** [empleado-form.html](../empleado-form.html). Versión V2: `GET/POST /empleados/crear` y `GET/POST /empleados/editar` → empleado/crear.jsp y empleado/editar.jsp (seis campos obligatorios, incluido el estado).
+- **Archivo:** [empleado-form.html](../diseno-original/empleado-form.html). Versión V2: `GET/POST /empleados/crear` y `GET/POST /empleados/editar` → empleado/crear.jsp y empleado/editar.jsp (seis campos obligatorios, incluido el estado).
 - **Funcionalidades:** F29, F31.
 - **Entidades:** Empleado.
 - **Reglas:** RN02 — la edición y la desactivación conservan el registro y su historial.
@@ -295,7 +295,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Dar de alta una cuenta de acceso; en la maqueta V1 y en V2 el mismo formulario edita la cuenta y cambia su estado.
 - **Actor:** Administrador.
-- **Archivo:** [usuario-form.html](../usuario-form.html). Versión V2: `GET/POST /usuarios/crear` y `GET/POST /usuarios/editar` → usuario/crear.jsp y usuario/editar.jsp.
+- **Archivo:** [usuario-form.html](../diseno-original/usuario-form.html). Versión V2: `GET/POST /usuarios/crear` y `GET/POST /usuarios/editar` → usuario/crear.jsp y usuario/editar.jsp.
 - **Funcionalidades:** F32.
 - **Entidades:** Usuario, Empleado.
 - **Reglas:** RN02 — la cuenta se desactiva, no se elimina.
@@ -305,7 +305,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Dar de alta un concepto económico con nombre, tipo y estado; en la maqueta V1 el mismo formulario edita el concepto y cambia su estado.
 - **Actor:** Administrador.
-- **Archivo:** [concepto-form.html](../concepto-form.html). Versión V2: sin formulario propio — la gestión de conceptos no está implementada en V2.
+- **Archivo:** [concepto-form.html](../diseno-original/concepto-form.html). Versión V2: sin formulario propio — la gestión de conceptos no está implementada en V2.
 - **Funcionalidades:** F23, F25.
 - **Entidades:** ConceptoMovimiento.
 - **Reglas:** RN02 — el concepto se edita y se desactiva, nunca se elimina.
@@ -315,7 +315,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Permite al empleado registrar su entrada, registrar su salida y consultar su historial y su resumen de asistencia, sin selector de empleado: opera sobre el empleado actual.
 - **Actor:** Operador / Vendedor (empleado actual de la demostración).
-- **Archivo:** [mi-asistencia.html](../mi-asistencia.html). Versión V2: `GET /asistencia/mi` con `POST /asistencia/entrada` y `POST /asistencia/salida` → asistencia/mi.jsp.
+- **Archivo:** [mi-asistencia.html](../diseno-original/mi-asistencia.html). Versión V2: `GET /asistencia/mi` con `POST /asistencia/entrada` y `POST /asistencia/salida` → asistencia/mi.jsp.
 - **Funcionalidades:** F35, F36, F37.
 - **Entidades:** Asistencia, Empleado.
 - **Reglas:** RN05 — empleado activo, jornada propia, un registro por jornada y salida posterior a la entrada.
@@ -325,7 +325,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Consultar la asistencia de todo el personal con filtro por empleado, una fila por empleado y fecha.
 - **Actor:** Administrador.
-- **Archivo:** [control-asistencia.html](../control-asistencia.html). Versión V2: `GET /asistencia/control` → asistencia/control.jsp (selector «Todo el personal»).
+- **Archivo:** [control-asistencia.html](../diseno-original/control-asistencia.html). Versión V2: `GET /asistencia/control` → asistencia/control.jsp (selector «Todo el personal»).
 - **Funcionalidades:** F38.
 - **Entidades:** Asistencia, Empleado.
 - **Reglas:** RN05 — un solo registro por empleado y fecha, con estado calculado a partir de las horas.
@@ -335,7 +335,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 
 - **Propósito:** Consultar un movimiento de caja con su concepto, su origen (venta o compra) y el responsable que lo originó.
 - **Actor:** Administrador.
-- **Archivo:** [movimiento-detalle.html](../movimiento-detalle.html). Versión V2: `GET /finanzas/detalle` → finanzas/detalle.jsp.
+- **Archivo:** [movimiento-detalle.html](../diseno-original/movimiento-detalle.html). Versión V2: `GET /finanzas/detalle` → finanzas/detalle.jsp.
 - **Funcionalidades:** F28.
 - **Entidades:** MovimientoCaja, ConceptoMovimiento, Venta, Compra.
 - **Reglas:** RN04 — el movimiento identifica siempre la operación que lo originó.
@@ -346,7 +346,7 @@ De las 30 interfaces, **24 operan en la versión Spring Boot** con sus rutas y v
 | Indicador | Valor |
 |---|---:|
 | Interfaces totales | 30 |
-| Archivos HTML en la raíz | 31 |
+| Archivos HTML en `diseno-original/` | 31 |
 | Funcionalidades totales | 38 |
 | Entidades | 12 |
 | Reglas de negocio | 5 |

@@ -204,7 +204,7 @@ flowchart TB
 
 ## 5. Correspondencia con el resto del proyecto
 
-El proyecto completo, al corte del 10/09/2026, tiene **30 interfaces (P01–P30)**, **38 funcionalidades (F01–F38)**, **12 entidades** (incluida `Asistencia`) y **5 reglas de negocio (RN01–RN05)**; la maqueta tiene **31 archivos HTML en la raíz** más esta vista navegable `documentacion/bpmn.html`.
+El proyecto completo, al corte del 10/09/2026, tiene **30 interfaces (P01–P30)**, **38 funcionalidades (F01–F38)**, **12 entidades** (incluida `Asistencia`) y **5 reglas de negocio (RN01–RN05)**; la maqueta tiene **31 archivos HTML en `diseno-original/`** más esta vista navegable `documentacion/bpmn.html`.
 
 | Proceso | Elementos | Funcionalidades | Interfaces | Reglas | Entidades |
 |---|---|---|---|---|---|

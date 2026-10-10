@@ -258,7 +258,7 @@ Para no presentar como «implementado» algo que sólo está previsto, los patro
 
 | Patrón / convención | Qué resuelve | Dónde se usa en Estación Nexo | Evidencia |
 |---|---|---|---|
-| **Design tokens (variables CSS)** | Un mismo lenguaje de color compartido por todos los componentes | La paleta `:root` de `css/estilos.css` gobierna botones, tarjetas y gráficos | Extracto 1 de esta sección |
+| **Design tokens (variables CSS)** | Un mismo lenguaje de color compartido por todos los componentes | La paleta `:root` de `diseno-original/css/estilos.css` gobierna botones, tarjetas y gráficos | Extracto 1 de esta sección |
 | **Navegación consistente** | Un mismo menú, con el mismo orden de módulos, en todas las páginas internas | Las **27 páginas con barra lateral** repiten el mismo bloque `<nav>` con el mismo orden de módulos, de 13 enlaces que cubren los 12 módulos oficiales (sólo cambia `aria-current="page"`); las 4 páginas públicas (index, publicidad, contacto, login) usan una variante reducida de 4 enlaces. **No es un include/partial de servidor ni de plantilla:** en HTML estático el bloque está duplicado en cada archivo y se mantiene idéntico por convención | Extracto 2 de esta sección |
 | **Convención de bloque de comentario por página** | Trazabilidad legible de qué cubre cada archivo | Cada uno de los 31 HTML arranca en su línea 3 con `Interfaz: Pnn …`, `Funcionalidades:`, `Entidades:`, `Reglas:` y `Estado:` | Propio de los 31 archivos HTML |
 
@@ -266,7 +266,7 @@ Para no presentar como «implementado» algo que sólo está previsto, los patro
 
 | Patrón | Qué resuelve | Dónde está definido | Estado |
 |---|---|---|---|
-| **Modelo-Vista-Controlador (MVC)** | Separar datos, presentación y lógica | Modelo: las 12 entidades de [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md); Vista: 31 HTML + `css/estilos.css` (V1) y 34 vistas JSP (V2); Controlador: los F01–F38 (README sección 16) | **Implementado en V2 para 35/38 funcionalidades** (`@Controller`, `@GetMapping`/`@PostMapping`, `Controller → Service → ServiceImpl` sobre `List<T>` en memoria, verificado por la regresión integral ETAPA 10 con 126/126 pruebas, y 133/133 en la revisión final del 10/10/2026); las 3 restantes (F03, F33 y F34) quedan fuera del alcance V2 y existen sólo en V1 |
+| **Modelo-Vista-Controlador (MVC)** | Separar datos, presentación y lógica | Modelo: las 12 entidades de [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md); Vista: 31 HTML + `diseno-original/css/estilos.css` (V1) y 34 vistas JSP (V2); Controlador: los F01–F38 (README sección 16) | **Implementado en V2 para 35/38 funcionalidades** (`@Controller`, `@GetMapping`/`@PostMapping`, `Controller → Service → ServiceImpl` sobre `List<T>` en memoria, verificado por la regresión integral ETAPA 10 con 126/126 pruebas, y 133/133 en la revisión final del 10/10/2026); las 3 restantes (F03, F33 y F34) quedan fuera del alcance V2 y existen sólo en V1 |
 | **Service / ServiceImpl (capa de lógica)** | Separar la lógica de negocio del controlador | README sección 16 «Versión V2 y etapa posterior»; aplica RN01–RN05 sobre compra (F13), venta (F20), inventario (F16 y F17) y asistencia (F35–F38); RN02 rige los cinco catálogos con estado | **Implementado en V2** — servicios sobre datos en memoria (`List<T>`), sin base de datos |
 | **Repository / DAO y base de datos (capa de persistencia)** | Separar el acceso a datos persistidos | README sección 16 «Versión V2 y etapa posterior» (Spring Data JPA cuando exista base de datos) | **Pendiente para la etapa posterior** — hoy no hay Repository, DAO, JPA, Hibernate, JdbcTemplate ni conexiones a BD |
 
@@ -274,7 +274,7 @@ Para no presentar como «implementado» algo que sólo está previsto, los patro
 
 > **[PENDIENTE — requiere evidencia]** el punto 5.10 pide además «capturas explicativas de los patrones revisados en el curso». El material de clase (diapositivas y prácticas de patrones) no está en el repositorio: **no se inventa** ni se sustituye por capturas ajenas, y ningún patrón se lista como «revisado en clase» sin ese material. Al recibirlo, esta sección debe añadir las capturas y, si el curso revisó otros patrones (por ejemplo del catálogo de Arquitectura de Software), incorporarlos con su implementación en Spring Boot.
 
-**Extracto 1 — design tokens (`css/estilos.css`):**
+**Extracto 1 — design tokens (`diseno-original/css/estilos.css`):**
 
 ```css
 :root{
@@ -312,7 +312,7 @@ Las fases siguen el orden real del trabajo realizado y del que queda. **Las fech
 | 2 | Modelo de negocio y modelo entidad-relación | [01_modelo_negocio.md](01_modelo_negocio.md), [02_modelo_entidad_relacion.md](02_modelo_entidad_relacion.md) | Ejecutado | Sin registrar en el repositorio |
 | 3 | Definición de interfaces, funcionalidades y reglas | [03](03_interfaces.md), [04](04_funcionalidades.md), [05](05_reglas_negocio.md) | Ejecutado | Sin registrar en el repositorio |
 | 4 | Matriz bidimensional y trazabilidad | [06](06_matriz_funcionalidades_interfaces.md), [07](07_trazabilidad.md) | Ejecutado | Sin registrar en el repositorio |
-| 5 | Maquetación de las 30 interfaces (HTML5 + CSS3 + Bootstrap) | 31 archivos HTML navegables + `css/estilos.css` | Ejecutado | Sin registrar en el repositorio |
+| 5 | Maquetación de las 30 interfaces (HTML5 + CSS3 + Bootstrap) | 31 archivos HTML navegables + `diseno-original/css/estilos.css` | Ejecutado | Sin registrar en el repositorio |
 | 6 | BPMN núcleo y de soporte | [09_bpmn.md](09_bpmn.md), [bpmn.html](bpmn.html) | Ejecutado | Sin registrar en el repositorio |
 | 7 | Documentación 5.1–5.8 y auditoría | [08_puntos_1_al_5_8.md](08_puntos_1_al_5_8.md), [00_auditoria.md](00_auditoria.md) | Ejecutado | Sin registrar en el repositorio |
 | 8 | Cierre de 5.9–5.15 | Este documento, los puntos 5.11–5.14 y [15_anexos.md](15_anexos.md) | Ejecutado | 01/10/2026 |
