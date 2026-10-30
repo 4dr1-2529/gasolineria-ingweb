@@ -15,39 +15,11 @@
 </head>
 <body>
     <header class="sidebar">
-        <a class="brand" href="${pageContext.request.contextPath}/categorias/list">
+        <a class="brand" href="${pageContext.request.contextPath}/">
             <span class="brand-mark">N</span>
             <span>NEXO<small>ESTACIÓN NEXO</small></span>
         </a>
-        <nav>
-            <c:set var="esAdmin" value="false"/>
-            <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
-                <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}">
-                    <c:set var="esAdmin" value="true"/>
-                </c:if>
-            </c:forEach>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
-                <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/combustibles/list">Combustibles</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
-                <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
-                <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
-                <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
-                <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/asistencia/mi">Asistencia</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/inventario/list">Inventario</a>
-            <a href="${pageContext.request.contextPath}/ventas/list" aria-current="page">Ventas</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
-            </c:if>
-        </nav>
+        <%@ include file="/WEB-INF/views/shared/menu.jspf" %>
         <div class="sesion">
             <span class="sesion-usuario">Sesión: <c:out value="${pageContext.request.remoteUser}"/></span>
             <form:form action="${pageContext.request.contextPath}/logout" method="post" cssClass="sesion-salir">
@@ -97,6 +69,7 @@
                      (combustible y cantidad) llega como parámetros simples.
                      El precio unitario lo toma el servidor del producto elegido --%>
                 <form:form action="${pageContext.request.contextPath}/ventas/crear" method="post" modelAttribute="venta">
+                    <input type="hidden" name="formularioToken" value="${formularioToken}">
                     <div class="form-grid">
                         <div class="field">
                             <label for="idProducto">Combustible *</label>
@@ -109,16 +82,11 @@
                         </div>
                         <div class="field">
                             <label for="cantidad">Cantidad (L) *</label>
-                            <input class="form-control" id="cantidad" name="cantidad" type="number" value="${not empty detalle.cantidad ? detalle.cantidad : '10'}" required min="0.01" step="0.01">
+                            <input class="form-control" id="cantidad" name="cantidad" type="number" value="${not empty detalle.cantidad ? detalle.cantidad : '10'}" required min="0.001" step="0.001">
                         </div>
-                        <div class="field">
-                            <form:label path="idUsuario">Operador *</form:label>
-                            <form:select path="idUsuario" id="idUsuario" cssClass="form-select" required="required">
-                                <form:options items="${operadores}"/>
-                            </form:select>
-                        </div>
+                        <p class="form-help">Responsable: <c:out value="${pageContext.request.remoteUser}"/> (sesión actual).</p>
                     </div>
-                    <div class="actions">
+<section aria-label="Líneas adicionales"><div id="lineas-adicionales"></div><button type="button" class="btn btn-secondary" id="agregar-linea">Agregar combustible</button><template id="plantilla-linea"><fieldset class="form-grid"><legend>Combustible adicional</legend><label>Combustible<select class="form-select" name="lineas[__indice__].idProducto" required><option value="">Seleccione</option><c:forEach var="p" items="${productos}"><option value="${p.id}"><c:out value="${p.nombre}"/></option></c:forEach></select></label><label>Litros<input class="form-control" type="number" min="0.001" step="0.001" required name="lineas[__indice__].cantidad"/></label><button type="button" class="btn" data-quitar-linea>Quitar línea</button></fieldset></template></section>                    <div class="actions">
                         <button type="submit" class="btn btn-primary">Confirmar venta</button>
                         <a class="btn btn-secondary" href="${pageContext.request.contextPath}/ventas/list">Cancelar</a>
                     </div>
@@ -149,7 +117,7 @@
                             <c:forEach items="${productos}" var="producto">
                                 <tr>
                                     <td><c:out value="${producto.nombre}"/></td>
-                                    <td><fmt:formatNumber value="${producto.stock}" type="number" maxFractionDigits="2"/> L</td>
+                                    <td><fmt:formatNumber value="${producto.stock}" type="number" maxFractionDigits="3"/> L</td>
                                     <td>S/ <fmt:formatNumber value="${producto.precioActual}" type="number" minFractionDigits="2"/></td>
                                 </tr>
                             </c:forEach>
@@ -173,5 +141,6 @@
             </p>
         </main>
     </div>
+<script src="${pageContext.request.contextPath}/js/lineas.js" defer></script>
 </body>
 </html>

@@ -15,39 +15,11 @@
 </head>
 <body>
     <header class="sidebar">
-        <a class="brand" href="${pageContext.request.contextPath}/categorias/list">
+        <a class="brand" href="${pageContext.request.contextPath}/">
             <span class="brand-mark">N</span>
             <span>NEXO<small>ESTACIÓN NEXO</small></span>
         </a>
-        <nav>
-            <c:set var="esAdmin" value="false"/>
-            <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
-                <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}">
-                    <c:set var="esAdmin" value="true"/>
-                </c:if>
-            </c:forEach>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
-                <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/combustibles/list">Combustibles</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
-                <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
-                <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
-                <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
-                <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/asistencia/mi">Asistencia</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/inventario/list" aria-current="page">Inventario</a>
-            <a href="${pageContext.request.contextPath}/ventas/list">Ventas</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
-            </c:if>
-        </nav>
+        <%@ include file="/WEB-INF/views/shared/menu.jspf" %>
         <div class="sesion">
             <span class="sesion-usuario">Sesión: <c:out value="${pageContext.request.remoteUser}"/></span>
             <form:form action="${pageContext.request.contextPath}/logout" method="post" cssClass="sesion-salir">
@@ -73,12 +45,12 @@
                     <h1>Existencias y movimientos</h1>
                     <p class="subtitle">Consultar la disponibilidad física en litros y la trazabilidad del combustible.</p>
                 </div>
-                <div class="actions">
+                <c:if test="${esAdmin or esOperador}"><div class="actions">
                     <a class="btn btn-primary" href="${pageContext.request.contextPath}/inventario/entrada/crear">+ Entrada</a>
                     <a class="btn btn-secondary" href="${pageContext.request.contextPath}/inventario/salida/crear">Registrar salida</a>
                     <a class="btn btn-secondary" href="${pageContext.request.contextPath}/inventario/entradas">Entradas</a>
                     <a class="btn btn-secondary" href="${pageContext.request.contextPath}/inventario/salidas">Salidas</a>
-                </div>
+                </div></c:if>
             </div>
 
             <c:if test="${not empty mensaje}">
@@ -101,7 +73,7 @@
                             </c:otherwise>
                         </c:choose>
                         <div class="stock-number">
-                            <fmt:formatNumber value="${producto.stock}" type="number" maxFractionDigits="2"/>
+                            <fmt:formatNumber value="${producto.stock}" type="number" maxFractionDigits="3"/>
                             <small>L</small>
                         </div>
                         <p class="muted-text">Alerta visual bajo 1,000 L</p>
@@ -120,7 +92,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <caption>
-                            Total físico: <fmt:formatNumber value="${totalFisico}" type="number" maxFractionDigits="2"/> L
+                            Total físico: <fmt:formatNumber value="${totalFisico}" type="number" maxFractionDigits="3"/> L
                         </caption>
                         <thead>
                             <tr>
@@ -135,7 +107,7 @@
                                 <tr>
                                     <td><c:out value="${producto.nombre}"/></td>
                                     <td><c:out value="${producto.unidadMedida}"/></td>
-                                    <td><fmt:formatNumber value="${producto.stock}" type="number" maxFractionDigits="2"/> L</td>
+                                    <td><fmt:formatNumber value="${producto.stock}" type="number" maxFractionDigits="3"/> L</td>
                                     <td>
                                         <span class="badge">
                                             <c:out value="${producto.estado}"/>
@@ -153,16 +125,17 @@
                 </div>
             </section>
 
+            <c:if test="${esAdmin or esOperador}">
             <%-- P14 · Libro de movimientos físicos --%>
             <section class="panel">
                 <h2>Libro de movimientos físicos</h2>
                 <div class="table-responsive">
                     <table class="table">
                         <caption>
-                            Saldo inicial <fmt:formatNumber value="${saldoInicial}" type="number"/> L +
-                            entradas <fmt:formatNumber value="${entradas}" type="number" maxFractionDigits="2"/> L −
-                            salidas <fmt:formatNumber value="${salidas}" type="number" maxFractionDigits="2"/> L =
-                            <fmt:formatNumber value="${saldoInicial.add(entradas).subtract(salidas)}" type="number" maxFractionDigits="2"/> L
+                            Base física derivada <fmt:formatNumber value="${saldoInicial}" type="number"/> L +
+                            entradas <fmt:formatNumber value="${entradas}" type="number" maxFractionDigits="3"/> L −
+                            salidas <fmt:formatNumber value="${salidas}" type="number" maxFractionDigits="3"/> L =
+                            <fmt:formatNumber value="${saldoInicial.add(entradas).subtract(salidas)}" type="number" maxFractionDigits="3"/> L
                         </caption>
                         <thead>
                             <tr>
@@ -192,7 +165,7 @@
                                         </c:choose>
                                     </td>
                                     <td><c:out value="${productosPorId[movimiento.idProducto].nombre}"/></td>
-                                    <td><fmt:formatNumber value="${movimiento.cantidad}" type="number" maxFractionDigits="2"/> L</td>
+                                    <td><fmt:formatNumber value="${movimiento.cantidad}" type="number" maxFractionDigits="3"/> L</td>
                                     <td>
                                         <c:out value="${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0]}"/>
                                         <c:out value="${fn:substring(momentos[1], 0, 5)}"/>
@@ -211,11 +184,12 @@
                 </div>
             </section>
 
-            <p class="notice">
+            <c:if test="${demostracion}"><p class="notice">
                 RN03 y RN04 · Las entradas de la compra C001 (MI001–MI003) aumentan el inventario; el egreso
                 económico MC001 de S/ 1,350.00 se consulta en el módulo Finanzas. El saldo
                 inicial de 6,700 L corresponde al cierre del 09/09/2026.
-            </p>
+            </p></c:if>
+            </c:if>
         </main>
     </div>
 </body>

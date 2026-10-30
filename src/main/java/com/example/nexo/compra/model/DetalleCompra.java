@@ -1,29 +1,39 @@
 package com.example.nexo.compra.model;
 
+import jakarta.persistence.*;
+import java.time.*;
 import java.math.BigDecimal;
+import com.example.nexo.shared.persistence.TipoMovimientoConverter;
+import com.example.nexo.compra.model.Compra;
+import com.example.nexo.producto.model.Producto;
 
-/**
- * Línea de una compra: producto recibido, litros, precio de compra y subtotal.
- * Atributos tomados del modelo de entidad de la versión 1:
- * id_detalle_compra, id_compra, id_producto, cantidad, precio_compra y subtotal.
- * cantidad son litros recibidos; precio_compra es el precio por litro en el
- * momento de la compra; subtotal = cantidad × precio_compra.
- */
+/** Entidad del diccionario aprobado; los identificadores de formulario son transitorios. */
+@Entity
+@Table(name="detalle_compra")
+@org.hibernate.annotations.DynamicUpdate
 public class DetalleCompra {
-
-    private Integer id;
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id_detalle_compra", nullable=false)
+    private Long id;
+    @Transient
     private String idCompra;
+    @Transient
     private String idProducto;
+    @Column(name="cantidad_litros", nullable=false, precision=12, scale=3)
     private BigDecimal cantidad;
+    @Column(name="precio_compra", nullable=false, precision=12, scale=2)
     private BigDecimal precioCompra;
+    @Column(name="subtotal", nullable=false, precision=12, scale=2)
     private BigDecimal subtotal;
+    @ManyToOne(fetch=FetchType.EAGER, optional=false)
+    @JoinColumn(name="id_compra", nullable=false, unique=false)
+    private Compra compra;
+    @ManyToOne(fetch=FetchType.EAGER, optional=false)
+    @JoinColumn(name="id_producto", nullable=false, unique=false)
+    private Producto producto;
 
-    public DetalleCompra() {
-        // Constructor vacío
-    }
-
-    public DetalleCompra(Integer id, String idCompra, String idProducto, BigDecimal cantidad,
-            BigDecimal precioCompra, BigDecimal subtotal) {
+    public DetalleCompra() { }
+    public DetalleCompra(Long id, String idCompra, String idProducto, BigDecimal cantidad, BigDecimal precioCompra, BigDecimal subtotal) {
         this.id = id;
         this.idCompra = idCompra;
         this.idProducto = idProducto;
@@ -31,53 +41,20 @@ public class DetalleCompra {
         this.precioCompra = precioCompra;
         this.subtotal = subtotal;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getIdCompra() {
-        return idCompra;
-    }
-
-    public void setIdCompra(String idCompra) {
-        this.idCompra = idCompra;
-    }
-
-    public String getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(String idProducto) {
-        this.idProducto = idProducto;
-    }
-
-    public BigDecimal getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(BigDecimal cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public BigDecimal getPrecioCompra() {
-        return precioCompra;
-    }
-
-    public void setPrecioCompra(BigDecimal precioCompra) {
-        this.precioCompra = precioCompra;
-    }
-
-    public BigDecimal getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(BigDecimal subtotal) {
-        this.subtotal = subtotal;
-    }
-
+    public Long getId() { return id; }
+    public void setId(Long valor) { this.id = valor; }
+    public String getIdCompra() { return idCompra != null ? idCompra : compra == null ? null : compra.getId(); }
+    public void setIdCompra(String valor) { this.idCompra = valor; }
+    public String getIdProducto() { return idProducto != null ? idProducto : producto == null ? null : producto.getId(); }
+    public void setIdProducto(String valor) { this.idProducto = valor; }
+    public BigDecimal getCantidad() { return cantidad; }
+    public void setCantidad(BigDecimal valor) { this.cantidad = valor; }
+    public BigDecimal getPrecioCompra() { return precioCompra; }
+    public void setPrecioCompra(BigDecimal valor) { this.precioCompra = valor; }
+    public BigDecimal getSubtotal() { return subtotal; }
+    public void setSubtotal(BigDecimal valor) { this.subtotal = valor; }
+    public Compra getCompra() { return compra; }
+    public void setCompra(Compra valor) { this.compra = valor; this.idCompra = valor == null ? null : valor.getId(); }
+    public Producto getProducto() { return producto; }
+    public void setProducto(Producto valor) { this.producto = valor; this.idProducto = valor == null ? null : valor.getId(); }
 }

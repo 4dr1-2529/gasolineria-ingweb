@@ -1,0 +1,19 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: estacion_nexo
+      MYSQL_USER: nexo
+      MYSQL_PASSWORD: ${NEXO_DB_PASSWORD:?Define NEXO_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${NEXO_MYSQL_ROOT_PASSWORD:?Define NEXO_MYSQL_ROOT_PASSWORD}
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - nexo_mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$${MYSQL_PASSWORD}\" mysql --protocol=TCP -h127.0.0.1 -u\"$${MYSQL_USER}\" -D\"$${MYSQL_DATABASE}\" -e 'SELECT 1' >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+volumes:
+  nexo_mysql:

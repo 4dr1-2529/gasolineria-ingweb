@@ -8,37 +8,40 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import com.example.nexo.empleado.model.Empleado;
+import com.example.nexo.empleado.service.EmpleadoService;
+import com.example.nexo.usuario.service.UsuarioService;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 
 /**
  * F01 y F02 · Autenticación de la versión 2 con Spring Security.
  *
- * Se respetan los actores oficiales de 03_interfaces.md:
- * - Administrador: P05, P07, P12, P15, P16, P18–P23, P25, P26, P29 y P30;
- * - Operador / Vendedor o Empleado: P08 y P24 (registrar venta) y P13 (salida);
- * - cualquier usuario autenticado: P06, P09, P10, P11, P14 y P28.
+ * Permisos del Word actualizado (5.6.3): Administrador administra catálogos,
+ * compras, personal y finanzas; Operador registra ajustes; Vendedor registra
+ * ventas. Los tres consultan existencias y su asistencia.
  * El formulario de login es propio (JSP login.jsp), la sesión expira con
  * server.servlet.session.timeout y el cierre de sesión invalida la sesión.
  */
 @Configuration
 @EnableWebSecurity
+@org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain cadenaFiltros(HttpSecurity http) throws Exception {
+    public SecurityFilterChain cadenaFiltros(HttpSecurity http, UsuarioService usuarios,
+            EmpleadoService empleados) throws Exception {
         http
+                .addFilterAfter(new CuentaVigenteFilter(usuarios, empleados), AnonymousAuthenticationFilter.class)
                 .authorizeHttpRequests(autorizar -> autorizar
                         // Públicas: la hoja de estilos, el login, la página de error
                         // y las vistas internas (el forward del controller a un JSP
                         // vuelve a pasar por esta cadena)
-                        .requestMatchers("/css/**", "/login", "/error", "/WEB-INF/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/login", "/error", "/WEB-INF/**").permitAll()
                         // Secciones exclusivas del Administrador
                         .requestMatchers(
-                                "/categorias/**",
+                                "/categorias/**", "/proveedores/**",
                                 "/combustibles/crear",
                                 "/combustibles/editar",
                                 "/combustibles/estado",
-                                "/inventario/entrada/crear",
                                 "/empleados/**",
                                 "/usuarios/**",
                                 "/compras/**",
@@ -46,8 +49,11 @@ public class SecurityConfig {
                                 "/asistencia/control")
                         .hasRole("ADMIN")
                         // Registro de ventas y salidas de inventario: personal de operación
-                        .requestMatchers("/ventas/crear", "/inventario/salida/crear")
-                        .hasAnyRole("OPERADOR", "EMPLEADO")
+                        .requestMatchers("/ventas/**")
+                        .hasAnyRole("ADMIN", "VENDEDOR")
+                        .requestMatchers("/inventario/entrada/crear", "/inventario/salida/crear",
+                                "/inventario/entradas", "/inventario/salidas")
+                        .hasAnyRole("ADMIN", "OPERADOR")
                         // El resto de las pantallas requieren sesión iniciada
                         .anyRequest().authenticated())
                 .formLogin(formulario -> formulario

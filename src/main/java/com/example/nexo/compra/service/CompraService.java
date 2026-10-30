@@ -25,4 +25,6 @@ public interface CompraService {
      */
     public String crearCompra(Compra compra, DetalleCompra detalle);
 
+    public String crearCompra(Compra cabecera, List<DetalleCompra> lineas);
+    public List<Compra> filtrar(Long proveedor,Long responsable,java.time.LocalDate desde,java.time.LocalDate hasta,String estado,String producto);
 }

@@ -11,7 +11,7 @@ public interface UsuarioService {
     /** Crea la cuenta: devuelve null si fue válida o el motivo del rechazo. */
     public String crearUsuario(Usuario usuario);
 
-    public Usuario buscarUsuarioPorId(Integer id);
+    public Usuario buscarUsuarioPorId(Long id);
 
     /** Busca por nombre de usuario ignorando mayúsculas y espacios sobrantes. */
     public Usuario buscarUsuarioPorUsername(String username);

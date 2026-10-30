@@ -3,6 +3,7 @@ package com.example.nexo.categoria.controller;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,8 +48,13 @@ public class CategoriaController {
     }
 
     @PostMapping("/crear")
-    public String crearCategoria(@ModelAttribute("categoria") Categoria categoria,
+    public String crearCategoria(@ModelAttribute("categoria") Categoria categoria, BindingResult resultadoCategoria,
             RedirectAttributes redirect) {
+        if (resultadoCategoria.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/categorias/crear";
+        }
         String error = categoriaService.crearCategoria(categoria);
         if (error != null) {
             // Se conserva lo digitado y se muestra el motivo del servidor
@@ -63,7 +69,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/editar")
-    public String mostrarFormularioEditar(@RequestParam("id") Integer id, Model model,
+    public String mostrarFormularioEditar(@RequestParam("id") Long id, Model model,
             RedirectAttributes redirect) {
         Categoria categoria = categoriaService.buscarCategoriaPorId(id);
         if (categoria == null) {
@@ -76,8 +82,13 @@ public class CategoriaController {
     }
 
     @PostMapping("/editar")
-    public String editarCategoria(@ModelAttribute("categoria") Categoria categoria,
+    public String editarCategoria(@ModelAttribute("categoria") Categoria categoria, BindingResult resultadoCategoria,
             RedirectAttributes redirect) {
+        if (resultadoCategoria.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/categorias/editar" + "?id=" + categoria.getId();
+        }
         String error = categoriaService.editarCategoria(categoria);
         if (error != null) {
             redirect.addFlashAttribute("categoria", categoria);
@@ -95,7 +106,7 @@ public class CategoriaController {
      * formulario del listado; el estado lo decide el botón pulsado.
      */
     @PostMapping("/estado")
-    public String cambiarEstado(@RequestParam("id") Integer id,
+    public String cambiarEstado(@RequestParam("id") Long id,
             @RequestParam("estado") String estado, RedirectAttributes redirect) {
         String error = categoriaService.cambiarEstadoCategoria(id, estado);
         if (error != null) {

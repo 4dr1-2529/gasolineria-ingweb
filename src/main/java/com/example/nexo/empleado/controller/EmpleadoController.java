@@ -1,6 +1,7 @@
 package com.example.nexo.empleado.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,8 +30,8 @@ public class EmpleadoController {
     }
 
     @GetMapping("/list")
-    public String listarEmpleados(Model model) {
-        model.addAttribute("empleados", empleadoService.listaEmpleados());
+    public String listarEmpleados(@RequestParam(required=false) String dni,@RequestParam(required=false) String nombre,@RequestParam(required=false) String cargo,@RequestParam(required=false) String estado,Model model) {
+        model.addAttribute("empleados", empleadoService.filtrar(dni,nombre,cargo,estado));
         return "empleado/lista"; // Retorna la vista correspondiente
     }
 
@@ -44,8 +45,13 @@ public class EmpleadoController {
     }
 
     @PostMapping("/crear")
-    public String crearEmpleado(@ModelAttribute("empleado") Empleado empleado,
+    public String crearEmpleado(@ModelAttribute("empleado") Empleado empleado, BindingResult resultadoEmpleado,
             RedirectAttributes redirect) {
+        if (resultadoEmpleado.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/empleados/crear";
+        }
         String error = empleadoService.crearEmpleado(empleado);
         if (error != null) {
             // Se conserva lo digitado y se muestra el motivo del servidor
@@ -60,7 +66,7 @@ public class EmpleadoController {
     }
 
     @GetMapping("/editar")
-    public String mostrarFormularioEditar(@RequestParam("id") Integer id, Model model,
+    public String mostrarFormularioEditar(@RequestParam("id") Long id, Model model,
             RedirectAttributes redirect) {
         Empleado empleado = empleadoService.buscarEmpleadoPorId(id);
         if (empleado == null) {
@@ -74,8 +80,13 @@ public class EmpleadoController {
     }
 
     @PostMapping("/editar")
-    public String editarEmpleado(@ModelAttribute("empleado") Empleado empleado,
+    public String editarEmpleado(@ModelAttribute("empleado") Empleado empleado, BindingResult resultadoEmpleado,
             RedirectAttributes redirect) {
+        if (resultadoEmpleado.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/empleados/editar" + "?id=" + empleado.getId();
+        }
         String error = empleadoService.editarEmpleado(empleado);
         if (error != null) {
             redirect.addFlashAttribute("empleado", empleado);
@@ -93,7 +104,7 @@ public class EmpleadoController {
      * formulario del listado; el estado lo decide el botón pulsado.
      */
     @PostMapping("/estado")
-    public String cambiarEstado(@RequestParam("id") Integer id,
+    public String cambiarEstado(@RequestParam("id") Long id,
             @RequestParam("estado") String estado, RedirectAttributes redirect) {
         String error = empleadoService.cambiarEstadoEmpleado(id, estado);
         if (error != null) {

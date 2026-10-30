@@ -1,0 +1,77 @@
+{
+  "comando": "mvnw.cmd -o test -q",
+  "total": 35,
+  "suites": [
+    {
+      "suite": "com.example.nexo.FormularioUnicoTest",
+      "tests": 4,
+      "fallos": 0,
+      "errores": 0,
+      "omitidos": 0,
+      "casos": [
+        "tokenNoEsTransferibleEntreSesionesNiOperaciones",
+        "tokenSoloEjecutaUnaVez",
+        "errorDeValidacionNoConsumeToken",
+        "reenviosConcurrentesEjecutanUnaVez"
+      ]
+    },
+    {
+      "suite": "com.example.nexo.JspHttpTest",
+      "tests": 3,
+      "fallos": 0,
+      "errores": 0,
+      "omitidos": 0,
+      "casos": [
+        "vendedorVeNavegacionYPrecisionPermitidas",
+        "administradorCompilaTodasSusJsp",
+        "operadorVeAjustesYSusPantallas"
+      ]
+    },
+    {
+      "suite": "com.example.nexo.ReglasNegocioTest",
+      "tests": 16,
+      "fallos": 0,
+      "errores": 0,
+      "omitidos": 0,
+      "casos": [
+        "jornadaAnteriorAbiertaBloqueaNuevaEntrada",
+        "ventaConservaMilesimasDeLitro",
+        "fechaDeMovimientoSeGeneraEnServicio",
+        "stockInsuficienteNoCreaVenta",
+        "jornadaUsaFechaLimaAunqueRelojUseUtc",
+        "empleadoInactivoNoMarcaEntradaNiSalida",
+        "rechazaPrecisionExcesivaSinRedondear",
+        "categoriaInactivaBloqueaCompraYMovimiento",
+        "noPuedeCambiarProductoHaciaCategoriaInactiva",
+        "productoPuedeRepetirNombreEnOtraCategoria",
+        "entradasConcurrentesNoDuplicanJornada",
+        "nombresEquivalentesNoDuplicanCategorias",
+        "duplicadoDentroDeCategoriaSeRechaza",
+        "segundaEntradaNoDuplicaJornada",
+        "categoriaInactivaBloqueaVentaSinEfectos",
+        "salidaSinEntradaYSinAvanceHorarioSeRechazan"
+      ]
+    },
+    {
+      "suite": "com.example.nexo.SeguridadHttpTest",
+      "tests": 12,
+      "fallos": 0,
+      "errores": 0,
+      "omitidos": 0,
+      "casos": [
+        "usuarioInactivoNoPuedeAcceder",
+        "logoutInvalidaSesion",
+        "empleadoInactivoBloqueaLoginYSesionAnterior",
+        "ventaUsaResponsableAutenticadoYRechazaReenvio",
+        "escrituraSinTokenSeRechazaAunqueHayaSesion",
+        "credencialesIncorrectasYCuentasInexistentesSeRechazan",
+        "inventarioIgnoraResponsableEnviadoPorNavegador",
+        "loginRequiereCsrf",
+        "formatoNumericoInvalidoMuestraAviso",
+        "permisosSeparanAdministradorOperadorVendedor",
+        "accesoAnonimoRedirigeAlLogin",
+        "asistenciaIgnoraEmpleadoYHorarioManipulados"
+      ]
+    }
+  ]
+}

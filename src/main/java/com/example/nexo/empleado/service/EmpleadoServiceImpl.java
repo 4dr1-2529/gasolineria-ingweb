@@ -7,56 +7,39 @@ import org.springframework.stereotype.Service;
 import com.example.nexo.empleado.model.Empleado;
 
 
-/**
- * Guarda los empleados en una colección en memoria.
- * No hay base de datos: la lista vive mientras la aplicación está en ejecución.
- * Los datos iniciales son los tres empleados de la versión 1.
- *
- * Validaciones de servidor (F29 y F31): DNI obligatorio de 8 dígitos y único,
- * nombres y apellidos de 3 a 60, cargo de 3 a 40, teléfono con el formato
- * 000 000 000 y estado del catálogo (Activo / Inactivo).
- * RN02: nunca se elimina un empleado, sólo se cambia su estado (F31).
- */
+/** Servicio persistente: conserva validación, baja lógica e historial. */
 @Service
+@org.springframework.transaction.annotation.Transactional
 public class EmpleadoServiceImpl implements EmpleadoService {
 
-    private final List<Empleado> empleados = new ArrayList<>();
+    private final com.example.nexo.empleado.repository.EmpleadoRepository repo;
 
-    public EmpleadoServiceImpl() {
-        // Datos de partida tomados de la versión 1 (lista de personal)
-        empleados.add(new Empleado(1, "00000001", "Ana", "Torres", "Operadora", "000 000 001", "Activo"));
-        empleados.add(new Empleado(2, "00000002", "Luis", "Rojas", "Vendedor", "000 000 002", "Activo"));
-        empleados.add(new Empleado(3, "00000003", "Elena", "Díaz", "Administradora", "000 000 003", "Activo"));
+
+
+    public EmpleadoServiceImpl(com.example.nexo.empleado.repository.EmpleadoRepository repo) {
+        this.repo=repo;
+
     }
 
     public List<Empleado> listaEmpleados() {
-        return empleados;
+        return repo.findAll();
     }
 
-    public Empleado buscarEmpleadoPorId(Integer id) {
-        if (id == null) {
-            return null;
-        }
-        for (Empleado empleado : empleados) {
-            if (id.equals(empleado.getId())) {
-                return empleado;
-            }
-        }
-        // Id inexistente: se devuelve null y el controller regresa a la lista
-        return null;
-    }
+    public Empleado buscarEmpleadoPorId(Long id) {return id==null?null:repo.findById(id).orElse(null);}
 
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN') && @actorActual.estaVigente()")
     public String crearEmpleado(Empleado empleado) {
         String error = validar(empleado, null);
         if (error != null) {
             return error;
         }
         normalizar(empleado);
-        empleado.setId(siguienteId());
-        empleados.add(empleado);
+        empleado.setId(null);
+        repo.save(empleado);
         return null; // alta completada
     }
 
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN') && @actorActual.estaVigente()")
     public String editarEmpleado(Empleado empleado) {
         Empleado existente = buscarEmpleadoPorId(empleado.getId());
         if (existente == null) {
@@ -76,7 +59,8 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         return null; // edición completada: se conserva el id y el historial
     }
 
-    public String cambiarEstadoEmpleado(Integer id, String estado) {
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN') && @actorActual.estaVigente()")
+    public String cambiarEstadoEmpleado(Long id, String estado) {
         Empleado empleado = buscarEmpleadoPorId(id);
         if (empleado == null) {
             return "No se encontró el empleado solicitado.";
@@ -93,7 +77,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
      * Reglas comunes de alta y edición. 'idExcluido' es el id que no compite
      * consigo mismo al validar la unicidad del DNI (edición).
      */
-    private String validar(Empleado empleado, Integer idExcluido) {
+    private String validar(Empleado empleado, Long idExcluido) {
         if (empleado == null) {
             return "Los datos del empleado son obligatorios.";
         }
@@ -102,7 +86,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             return "El DNI debe tener exactamente 8 dígitos.";
         }
         // Unicidad del DNI: una misma persona no se registra dos veces
-        for (Empleado existente : empleados) {
+        for (Empleado existente : repo.findAll()) {
             boolean mismo = idExcluido != null && idExcluido.equals(existente.getId());
             if (!mismo && dni.equals(texto(existente.getDni()))) {
                 return "Ya existe un empleado con el DNI " + dni + ".";
@@ -153,14 +137,12 @@ public class EmpleadoServiceImpl implements EmpleadoService {
      * El id_empleado es entero en el modelo de la versión 1,
      * así que se conserva la numeración correlativa 1, 2, 3 → 4.
      */
-    private Integer siguienteId() {
-        int maximo = 0;
-        for (Empleado empleado : empleados) {
-            if (empleado.getId() != null && empleado.getId() > maximo) {
-                maximo = empleado.getId();
-            }
-        }
-        return maximo + 1;
-    }
 
+
+    public List<Empleado> filtrar(String dni,String nombre,String cargo,String estado) {
+        return repo.findAll().stream().filter(e->e.getDni().contains(com.example.nexo.shared.validation.TextoNormalizado.nombre(dni)))
+            .filter(e->com.example.nexo.shared.validation.TextoNormalizado.clave(e.getNombres()+" "+e.getApellidos()).contains(com.example.nexo.shared.validation.TextoNormalizado.clave(nombre)))
+            .filter(e->com.example.nexo.shared.validation.TextoNormalizado.clave(e.getCargo()).contains(com.example.nexo.shared.validation.TextoNormalizado.clave(cargo)))
+            .filter(e->estado==null || estado.isBlank() || estado.equals(e.getEstado())).toList();
+    }
 }

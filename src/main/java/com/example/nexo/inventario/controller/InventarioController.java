@@ -9,10 +9,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import jakarta.servlet.http.HttpSession;
+import com.example.nexo.shared.web.FormularioUnico;
+import org.springframework.security.core.Authentication;
+import com.example.nexo.auth.service.ResponsableSesion;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.nexo.empleado.model.Empleado;
@@ -36,7 +42,7 @@ import com.example.nexo.usuario.service.UsuarioService;
 public class InventarioController {
 
     /** Saldo físico de referencia al cierre del 09/09/2026 (versión 1). */
-    private static final BigDecimal SALDO_INICIAL = new BigDecimal("6700");
+
 
     /** Formato de la marca de tiempo informativa del formulario. */
     private static final DateTimeFormatter FORMATO_FECHA_HORA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -83,7 +89,7 @@ public class InventarioController {
         model.addAttribute("responsables", nombresUsuarios());
         model.addAttribute("entradas", entradas);
         model.addAttribute("salidas", salidas);
-        model.addAttribute("saldoInicial", SALDO_INICIAL);
+        model.addAttribute("saldoInicial", totalFisico.subtract(entradas).add(salidas));
         model.addAttribute("totalFisico", totalFisico);
         model.addAttribute("bajos", existenciasBajas());
         return "inventario/lista";
@@ -102,26 +108,35 @@ public class InventarioController {
     }
 
     @GetMapping("/entrada/crear")
-    public String mostrarFormularioEntrada(Model model) {
+    public String mostrarFormularioEntrada(Model model, HttpSession sesion) {
         // Tras un rechazo conserva lo digitado (el objeto viene por flash)
         if (!model.containsAttribute("movimiento")) {
             model.addAttribute("movimiento", new MovimientoInventario());
         }
         // Fecha y hora de registro (sólo informativas en la vista): las fija el servidor
-        model.addAttribute("marcaTiempo", LocalDateTime.now().format(FORMATO_FECHA_HORA));
+        model.addAttribute("marcaTiempo", LocalDateTime.now(com.example.nexo.shared.config.TiempoConfig.LIMA).format(FORMATO_FECHA_HORA));
         // RN02 · Sólo los combustibles con estado Activo reciben movimientos
         model.addAttribute("productosActivos", productosActivos());
         model.addAttribute("productos", productoService.listaProductos());
         model.addAttribute("operadores", operadores());
+        model.addAttribute("formularioToken", FormularioUnico.emitir(sesion, "entrada"));
         return "inventario/entrada";
     }
 
     @PostMapping("/entrada/crear")
-    public String crearEntrada(@ModelAttribute("movimiento") MovimientoInventario movimiento,
-            RedirectAttributes redirect) {
+    public String crearEntrada(@ModelAttribute("movimiento") MovimientoInventario movimiento, BindingResult resultadoMovimiento,
+            Authentication autenticacion, HttpSession sesion,
+            @RequestParam("formularioToken") String formularioToken, RedirectAttributes redirect) {
+        if (resultadoMovimiento.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/inventario/entrada/crear";
+        }
         // La fecha y hora no viajan en el formulario: las registra el servidor
-        movimiento.setFechaHora(LocalDateTime.now());
-        String error = movimientoService.registrarEntrada(movimiento);
+        movimiento.setFechaHora(LocalDateTime.now(com.example.nexo.shared.config.TiempoConfig.LIMA));
+        movimiento.setIdUsuario(ResponsableSesion.id(autenticacion, usuarioService));
+        String error = FormularioUnico.ejecutar(sesion, "entrada", formularioToken,
+                () -> movimientoService.registrarEntrada(movimiento));
         if (error != null) {
             // Entrada rechazada: se regresa al formulario conservando lo digitado
             redirect.addFlashAttribute("movimiento", movimiento);
@@ -136,26 +151,35 @@ public class InventarioController {
     }
 
     @GetMapping("/salida/crear")
-    public String mostrarFormularioSalida(Model model) {
+    public String mostrarFormularioSalida(Model model, HttpSession sesion) {
         // Tras un rechazo conserva lo digitado (el objeto viene por flash)
         if (!model.containsAttribute("movimiento")) {
             model.addAttribute("movimiento", new MovimientoInventario());
         }
         // Fecha y hora de registro (sólo informativas en la vista): las fija el servidor
-        model.addAttribute("marcaTiempo", LocalDateTime.now().format(FORMATO_FECHA_HORA));
+        model.addAttribute("marcaTiempo", LocalDateTime.now(com.example.nexo.shared.config.TiempoConfig.LIMA).format(FORMATO_FECHA_HORA));
         // RN02 · Sólo los combustibles con estado Activo reciben movimientos
         model.addAttribute("productosActivos", productosActivos());
         model.addAttribute("productos", productoService.listaProductos());
         model.addAttribute("operadores", operadores());
+        model.addAttribute("formularioToken", FormularioUnico.emitir(sesion, "salida"));
         return "inventario/salida";
     }
 
     @PostMapping("/salida/crear")
-    public String crearSalida(@ModelAttribute("movimiento") MovimientoInventario movimiento,
-            RedirectAttributes redirect) {
+    public String crearSalida(@ModelAttribute("movimiento") MovimientoInventario movimiento, BindingResult resultadoMovimiento,
+            Authentication autenticacion, HttpSession sesion,
+            @RequestParam("formularioToken") String formularioToken, RedirectAttributes redirect) {
+        if (resultadoMovimiento.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/inventario/salida/crear";
+        }
         // La fecha y hora no viajan en el formulario: las registra el servidor
-        movimiento.setFechaHora(LocalDateTime.now());
-        String error = movimientoService.registrarSalida(movimiento);
+        movimiento.setFechaHora(LocalDateTime.now(com.example.nexo.shared.config.TiempoConfig.LIMA));
+        movimiento.setIdUsuario(ResponsableSesion.id(autenticacion, usuarioService));
+        String error = FormularioUnico.ejecutar(sesion, "salida", formularioToken,
+                () -> movimientoService.registrarSalida(movimiento));
         if (error != null) {
             // Salida rechazada: se regresa al formulario conservando lo digitado
             redirect.addFlashAttribute("movimiento", movimiento);
@@ -194,11 +218,11 @@ public class InventarioController {
      * (Ana Torres y Luis Rojas de la versión 1), con el nombre completo de
      * su empleado. Son los mismos responsables que ofrece P12 y P13.
      */
-    private Map<Integer, String> operadores() {
-        Map<Integer, String> nombres = new HashMap<>();
+    private Map<Long, String> operadores() {
+        Map<Long, String> nombres = new HashMap<>();
         for (Usuario usuario : usuarioService.listaUsuarios()) {
             // RN02: una cuenta Inactiva no se elige en operaciones nuevas
-            if ("Operador / Vendedor".equals(usuario.getRol())
+            if ("Vendedor".equals(usuario.getRol())
                     && "Activo".equals(usuario.getEstado())) {
                 nombres.put(usuario.getId(), nombreResponsable(usuario.getId()));
             }
@@ -214,7 +238,7 @@ public class InventarioController {
     private List<Producto> productosActivos() {
         List<Producto> activos = new ArrayList<>();
         for (Producto producto : productoService.listaProductos()) {
-            if ("Activo".equals(producto.getEstado())) {
+            if (productoService.disponibleParaOperacion(producto.getId())) {
                 activos.add(producto);
             }
         }
@@ -225,15 +249,15 @@ public class InventarioController {
      * Todos los usuarios con nombre completo, para mostrar la columna
      * Responsable del libro de movimientos.
      */
-    private Map<Integer, String> nombresUsuarios() {
-        Map<Integer, String> nombres = new HashMap<>();
+    private Map<Long, String> nombresUsuarios() {
+        Map<Long, String> nombres = new HashMap<>();
         for (Usuario usuario : usuarioService.listaUsuarios()) {
             nombres.put(usuario.getId(), nombreResponsable(usuario.getId()));
         }
         return nombres;
     }
 
-    private String nombreResponsable(Integer idUsuario) {
+    private String nombreResponsable(Long idUsuario) {
         Usuario usuario = usuarioService.buscarUsuarioPorId(idUsuario);
         if (usuario == null) {
             return "";

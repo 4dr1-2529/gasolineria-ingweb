@@ -15,7 +15,7 @@ public interface EmpleadoService {
     public List<Empleado> listaEmpleados();
 
     /** Busca por identificador; devuelve null si no existe. */
-    public Empleado buscarEmpleadoPorId(Integer id);
+    public Empleado buscarEmpleadoPorId(Long id);
 
     /** F29 · alta de un empleado; devuelve el error o null si se registró. */
     public String crearEmpleado(Empleado empleado);
@@ -24,6 +24,7 @@ public interface EmpleadoService {
     public String editarEmpleado(Empleado empleado);
 
     /** F31 · RN02 · cambia el estado sin eliminar el registro. */
-    public String cambiarEstadoEmpleado(Integer id, String estado);
+    public String cambiarEstadoEmpleado(Long id, String estado);
 
+    public List<Empleado> filtrar(String dni,String nombre,String cargo,String estado);
 }

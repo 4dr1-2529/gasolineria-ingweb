@@ -48,10 +48,10 @@ public class AsistenciaController {
      */
     @GetMapping("/mi")
     public String mostrarMiAsistencia(Authentication autenticacion, Model model) {
-        Integer idEmpleado = idEmpleadoDeLaSesion(autenticacion);
+        Long idEmpleado = idEmpleadoDeLaSesion(autenticacion);
         Empleado empleado = asistenciaService.buscarEmpleado(idEmpleado);
         List<Asistencia> asistencias = asistenciaService.listaAsistenciasDeEmpleado(idEmpleado);
-        LocalDate fechaHoy = LocalDate.now();
+        LocalDate fechaHoy = LocalDate.now(com.example.nexo.shared.config.TiempoConfig.LIMA);
         Asistencia asistenciaHoy = null;
         for (Asistencia asistencia : asistencias) {
             if (fechaHoy.equals(asistencia.getFecha())) {
@@ -73,14 +73,14 @@ public class AsistenciaController {
 
     @PostMapping("/entrada")
     public String registrarEntrada(Authentication autenticacion, RedirectAttributes redirect) {
-        Integer idEmpleado = idEmpleadoDeLaSesion(autenticacion);
+        Long idEmpleado = idEmpleadoDeLaSesion(autenticacion);
         redirect.addFlashAttribute("mensaje", asistenciaService.registrarEntrada(idEmpleado));
         return "redirect:/asistencia/mi";
     }
 
     @PostMapping("/salida")
     public String registrarSalida(Authentication autenticacion, RedirectAttributes redirect) {
-        Integer idEmpleado = idEmpleadoDeLaSesion(autenticacion);
+        Long idEmpleado = idEmpleadoDeLaSesion(autenticacion);
         redirect.addFlashAttribute("mensaje", asistenciaService.registrarSalida(idEmpleado));
         return "redirect:/asistencia/mi";
     }
@@ -91,7 +91,7 @@ public class AsistenciaController {
      */
     @GetMapping("/control")
     public String mostrarControlAsistencia(
-            @RequestParam(value = "idEmpleado", required = false) Integer idEmpleado, Model model) {
+            @RequestParam(value = "idEmpleado", required = false) Long idEmpleado, Model model) {
         List<Asistencia> asistencias = (idEmpleado == null)
                 ? asistenciaService.listaAsistencias()
                 : asistenciaService.listaAsistenciasDeEmpleado(idEmpleado);
@@ -104,7 +104,7 @@ public class AsistenciaController {
      * Empleado dueño de la sesión: el usuario autenticado se traduce a su
      * cuenta y de ahí al idEmpleado. Nunca se toma un id de la petición.
      */
-    private Integer idEmpleadoDeLaSesion(Authentication autenticacion) {
+    private Long idEmpleadoDeLaSesion(Authentication autenticacion) {
         if (autenticacion == null) {
             return null;
         }
@@ -116,8 +116,8 @@ public class AsistenciaController {
      * Los empleados se toman de EmpleadoService (no hay una segunda lista):
      * sirven para el filtro de la consulta y para mostrar los datos de cada fila.
      */
-    private Map<Integer, Empleado> empleadosPorId() {
-        Map<Integer, Empleado> empleados = new HashMap<>();
+    private Map<Long, Empleado> empleadosPorId() {
+        Map<Long, Empleado> empleados = new HashMap<>();
         for (Empleado empleado : empleadoService.listaEmpleados()) {
             empleados.put(empleado.getId(), empleado);
         }

@@ -15,41 +15,11 @@
 </head>
 <body>
     <header class="sidebar">
-        <a class="brand" href="${pageContext.request.contextPath}/categorias/list">
+        <a class="brand" href="${pageContext.request.contextPath}/">
             <span class="brand-mark">N</span>
             <span>NEXO<small>ESTACIÓN NEXO</small></span>
         </a>
-        <nav>
-            <c:set var="esAdmin" value="false"/>
-            <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
-                <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}">
-                    <c:set var="esAdmin" value="true"/>
-                </c:if>
-            </c:forEach>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
-                <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/combustibles/list">Combustibles</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
-                <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
-                <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
-                <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
-                <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/asistencia/mi">Asistencia</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/inventario/list">Inventario</a>
-            <a href="${pageContext.request.contextPath}/ventas/list">Ventas</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/finanzas/list" aria-current="page">Finanzas</a>
-                <a href="${pageContext.request.contextPath}/finanzas/conceptos/list">Conceptos económicos</a>
-                <a href="${pageContext.request.contextPath}/finanzas/conceptos/crear">Nuevo concepto</a>
-            </c:if>
-        </nav>
+        <%@ include file="/WEB-INF/views/shared/menu.jspf" %>
         <div class="sesion">
             <span class="sesion-usuario">Sesión: <c:out value="${pageContext.request.remoteUser}"/></span>
             <form:form action="${pageContext.request.contextPath}/logout" method="post" cssClass="sesion-salir">
@@ -88,7 +58,7 @@
                 </p>
             </c:if>
 
-            <%-- KPI de la versión 1: ingresos, egresos y saldo de caja --%>
+<section class="panel"><h2>Caja diaria</h2><c:choose><c:when test="${empty cajaActual}"><p>No hay caja abierta para hoy.</p><form:form method="post" action="${pageContext.request.contextPath}/finanzas/caja/abrir"><label for="saldo">Saldo de apertura (S/)</label><input class="form-control" id="saldo" name="saldo" type="number" min="0" step="0.01" required/><button class="btn btn-primary" type="submit">Abrir caja</button></form:form></c:when><c:otherwise><p>Fecha: <c:out value="${cajaActual.fecha}"/> · Estado: <c:out value="${cajaActual.estado}"/> · Apertura: S/ <c:out value="${cajaActual.saldoApertura}"/></p><c:if test="${cajaActual.estado == 'ABIERTA'}"><form:form method="post" action="${pageContext.request.contextPath}/finanzas/caja/cerrar"><button class="btn btn-primary" type="submit">Cerrar caja con saldo calculado</button></form:form></c:if><c:if test="${cajaActual.estado == 'CERRADA'}"><p>Saldo de cierre: S/ <c:out value="${cajaActual.saldoCierre}"/> · Cerrada: <c:out value="${cajaActual.fechaCierre}"/></p></c:if></c:otherwise></c:choose><details><summary>Historial de cajas</summary><table class="table"><thead><tr><th>Fecha</th><th>Apertura S/</th><th>Cierre S/</th><th>Estado</th></tr></thead><tbody><c:forEach var="caja" items="${cajas}"><tr><td><c:out value="${caja.fecha}"/></td><td><c:out value="${caja.saldoApertura}"/></td><td><c:out value="${caja.saldoCierre}"/></td><td><c:out value="${caja.estado}"/></td></tr></c:forEach></tbody></table></details></section>            <%-- KPI de la versión 1: ingresos, egresos y saldo de caja --%>
             <div class="kpi-grid">
                 <section class="kpi">
                     <p>Ingresos de hoy</p>

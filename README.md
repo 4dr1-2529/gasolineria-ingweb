@@ -1,3 +1,159 @@
+# Estación Nexo — persistencia MySQL
+
+Spring Boot MVC, JSP/JSTL, Spring Security, Spring Data JPA/Hibernate y MySQL.
+Los módulos guardan sus datos mediante 15 entidades y 15 repositorios. Flyway
+aplica las migraciones y Hibernate valida el esquema; no hay perfil de almacenamiento
+en memoria. Compras, ventas, inventario, caja y asistencia utilizan persistencia relacional.
+La comprobación del reinicio del WAR sigue bloqueada por la desaparición del
+archivo al ejecutarlo en este equipo; no se considera aprobada. Los resultados y límites se detallan en
+[la revisión de persistencia](documentacion/27_persistencia_real_y_validacion.md).
+
+Se mantienen roles, BCrypt, sesiones, CSRF, responsable autenticado, categoría activa,
+precisión de litros y protección de reenvíos. Cliente y Proveedor no tienen login.
+Los códigos comerciales anteriores conservan sus rutas; las PK internas son Long.
+
+## Ejecutar en Visual Studio Code
+
+Requisitos: JDK 17 compatible (verificado con Temurin 21), Docker Desktop o un
+MySQL disponible y la terminal PowerShell. Se incluye Maven Wrapper.
+
+Para iniciar MySQL local con volumen persistente:
+
+```powershell
+$env:NEXO_MYSQL_ROOT_PASSWORD=[guid]::NewGuid().ToString('N')
+$env:NEXO_DB_PASSWORD=Read-Host 'Contraseña del usuario MySQL nexo' -MaskInput
+docker compose up -d --wait
+```
+
+La aplicación utiliza por defecto `localhost:3306/estacion_nexo`, usuario `nexo`.
+Para otra instancia configurar NEXO_DB_URL, NEXO_DB_USER y NEXO_DB_PASSWORD.
+La URL debe conservar America/Lima en la configuración de conexión.
+
+Para una demostración con datos ficticios y cuentas `ediaz` (Administrador),
+`atorres` (Operador) y `lrojas` (Vendedor):
+
+```powershell
+$env:NEXO_DEMO_PASSWORD=Read-Host 'Contraseña de las cuentas de demostración' -MaskInput
+.\mvnw.cmd spring-boot:run '-Dspring-boot.run.arguments=--spring.profiles.active=demo'
+```
+
+Abrir [el login local](http://localhost:8080/login). La semilla se aplica una sola
+vez a una base nueva y no reemplaza datos ni contraseñas después de reiniciar.
+La contraseña elegida debe tener de 8 a 40 caracteres. No hay contraseña de demo
+incluida en el repositorio. El administrador debe abrir la caja del día desde
+Finanzas antes de registrar compras o ventas; el perfil demo crea una apertura
+ficticia inicial de cero para su primera jornada.
+
+Sin el perfil demo no se crean empleados, proveedores ni operaciones ficticias.
+Para aprovisionar el primer administrador, definir NEXO_ADMIN_PASSWORD,
+NEXO_ADMIN_DNI, NEXO_ADMIN_NOMBRES, NEXO_ADMIN_APELLIDOS y NEXO_ADMIN_TELEFONO
+(formato `000 000 000`), y opcionalmente NEXO_ADMIN_USERNAME (predeterminado `admin`).
+Ejecutar después `.\mvnw.cmd spring-boot:run`. El aprovisionamiento solo actúa
+cuando no existen cuentas; no restablece contraseñas en reinicios posteriores.
+
+## Compilar y probar
+
+Las pruebas de integración requieren una base separada llamada `nexo_pruebas`.
+La configuración de pruebas usa NEXO_TEST_DB_URL, NEXO_TEST_DB_USER y
+NEXO_TEST_DB_PASSWORD; no reutiliza automáticamente la URL de la aplicación.
+Su URL predeterminada apunta a `127.0.0.1:13306/nexo_pruebas`.
+
+Si se utiliza el MySQL de Compose, crear la base de pruebas con el administrador
+mediante `docker compose exec mysql mysql -uroot -p` y ejecutar:
+
+```sql
+CREATE DATABASE nexo_pruebas CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+GRANT ALL ON nexo_pruebas.* TO 'nexo'@'%';
+```
+
+Después:
+
+```powershell
+$env:NEXO_TEST_DB_URL='jdbc:mysql://localhost:3306/nexo_pruebas?connectionTimeZone=America/Lima&forceConnectionTimeZoneToSession=true'
+$env:NEXO_TEST_DB_USER='nexo'
+$env:NEXO_TEST_DB_PASSWORD=$env:NEXO_DB_PASSWORD
+# NEXO_DEMO_PASSWORD debe corresponder a las cuentas existentes en la base de pruebas.
+.\mvnw.cmd verify
+java -jar target/estacion-nexo.war --spring.profiles.active=demo
+```
+
+`verify` compila, ejecuta pruebas y genera el WAR. Los reportes están en
+`target/surefire-reports/`. El WAR usa el nombre estable `estacion-nexo.war`.
+La conexión MySQL debe estar disponible; no se reemplaza por listas ni H2.
+La prueba de reinicio completo y su evidencia están en
+[verificar_reinicio_aplicacion.py](documentacion/evidencias/verificar_reinicio_aplicacion.py).
+Ese verificador utiliza la instancia aislada de integración en el puerto 13306,
+crea datos ficticios por HTTP y reinicia Java manteniendo la misma base.
+
+Para el error de certificados PKIX del JDK de este equipo, usar los certificados
+confiables de Windows, manteniendo la verificación TLS:
+
+```powershell
+$env:MAVEN_OPTS='-Djavax.net.ssl.trustStoreType=Windows-ROOT -Djavax.net.ssl.trustStore=NONE'
+```
+
+## Archivos y publicación
+
+Las migraciones activas están en `src/main/resources/db/migration/`: modelo,
+catálogos de roles/conceptos, índices operativos y unicidad de conceptos.
+`target/`, `.env` y `.env.*` están ignorados. Los generadores temporales
+`target/migrar_modelos.py` y `target/migrar_catalogos.py` no son dependencias
+para compilar o ejecutar y no se publican. Tampoco se publican WAR, clases,
+copias locales, logs ni la configuración privada de las pruebas.
+
+El usuario autorizó la publicación en main manteniendo pendiente la prueba de reinicio del WAR. El manifiesto y las evidencias
+están en [la revisión final](documentacion/27_persistencia_real_y_validacion.md).
+
+<details>
+<summary>Historial documental previo a la integración de persistencia</summary>
+
+# Estación Nexo — estado de la revisión del 30 de octubre de 2026
+
+La aplicación funciona actualmente con **datos en memoria**. La migración integral
+al modelo del Word (49 funcionalidades, 32 interfaces y 15 entidades) **no está
+terminada**. No hay JPA, Repository ni conexión MySQL desde los servicios Java.
+
+Esta revisión corrige seguridad, roles, disponibilidad de categorías, precisión de
+litros, responsable autenticado, errores de formato y asistencia. Incluye pruebas
+unitarias, MockMvc y HTTP real con compilación JSP. El esquema relacional objetivo
+se prepara por separado; no constituye persistencia activa de la aplicación.
+
+- [Auditoría y diferencias con el informe](documentacion/24_auditoria_modelo_actualizado.md).
+- [Clases, carpetas y mappings actuales](documentacion/25_inventario_tecnico_y_rutas.md).
+- [Resultados, alcance y pendientes](documentacion/26_resultado_revision_20261030.md).
+- [DDL objetivo preparado](documentacion/persistencia/V1__modelo_objetivo.sql).
+
+## Ejecutar desde Visual Studio Code
+
+1. Abrir esta carpeta y usar un JDK compatible con Java 17 (pom.xml declara 17;
+   esta revisión se verificó con Temurin 21.0.7, sin cambiar la versión objetivo).
+2. En la terminal PowerShell ejecutar `.\mvnw.cmd test`.
+3. Ejecutar `.\mvnw.cmd spring-boot:run` y abrir `http://localhost:8080/login`.
+4. Para generar el WAR: `.\mvnw.cmd package`. El resultado queda en `target/`.
+
+Las semillas ficticias se crean automáticamente al construir los servicios:
+`ediaz` (Administrador), `atorres` (Operador), `lrojas` (Vendedor). La contraseña
+pública de demostración se define en `UsuarioServiceImpl.CONTRASENA_DEMO` y no
+corresponde a una cuenta real. Los hashes BCrypt se generan al iniciar. Esta
+versión pierde los cambios al reiniciar y no debe presentarse como persistente.
+
+Si Maven informa `PKIX path building failed` en este equipo Windows, puede usar
+los certificados ya confiables del sistema, sin desactivar TLS:
+
+```powershell
+$env:MAVEN_OPTS='-Djavax.net.ssl.trustStoreType=Windows-ROOT -Djavax.net.ssl.trustStore=NONE'
+.\mvnw.cmd test
+```
+
+Los permisos actuales separan Operador (ajustes de inventario) y Vendedor
+(ventas). Administrador mantiene catálogos, compras, personal y finanzas. Una
+cuenta o empleado inactivo pierde acceso, incluso con una sesión anterior.
+Cliente y Proveedor no tienen login. La persistencia de Rol y Proveedor sigue
+pendiente y no se sustituye por cuentas de acceso para esos actores externos.
+
+<details>
+<summary>Documentación histórica anterior a esta revisión — conserva evidencia del alcance previo</summary>
+
 # Sistema Web de Gestión para Estación de Servicio — Estación Nexo
 
 ## 1. Descripción
@@ -247,12 +403,12 @@ La aplicación inicia en `http://localhost:8080`.
 Abrir `http://localhost:8080/login` en el navegador:
 - Administrador: usuario `ediaz`
 - Operador: usuario `atorres` o `lrojas`
-- Contraseña de prueba: indicada por el semillero / Administrador (`NexoDemo2026`).
+- Contraseña de prueba: indicada por el semillero / Administrador (`[valor configurado mediante NEXO_DEMO_PASSWORD]`).
 
 ### 3. Ejecutar la batería de pruebas de regresión (133 pruebas)
 Con la aplicación levantada en el puerto 8080, abrir una consola PowerShell:
 ```powershell
-$env:NEXO_DEMO_PASS = "NexoDemo2026"
+$env:NEXO_DEMO_PASS = "[valor configurado mediante NEXO_DEMO_PASSWORD]"
 & .\documentacion\evidencias\bateria_revision.ps1
 ```
 El guion verifica automáticamente códigos HTTP, redirecciones, tokens CSRF, validaciones en servidor y consistencia física/monetaria de los datos.
@@ -267,3 +423,7 @@ Abrir [index.html](diseno-original/index.html) directamente con doble clic en el
 
 ---
 Estación Nexo — Proyecto de Ingeniería Web — Avance 1.
+
+</details>
+
+</details>

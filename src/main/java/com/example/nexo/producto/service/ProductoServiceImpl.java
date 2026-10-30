@@ -10,66 +10,56 @@ import com.example.nexo.categoria.service.CategoriaService;
 import com.example.nexo.producto.model.Producto;
 
 
-/**
- * Guarda los productos (combustibles) en una colección en memoria.
- * No hay base de datos: la lista vive mientras la aplicación está en ejecución.
- * Los datos iniciales son los tres combustibles de la versión 1.
- *
- * Validaciones de servidor (F09 y F11): nombre obligatorio de 3 a 40
- * caracteres, único ignorando mayúsculas y espacios; categoría existente y
- * Activa en el alta; unidad Litro; precio mayor que cero; stock no negativo
- * (RN01); estado del catálogo (Activo / Inactivo).
- * RN02: nunca se elimina un combustible, sólo se cambia su estado (F12).
- */
+/** Servicio persistente: conserva validación, baja lógica e historial. */
 @Service
+@org.springframework.transaction.annotation.Transactional
 public class ProductoServiceImpl implements ProductoService {
 
-    private final List<Producto> productos = new ArrayList<>();
+    private final com.example.nexo.producto.repository.ProductoRepository repo;
     private final CategoriaService categoriaService;
 
-    public ProductoServiceImpl(CategoriaService categoriaService) {
+
+
+    public ProductoServiceImpl(CategoriaService categoriaService, com.example.nexo.producto.repository.ProductoRepository repo) {
+        this.repo=repo;
         this.categoriaService = categoriaService;
-        // Datos de partida tomados de la versión 1 (catálogo de combustibles)
-        productos.add(new Producto("PR01", 1, "Gasolina Regular", "Litro",
-                new BigDecimal("5.00"), new BigDecimal("1990"), "Activo"));
-        productos.add(new Producto("PR02", 1, "Gasolina Premium", "Litro",
-                new BigDecimal("6.00"), new BigDecimal("980"), "Activo"));
-        productos.add(new Producto("PR03", 2, "Diésel", "Litro",
-                new BigDecimal("4.00"), new BigDecimal("3950"), "Activo"));
     }
 
     public List<Producto> listaProductos() {
-        return productos;
+        return repo.findAll();
     }
 
-    public Producto buscarProductoPorId(String id) {
-        if (id == null) {
-            return null;
-        }
-        for (Producto producto : productos) {
-            if (id.equals(producto.getId())) {
-                return producto;
-            }
-        }
-        return null;
-    }
+    public Producto buscarProductoPorId(String id) {return id==null?null:repo.buscarCodigo(id).orElse(null);}
 
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN') && @actorActual.estaVigente()")
     public String crearProducto(Producto producto) {
         String error = validar(producto, null, true);
         if (error != null) {
             return error;
         }
         normalizar(producto);
-        producto.setId(siguienteId());
-        productos.add(producto);
+        producto.setClave(null);
+        producto.setId(com.example.nexo.shared.persistence.Codigos.nuevo("PR",10));
+        producto.setCategoria(categoriaService.buscarCategoriaPorId(producto.getIdCategoria()));
+        repo.save(producto);
         return null; // alta completada
     }
 
+    public boolean disponibleParaOperacion(String id) {
+        Producto producto = buscarProductoPorId(id);
+        if (producto == null || !"Activo".equals(producto.getEstado())) return false;
+        Categoria categoria = categoriaService.buscarCategoriaPorId(producto.getIdCategoria());
+        return categoria != null && "Activo".equals(categoria.getEstado());
+    }
+
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN') && @actorActual.estaVigente()")
     public String editarProducto(Producto producto) {
-        Producto existente = buscarProductoPorId(producto.getId());
+        Producto existente = repo.bloquear(producto.getId()).orElse(null);
         if (existente == null) {
             return "No se encontró el combustible solicitado.";
         }
+        // F11 modifica atributos comerciales; las variaciones físicas pasan por Inventario.
+        producto.setStock(existente.getStock());
         // En la edición la categoría actual puede conservarse aunque esté
         // Inactiva (RN02: el historial se conserva); sólo se exige que exista.
         String error = validar(producto, producto.getId(), false);
@@ -78,14 +68,14 @@ public class ProductoServiceImpl implements ProductoService {
         }
         normalizar(producto);
         existente.setNombre(producto.getNombre());
-        existente.setIdCategoria(producto.getIdCategoria());
+        existente.setCategoria(categoriaService.buscarCategoriaPorId(producto.getIdCategoria()));
         existente.setUnidadMedida(producto.getUnidadMedida());
         existente.setPrecioActual(producto.getPrecioActual());
-        existente.setStock(producto.getStock());
         existente.setEstado(producto.getEstado());
         return null; // edición completada: se conserva el código y el historial
     }
 
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN') && @actorActual.estaVigente()")
     public String cambiarEstadoProducto(String id, String estado) {
         Producto producto = buscarProductoPorId(id);
         if (producto == null) {
@@ -106,18 +96,19 @@ public class ProductoServiceImpl implements ProductoService {
      */
     private String validar(Producto producto, String idExcluido, boolean categoriaActiva) {
         if (producto == null || producto.getNombre() == null
-                || producto.getNombre().trim().isEmpty()) {
+                || com.example.nexo.shared.validation.TextoNormalizado.nombre(producto.getNombre()).isEmpty()) {
             return "El nombre del combustible es obligatorio.";
         }
-        String nombre = producto.getNombre().trim();
+        String nombre = com.example.nexo.shared.validation.TextoNormalizado.nombre(producto.getNombre());
         if (nombre.length() < 3 || nombre.length() > 40) {
             return "El nombre del combustible debe tener entre 3 y 40 caracteres.";
         }
         // Unicidad ignorando mayúsculas y espacios (como en los usuarios)
         String normalizado = normalizarTexto(nombre);
-        for (Producto existente : productos) {
+        for (Producto existente : repo.findAll()) {
             boolean mismo = idExcluido != null && idExcluido.equals(existente.getId());
-            if (!mismo && normalizado.equals(normalizarTexto(existente.getNombre()))) {
+            if (!mismo && java.util.Objects.equals(producto.getIdCategoria(), existente.getIdCategoria())
+                    && normalizado.equals(normalizarTexto(existente.getNombre()))) {
                 return "Ya existe un combustible con el nombre «" + existente.getNombre() + "».";
             }
         }
@@ -125,21 +116,32 @@ public class ProductoServiceImpl implements ProductoService {
         if (categoria == null) {
             return "La categoría seleccionada no existe.";
         }
-        if (categoriaActiva && !"Activo".equals(categoria.getEstado())) {
+        Producto anterior = idExcluido == null ? null : buscarProductoPorId(idExcluido);
+        boolean cambiaCategoria = anterior == null
+                || !java.util.Objects.equals(anterior.getIdCategoria(), producto.getIdCategoria());
+        if ((categoriaActiva || cambiaCategoria) && !"Activo".equals(categoria.getEstado())) {
             return "La categoría «" + categoria.getNombre()
                     + "» está Inactiva y no puede usarse en un combustible nuevo.";
         }
-        if (!"Litro".equals(producto.getUnidadMedida())) {
-            return "La unidad de medida debe ser Litro.";
+        if (!"L".equals(producto.getUnidadMedida())) {
+            return "La unidad de medida debe ser L (litros).";
         }
         if (producto.getPrecioActual() == null
                 || producto.getPrecioActual().compareTo(BigDecimal.ZERO) <= 0) {
             return "El precio por litro debe ser mayor a cero.";
         }
+        if (producto.getPrecioActual().stripTrailingZeros().scale() > 2
+                || producto.getPrecioActual().compareTo(new BigDecimal("9999999999.99")) > 0) {
+            return "El precio debe ajustarse a DECIMAL(12,2).";
+        }
         // RN01: el stock nunca queda negativo; en el alta no se admite negativo
         if (producto.getStock() == null
                 || producto.getStock().compareTo(BigDecimal.ZERO) < 0) {
             return "El stock no puede ser negativo.";
+        }
+        if (producto.getStock().stripTrailingZeros().scale() > 3
+                || producto.getStock().compareTo(new BigDecimal("999999999.999")) > 0) {
+            return "El stock debe ajustarse a DECIMAL(12,3).";
         }
         if (!esEstadoValido(producto.getEstado())) {
             return "El estado debe ser Activo o Inactivo.";
@@ -153,32 +155,16 @@ public class ProductoServiceImpl implements ProductoService {
 
     /** Guarda el nombre sin los espacios sobrantes. */
     private void normalizar(Producto producto) {
-        producto.setNombre(producto.getNombre().trim());
+        producto.setNombre(com.example.nexo.shared.validation.TextoNormalizado.nombre(producto.getNombre()));
     }
 
     private String normalizarTexto(String texto) {
-        return texto.trim().toLowerCase().replaceAll("\\s+", " ");
+        return com.example.nexo.shared.validation.TextoNormalizado.clave(texto);
     }
 
     /**
      * Continúa la numeración de códigos de la versión 1: PR01, PR02, PR03 → PR04.
      */
-    private String siguienteId() {
-        int maximo = 0;
-        for (Producto producto : productos) {
-            String id = producto.getId();
-            if (id != null && id.startsWith("PR")) {
-                try {
-                    int numero = Integer.parseInt(id.substring(2));
-                    if (numero > maximo) {
-                        maximo = numero;
-                    }
-                } catch (NumberFormatException excepcion) {
-                    // Un código fuera del patrón no altera la numeración
-                }
-            }
-        }
-        return String.format("PR%02d", maximo + 1);
-    }
+
 
 }

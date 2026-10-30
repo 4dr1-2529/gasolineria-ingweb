@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,8 +38,13 @@ public class UsuarioController {
     }
 
     @GetMapping("/list")
-    public String listarUsuarios(Model model) {
-        model.addAttribute("usuarios", usuarioService.listaUsuarios());
+    public String listarUsuarios(@RequestParam(required=false) String username,@RequestParam(required=false) String empleado,@RequestParam(required=false) String rol,@RequestParam(required=false) String estado,Model model) {
+        Map<Long,String> nombres=nombresEmpleados();
+        model.addAttribute("usuarios", usuarioService.listaUsuarios().stream()
+            .filter(u->com.example.nexo.shared.validation.TextoNormalizado.clave(u.getUsername()).contains(com.example.nexo.shared.validation.TextoNormalizado.clave(username)))
+            .filter(u->com.example.nexo.shared.validation.TextoNormalizado.clave(nombres.get(u.getIdEmpleado())).contains(com.example.nexo.shared.validation.TextoNormalizado.clave(empleado)))
+            .filter(u->rol==null || rol.isBlank() || rol.equals(u.getRol()))
+            .filter(u->estado==null || estado.isBlank() || estado.equals(u.getEstado())).toList());
         model.addAttribute("nombresEmpleados", nombresEmpleados());
         return "usuario/lista"; // Retorna la vista correspondiente
     }
@@ -50,17 +56,27 @@ public class UsuarioController {
         if (!model.containsAttribute("usuario")) {
             model.addAttribute("usuario", new Usuario());
         }
-        model.addAttribute("empleados", empleadoService.listaEmpleados());
-        model.addAttribute("nombresEmpleados", nombresEmpleados());
+        Map<Long, String> disponibles = nombresEmpleados();
+        for (Usuario cuenta : usuarioService.listaUsuarios()) disponibles.remove(cuenta.getIdEmpleado());
+        for (Empleado empleado : empleadoService.listaEmpleados()) {
+            if (!"Activo".equals(empleado.getEstado())) disponibles.remove(empleado.getId());
+        }
+        model.addAttribute("nombresEmpleados", disponibles);
         return "usuario/crear"; // Retorna la vista correspondiente
     }
 
     @PostMapping("/crear")
-    public String crearUsuario(@ModelAttribute("usuario") Usuario usuario,
+    public String crearUsuario(@ModelAttribute("usuario") Usuario usuario, BindingResult resultadoUsuario,
             RedirectAttributes redirect) {
+        if (resultadoUsuario.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/usuarios/crear";
+        }
         String error = usuarioService.crearUsuario(usuario);
         if (error != null) {
             // Cuenta rechazada: se vuelve al formulario conservando lo digitado
+            usuario.setPassword(null);
             redirect.addFlashAttribute("usuario", usuario);
             redirect.addFlashAttribute("mensaje", error);
             redirect.addFlashAttribute("mensajeTipo", "error");
@@ -73,7 +89,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/editar")
-    public String mostrarFormularioEditar(@RequestParam("id") Integer id, Model model) {
+    public String mostrarFormularioEditar(@RequestParam("id") Long id, Model model) {
         Usuario usuario = usuarioService.buscarUsuarioPorId(id);
         if (usuario == null) {
             // Id inexistente: se regresa a la lista sin mostrar un error
@@ -86,10 +102,16 @@ public class UsuarioController {
     }
 
     @PostMapping("/editar")
-    public String editarUsuario(@ModelAttribute("usuario") Usuario usuario,
+    public String editarUsuario(@ModelAttribute("usuario") Usuario usuario, BindingResult resultadoUsuario,
             RedirectAttributes redirect) {
+        if (resultadoUsuario.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/usuarios/editar" + "?id=" + usuario.getId();
+        }
         String error = usuarioService.editarUsuario(usuario);
         if (error != null) {
+            usuario.setPassword(null);
             redirect.addFlashAttribute("usuario", usuario);
             redirect.addFlashAttribute("mensaje", error);
             redirect.addFlashAttribute("mensajeTipo", "error");
@@ -105,8 +127,8 @@ public class UsuarioController {
      * Los empleados se toman de EmpleadoService (no hay una segunda lista):
      * sirven para el selector del formulario y para mostrar el nombre en la lista.
      */
-    private Map<Integer, String> nombresEmpleados() {
-        Map<Integer, String> nombres = new HashMap<>();
+    private Map<Long, String> nombresEmpleados() {
+        Map<Long, String> nombres = new HashMap<>();
         for (Empleado empleado : empleadoService.listaEmpleados()) {
             nombres.put(empleado.getId(), empleado.getNombres() + " " + empleado.getApellidos());
         }

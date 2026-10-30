@@ -1,0 +1,73 @@
+{
+  "alcance": "Esquema SQL aislado, no persistencia de la aplicación Java",
+  "pruebas": [
+    {
+      "prueba": "15 tablas del diccionario",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "109 columnas del diccionario",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "22 relaciones FK",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "15 PK",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "DECIMAL de litros conserva milésimas",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Conciliación SQL apertura + ingresos - egresos",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Rechaza stock negativo",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Rechaza FK de categoría inexistente",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Conserva producto con operaciones",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Una jornada por empleado y fecha",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Salida posterior a entrada",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Una caja por fecha",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Una entrada por detalle de compra",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Un ingreso por venta",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Movimiento de caja exige origen",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Rollback SQL de operación con FK inválida",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "No queda cabecera parcial tras rollback SQL",
+      "resultado": "PASS"
+    }
+  ]
+}

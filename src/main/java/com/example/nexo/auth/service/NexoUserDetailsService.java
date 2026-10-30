@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 import com.example.nexo.empleado.model.Empleado;
 import com.example.nexo.usuario.model.Usuario;
 import com.example.nexo.usuario.service.UsuarioService;
+import com.example.nexo.empleado.service.EmpleadoService;
 
 
 /**
- * Conecta los usuarios en memoria con Spring Security (F01).
+ * Conecta los usuarios persistidos con Spring Security (F01).
  * El nombre de usuario se busca normalizado (sin mayúsculas ni espacios
  * sobrantes) y una cuenta con estado «Inactivo» queda deshabilitada:
  * el usuario no puede iniciar sesión aunque recuerde su contraseña.
@@ -20,9 +21,11 @@ import com.example.nexo.usuario.service.UsuarioService;
 public class NexoUserDetailsService implements UserDetailsService {
 
     private final UsuarioService usuarioService;
+    private final EmpleadoService empleadoService;
 
-    public NexoUserDetailsService(UsuarioService usuarioService) {
+    public NexoUserDetailsService(UsuarioService usuarioService, EmpleadoService empleadoService) {
         this.usuarioService = usuarioService;
+        this.empleadoService = empleadoService;
     }
 
     @Override
@@ -32,11 +35,15 @@ public class NexoUserDetailsService implements UserDetailsService {
             // Spring Security oculta este detalle y responde «credenciales incorrectas»
             throw new UsernameNotFoundException("Usuario inexistente");
         }
+        Empleado empleado = empleadoService.buscarEmpleadoPorId(usuario.getIdEmpleado());
         return User.builder()
                 .username(usuario.getUsername())
                 .password(usuario.getPassword() == null ? "" : usuario.getPassword())
                 .authorities(rolSeguridad(usuario.getRol()))
-                .disabled("Inactivo".equals(usuario.getEstado()))
+                .disabled(!"Activo".equals(usuario.getEstado()) || empleado == null
+                        || !"Activo".equals(empleado.getEstado()) || !"Activo".equals(usuario.getPerfil().getEstado())
+                        || !java.util.Set.of("Administrador", "Operador", "Vendedor")
+                                .contains(String.valueOf(usuario.getRol())))
                 .build();
     }
 
@@ -45,9 +52,12 @@ public class NexoUserDetailsService implements UserDetailsService {
         if ("Administrador".equals(rol)) {
             return new String[] { "ROLE_ADMIN" };
         }
-        if ("Empleado".equals(rol)) {
-            return new String[] { "ROLE_EMPLEADO" };
+        if ("Operador".equals(rol)) {
+            return new String[] { "ROLE_OPERADOR" };
         }
-        return new String[] { "ROLE_OPERADOR" }; // «Operador / Vendedor»
+        if ("Vendedor".equals(rol)) {
+            return new String[] { "ROLE_VENDEDOR" };
+        }
+        return new String[0];
     }
 }

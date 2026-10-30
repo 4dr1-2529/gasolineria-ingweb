@@ -34,14 +34,12 @@ public interface MovimientoInventarioService {
      * RN03 · La compra ya sumó los litros al stock; aquí sólo se registra
      * la entrada correspondiente, sin volver a modificar el stock.
      */
-    public void registrarEntradaPorCompra(String idProducto, Integer idUsuario, BigDecimal cantidad,
-            LocalDateTime fechaHora, String motivo);
+
 
     /**
      * RN03 · La venta ya descontó los litros del stock; aquí sólo se
      * registra la salida correspondiente, sin volver a modificar el stock.
      */
-    public void registrarSalidaPorVenta(String idProducto, Integer idUsuario, BigDecimal cantidad,
-            LocalDateTime fechaHora, String motivo);
+
 
 }

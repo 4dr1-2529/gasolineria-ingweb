@@ -11,6 +11,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import jakarta.servlet.http.HttpSession;
+import com.example.nexo.shared.web.FormularioUnico;
+import org.springframework.security.core.Authentication;
+import com.example.nexo.auth.service.ResponsableSesion;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,23 +46,34 @@ public class CompraController {
     /** Formato de la fecha informativa del formulario (dd/MM/yyyy). */
     private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+    private final com.example.nexo.proveedor.service.ProveedorService proveedores;
     private final CompraService compraService;
     private final ProductoService productoService;
     private final UsuarioService usuarioService;
     private final EmpleadoService empleadoService;
 
     public CompraController(CompraService compraService, ProductoService productoService,
-            UsuarioService usuarioService, EmpleadoService empleadoService) {
+            UsuarioService usuarioService, EmpleadoService empleadoService, com.example.nexo.proveedor.service.ProveedorService proveedores) {
         this.compraService = compraService;
+        this.proveedores=proveedores;
         this.productoService = productoService;
         this.usuarioService = usuarioService;
         this.empleadoService = empleadoService;
     }
 
     @GetMapping("/list")
-    public String listarCompras(Model model) {
-        List<Compra> compras = compraService.listaCompras();
-        List<DetalleCompra> detalles = compraService.listaDetalles();
+    public String listarCompras(@RequestParam(required=false) Long idProveedor,@RequestParam(required=false) Long idResponsable,
+            @RequestParam(required=false) @org.springframework.format.annotation.DateTimeFormat(iso=org.springframework.format.annotation.DateTimeFormat.ISO.DATE) LocalDate desde,
+            @RequestParam(required=false) @org.springframework.format.annotation.DateTimeFormat(iso=org.springframework.format.annotation.DateTimeFormat.ISO.DATE) LocalDate hasta,
+            @RequestParam(required=false) String estado,@RequestParam(required=false) String idProducto,Model model) {
+        List<Compra> compras = compraService.filtrar(idProveedor,idResponsable,desde,hasta,estado,idProducto);
+        Set<String> codigos=compras.stream().map(Compra::getId).collect(java.util.stream.Collectors.toSet());
+        model.addAttribute("proveedoresFiltro",proveedores.listar(null,null,null));
+        Map<Long,String> responsablesFiltro=new HashMap<>();
+        for(var u:usuarioService.listaUsuarios())responsablesFiltro.put(u.getId(),nombreResponsable(u.getId()));
+        model.addAttribute("responsablesFiltro",responsablesFiltro);
+        model.addAttribute("productosFiltro",productoService.listaProductos());
+        List<DetalleCompra> detalles = compraService.listaDetalles().stream().filter(d->codigos.contains(d.getIdCompra())).toList();
         Map<String, Producto> productos = productosPorId();
 
         // Datos que la vista necesita por compra: sus combustibles y sus litros
@@ -98,7 +114,7 @@ public class CompraController {
     }
 
     @GetMapping("/crear")
-    public String mostrarFormulario(Model model) {
+    public String mostrarFormulario(Model model, HttpSession sesion) {
         // Tras un rechazo conserva lo digitado (los atributos vienen por flash)
         if (!model.containsAttribute("compra")) {
             model.addAttribute("compra", new Compra());
@@ -107,19 +123,31 @@ public class CompraController {
             model.addAttribute("detalle", new DetalleCompra());
         }
         // Fecha de registro (sólo informativa en la vista): la fija el servidor
-        model.addAttribute("fechaRegistro", LocalDate.now().format(FORMATO_FECHA));
+        model.addAttribute("proveedores",proveedores.activos());
+        model.addAttribute("fechaRegistro", LocalDate.now(com.example.nexo.shared.config.TiempoConfig.LIMA).format(FORMATO_FECHA));
         // RN02 · Sólo los combustibles con estado Activo pueden comprarse
         model.addAttribute("productos", productosActivos());
         model.addAttribute("responsables", responsables());
+        model.addAttribute("formularioToken", FormularioUnico.emitir(sesion, "compra"));
         return "compra/crear";
     }
 
     @PostMapping("/crear")
-    public String crearCompra(@ModelAttribute("compra") Compra compra,
-            @ModelAttribute("detalle") DetalleCompra detalle,
-            RedirectAttributes redirect) {
+    public String crearCompra(@ModelAttribute("compra") Compra compra, BindingResult resultadoCompra,
+            @ModelAttribute("detalle") DetalleCompra detalle, BindingResult resultadoDetalle,
+            @ModelAttribute("lineasOperacion") com.example.nexo.shared.web.LineasOperacion lineas, BindingResult resultadoLineas,
+            Authentication autenticacion, HttpSession sesion,
+            @RequestParam("formularioToken") String formularioToken, RedirectAttributes redirect) {
+        if (resultadoCompra.hasErrors() || resultadoDetalle.hasErrors() || resultadoLineas.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/compras/crear";
+        }
         // La fecha no viaja en el formulario: la registra el Service con hora del servidor
-        String error = compraService.crearCompra(compra, detalle);
+        compra.setId(com.example.nexo.shared.persistence.Codigos.desdeToken(formularioToken,"C",12));
+        compra.setIdUsuario(ResponsableSesion.id(autenticacion, usuarioService));
+        String error = FormularioUnico.ejecutar(sesion, "compra", formularioToken,
+                () -> compraService.crearCompra(compra, lineas.compras(detalle)));
         if (error != null) {
             // Compra rechazada: se regresa al formulario conservando lo digitado
             redirect.addFlashAttribute("compra", compra);
@@ -128,8 +156,7 @@ public class CompraController {
             redirect.addFlashAttribute("mensajeTipo", "error");
             return "redirect:/compras/crear";
         }
-        redirect.addFlashAttribute("mensaje", "Compra " + compra.getId()
-                + " registrada: " + detalle.getCantidad() + " L añadidos al stock.");
+        redirect.addFlashAttribute("mensaje", "Compra " + compra.getId() + " registrada con todos sus detalles y movimientos de inventario y caja.");
         redirect.addFlashAttribute("mensajeTipo", "ok");
         return "redirect:/compras/list";
     }
@@ -167,10 +194,10 @@ public class CompraController {
      * Responsables del formulario: las cuentas Activas con rol "Operador /
      * Vendedor" (RN02: una cuenta Inactiva no se elige en operaciones nuevas).
      */
-    private Map<Integer, String> responsables() {
-        Map<Integer, String> nombres = new HashMap<>();
+    private Map<Long, String> responsables() {
+        Map<Long, String> nombres = new HashMap<>();
         for (Usuario usuario : usuarioService.listaUsuarios()) {
-            if ("Operador / Vendedor".equals(usuario.getRol())
+            if ("Vendedor".equals(usuario.getRol())
                     && "Activo".equals(usuario.getEstado())) {
                 nombres.put(usuario.getId(), nombreResponsable(usuario.getId()));
             }
@@ -185,14 +212,14 @@ public class CompraController {
     private List<Producto> productosActivos() {
         List<Producto> activos = new ArrayList<>();
         for (Producto producto : productoService.listaProductos()) {
-            if ("Activo".equals(producto.getEstado())) {
+            if (productoService.disponibleParaOperacion(producto.getId())) {
                 activos.add(producto);
             }
         }
         return activos;
     }
 
-    private String nombreResponsable(Integer idUsuario) {
+    private String nombreResponsable(Long idUsuario) {
         Usuario usuario = usuarioService.buscarUsuarioPorId(idUsuario);
         if (usuario == null) {
             return "";

@@ -1,0 +1,17 @@
+{
+  "alcance": "Esquema SQL aislado, no persistencia de la aplicación Java",
+  "pruebas": [
+    {
+      "prueba": "Datos conservados tras reiniciar MySQL",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Movimientos conservados tras reiniciar MySQL",
+      "resultado": "PASS"
+    },
+    {
+      "prueba": "Zona de sesión Perú",
+      "resultado": "PASS"
+    }
+  ]
+}

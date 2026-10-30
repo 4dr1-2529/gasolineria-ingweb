@@ -12,39 +12,11 @@
 </head>
 <body>
     <header class="sidebar">
-        <a class="brand" href="${pageContext.request.contextPath}/categorias/list">
+        <a class="brand" href="${pageContext.request.contextPath}/">
             <span class="brand-mark">N</span>
             <span>NEXO<small>ESTACIÓN NEXO</small></span>
         </a>
-        <nav>
-            <c:set var="esAdmin" value="false"/>
-            <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
-                <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}">
-                    <c:set var="esAdmin" value="true"/>
-                </c:if>
-            </c:forEach>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
-                <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/combustibles/list">Combustibles</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
-                <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
-                <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
-                <a href="${pageContext.request.contextPath}/usuarios/list" aria-current="page">Usuarios</a>
-                <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/asistencia/mi">Asistencia</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/inventario/list">Inventario</a>
-            <a href="${pageContext.request.contextPath}/ventas/list">Ventas</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
-            </c:if>
-        </nav>
+        <%@ include file="/WEB-INF/views/shared/menu.jspf" %>
         <div class="sesion">
             <span class="sesion-usuario">Sesión: <c:out value="${pageContext.request.remoteUser}"/></span>
             <form:form action="${pageContext.request.contextPath}/logout" method="post" cssClass="sesion-salir">
@@ -81,7 +53,7 @@
                 </p>
             </c:if>
 
-            <section class="panel">
+<form method="get" class="form-grid"><label>Username<input name="username" value="<c:out value='${param.username}'/>"/></label><label>Empleado<input name="empleado" value="<c:out value='${param.empleado}'/>"/></label><label>Rol<select name="rol"><option value="">Todos</option><option>Administrador</option><option>Operador</option><option>Vendedor</option></select></label><label>Estado<select name="estado"><option value="">Todos</option><option>Activo</option><option>Inactivo</option></select></label><button class="btn" type="submit">Filtrar usuarios</button></form>            <section class="panel">
                 <h2>Cuentas de acceso</h2>
                 <div class="table-responsive">
                     <table class="table">
@@ -94,7 +66,7 @@
                                 <th scope="col">Username</th>
                                 <th scope="col">Rol</th>
                                 <th scope="col">Estado</th>
-                                <th scope="col">Acciones</th>
+                                <th scope="col">Último acceso</th><th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,13 +81,13 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/usuarios/editar?id=${usuario.id}">Editar</a>
+                                        <c:out value="${usuario.ultimoAcceso}"/></td><td><a href="${pageContext.request.contextPath}/usuarios/editar?id=${usuario.id}">Editar</a>
                                     </td>
                                 </tr>
                             </c:forEach>
                             <c:if test="${empty usuarios}">
                                 <tr>
-                                    <td colspan="5">No hay usuarios registrados.</td>
+                                    <td colspan="6">No hay usuarios registrados.</td>
                                 </tr>
                             </c:if>
                         </tbody>

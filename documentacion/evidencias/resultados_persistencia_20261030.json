@@ -1,0 +1,105 @@
+{
+  "comando": "mvnw.cmd verify -q",
+  "base_integracion": "nexo_pruebas",
+  "motor": "MySQL 8.4",
+  "total": 48,
+  "fallos": 0,
+  "errores": 0,
+  "omitidas": 0,
+  "suites": [
+    {
+      "suite": "com.example.nexo.FormularioUnicoTest",
+      "pruebas": 4,
+      "fallos": 0,
+      "errores": 0,
+      "omitidas": 0,
+      "casos": [
+        "tokenNoEsTransferibleEntreSesionesNiOperaciones",
+        "tokenSoloEjecutaUnaVez",
+        "errorDeValidacionNoConsumeToken",
+        "reenviosConcurrentesEjecutanUnaVez"
+      ]
+    },
+    {
+      "suite": "com.example.nexo.JspHttpTest",
+      "pruebas": 3,
+      "fallos": 0,
+      "errores": 0,
+      "omitidas": 0,
+      "casos": [
+        "vendedorVeNavegacionYPrecisionPermitidas",
+        "administradorCompilaTodasSusJsp",
+        "operadorVeAjustesYSusPantallas"
+      ]
+    },
+    {
+      "suite": "com.example.nexo.PersistenciaMySqlTest",
+      "pruebas": 9,
+      "fallos": 0,
+      "errores": 0,
+      "omitidas": 0,
+      "casos": [
+        "codigoPersistidoImpideDuplicarSolicitud",
+        "cajaCerradaRechazaVentaYConservaSaldoCalculado",
+        "filtrosYDashboardLeenOperacionesPersistidas",
+        "compraVariasLineasPersisteTodosLosEfectos",
+        "falloEconomicoRevierteCompraCompleta",
+        "proveedorInactivoNoCompraPeroConservaHistorial",
+        "falloEconomicoRevierteVentaCompleta",
+        "ventasConcurrentesNoDejanStockNegativo",
+        "ventaPersistePrecioServidorYReferencias"
+      ]
+    },
+    {
+      "suite": "com.example.nexo.ReglasNegocioTest",
+      "pruebas": 16,
+      "fallos": 0,
+      "errores": 0,
+      "omitidas": 0,
+      "casos": [
+        "jornadaAnteriorAbiertaBloqueaNuevaEntrada",
+        "ventaConservaMilesimasDeLitro",
+        "fechaDeMovimientoSeGeneraEnServicio",
+        "stockInsuficienteNoCreaVenta",
+        "jornadaUsaFechaLimaAunqueRelojUseUtc",
+        "empleadoInactivoNoMarcaEntradaNiSalida",
+        "rechazaPrecisionExcesivaSinRedondear",
+        "categoriaInactivaBloqueaCompraYMovimiento",
+        "noPuedeCambiarProductoHaciaCategoriaInactiva",
+        "productoPuedeRepetirNombreEnOtraCategoria",
+        "entradasConcurrentesNoDuplicanJornada",
+        "nombresEquivalentesNoDuplicanCategorias",
+        "duplicadoDentroDeCategoriaSeRechaza",
+        "segundaEntradaNoDuplicaJornada",
+        "categoriaInactivaBloqueaVentaSinEfectos",
+        "salidaSinEntradaYSinAvanceHorarioSeRechazan"
+      ]
+    },
+    {
+      "suite": "com.example.nexo.SeguridadHttpTest",
+      "pruebas": 16,
+      "fallos": 0,
+      "errores": 0,
+      "omitidas": 0,
+      "casos": [
+        "usuarioInactivoNoPuedeAcceder",
+        "logoutInvalidaSesion",
+        "empleadoInactivoBloqueaLoginYSesionAnterior",
+        "vendedorNoPuedeCerrarCajaNiModificarProveedor",
+        "proveedorCrudSeGuardaYFiltraEnMySql",
+        "ventaUsaResponsableAutenticadoYRechazaReenvio",
+        "escrituraSinTokenSeRechazaAunqueHayaSesion",
+        "credencialesIncorrectasYCuentasInexistentesSeRechazan",
+        "compraHttpVariasLineasPersisteUnaSolaOperacion",
+        "inventarioIgnoraResponsableEnviadoPorNavegador",
+        "loginRequiereCsrf",
+        "formatoNumericoInvalidoMuestraAviso",
+        "permisosSeparanAdministradorOperadorVendedor",
+        "accesoAnonimoRedirigeAlLogin",
+        "proveedorInexistenteNoProduceBucleDeRedireccion",
+        "asistenciaIgnoraEmpleadoYHorarioManipulados"
+      ]
+    }
+  ],
+  "nota": "La prueba de reinicio del WAR es independiente y no se incluye como aprobada."
+}

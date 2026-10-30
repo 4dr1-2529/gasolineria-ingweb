@@ -4,3 +4,6 @@ Thumbs.db
 *.tmp
 *.log
 target/
+.env
+.env.*
+!.env.example

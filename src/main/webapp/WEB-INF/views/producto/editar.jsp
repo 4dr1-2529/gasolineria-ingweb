@@ -11,39 +11,11 @@
 </head>
 <body>
     <header class="sidebar">
-        <a class="brand" href="${pageContext.request.contextPath}/categorias/list">
+        <a class="brand" href="${pageContext.request.contextPath}/">
             <span class="brand-mark">N</span>
             <span>NEXO<small>ESTACIÓN NEXO</small></span>
         </a>
-        <nav>
-            <c:set var="esAdmin" value="false"/>
-            <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
-                <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}">
-                    <c:set var="esAdmin" value="true"/>
-                </c:if>
-            </c:forEach>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
-                <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/combustibles/list" aria-current="page">Combustibles</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
-                <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
-                <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
-                <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
-                <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/asistencia/mi">Asistencia</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/inventario/list">Inventario</a>
-            <a href="${pageContext.request.contextPath}/ventas/list">Ventas</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
-            </c:if>
-        </nav>
+        <%@ include file="/WEB-INF/views/shared/menu.jspf" %>
         <div class="sesion">
             <span class="sesion-usuario">Sesión: <c:out value="${pageContext.request.remoteUser}"/></span>
             <form:form action="${pageContext.request.contextPath}/logout" method="post" cssClass="sesion-salir">
@@ -110,18 +82,14 @@
                         <div class="field">
                             <form:label path="unidadMedida">Unidad</form:label>
                             <form:select path="unidadMedida" id="unidadMedida" cssClass="form-select" required="required">
-                                <form:option value="Litro" label="Litro"/>
+                                <form:option value="L" label="Litro (L)"/>
                             </form:select>
                         </div>
                         <div class="field">
                             <form:label path="precioActual">Precio actual (S/ por L)</form:label>
                             <form:input path="precioActual" id="precioActual" cssClass="form-control" type="number" min="0.01" step="0.01" required="required" />
                         </div>
-                        <div class="field">
-                            <form:label path="stock">Stock de referencia (L)</form:label>
-                            <form:input path="stock" id="stock" cssClass="form-control" type="number" min="0" step="0.01" required="required" />
-                            <p class="form-help">No puede ser negativo (RN01).</p>
-                        </div>
+                        <p class="form-help">Las existencias se modifican mediante compras, ventas o ajustes de inventario.</p>
                         <div class="field">
                             <form:label path="estado">Estado</form:label>
                             <form:select path="estado" id="estado" cssClass="form-select" required="required">

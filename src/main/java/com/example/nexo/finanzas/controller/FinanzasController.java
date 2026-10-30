@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,13 +38,15 @@ import com.example.nexo.usuario.service.UsuarioService;
 @RequestMapping("/finanzas")
 public class FinanzasController {
 
+    private final com.example.nexo.finanzas.service.CajaDiariaService cajas;
     private final MovimientoCajaService movimientoService;
     private final UsuarioService usuarioService;
     private final EmpleadoService empleadoService;
 
     public FinanzasController(MovimientoCajaService movimientoService, UsuarioService usuarioService,
-            EmpleadoService empleadoService) {
+            EmpleadoService empleadoService, com.example.nexo.finanzas.service.CajaDiariaService cajas) {
         this.movimientoService = movimientoService;
+        this.cajas=cajas;
         this.usuarioService = usuarioService;
         this.empleadoService = empleadoService;
     }
@@ -54,6 +57,8 @@ public class FinanzasController {
      */
     @GetMapping("/list")
     public String resumen(Model model) {
+        model.addAttribute("cajaActual",cajas.actual());
+        model.addAttribute("cajas",cajas.listar());
         model.addAttribute("movimientos", movimientoService.listaMovimientos());
         model.addAttribute("conceptosPorId", conceptosPorId());
         model.addAttribute("responsables", nombresUsuarios());
@@ -123,8 +128,13 @@ public class FinanzasController {
     }
 
     @PostMapping("/conceptos/crear")
-    public String crearConcepto(@ModelAttribute("concepto") ConceptoMovimiento concepto,
+    public String crearConcepto(@ModelAttribute("concepto") ConceptoMovimiento concepto, BindingResult resultadoConcepto,
             RedirectAttributes redirect) {
+        if (resultadoConcepto.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/finanzas/conceptos/crear";
+        }
         String error = movimientoService.crearConcepto(concepto);
         if (error != null) {
             // Se conserva lo digitado y se muestra el motivo del servidor
@@ -152,8 +162,13 @@ public class FinanzasController {
     }
 
     @PostMapping("/conceptos/editar")
-    public String editarConcepto(@ModelAttribute("concepto") ConceptoMovimiento concepto,
+    public String editarConcepto(@ModelAttribute("concepto") ConceptoMovimiento concepto, BindingResult resultadoConcepto,
             RedirectAttributes redirect) {
+        if (resultadoConcepto.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/finanzas/conceptos/editar" + "?id=" + concepto.getId();
+        }
         String error = movimientoService.editarConcepto(concepto);
         if (error != null) {
             redirect.addFlashAttribute("concepto", concepto);
@@ -219,15 +234,15 @@ public class FinanzasController {
         return conceptos;
     }
 
-    private Map<Integer, String> nombresUsuarios() {
-        Map<Integer, String> nombres = new HashMap<>();
+    private Map<Long, String> nombresUsuarios() {
+        Map<Long, String> nombres = new HashMap<>();
         for (Usuario usuario : usuarioService.listaUsuarios()) {
             nombres.put(usuario.getId(), nombreResponsable(usuario.getId()));
         }
         return nombres;
     }
 
-    private String nombreResponsable(Integer idUsuario) {
+    private String nombreResponsable(Long idUsuario) {
         Usuario usuario = usuarioService.buscarUsuarioPorId(idUsuario);
         if (usuario == null) {
             return "";

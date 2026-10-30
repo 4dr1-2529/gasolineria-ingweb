@@ -17,6 +17,9 @@ public interface ProductoService {
     /** Busca por código (PR01…); devuelve null si no existe. */
     public Producto buscarProductoPorId(String id);
 
+    /** RN02: tanto el combustible como su categoría deben estar activos. */
+    public boolean disponibleParaOperacion(String id);
+
     /** F09 · alta de un combustible; devuelve el error o null si se registró. */
     public String crearProducto(Producto producto);
 

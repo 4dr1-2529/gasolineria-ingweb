@@ -1,0 +1,23 @@
+{
+  "estado": "NO_COMPLETADA",
+  "alcance": "Arranque y reinicio del WAR con la misma base MySQL estacion_nexo",
+  "observado": [
+    "Maven verify final terminó con código 0, 48 pruebas sin fallos ni omisiones y WAR generado.",
+    "El WAR inició Tomcat en 18080 y conectó con MySQL.",
+    "Durante la consulta inicial de login el archivo WAR desapareció y Java terminó con código 0, sin excepción de aplicación registrada.",
+    "Windows denegó posteriormente la escritura del mismo nombre de archivo.",
+    "No se confirmó la causa mediante los registros accesibles; no se modificaron controles de seguridad.",
+    "El usuario informó de una alerta que había retirado; el reintento posterior de Maven package continuó fallando al escribir target/estacion-nexo.war."
+  ],
+  "compra_desde_formulario_WAR": "NO_EJECUTADA",
+  "venta_desde_formulario_WAR": "NO_EJECUTADA",
+  "reinicio_completo_con_comparacion": "NO_VERIFICADO",
+  "usuarios_y_asistencia_tras_reinicio_WAR": "NO_VERIFICADOS",
+  "logs_locales_no_publicados": [
+    "target/reinicio-app-1.log",
+    "target/diagnostico-empaquetado.log"
+  ],
+  "commit_realizado": false,
+  "push_realizado": false,
+  "ultimo_empaquetado": "FALLIDO_POR_ACCESO_AL_ARCHIVO"
+}

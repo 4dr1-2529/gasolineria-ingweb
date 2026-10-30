@@ -1,0 +1,16 @@
+package com.example.nexo.shared.config;
+
+import java.time.Clock;
+import java.time.ZoneId;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class TiempoConfig {
+    public static final ZoneId LIMA = ZoneId.of("America/Lima");
+
+    @Bean
+    public Clock relojServidor() {
+        return Clock.system(LIMA);
+    }
+}

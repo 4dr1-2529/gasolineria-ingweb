@@ -159,7 +159,7 @@ El código se organiza por módulo dentro de `com.example.nexo`: `auth` contiene
 | `CategoriaServiceImpl.categorias` | Gasolinas, Diésel |
 | `ProductoServiceImpl.productos` | PR01 1990 L / S/ 5.00, PR02 980 L / S/ 6.00, PR03 3950 L / S/ 4.00 |
 | `EmpleadoServiceImpl.empleados` | 3 (Torres, Rojas, Díaz) |
-| `UsuarioServiceImpl.usuarios` | atorres, lrojas (Operador/Vendedor), ediaz (Administrador) — hash BCrypt de `NexoDemo2026` |
+| `UsuarioServiceImpl.usuarios` | atorres, lrojas (Operador/Vendedor), ediaz (Administrador) — hash BCrypt de `[valor configurado mediante NEXO_DEMO_PASSWORD]` |
 | `CompraServiceImpl.compras/detalles` | C001 + 3 detalles |
 | `VentaServiceImpl.ventas/detalles` | V001–V003 |
 | `MovimientoInventarioServiceImpl.movimientos` | MI001–MI006 (entradas 300 L, salidas 80 L) |

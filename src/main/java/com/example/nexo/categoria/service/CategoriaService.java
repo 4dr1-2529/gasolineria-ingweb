@@ -15,7 +15,7 @@ public interface CategoriaService {
     public List<Categoria> listaCategorias();
 
     /** Busca por identificador; devuelve null si no existe. */
-    public Categoria buscarCategoriaPorId(Integer id);
+    public Categoria buscarCategoriaPorId(Long id);
 
     /** F04 · alta de una categor��a; devuelve el error o null si se registr��. */
     public String crearCategoria(Categoria categoria);
@@ -24,6 +24,6 @@ public interface CategoriaService {
     public String editarCategoria(Categoria categoria);
 
     /** F08 · RN02 · cambia el estado sin eliminar el registro. */
-    public String cambiarEstadoCategoria(Integer id, String estado);
+    public String cambiarEstadoCategoria(Long id, String estado);
 
 }

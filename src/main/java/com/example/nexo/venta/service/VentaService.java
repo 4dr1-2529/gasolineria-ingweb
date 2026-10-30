@@ -20,8 +20,9 @@ public interface VentaService {
      * crea la venta, crea la línea de detalle y descuenta los litros del stock
      * del producto. El precio unitario se toma del producto existente.
      * Devuelve null cuando la venta quedó registrada, o el mensaje de error
-     * cuando la venta fue rechazada (no se modifica ningún dato en memoria).
+     * cuando la venta fue rechazada (no se confirma ningún cambio persistente).
      */
     public String crearVenta(Venta venta, DetalleVenta detalle);
 
+    public String crearVenta(Venta cabecera, List<DetalleVenta> lineas);
 }

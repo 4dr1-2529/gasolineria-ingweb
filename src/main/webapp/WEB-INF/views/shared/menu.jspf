@@ -1,0 +1,30 @@
+<nav aria-label="Navegación principal">
+    <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
+    <c:set var="esAdmin" value="false"/>
+    <c:set var="esOperador" value="false"/>
+    <c:set var="esVendedor" value="false"/>
+    <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
+        <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}"><c:set var="esAdmin" value="true"/></c:if>
+        <c:if test="${rolMenu.authority == 'ROLE_OPERADOR'}"><c:set var="esOperador" value="true"/></c:if>
+        <c:if test="${rolMenu.authority == 'ROLE_VENDEDOR'}"><c:set var="esVendedor" value="true"/></c:if>
+    </c:forEach>
+    <c:if test="${esAdmin}">
+        <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
+        <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
+        <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
+        <a href="${pageContext.request.contextPath}/proveedores/list">Proveedores</a>
+        <a href="${pageContext.request.contextPath}/compras/list">Compras</a>
+        <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
+        <a href="${pageContext.request.contextPath}/asistencia/control">Control de asistencia</a>
+    </c:if>
+    <a href="${pageContext.request.contextPath}/combustibles/list">Combustibles</a>
+    <a href="${pageContext.request.contextPath}/inventario/list">Existencias</a>
+    <c:if test="${esAdmin or esOperador}">
+        <a href="${pageContext.request.contextPath}/inventario/entrada/crear">Registrar entrada</a>
+        <a href="${pageContext.request.contextPath}/inventario/salida/crear">Registrar salida</a>
+        <a href="${pageContext.request.contextPath}/inventario/entradas">Entradas</a>
+        <a href="${pageContext.request.contextPath}/inventario/salidas">Salidas</a>
+    </c:if>
+    <c:if test="${esAdmin or esVendedor}"><a href="${pageContext.request.contextPath}/ventas/list">Ventas</a></c:if>
+    <a href="${pageContext.request.contextPath}/asistencia/mi">Mi asistencia</a>
+</nav>

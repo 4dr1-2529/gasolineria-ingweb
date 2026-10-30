@@ -16,21 +16,21 @@ public interface AsistenciaService {
     public List<Asistencia> listaAsistencias();
 
     /** RN05 · las marcaciones de un solo empleado (P28 usa el de la sesión). */
-    public List<Asistencia> listaAsistenciasDeEmpleado(Integer idEmpleado);
+    public List<Asistencia> listaAsistenciasDeEmpleado(Long idEmpleado);
 
     /** RN05 · la asistencia abierta (entrada sin salida) de hoy, o null. */
-    public Asistencia buscarAsistenciaAbierta(Integer idEmpleado);
+    public Asistencia buscarAsistenciaAbierta(Long idEmpleado);
 
     /** RN05 · registra la entrada de hoy para ese empleado. */
-    public String registrarEntrada(Integer idEmpleado);
+    public String registrarEntrada(Long idEmpleado);
 
     /** RN05 · cierra la asistencia abierta de ese empleado. */
-    public String registrarSalida(Integer idEmpleado);
+    public String registrarSalida(Long idEmpleado);
 
     /**
      * Empleado dueño de la sesión, para mostrar su nombre en P28.
      * Devuelve null si la cuenta no tiene empleado asociado.
      */
-    public Empleado buscarEmpleado(Integer idEmpleado);
+    public Empleado buscarEmpleado(Long idEmpleado);
 
 }

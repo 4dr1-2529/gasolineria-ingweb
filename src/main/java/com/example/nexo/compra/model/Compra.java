@@ -1,29 +1,45 @@
 package com.example.nexo.compra.model;
 
+import jakarta.persistence.*;
+import java.time.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import com.example.nexo.shared.persistence.TipoMovimientoConverter;
+import com.example.nexo.usuario.model.Usuario;
+import com.example.nexo.proveedor.model.Proveedor;
 
-/**
- * Compra de combustible al proveedor.
- * Atributos tomados del modelo de entidad de la versión 1:
- * id_compra, id_usuario (responsable), fecha_hora, proveedor, total y estado.
- * El proveedor es un atributo de texto, no una entidad.
- */
+/** Entidad del diccionario aprobado; los identificadores de formulario son transitorios. */
+@Entity
+@Table(name="compra", uniqueConstraints={@UniqueConstraint(columnNames={"codigo_compra"})})
+@org.hibernate.annotations.DynamicUpdate
 public class Compra {
-
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id_compra", nullable=false)
+    private Long clave;
+    @Column(name="codigo_compra", nullable=false, length=12)
     private String id;
-    private Integer idUsuario;
+    @Transient
+    private Long idUsuario;
+    @Column(name="fecha_hora", nullable=false, columnDefinition="DATETIME")
     private LocalDateTime fechaHora;
+    @Transient
     private String proveedor;
+    @Column(name="total", nullable=false, precision=12, scale=2)
     private BigDecimal total;
+    @Column(name="estado", nullable=false, length=20)
     private String estado;
+    @Transient
+    private Long idProveedor;
+    @Column(name="observacion", nullable=true, length=200)
+    private String observacion;
+    @ManyToOne(fetch=FetchType.EAGER, optional=false)
+    @JoinColumn(name="id_usuario", nullable=false, unique=false)
+    private Usuario usuario;
+    @ManyToOne(fetch=FetchType.EAGER, optional=false)
+    @JoinColumn(name="id_proveedor", nullable=false, unique=false)
+    private Proveedor proveedorEntidad;
 
-    public Compra() {
-        // Constructor vacío
-    }
-
-    public Compra(String id, Integer idUsuario, LocalDateTime fechaHora, String proveedor,
-            BigDecimal total, String estado) {
+    public Compra() { }
+    public Compra(String id, Long idUsuario, LocalDateTime fechaHora, String proveedor, BigDecimal total, String estado) {
         this.id = id;
         this.idUsuario = idUsuario;
         this.fechaHora = fechaHora;
@@ -31,53 +47,26 @@ public class Compra {
         this.total = total;
         this.estado = estado;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Integer getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
-    }
-
-    public String getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(String proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
+    public Long getClave() { return clave; }
+    public void setClave(Long valor) { this.clave = valor; }
+    public String getId() { return id; }
+    public void setId(String valor) { this.id = valor; }
+    public Long getIdUsuario() { return idUsuario != null ? idUsuario : usuario == null ? null : usuario.getId(); }
+    public void setIdUsuario(Long valor) { this.idUsuario = valor; }
+    public LocalDateTime getFechaHora() { return fechaHora; }
+    public void setFechaHora(LocalDateTime valor) { this.fechaHora = valor; }
+    public String getProveedor() { return proveedorEntidad == null ? proveedor : proveedorEntidad.getRazonSocial(); }
+    public void setProveedor(String valor) { this.proveedor = valor; }
+    public BigDecimal getTotal() { return total; }
+    public void setTotal(BigDecimal valor) { this.total = valor; }
+    public String getEstado() { return estado; }
+    public void setEstado(String valor) { this.estado = valor; }
+    public Long getIdProveedor() { return idProveedor != null ? idProveedor : proveedorEntidad == null ? null : proveedorEntidad.getId(); }
+    public void setIdProveedor(Long valor) { this.idProveedor = valor; }
+    public String getObservacion() { return observacion; }
+    public void setObservacion(String valor) { this.observacion = valor; }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario valor) { this.usuario = valor; this.idUsuario = valor == null ? null : valor.getId(); }
+    public Proveedor getProveedorEntidad() { return proveedorEntidad; }
+    public void setProveedorEntidad(Proveedor valor) { this.proveedorEntidad = valor; this.idProveedor = valor == null ? null : valor.getId(); }
 }

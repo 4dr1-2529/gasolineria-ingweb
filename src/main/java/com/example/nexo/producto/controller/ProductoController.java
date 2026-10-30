@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -56,8 +57,13 @@ public class ProductoController {
     }
 
     @PostMapping("/crear")
-    public String crearProducto(@ModelAttribute("producto") Producto producto,
+    public String crearProducto(@ModelAttribute("producto") Producto producto, BindingResult resultadoProducto,
             RedirectAttributes redirect) {
+        if (resultadoProducto.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/combustibles/crear";
+        }
         String error = productoService.crearProducto(producto);
         if (error != null) {
             // Se conserva lo digitado y se muestra el motivo del servidor
@@ -86,8 +92,13 @@ public class ProductoController {
     }
 
     @PostMapping("/editar")
-    public String editarProducto(@ModelAttribute("producto") Producto producto,
+    public String editarProducto(@ModelAttribute("producto") Producto producto, BindingResult resultadoProducto,
             RedirectAttributes redirect) {
+        if (resultadoProducto.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/combustibles/editar" + "?id=" + producto.getId();
+        }
         String error = productoService.editarProducto(producto);
         if (error != null) {
             redirect.addFlashAttribute("producto", producto);
@@ -138,8 +149,8 @@ public class ProductoController {
      * Sólo para mostrar el nombre de la categoría en la lista
      * (el modelo conserva la llave foránea id_categoria).
      */
-    private Map<Integer, String> nombresCategorias() {
-        Map<Integer, String> nombres = new HashMap<>();
+    private Map<Long, String> nombresCategorias() {
+        Map<Long, String> nombres = new HashMap<>();
         for (Categoria categoria : categoriaService.listaCategorias()) {
             nombres.put(categoria.getId(), categoria.getNombre());
         }

@@ -12,39 +12,11 @@
 </head>
 <body>
     <header class="sidebar">
-        <a class="brand" href="${pageContext.request.contextPath}/categorias/list">
+        <a class="brand" href="${pageContext.request.contextPath}/">
             <span class="brand-mark">N</span>
             <span>NEXO<small>ESTACIÓN NEXO</small></span>
         </a>
-        <nav>
-            <c:set var="esAdmin" value="false"/>
-            <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
-                <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}">
-                    <c:set var="esAdmin" value="true"/>
-                </c:if>
-            </c:forEach>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
-                <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/combustibles/list">Combustibles</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
-                <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
-                <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
-                <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
-                <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/asistencia/mi">Asistencia</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/compras/list" aria-current="page">Compras</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/inventario/list">Inventario</a>
-            <a href="${pageContext.request.contextPath}/ventas/list">Ventas</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
-            </c:if>
-        </nav>
+        <%@ include file="/WEB-INF/views/shared/menu.jspf" %>
         <div class="sesion">
             <span class="sesion-usuario">Sesión: <c:out value="${pageContext.request.remoteUser}"/></span>
             <form:form action="${pageContext.request.contextPath}/logout" method="post" cssClass="sesion-salir">
@@ -72,7 +44,7 @@
                 </div>
                 <div class="actions">
                     <a class="btn btn-secondary" href="${pageContext.request.contextPath}/compras/list">← Compras</a>
-                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/compras/detalle?id=C001">Ver C001</a>
+                    <c:if test="${demostracion}"><a class="btn btn-secondary" href="${pageContext.request.contextPath}/compras/detalle?id=C001">Ver C001</a></c:if>
                 </div>
             </div>
 
@@ -93,11 +65,10 @@
                 <%-- La compra se vincula al objeto "compra"; la línea de detalle
                      (combustible, cantidad y precio) llega como parámetros simples --%>
                 <form:form action="${pageContext.request.contextPath}/compras/crear" method="post" modelAttribute="compra">
+                    <input type="hidden" name="formularioToken" value="${formularioToken}">
                     <div class="form-grid">
                         <div class="field">
-                            <form:label path="proveedor">Proveedor *</form:label>
-                            <form:input path="proveedor" id="proveedor" cssClass="form-control" type="text"
-                                required="required" minlength="3" maxlength="60"/>
+                            <form:label path="idProveedor">Proveedor activo *</form:label><form:select path="idProveedor" required="required" cssClass="form-select"><form:option value="" label="Seleccione proveedor"/><form:options items="${proveedores}" itemValue="id" itemLabel="razonSocial"/></form:select><c:if test="${empty proveedores}"><p class="notice">Registra o activa un proveedor antes de comprar.</p></c:if>
                         </div>
                         <div class="field">
                             <label for="fechaRegistro">Fecha de registro</label>
@@ -117,21 +88,15 @@
                         </div>
                         <div class="field">
                             <label for="cantidad">Cantidad (L) *</label>
-                            <input class="form-control" id="cantidad" name="cantidad" type="number" value="${not empty detalle.cantidad ? detalle.cantidad : '100'}" required min="0.01" step="0.01">
+                            <input class="form-control" id="cantidad" name="cantidad" type="number" value="${not empty detalle.cantidad ? detalle.cantidad : '100'}" required min="0.001" step="0.001">
                         </div>
                         <div class="field">
                             <label for="precioCompra">Precio de compra (S/ por litro) *</label>
                             <input class="form-control" id="precioCompra" name="precioCompra" type="number" value="${not empty detalle.precioCompra ? detalle.precioCompra : '4.50'}" required min="0.01" step="0.01">
                         </div>
-                        <div class="field">
-                            <form:label path="idUsuario">Responsable *</form:label>
-                            <form:select path="idUsuario" id="idUsuario" cssClass="form-select" required="required">
-                                <form:option value="" label="Seleccionar responsable"/>
-                                <form:options items="${responsables}"/>
-                            </form:select>
-                        </div>
+                        <p class="form-help">Responsable: <c:out value="${pageContext.request.remoteUser}"/> (sesión actual).</p>
                     </div>
-                    <div class="actions">
+<section aria-label="Líneas adicionales"><div id="lineas-adicionales"></div><button type="button" class="btn btn-secondary" id="agregar-linea">Agregar combustible</button><template id="plantilla-linea"><fieldset class="form-grid"><legend>Combustible adicional</legend><label>Combustible<select class="form-select" name="lineas[__indice__].idProducto" required><option value="">Seleccione</option><c:forEach var="p" items="${productos}"><option value="${p.id}"><c:out value="${p.nombre}"/></option></c:forEach></select></label><label>Litros<input class="form-control" type="number" min="0.001" step="0.001" required name="lineas[__indice__].cantidad"/></label><label>Precio por litro<input class="form-control" type="number" min="0.01" step="0.01" required name="lineas[__indice__].precioCompra"/></label><button type="button" class="btn" data-quitar-linea>Quitar línea</button></fieldset></template></section>                    <div class="actions">
                         <button type="submit" class="btn btn-primary">Registrar compra</button>
                     </div>
                     <p class="form-help">
@@ -142,7 +107,7 @@
                 </form:form>
             </section>
 
-            <section class="panel">
+            <c:if test="${demostracion}"><section class="panel">
                 <h2>Resumen del escenario</h2>
                 <p>
                     Compra de referencia C001:
@@ -154,7 +119,7 @@
                     se registra con la fecha del servidor y suma sus litros al stock del producto
                     seleccionado.
                 </p>
-            </section>
+            </section></c:if>
 
             <p class="notice">
                 Este formulario comparte F13 con P20: la lista de compras y el formulario dedicado
@@ -162,5 +127,6 @@
             </p>
         </main>
     </div>
+<script src="${pageContext.request.contextPath}/js/lineas.js" defer></script>
 </body>
 </html>

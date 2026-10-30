@@ -15,39 +15,11 @@
 </head>
 <body>
     <header class="sidebar">
-        <a class="brand" href="${pageContext.request.contextPath}/categorias/list">
+        <a class="brand" href="${pageContext.request.contextPath}/">
             <span class="brand-mark">N</span>
             <span>NEXO<small>ESTACIÓN NEXO</small></span>
         </a>
-        <nav>
-            <c:set var="esAdmin" value="false"/>
-            <c:forEach var="rolMenu" items="${pageContext.request.userPrincipal.authorities}">
-                <c:if test="${rolMenu.authority == 'ROLE_ADMIN'}">
-                    <c:set var="esAdmin" value="true"/>
-                </c:if>
-            </c:forEach>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/categorias/list">Categorías</a>
-                <a href="${pageContext.request.contextPath}/categorias/crear">Nueva categoría</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/combustibles/list">Combustibles</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/combustibles/crear">Nuevo combustible</a>
-                <a href="${pageContext.request.contextPath}/empleados/list">Empleados</a>
-                <a href="${pageContext.request.contextPath}/empleados/crear">Nuevo empleado</a>
-                <a href="${pageContext.request.contextPath}/usuarios/list">Usuarios</a>
-                <a href="${pageContext.request.contextPath}/usuarios/crear">Nuevo usuario</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/asistencia/mi">Asistencia</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/compras/list" aria-current="page">Compras</a>
-            </c:if>
-            <a href="${pageContext.request.contextPath}/inventario/list">Inventario</a>
-            <a href="${pageContext.request.contextPath}/ventas/list">Ventas</a>
-            <c:if test="${esAdmin}">
-                <a href="${pageContext.request.contextPath}/finanzas/list">Finanzas</a>
-            </c:if>
-        </nav>
+        <%@ include file="/WEB-INF/views/shared/menu.jspf" %>
         <div class="sesion">
             <span class="sesion-usuario">Sesión: <c:out value="${pageContext.request.remoteUser}"/></span>
             <form:form action="${pageContext.request.contextPath}/logout" method="post" cssClass="sesion-salir">
@@ -75,7 +47,7 @@
                 </div>
                 <div class="actions">
                     <a class="btn btn-primary" href="${pageContext.request.contextPath}/compras/crear">+ Nueva compra</a>
-                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/compras/detalle?id=C001">Ver C001</a>
+                    <c:if test="${demostracion}"><a class="btn btn-secondary" href="${pageContext.request.contextPath}/compras/detalle?id=C001">Ver C001</a></c:if>
                 </div>
             </div>
 
@@ -85,7 +57,7 @@
                 </p>
             </c:if>
 
-            <div class="kpi-grid">
+<form method="get" class="form-grid"><label>Proveedor<select name="idProveedor"><option value="">Todos</option><c:forEach var="p" items="${proveedoresFiltro}"><option value="${p.id}" ${param.idProveedor == p.id ? 'selected' : ''}><c:out value="${p.razonSocial}"/></option></c:forEach></select></label><label>Empleado responsable<select name="idResponsable"><option value="">Todos</option><c:forEach var="r" items="${responsablesFiltro}"><option value="${r.key}" ${param.idResponsable == r.key ? 'selected' : ''}><c:out value="${r.value}"/></option></c:forEach></select></label><label>Desde<input type="date" name="desde" value="<c:out value='${param.desde}'/>"/></label><label>Hasta<input type="date" name="hasta" value="<c:out value='${param.hasta}'/>"/></label><label>Estado<select name="estado"><option value="">Todos</option><option>Confirmada</option><option>Pendiente</option></select></label><label>Combustible<select name="idProducto"><option value="">Todos</option><c:forEach var="p" items="${productosFiltro}"><option value="${p.id}"><c:out value="${p.nombre}"/></option></c:forEach></select></label><button class="btn" type="submit">Filtrar compras</button></form>            <div class="kpi-grid">
                 <section class="kpi">
                     <p>Compras registradas</p>
                     <strong>S/ <fmt:formatNumber value="${totalMonto}" type="number" minFractionDigits="2"/></strong>
@@ -98,12 +70,12 @@
                 </section>
                 <section class="kpi">
                     <p>Litros adquiridos</p>
-                    <strong><fmt:formatNumber value="${totalLitros}" type="number" maxFractionDigits="2"/> L</strong>
+                    <strong><fmt:formatNumber value="${totalLitros}" type="number" maxFractionDigits="3"/> L</strong>
                     <small><c:out value="${productosComprados}"/></small>
                 </section>
                 <section class="kpi">
                     <p>Efecto en inventario</p>
-                    <strong>+<fmt:formatNumber value="${totalLitros}" type="number" maxFractionDigits="2"/> L</strong>
+                    <strong>+<fmt:formatNumber value="${totalLitros}" type="number" maxFractionDigits="3"/> L</strong>
                     <small>Se suma al stock de los productos</small>
                 </section>
             </div>
@@ -115,7 +87,7 @@
                         <caption>
                             Compras registradas: <c:out value="${fn:length(compras)}"/> ·
                             Total: S/ <fmt:formatNumber value="${totalMonto}" type="number" minFractionDigits="2"/> ·
-                            <fmt:formatNumber value="${totalLitros}" type="number" maxFractionDigits="2"/> L
+                            <fmt:formatNumber value="${totalLitros}" type="number" maxFractionDigits="3"/> L
                         </caption>
                         <thead>
                             <tr>
@@ -141,7 +113,7 @@
                                     </td>
                                     <td><c:out value="${compra.proveedor}"/></td>
                                     <td><c:out value="${combustiblesPorCompra[compra.id]}"/></td>
-                                    <td><fmt:formatNumber value="${litrosPorCompra[compra.id]}" type="number" maxFractionDigits="2"/> L</td>
+                                    <td><fmt:formatNumber value="${litrosPorCompra[compra.id]}" type="number" maxFractionDigits="3"/> L</td>
                                     <td>S/ <fmt:formatNumber value="${compra.total}" type="number" minFractionDigits="2"/></td>
                                     <td>
                                         <span class="badge">

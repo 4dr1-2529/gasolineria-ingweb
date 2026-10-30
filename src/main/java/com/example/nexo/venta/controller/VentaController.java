@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import jakarta.servlet.http.HttpSession;
+import com.example.nexo.shared.web.FormularioUnico;
+import org.springframework.security.core.Authentication;
+import com.example.nexo.auth.service.ResponsableSesion;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -87,7 +92,7 @@ public class VentaController {
     }
 
     @GetMapping("/crear")
-    public String mostrarFormulario(Model model) {
+    public String mostrarFormulario(Model model, HttpSession sesion) {
         // Tras un rechazo conserva lo digitado (los atributos vienen por flash)
         if (!model.containsAttribute("venta")) {
             model.addAttribute("venta", new Venta());
@@ -98,14 +103,25 @@ public class VentaController {
         // RN02 · Sólo los combustibles con estado Activo pueden venderse
         model.addAttribute("productos", productosActivos());
         model.addAttribute("operadores", operadores());
+        model.addAttribute("formularioToken", FormularioUnico.emitir(sesion, "venta"));
         return "venta/crear";
     }
 
     @PostMapping("/crear")
-    public String crearVenta(@ModelAttribute("venta") Venta venta,
-            @ModelAttribute("detalle") DetalleVenta detalle,
-            RedirectAttributes redirect) {
-        String error = ventaService.crearVenta(venta, detalle);
+    public String crearVenta(@ModelAttribute("venta") Venta venta, BindingResult resultadoVenta,
+            @ModelAttribute("detalle") DetalleVenta detalle, BindingResult resultadoDetalle,
+            @ModelAttribute("lineasOperacion") com.example.nexo.shared.web.LineasOperacion lineas, BindingResult resultadoLineas,
+            Authentication autenticacion, HttpSession sesion,
+            @RequestParam("formularioToken") String formularioToken, RedirectAttributes redirect) {
+        if (resultadoVenta.hasErrors() || resultadoDetalle.hasErrors() || resultadoLineas.hasErrors()) {
+            redirect.addFlashAttribute("mensaje", "Revisa los campos numéricos y los formatos del formulario.");
+            redirect.addFlashAttribute("mensajeTipo", "error");
+            return "redirect:/ventas/crear";
+        }
+        venta.setId(com.example.nexo.shared.persistence.Codigos.desdeToken(formularioToken,"V",12));
+        venta.setIdUsuario(ResponsableSesion.id(autenticacion, usuarioService));
+        String error = FormularioUnico.ejecutar(sesion, "venta", formularioToken,
+                () -> ventaService.crearVenta(venta, lineas.ventas(detalle)));
         if (error != null) {
             // Venta rechazada: se regresa al formulario conservando lo digitado
             redirect.addFlashAttribute("venta", venta);
@@ -114,8 +130,7 @@ public class VentaController {
             redirect.addFlashAttribute("mensajeTipo", "error");
             return "redirect:/ventas/crear";
         }
-        redirect.addFlashAttribute("mensaje", "Venta " + venta.getId()
-                + " registrada: " + detalle.getCantidad() + " L descontados del stock.");
+        redirect.addFlashAttribute("mensaje", "Venta " + venta.getId() + " registrada con todos sus detalles y movimientos de inventario y caja.");
         redirect.addFlashAttribute("mensajeTipo", "ok");
         return "redirect:/ventas/list";
     }
@@ -151,7 +166,7 @@ public class VentaController {
     private List<Producto> productosActivos() {
         List<Producto> activos = new ArrayList<>();
         for (Producto producto : productoService.listaProductos()) {
-            if ("Activo".equals(producto.getEstado())) {
+            if (productoService.disponibleParaOperacion(producto.getId())) {
                 activos.add(producto);
             }
         }
@@ -163,11 +178,11 @@ public class VentaController {
      * (Ana Torres y Luis Rojas de la versión 1), con el nombre completo de
      * su empleado. Son los mismos operadores que ofrece P08 y P24.
      */
-    private Map<Integer, String> operadores() {
-        Map<Integer, String> nombres = new HashMap<>();
+    private Map<Long, String> operadores() {
+        Map<Long, String> nombres = new HashMap<>();
         for (Usuario usuario : usuarioService.listaUsuarios()) {
             // RN02: una cuenta Inactiva no se elige en operaciones nuevas
-            if ("Operador / Vendedor".equals(usuario.getRol())
+            if ("Vendedor".equals(usuario.getRol())
                     && "Activo".equals(usuario.getEstado())) {
                 nombres.put(usuario.getId(), nombreOperador(usuario.getId()));
             }
@@ -179,15 +194,15 @@ public class VentaController {
      * Todos los usuarios con nombre completo, para mostrar la columna
      * Operador del historial y el encabezado del detalle.
      */
-    private Map<Integer, String> nombresUsuarios() {
-        Map<Integer, String> nombres = new HashMap<>();
+    private Map<Long, String> nombresUsuarios() {
+        Map<Long, String> nombres = new HashMap<>();
         for (Usuario usuario : usuarioService.listaUsuarios()) {
             nombres.put(usuario.getId(), nombreOperador(usuario.getId()));
         }
         return nombres;
     }
 
-    private String nombreOperador(Integer idUsuario) {
+    private String nombreOperador(Long idUsuario) {
         Usuario usuario = usuarioService.buscarUsuarioPorId(idUsuario);
         if (usuario == null) {
             return "";
