@@ -1,6 +1,6 @@
-# Estación Nexo — persistencia MySQL
+# Estación Nexo — persistencia MariaDB/MySQL
 
-Spring Boot MVC, JSP/JSTL, Spring Security, Spring Data JPA/Hibernate y MySQL.
+Spring Boot MVC, JSP/JSTL, Spring Security, Spring Data JPA/Hibernate y MariaDB/MySQL.
 Los módulos guardan sus datos mediante 15 entidades y 15 repositorios. Flyway
 aplica las migraciones y Hibernate valida el esquema; no hay perfil de almacenamiento
 en memoria. Compras, ventas, inventario, caja y asistencia utilizan persistencia relacional.
@@ -14,8 +14,7 @@ Los códigos comerciales anteriores conservan sus rutas; las PK internas son Lon
 
 ## Ejecutar en Visual Studio Code
 
-Requisitos: JDK 17 compatible (verificado con Temurin 21), Docker Desktop o un
-MySQL disponible y la terminal PowerShell. Se incluye Maven Wrapper.
+Requisitos: JDK 17 compatible (verificado con Temurin 21), Docker Desktop o MySQL/MariaDB disponible y la terminal PowerShell. Se incluye Maven Wrapper.
 
 Para iniciar MySQL local con volumen persistente:
 
@@ -25,7 +24,30 @@ $env:NEXO_DB_PASSWORD=Read-Host 'Contraseña del usuario MySQL nexo' -MaskInput
 docker compose up -d --wait
 ```
 
-La aplicación utiliza por defecto `localhost:3306/estacion_nexo`, usuario `nexo`.
+La aplicación utiliza por defecto `127.0.0.1:3307/estacion_nexo`, usuario `nexo`.
+Para usar XAMPP, configura MariaDB en el puerto 3307 y crea la base y el usuario
+`nexo` desde phpMyAdmin. En la pestaña SQL puedes ejecutar:
+
+```sql
+CREATE DATABASE estacion_nexo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'nexo'@'localhost' IDENTIFIED BY 'elige_una_clave';
+GRANT ALL PRIVILEGES ON estacion_nexo.* TO 'nexo'@'localhost';
+CREATE USER 'nexo'@'127.0.0.1' IDENTIFIED BY 'elige_una_clave';
+GRANT ALL PRIVILEGES ON estacion_nexo.* TO 'nexo'@'127.0.0.1';
+```
+
+En la terminal PowerShell desde la que iniciarás Spring Boot, define
+`$env:NEXO_DB_USER='nexo'` y `$env:NEXO_DB_PASSWORD='la_clave_elegida'`.
+Para cambiar el puerto de XAMPP, detén MySQL y actualiza `port=3306` a `port=3307`
+en las secciones `[client]` y `[mysqld]` de `C:\xampp\mysql\bin\my.ini`.
+En `C:\xampp\xampp-control.ini`, cambia `MySQL=3306` a `MySQL=3307` dentro de
+`[ServicePorts]`, guarda y vuelve a iniciar MySQL desde el panel XAMPP.
+Si phpMyAdmin no conecta luego del cambio, configura el puerto `3307` en
+`C:\xampp\phpMyAdmin\config.inc.php` agregando
+`$cfg['Servers'][$i]['port'] = '3307';`.
+
+Para Docker Compose, el puerto local 3307 se publica hacia el puerto 3306 del
+contenedor.
 Para otra instancia configurar NEXO_DB_URL, NEXO_DB_USER y NEXO_DB_PASSWORD.
 La URL debe conservar America/Lima en la configuración de conexión.
 
@@ -62,14 +84,14 @@ Si se utiliza el MySQL de Compose, crear la base de pruebas con el administrador
 mediante `docker compose exec mysql mysql -uroot -p` y ejecutar:
 
 ```sql
-CREATE DATABASE nexo_pruebas CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE nexo_pruebas CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 GRANT ALL ON nexo_pruebas.* TO 'nexo'@'%';
 ```
 
 Después:
 
 ```powershell
-$env:NEXO_TEST_DB_URL='jdbc:mysql://localhost:3306/nexo_pruebas?connectionTimeZone=America/Lima&forceConnectionTimeZoneToSession=true'
+$env:NEXO_TEST_DB_URL='jdbc:mysql://localhost:3307/nexo_pruebas?connectionTimeZone=America/Lima&forceConnectionTimeZoneToSession=true'
 $env:NEXO_TEST_DB_USER='nexo'
 $env:NEXO_TEST_DB_PASSWORD=$env:NEXO_DB_PASSWORD
 # NEXO_DEMO_PASSWORD debe corresponder a las cuentas existentes en la base de pruebas.

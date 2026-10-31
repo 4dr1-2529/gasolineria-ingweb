@@ -1,6 +1,7 @@
 -- Modelo objetivo del Word corregido, sección 5.10.2 (30/10/2026).
 -- Migración activa de Flyway; Hibernate valida el esquema.
--- MySQL 8.4. Mantiene 15 tablas, 109 columnas de negocio y 22 FK.
+-- Compatible con MySQL 8 y MariaDB de XAMPP. Mantiene 15 tablas,
+-- 109 columnas de negocio y 22 FK.
 SET time_zone = '-05:00';
 
 CREATE TABLE categoria (
@@ -11,7 +12,7 @@ CREATE TABLE categoria (
   fecha_creacion DATETIME NOT NULL,
   CONSTRAINT uq_categoria_nombre UNIQUE (nombre),
   CONSTRAINT ck_categoria_estado CHECK (estado IN ('Activo','Inactivo'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE producto (
   id_producto BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -27,7 +28,7 @@ CREATE TABLE producto (
   CONSTRAINT ck_producto_1 CHECK (precio_venta > 0),
   CONSTRAINT ck_producto_2 CHECK (stock_actual >= 0),
   CONSTRAINT ck_producto_estado CHECK (estado IN ('Activo','Inactivo'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE proveedor (
   id_proveedor BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -40,7 +41,7 @@ CREATE TABLE proveedor (
   estado VARCHAR(10) NOT NULL,
   CONSTRAINT uq_proveedor_ruc UNIQUE (ruc),
   CONSTRAINT ck_proveedor_estado CHECK (estado IN ('Activo','Inactivo'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE compra (
   id_compra BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -52,7 +53,7 @@ CREATE TABLE compra (
   estado VARCHAR(20) NOT NULL,
   observacion VARCHAR(200) NULL,
   CONSTRAINT uq_compra_codigo_compra UNIQUE (codigo_compra)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE detalle_compra (
   id_detalle_compra BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -64,7 +65,7 @@ CREATE TABLE detalle_compra (
   CONSTRAINT ck_detalle_compra_1 CHECK (cantidad_litros > 0),
   CONSTRAINT ck_detalle_compra_2 CHECK (precio_compra > 0),
   CONSTRAINT ck_detalle_compra_3 CHECK (subtotal > 0)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE empleado (
   id_empleado BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -77,7 +78,7 @@ CREATE TABLE empleado (
   estado VARCHAR(10) NOT NULL,
   CONSTRAINT uq_empleado_dni UNIQUE (dni),
   CONSTRAINT ck_empleado_estado CHECK (estado IN ('Activo','Inactivo'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE rol (
   id_rol BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -88,7 +89,7 @@ CREATE TABLE rol (
   CONSTRAINT uq_rol_codigo UNIQUE (codigo),
   CONSTRAINT uq_rol_nombre UNIQUE (nombre),
   CONSTRAINT ck_rol_estado CHECK (estado IN ('Activo','Inactivo'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE usuario (
   id_usuario BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -102,7 +103,7 @@ CREATE TABLE usuario (
   CONSTRAINT uq_usuario_username UNIQUE (username),
   CONSTRAINT uq_usuario_id_empleado UNIQUE (id_empleado),
   CONSTRAINT ck_usuario_estado CHECK (estado IN ('Activo','Inactivo'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE venta (
   id_venta BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -112,7 +113,7 @@ CREATE TABLE venta (
   total DECIMAL(12,2) NOT NULL,
   estado VARCHAR(20) NOT NULL,
   CONSTRAINT uq_venta_codigo_venta UNIQUE (codigo_venta)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE detalle_venta (
   id_detalle_venta BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -124,7 +125,7 @@ CREATE TABLE detalle_venta (
   CONSTRAINT ck_detalle_venta_1 CHECK (cantidad_litros > 0),
   CONSTRAINT ck_detalle_venta_2 CHECK (precio_unitario > 0),
   CONSTRAINT ck_detalle_venta_3 CHECK (subtotal > 0)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE movimiento_inventario (
   id_movimiento_inventario BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -143,7 +144,7 @@ CREATE TABLE movimiento_inventario (
   CONSTRAINT ck_movimiento_inventario_3 CHECK (NOT (id_detalle_compra IS NOT NULL AND id_detalle_venta IS NOT NULL)),
   CONSTRAINT ck_movimiento_inventario_4 CHECK (id_detalle_compra IS NULL OR tipo = 'ENTRADA'),
   CONSTRAINT ck_movimiento_inventario_5 CHECK (id_detalle_venta IS NULL OR tipo = 'SALIDA')
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE concepto_movimiento (
   id_concepto BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -154,7 +155,7 @@ CREATE TABLE concepto_movimiento (
   CONSTRAINT uq_concepto_movimiento_codigo UNIQUE (codigo),
   CONSTRAINT ck_concepto_movimiento_1 CHECK (tipo IN ('INGRESO','EGRESO')),
   CONSTRAINT ck_concepto_movimiento_estado CHECK (estado IN ('Activo','Inactivo'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE caja_diaria (
   id_caja BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -169,7 +170,7 @@ CREATE TABLE caja_diaria (
   CONSTRAINT uq_caja_diaria_fecha UNIQUE (fecha),
   CONSTRAINT ck_caja_diaria_1 CHECK (saldo_apertura >= 0),
   CONSTRAINT ck_caja_diaria_2 CHECK (estado IN ('ABIERTA','CERRADA'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE movimiento_caja (
   id_movimiento_caja BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -188,7 +189,7 @@ CREATE TABLE movimiento_caja (
   CONSTRAINT uq_movimiento_caja_id_venta UNIQUE (id_venta),
   CONSTRAINT ck_movimiento_caja_1 CHECK (monto > 0),
   CONSTRAINT ck_movimiento_caja_2 CHECK ((id_compra IS NOT NULL AND id_venta IS NULL AND tipo = 'EGRESO') OR (id_venta IS NOT NULL AND id_compra IS NULL AND tipo = 'INGRESO'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE asistencia (
   id_asistencia BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -201,7 +202,7 @@ CREATE TABLE asistencia (
   CONSTRAINT uq_asistencia_jornada UNIQUE (id_empleado,fecha),
   CONSTRAINT ck_asistencia_1 CHECK (hora_salida IS NULL OR hora_salida > hora_entrada),
   CONSTRAINT ck_asistencia_2 CHECK (estado IN ('PRESENTE','FALTA'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 ALTER TABLE producto ADD CONSTRAINT fk_producto_id_categoria FOREIGN KEY (id_categoria) REFERENCES categoria (id_categoria) ON DELETE RESTRICT ON UPDATE RESTRICT;
 ALTER TABLE compra ADD CONSTRAINT fk_compra_id_proveedor FOREIGN KEY (id_proveedor) REFERENCES proveedor (id_proveedor) ON DELETE RESTRICT ON UPDATE RESTRICT;

@@ -7,7 +7,7 @@ services:
       MYSQL_PASSWORD: ${NEXO_DB_PASSWORD:?Define NEXO_DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${NEXO_MYSQL_ROOT_PASSWORD:?Define NEXO_MYSQL_ROOT_PASSWORD}
     ports:
-      - "127.0.0.1:3306:3306"
+      - "127.0.0.1:3307:3306"
     volumes:
       - nexo_mysql:/var/lib/mysql
     healthcheck:
